@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+files:
+  - source: target/plentyentry-application.jar
+    destination: /tmp
+hooks:
+  BeforeInstall:
+    - location: scripts/before-install.sh
+      timeout: 900
+  AfterInstall:
+    - location: scripts/after-install.sh
+      timeout: 180
+  ApplicationStart:
+    - location: scripts/application-start.sh
+      timeout: 3600

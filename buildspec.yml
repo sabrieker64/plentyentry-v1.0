@@ -17,3 +17,4 @@ phases:
 artifacts:
   files:
     - target/plentyentry-application.jar
+    - appspec.yml
