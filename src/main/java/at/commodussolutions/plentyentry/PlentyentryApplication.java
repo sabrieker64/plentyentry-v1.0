@@ -15,7 +15,6 @@ public class PlentyentryApplication {
     }
 
     @GetMapping("/hello")
-    @ResponseBody
     public String sayHello(){
         return "Hello";
     }
