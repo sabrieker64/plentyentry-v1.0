@@ -18,3 +18,6 @@ artifacts:
   files:
     - target/plentyentry-application.jar
     - appspec.yml
+    - scripts/before-install.sh
+    - scripts/application-start.sh
+    - scripts/after-install.sh
