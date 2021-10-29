@@ -15,9 +15,6 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-  deploy:
-    commands:
-      - java -jar target/plentyentry-application.jar
 artifacts:
   files:
     - target/plentyentry-application.jar
