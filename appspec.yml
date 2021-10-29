@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: target/plentyentry-application.jar
-    destination: /tmp
+    destination: /tmp/
 hooks:
   BeforeInstall:
     - location: scripts/before-install.sh
