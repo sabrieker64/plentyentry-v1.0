@@ -7,14 +7,14 @@ phases:
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase...
-      - mvn clean
+      - mvn clean -DskipTests
   build:
     commands:
       - echo Build started on `date`
-      - mvn install
+      - mvn install -DskipTests
   post_build:
     commands:
-      - java -jar target/plentyentry-application.jar
+      - mvn test
 artifacts:
   files:
     - target/plentyentry-application.jar
