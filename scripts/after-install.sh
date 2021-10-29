@@ -1,4 +1,3 @@
 #!/bin/bash
-cd /tmp/ || exit
-
+mvn package
 echo "The AfterInstall deployment lifecycle event successfully completed." > after-install.txt
