@@ -5,3 +5,5 @@ then
  rm -rf $FOLDER
 fi
 mkdir -p $FOLDER
+
+../mvnw clean install
