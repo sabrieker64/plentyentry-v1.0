@@ -1,0 +1,1 @@
+The ApplicationStart deployment lifecycle event successfully completed.
