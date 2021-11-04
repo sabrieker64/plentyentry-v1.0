@@ -2,7 +2,7 @@ package at.commodussolutions.plentyentry.user.payment;
 
 
 import at.commodussolutions.plentyentry.user.payment.enums.PaymentType;
-import at.commodussolutions.plentyentry.user.userdata.User;
+import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import lombok.Data;
 
 import javax.persistence.*;

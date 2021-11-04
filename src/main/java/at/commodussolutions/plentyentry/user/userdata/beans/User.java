@@ -1,4 +1,4 @@
-package at.commodussolutions.plentyentry.user.userdata;
+package at.commodussolutions.plentyentry.user.userdata.beans;
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.Ticket;
 import at.commodussolutions.plentyentry.user.coronastate.CoronaStatus;

@@ -1,7 +1,7 @@
 package at.commodussolutions.plentyentry.user.coronastate;
 
 
-import at.commodussolutions.plentyentry.user.userdata.User;
+import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import lombok.Data;
 
 import javax.persistence.*;

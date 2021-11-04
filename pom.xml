@@ -50,6 +50,11 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
+            <groupId>cz.habarta.typescript-generator</groupId>
+            <artifactId>typescript-generator-maven-plugin</artifactId>
+            <version>2.32.889</version>
+        </dependency>
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
@@ -83,6 +88,28 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>cz.habarta.typescript-generator</groupId>
+                <artifactId>typescript-generator-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>process-classes</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jsonLibrary>jackson2</jsonLibrary>
+                    <classes>
+                        <class>at.commodussolutions.plentyentry.user.userdata.dto.UserDTO</class>
+                    </classes>
+                    <outputKind>module</outputKind>
+                    <outputFile>plentyentry-frontend/src/app/definitions/objects.ts</outputFile>
+                    <outputFileType>implementationFile</outputFileType>
                 </configuration>
             </plugin>
         </plugins>

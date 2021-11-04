@@ -1,7 +1,7 @@
 package at.commodussolutions.plentyentry.ordermanagement.ticket;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.Event;
-import at.commodussolutions.plentyentry.user.userdata.User;
+import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import lombok.Data;
 
 import javax.persistence.*;
