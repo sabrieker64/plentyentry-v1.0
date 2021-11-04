@@ -6,4 +6,4 @@ then
 fi
 mkdir -p $FOLDER
 
-../mvnw clean install
+mvnw clean install
