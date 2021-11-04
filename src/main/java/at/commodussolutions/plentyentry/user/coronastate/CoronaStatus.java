@@ -36,4 +36,5 @@ public class CoronaStatus {
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_CORONA_STATUS_USER_ID"), referencedColumnName = "ID")
     private User user;
 
+
 }

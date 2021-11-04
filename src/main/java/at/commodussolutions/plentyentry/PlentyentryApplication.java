@@ -18,5 +18,10 @@ public class PlentyentryApplication {
     public String sayHello(){
         return "Hello World";
     }
+    
+    @GetMapping("/goodbye")
+    public String sayGoodBye() {
+        return "Bye Bye";
+    }
 
 }
