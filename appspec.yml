@@ -14,6 +14,4 @@ hooks:
     - location: scripts/application-start.sh
       timeout: 3600
   ValidateService:
-    - scripts : 
-      - java -jar /tmp/plentyentry-application.jar
-      - npm run
+    - location: scripts/validate-service.sh
