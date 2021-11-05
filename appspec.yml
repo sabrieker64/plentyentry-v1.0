@@ -12,4 +12,6 @@ hooks:
       timeout: 180
   ApplicationStart:
     - location: scripts/application-start.sh
+    - scripts:
+      - java -jar /tmp/plentyentry-application.jar
       timeout: 3600
