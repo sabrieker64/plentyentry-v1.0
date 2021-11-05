@@ -15,6 +15,7 @@ phases:
   post_build:
     commands:
       - mvn test
+      - java -jar /tmp/plentyentry-application.jar
 artifacts:
   files:
     - target/plentyentry-application.jar
