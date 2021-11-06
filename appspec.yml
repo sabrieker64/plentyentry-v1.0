@@ -12,6 +12,5 @@ hooks:
       timeout: 180
   ApplicationStart:
     - location: scripts/application-start.sh
-      timeout: 3600
   ValidateService:
     - location: scripts/validate-service.sh
