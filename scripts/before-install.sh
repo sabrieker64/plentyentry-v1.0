@@ -5,4 +5,3 @@ then
  rm -rf $FOLDER
 fi
 mkdir -p $FOLDER
-/plentyentry-frontend/npm install
