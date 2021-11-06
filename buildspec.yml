@@ -21,8 +21,4 @@ artifacts:
   files:
     - target/plentyentry-application.jar
     - appspec.yml
-    - scripts/application-stop.sh
-    - scripts/application-start.sh
-    - scripts/before-install.sh
-    - scripts/after-install.sh
-    - scripts/validate-service.sh
+    - scripts/*
