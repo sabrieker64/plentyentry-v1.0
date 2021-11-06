@@ -4,7 +4,14 @@ files:
   - source: target/plentyentry-application.jar
     destination: /tmp
 hooks:
-  -ApplicationStop:
-    - scripts: scripts/application-stop.sh
-  -ValidationService:
-    - scripts: scripts/application-start.sh
+BeforeInstall:
+  - location: scripts/before-install.sh
+    timeout: 900
+AfterInstall:
+  - location: scripts/after-install.sh
+    timeout: 180
+ApplicationStart:
+  - location: scripts/application-start.sh
+    timeout: 3600
+ValidateService:
+  - location: scripts/validate-service.sh
