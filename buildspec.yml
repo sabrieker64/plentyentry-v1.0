@@ -8,10 +8,12 @@ phases:
     commands:
       - echo Nothing to do in the pre_build phase...
       - mvn clean -DskipTests
+      - npm install
   build:
     commands:
       - echo Build started on `date`
       - mvn install -DskipTests
+      - npm build
   post_build:
     commands:
       - mvn test
