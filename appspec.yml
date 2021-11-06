@@ -4,7 +4,5 @@ files:
   - source: target/plentyentry-application.jar
     destination: /tmp
 hooks:
-  ApplicationStop:
-    - location: scripts/application-stop.sh
-  ApplicationStart:
-    - location: scripts/validate-start.sh
+  -ValidationService:
+    - scripts: scripts/application-start.sh
