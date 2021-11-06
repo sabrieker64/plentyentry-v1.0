@@ -15,7 +15,6 @@ ApplicationStart:
     timeout: 3600
 ApplicationStop:
   - location: scripts/application-stop.sh
-    timeout: 300
 ValidateService:
   - location: scripts/validate-service.sh
     timeout: 60
