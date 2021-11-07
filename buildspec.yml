@@ -25,4 +25,3 @@ artifacts:
     - scripts/application-start.sh
     - scripts/before-install.sh
     - scripts/validate-service.sh
-  discard-paths: yes
