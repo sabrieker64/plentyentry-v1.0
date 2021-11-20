@@ -12,7 +12,7 @@ phases:
     commands:
       - echo Build started on `date`
       - mvn install -DskipTests
-      - /plentyentry-frontend/ng build
+      - /plentyentry-frontend ng build
   post_build:
     commands:
       - echo Tests Started
