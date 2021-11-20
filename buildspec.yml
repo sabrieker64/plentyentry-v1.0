@@ -12,11 +12,12 @@ phases:
     commands:
       - echo Build started on `date`
       - mvn install -DskipTests
-      - npm build
+      - ng build
   post_build:
     commands:
       - echo Tests Started
       - mvn test
+      - ng serve
 artifacts:
   files:
     - target/plentyentry-application.jar
@@ -25,3 +26,4 @@ artifacts:
     - scripts/application-start.sh
     - scripts/before-install.sh
     - scripts/validate-service.sh
+    - /plentyentry-frontend/dist/plentyentry-frontend/*
