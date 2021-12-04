@@ -1,9 +1,11 @@
 package at.commodussolutions.plentyentry.user.userdata.beans;
 
-import at.commodussolutions.plentyentry.ordermanagement.ticket.Ticket;
-import at.commodussolutions.plentyentry.user.coronastate.CoronaStatus;
-import at.commodussolutions.plentyentry.user.payment.PaymentMethod;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
+import at.commodussolutions.plentyentry.user.coronastate.beans.CoronaStatus;
+import at.commodussolutions.plentyentry.user.payment.beans.PaymentMethod;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,6 +15,8 @@ import java.util.List;
 @Entity
 @Table(name = "USER")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id

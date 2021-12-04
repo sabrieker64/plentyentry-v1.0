@@ -1,6 +1,6 @@
-package at.commodussolutions.plentyentry.ordermanagement.ticket;
+package at.commodussolutions.plentyentry.ordermanagement.ticket.beans;
 
-import at.commodussolutions.plentyentry.ordermanagement.event.Event;
+import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import lombok.Data;
 

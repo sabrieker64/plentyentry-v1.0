@@ -1,4 +1,4 @@
-package at.commodussolutions.plentyentry.user.payment;
+package at.commodussolutions.plentyentry.user.payment.beans;
 
 
 import at.commodussolutions.plentyentry.user.payment.enums.PaymentType;

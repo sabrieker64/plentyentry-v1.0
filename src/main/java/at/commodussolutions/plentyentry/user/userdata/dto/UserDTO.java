@@ -1,12 +1,15 @@
 package at.commodussolutions.plentyentry.user.userdata.dto;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
+import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
+import at.commodussolutions.plentyentry.user.coronastate.dto.CoronaStatusDTO;
+import at.commodussolutions.plentyentry.user.payment.dto.PaymentMethodDTO;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -14,29 +17,18 @@ import lombok.NoArgsConstructor;
 public class UserDTO {
 
     private Long id;
-
     private String firstName;
-
     private String lastName;
-
     private String street;
-
     private String postCode;
-
     private String city;
-
     private Integer age;
-
     private Integer svNumber;
-
-    //TODO: Date Formatter erstellen für String output
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private LocalDate birthday;
-
-    private List<String> tickets = new ArrayList<>();
-
-    private List<String> coronaStatus = new ArrayList<>();
-
-    private List<String> paymentMethod = new ArrayList<>();
+    private List<TicketDTO> tickets;
+    private List<CoronaStatusDTO> coronaStatus;
+    private List<PaymentMethodDTO> paymentMethod;
 
 
 }
