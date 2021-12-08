@@ -2,14 +2,20 @@ package at.commodussolutions.plentyentry.user.payment.beans;
 
 
 import at.commodussolutions.plentyentry.user.payment.enums.PaymentType;
-import at.commodussolutions.plentyentry.user.userdata.beans.User;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "PAYMENT_METHOD")
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class PaymentMethod {
 
     @Id
@@ -30,10 +36,5 @@ public class PaymentMethod {
 
     @Column(name = "IBAN")
     private Integer iban;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_PAYMENT_METHOD_USER_ID"))
-    private User user;
-
 
 }

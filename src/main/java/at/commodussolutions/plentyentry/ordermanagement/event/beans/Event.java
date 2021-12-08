@@ -1,15 +1,20 @@
 package at.commodussolutions.plentyentry.ordermanagement.event.beans;
 
-import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name = "EVENT")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Event {
 
     @Id
@@ -31,7 +36,6 @@ public class Event {
     @Column(name = "TICKET_COUNTER")
     private Integer ticketCounter;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TICKET_ID", foreignKey = @ForeignKey(name = "FK_EVENT_TICKET_ID"))
-    private List<Ticket> ticket;
+    @Column(name = "TICKET_ID")
+    private Long ticketId;
 }

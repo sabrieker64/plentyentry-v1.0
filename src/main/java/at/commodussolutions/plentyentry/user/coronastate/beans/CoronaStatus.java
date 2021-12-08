@@ -1,14 +1,19 @@
 package at.commodussolutions.plentyentry.user.coronastate.beans;
 
-
-import at.commodussolutions.plentyentry.user.userdata.beans.User;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "CORONA_STATUS")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CoronaStatus {
     @Id
     @Column(name = "ID")
@@ -31,10 +36,5 @@ public class CoronaStatus {
 
     @Column(name = "QUARANTINE")
     private Boolean quarantine;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey = @ForeignKey(name = "FK_CORONA_STATUS_USER_ID"), referencedColumnName = "ID")
-    private User user;
-
 
 }

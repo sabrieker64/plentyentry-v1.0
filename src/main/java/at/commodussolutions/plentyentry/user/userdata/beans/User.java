@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User implements Serializable {
 
     @Id
     @Column(name = "ID")
@@ -48,15 +49,15 @@ public class User {
     private LocalDate birthday;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_TICKET_ID"))
+    @JoinColumn(referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_USER_TICKET_ID"))
     private List<Ticket> tickets = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_CORONA_STATUS_ID"))
+    @JoinColumn(referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_USER_CORONA_STAT_ID"))
     private List<CoronaStatus> coronaStatus = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_PAYMENT_METHOD_ID"))
+    @JoinColumn(referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_USER_PAYMENT_ID"))
     private List<PaymentMethod> paymentMethod = new ArrayList<>();
 
 
