@@ -13,6 +13,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Author: @Eker
+ */
+
 @Entity
 @Table(name = "USER")
 @Data

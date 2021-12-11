@@ -4,6 +4,10 @@ import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
 import org.mapstruct.Mapper;
 
+/**
+ * Author: @Eker
+ */
+
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
