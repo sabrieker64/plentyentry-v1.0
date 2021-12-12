@@ -6,7 +6,7 @@ env:
 phases:
   install:
     runtime-versions:
-      java: 17
+      java: corretto17
       nodejs: 12
     commands:
       - echo $CODEBUILD_SRC_DIR
