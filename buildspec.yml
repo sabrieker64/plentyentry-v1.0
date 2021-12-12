@@ -7,18 +7,24 @@ phases:
   install:
     runtime-versions:
       java: corretto11
+      nodejs: 16.11
+    commands:
+      - echo $CODEBUILD_SRC_DIR
+      - npm install -y npm@latest
+      - npm install -g @angular/cli
+      - rm package-lock.json
   pre_build:
     commands:
       - mvn clean -DskipTests
       - echo Installing source NPM dependencies
       - npm install
-      - npm install -g @angular/cli
   build:
     commands:
       - echo Build started on `date`
       - mvn install -DskipTests
       - cd plentyentry-frontend
-      - ng build --${BUILD_ENV}
+      - ng build
+      - ls -l -F
   post_build:
     commands:
       - echo Tests Started
