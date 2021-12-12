@@ -6,8 +6,8 @@ env:
 phases:
   install:
     runtime-versions:
-      java: corretto11
-      nodejs: 16.11
+      java: corretto17
+      nodejs: 16
     commands:
       - echo $CODEBUILD_SRC_DIR
       - npm install -y npm@latest
