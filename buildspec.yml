@@ -7,7 +7,7 @@ phases:
   install:
     runtime-versions:
       java: corretto17
-      nodejs: 16
+      nodejs: 12
     commands:
       - echo $CODEBUILD_SRC_DIR
       - npm install -y npm@latest
