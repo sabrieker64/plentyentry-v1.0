@@ -1,4 +1,7 @@
 version: 0.2
+env:
+  variables:
+    BUILD_ENV: "prod"
 
 phases:
   install:
@@ -7,13 +10,15 @@ phases:
   pre_build:
     commands:
       - mvn clean -DskipTests
+      - echo Installing source NPM dependencies
       - npm install
+      - npm install -g @angular/cli
   build:
     commands:
       - echo Build started on `date`
       - mvn install -DskipTests
       - cd plentyentry-frontend
-      - ng build
+      - ng build --${BUILD_ENV}
   post_build:
     commands:
       - echo Tests Started
