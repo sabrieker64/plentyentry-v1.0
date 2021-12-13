@@ -23,7 +23,9 @@ phases:
       - echo Build started on `date`
       - mvn install
       - cd plentyentry-frontend
+      - cd plentyentry-frontend
       - ng build
+      - cd ../
       - ls -l -F
   post_build:
     commands:
