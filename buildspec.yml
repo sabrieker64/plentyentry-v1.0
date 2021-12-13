@@ -6,6 +6,7 @@ env:
 phases:
   install:
     runtime-versions:
+      java: 17
       nodejs: 12
     commands:
       - echo $CODEBUILD_SRC_DIR
@@ -20,7 +21,7 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - mvn package
+      - mvn install
       - cd plentyentry-frontend
       - ng build
       - ls -l -F
