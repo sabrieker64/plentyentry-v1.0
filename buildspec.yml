@@ -41,4 +41,4 @@ artifacts:
     - scripts/application-start.sh
     - scripts/before-install.sh
     - scripts/validate-service.sh
-    - /plentyentry-frontend/dist/plentyentry-frontend/*
+    - plentyentry-frontend/dist/plentyentry-frontend/*
