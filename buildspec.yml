@@ -18,11 +18,13 @@ phases:
     commands:
       - echo Installing source NPM dependencies
       - npm install
+      - ls
+      - cd ../
   build:
     commands:
       - echo Build started on `date`
-      - mvn clean package
       - ls
+      - mvn clean package
       - cd plentyentry-frontend
       - ng build
       - cd ../
