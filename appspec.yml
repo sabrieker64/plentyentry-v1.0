@@ -5,7 +5,7 @@ files:
       - target/plentyentry-application.jar
     destination: /tmp/backend/
   - source:
-      - plentyentry-frontend/*
+      - plentyentry-frontend/dist
     destination: /tmp/frontend/
 hooks:
   BeforeInstall:
