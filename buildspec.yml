@@ -38,4 +38,4 @@ artifacts:
     - target/plentyentry-application.jar
     - appspec.yml
     - scripts/*
-    - plentyentry-frontend/**
+    - plentyentry-frontend/*
