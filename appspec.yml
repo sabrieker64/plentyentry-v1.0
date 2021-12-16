@@ -4,6 +4,8 @@ files:
   - source:
       - target/plentyentry-application.jar
     destination: /tmp/
+  - source:
+      - plentyentry-frontend/*
 hooks:
   BeforeInstall:
     - location: scripts/before-install.sh
