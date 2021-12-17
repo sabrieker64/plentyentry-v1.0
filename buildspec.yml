@@ -39,3 +39,6 @@ artifacts:
     - appspec.yml
     - scripts/*
     - plentyentry-frontend/*
+    - plentyentry-frontend/src/*
+    - plentyentry-frontend/src/app/*
+    - plentyentry-frontend/dist/plentyentry-frontend/*
