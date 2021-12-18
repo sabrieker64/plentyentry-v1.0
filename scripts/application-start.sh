@@ -1,5 +1,4 @@
 #!/bin/bash
-ls
 java -jar /target/plentyentry-application.jar > /dev/null 2>&1 &
 echo Started Spring Boot Backend Application
 cd ../../plentyentry-frontend || exit
