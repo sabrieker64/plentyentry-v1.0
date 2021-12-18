@@ -10,8 +10,8 @@ files:
   - source:
       - plentyentry-frontend/
   destination: /tmp/frontend/
-    - source:
-        - plentyentry-frontend/dist/plentyentry-frontend/
+  - source:
+      - plentyentry-frontend/dist/plentyentry-frontend/
   destination: /tmp/frontend/dist/
     - source:
         - appspec.yml
