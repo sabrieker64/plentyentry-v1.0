@@ -13,8 +13,8 @@ files:
   - source:
       - plentyentry-frontend/dist/plentyentry-frontend/
   destination: /tmp/frontend/dist/
-    - source:
-        - appspec.yml
+  - source:
+      - appspec.yml
   destination: /tmp/
 hooks:
   BeforeInstall:
