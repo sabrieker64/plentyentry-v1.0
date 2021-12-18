@@ -7,8 +7,8 @@ files:
   - source:
       - scripts/
   destination: /tmp/backend/scripts/
-    - source:
-        - plentyentry-frontend/
+  - source:
+      - plentyentry-frontend/
   destination: /tmp/frontend/
     - source:
         - plentyentry-frontend/dist/plentyentry-frontend/
