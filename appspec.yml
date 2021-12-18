@@ -4,8 +4,8 @@ files:
   - source:
       - target/plentyentry-application.jar
   destination: /tmp/backend/jar/
-    - source:
-        - scripts/
+  - source:
+      - scripts/
   destination: /tmp/backend/scripts/
     - source:
         - plentyentry-frontend/
