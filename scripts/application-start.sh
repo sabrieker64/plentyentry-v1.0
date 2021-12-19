@@ -1,5 +1,5 @@
 #!/bin/bash
-java -jar backend/jar/target/plentyentry-application.jar > /dev/null 2>&1 &
-echo Started Spring Boot Backend Application
+java -jar target/plentyentry-application.jar
+echo Started Spring Boot Backend Application at port 8080
 npm start --prefix plentyentry-frontend/
 echo Started Frontend at Port 4200
