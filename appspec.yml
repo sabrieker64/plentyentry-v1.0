@@ -24,8 +24,9 @@ hooks:
     - location: scripts/after-install.sh
       timeout: 180
   ApplicationStart:
-    - location: scripts/application-start.sh
-      timeout: 300
+    - location: scripts/start-backend.sh
+    - location: scripts/start-frontend.sh
+      timeout: 600
   ValidateService:
     - location: scripts/validate-service.sh
-      timeout: 60
+      timeout: 100
