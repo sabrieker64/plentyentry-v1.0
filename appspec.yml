@@ -3,19 +3,19 @@ os: linux
 files:
   - source:
       - target/plentyentry-application.jar
-    destination: /tmp/
+    destination: /tmp
   - source:
       - scripts/
-    destination: /tmp/
+    destination: /tmp
   - source:
       - plentyentry-frontend/
-    destination: /tmp/
+    destination: /tmp
   - source:
       - plentyentry-frontend/dist/plentyentry-frontend/
-    destination: /tmp/
+    destination: /tmp
   - source:
       - appspec.yml
-    destination: /tmp/
+    destination: /tmp
 hooks:
   BeforeInstall:
     - location: scripts/before-install.sh
