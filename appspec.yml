@@ -16,6 +16,7 @@ files:
   - source:
       - appspec.yml
     destination: /tmp
+file_exists_behavior: RETAIN
 hooks:
   BeforeInstall:
     - location: scripts/before-install.sh
@@ -27,6 +28,7 @@ hooks:
     - location: scripts/start-backend.sh
     - location: scripts/start-frontend.sh
       timeout: 600
+      runas: root
   ValidateService:
     - location: scripts/validate-service.sh
       timeout: 100
