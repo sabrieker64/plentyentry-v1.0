@@ -3,16 +3,16 @@ os: linux
 files:
   - source:
       - target/plentyentry-application.jar
-    destination: /tmp/backend/jar/
+    destination: /tmp/
   - source:
       - scripts/
-    destination: /tmp/backend/scripts/
+    destination: /tmp/
   - source:
       - plentyentry-frontend/
-    destination: /tmp/frontend/
+    destination: /tmp/
   - source:
       - plentyentry-frontend/dist/plentyentry-frontend/
-    destination: /tmp/frontend/dist/
+    destination: /tmp/
   - source:
       - appspec.yml
     destination: /tmp/
