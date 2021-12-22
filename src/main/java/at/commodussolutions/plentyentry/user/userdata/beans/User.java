@@ -3,6 +3,7 @@ package at.commodussolutions.plentyentry.user.userdata.beans;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.user.coronastate.beans.CoronaStatus;
 import at.commodussolutions.plentyentry.user.payment.beans.PaymentMethod;
+import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -51,6 +52,10 @@ public class User implements Serializable {
 
     @Column(name = "BIRTHDAY")
     private LocalDate birthday;
+
+    @Column(name = "USER_TYPE")
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_USER_TICKET_ID"))

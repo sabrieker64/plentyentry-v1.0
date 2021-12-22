@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Author: @Eker
+ * @author: Eker
  */
 
 @RestController
