@@ -3,19 +3,19 @@ os: linux
 files:
   - source:
       - target/plentyentry-application.jar
-    destination: /tmp
+    destination: /tmpDir
   - source:
       - scripts/
-    destination: /tmp
+    destination: /tmpDir
   - source:
       - plentyentry-frontend/
-    destination: /tmp
+    destination: /tmpDir
   - source:
       - plentyentry-frontend/dist/plentyentry-frontend/
-    destination: /tmp
+    destination: /tmpDir
   - source:
       - appspec.yml
-    destination: /tmp
+    destination: /tmpDir
 file_exists_behavior: RETAIN
 hooks:
   BeforeInstall:
@@ -27,8 +27,7 @@ hooks:
   ApplicationStart:
     - location: scripts/start-backend.sh
     - location: scripts/start-frontend.sh
-      timeout: 600
-      runas: root
+      timeout: 1000
   ValidateService:
     - location: scripts/validate-service.sh
       timeout: 100
