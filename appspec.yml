@@ -16,7 +16,11 @@ files:
   - source:
       - appspec.yml
     destination: /tmpDir
-file_exists_behavior: RETAIN
+permission:
+  - object: /tmpDir
+    pattern: "**"
+    owner: ec2user
+    group: ec2user
 hooks:
   BeforeInstall:
     - location: scripts/before-install.sh
