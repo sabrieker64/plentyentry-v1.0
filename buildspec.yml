@@ -10,7 +10,6 @@ phases:
       nodejs: 12
     commands:
       - echo $CODEBUILD_SRC_DIR
-      - mvn clean install
       - cd plentyentry-frontend/
       - npm install -y npm@latest
       - npm install -g @angular/cli
@@ -24,7 +23,7 @@ phases:
     commands:
       - echo Build started on `date`
       - ls
-      - mvn clean package
+      - mvn clean install
       - cd plentyentry-frontend
       - ng build
       - cd ../
