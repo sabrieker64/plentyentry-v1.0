@@ -4,7 +4,7 @@ import {EventTileOverviewComponent} from "./event-tile-overview/event-tile-overv
 
 const routes: Routes = [
   {
-    path: ' ',
+    path: '',
     pathMatch: 'full',
     redirectTo: 'overview'
   },

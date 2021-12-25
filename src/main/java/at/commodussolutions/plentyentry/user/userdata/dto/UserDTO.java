@@ -1,5 +1,6 @@
 package at.commodussolutions.plentyentry.user.userdata.dto;
 
+import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.user.coronastate.dto.CoronaStatusDTO;
 import at.commodussolutions.plentyentry.user.payment.dto.PaymentMethodDTO;
@@ -33,8 +34,9 @@ public class UserDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private LocalDate birthday;
     private UserType userType;
+    private List<EventDTO> maintainedEvents;
     private List<TicketDTO> tickets;
-    private List<CoronaStatusDTO> coronaStatus;
+    private CoronaStatusDTO coronaStatus;
     private List<PaymentMethodDTO> paymentMethod;
 
 

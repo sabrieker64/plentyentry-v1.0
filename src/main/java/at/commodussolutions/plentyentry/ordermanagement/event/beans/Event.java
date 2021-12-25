@@ -38,4 +38,5 @@ public class Event {
 
     @Column(name = "TICKET_ID")
     private Long ticketId;
+
 }

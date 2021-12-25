@@ -1,5 +1,6 @@
 package at.commodussolutions.plentyentry.user.userdata.beans;
 
+import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.user.coronastate.beans.CoronaStatus;
 import at.commodussolutions.plentyentry.user.payment.beans.PaymentMethod;
@@ -57,15 +58,19 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_USER_MAINTAINED_EVENTS"))
+    private List<Event> maintainedEvents;
+
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_USER_TICKET_ID"))
     private List<Ticket> tickets = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_USER_CORONA_STAT_ID"))
-    private List<CoronaStatus> coronaStatus = new ArrayList<>();
+    private CoronaStatus coronaStatus;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_USER_PAYMENT_ID"))
     private List<PaymentMethod> paymentMethod = new ArrayList<>();
 

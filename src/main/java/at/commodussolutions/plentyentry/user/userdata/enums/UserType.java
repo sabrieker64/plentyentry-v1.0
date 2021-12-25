@@ -6,7 +6,9 @@ package at.commodussolutions.plentyentry.user.userdata.enums;
 
 public enum UserType {
     GUEST,
+    CUSTOMER,
     ADMIN,
+    //Creating Events (ist erlaubt)
     MAINTAINER,
     SUPERADMIN
 

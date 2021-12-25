@@ -1,21 +1,21 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2021-12-22 23:10:39.
+// Generated using typescript-generator version 2.32.889 on 2021-12-25 09:59:35.
 
 export interface UserDTO {
     id: number;
-    firstName: string;
-    lastName: string;
-    street: string;
-    postCode: string;
-    city: string;
-    age: number;
-    svNumber: number;
-    birthday: Date;
-    userType: UserType;
-    tickets: TicketDTO[];
-    coronaStatus: CoronaStatusDTO[];
-    paymentMethod: PaymentMethodDTO[];
+  firstName: string;
+  lastName: string;
+  street: string;
+  postCode: string;
+  city: string;
+  age: number;
+  svNumber: number;
+  birthday: Date;
+  userType: UserType;
+  tickets: TicketDTO[];
+  coronaStatus: CoronaStatusDTO;
+  paymentMethod: PaymentMethodDTO[];
 }
 
 export interface EventDTO {
@@ -57,6 +57,6 @@ export interface PaymentMethodDTO {
     user: UserDTO;
 }
 
-export type UserType = "GUEST" | "ADMIN" | "MAINTAINER" | "SUPERADMIN";
+export type UserType = "GUEST" | "CUSTOMER" | "ADMIN" | "MAINTAINER" | "SUPERADMIN";
 
 export type PaymentType = "CREDIT_CARD" | "PAYPAL" | "BANK_TRANSFER";
