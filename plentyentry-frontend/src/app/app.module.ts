@@ -1,29 +1,24 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
 import {AppComponent} from './app.component';
-import {RouterModule, Routes} from "@angular/router";
+import {AppRoutingModule} from "./app-routing.module";
+import {AngularMaterialModule} from "../library/anguler-material-module/anguler-material-module.module";
+import {NavigationLayoutModule} from "../library/navigation-layout/navigation-layout.module";
 
-const routes: Routes = [
-
-  {
-    path: ' ',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  }
-]
 
 @NgModule({
-  exports: [RouterModule],
   declarations: [
     AppComponent
   ],
   imports: [
-    RouterModule.forChild(routes),
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule,
+    AngularMaterialModule,
+    NavigationLayoutModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {
 }

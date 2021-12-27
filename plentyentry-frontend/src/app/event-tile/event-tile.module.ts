@@ -1,7 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {EventTileRoutingModule} from './event-tile-routing.module';
 import {EventTileOverviewComponent} from './event-tile-overview/event-tile-overview.component';
+import {AppRoutingModule} from "../app-routing.module";
+import {AppModule} from "../app.module";
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import {EventTileOverviewComponent} from './event-tile-overview/event-tile-overv
   ],
   imports: [
     CommonModule,
-    EventTileRoutingModule
+    AppRoutingModule,
+    AppModule
   ]
 })
 export class EventTileModule {
