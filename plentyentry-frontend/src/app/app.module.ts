@@ -1,9 +1,10 @@
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from "./app-routing.module";
-import {AngularMaterialModule} from "../library/anguler-material-module/anguler-material-module.module";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NavigationLayoutModule} from "../library/navigation-layout/navigation-layout.module";
+import {EventTileModule} from "./event-tile/event-tile.module";
 
 
 @NgModule({
@@ -12,13 +13,13 @@ import {NavigationLayoutModule} from "../library/navigation-layout/navigation-la
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    NavigationLayoutModule,
     AppRoutingModule,
-    AngularMaterialModule,
-    NavigationLayoutModule
+    EventTileModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {
 }

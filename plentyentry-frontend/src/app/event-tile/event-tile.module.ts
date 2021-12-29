@@ -2,17 +2,20 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {EventTileOverviewComponent} from './event-tile-overview/event-tile-overview.component';
 import {AppRoutingModule} from "../app-routing.module";
-import {AppModule} from "../app.module";
+import {AngularMaterialModule} from "../../library/anguler-material-module/anguler-material-module.module";
 
 
 @NgModule({
   declarations: [
     EventTileOverviewComponent
   ],
+  exports: [
+    EventTileOverviewComponent
+  ],
   imports: [
     CommonModule,
-    AppRoutingModule,
-    AppModule
+    AngularMaterialModule,
+    AppRoutingModule
   ]
 })
 export class EventTileModule {

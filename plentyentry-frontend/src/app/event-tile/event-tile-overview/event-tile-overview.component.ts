@@ -11,6 +11,14 @@ export class EventTileOverviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('This is our tile overview');
   }
 
+  buyClicked() {
+    console.log('buying clicked');
+  }
+
+  inToCartClicked() {
+    console.log('In to Cart clicked');
+  }
 }

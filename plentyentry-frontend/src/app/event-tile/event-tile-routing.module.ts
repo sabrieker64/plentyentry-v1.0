@@ -3,10 +3,11 @@ import {RouterModule, Routes} from '@angular/router';
 import {EventTileOverviewComponent} from "./event-tile-overview/event-tile-overview.component";
 
 const routes: Routes = [
+
   {
     path: '',
+    redirectTo: 'overview',
     pathMatch: 'full',
-    redirectTo: 'overview'
   },
 
   {
