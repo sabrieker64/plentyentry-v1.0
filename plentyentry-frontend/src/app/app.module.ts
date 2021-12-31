@@ -5,6 +5,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NavigationLayoutModule} from "../library/navigation-layout/navigation-layout.module";
 import {EventTileModule} from "./event-tile/event-tile.module";
+import {FooterLayoutModule} from "../library/footer-layout/footer-layout.module";
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {EventTileModule} from "./event-tile/event-tile.module";
     BrowserAnimationsModule,
     NavigationLayoutModule,
     AppRoutingModule,
-    EventTileModule
+    EventTileModule,
+    FooterLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent],
