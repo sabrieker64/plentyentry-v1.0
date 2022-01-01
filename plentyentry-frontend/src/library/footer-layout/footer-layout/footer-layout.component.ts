@@ -13,4 +13,7 @@ export class FooterLayoutComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  openFilter() {
+    console.log('Open filter dialog');
+  }
 }

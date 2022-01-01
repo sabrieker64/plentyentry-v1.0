@@ -6,6 +6,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NavigationLayoutModule} from "../library/navigation-layout/navigation-layout.module";
 import {EventTileModule} from "./event-tile/event-tile.module";
 import {FooterLayoutModule} from "../library/footer-layout/footer-layout.module";
+import {AngularMaterialModule} from "../library/anguler-material-module/anguler-material-module.module";
+import {RouterModule} from "@angular/router";
 
 
 @NgModule({
@@ -16,9 +18,11 @@ import {FooterLayoutModule} from "../library/footer-layout/footer-layout.module"
     BrowserModule,
     BrowserAnimationsModule,
     NavigationLayoutModule,
+    AngularMaterialModule,
     AppRoutingModule,
     EventTileModule,
-    FooterLayoutModule
+    FooterLayoutModule,
+    RouterModule.forRoot([])
   ],
   providers: [],
   bootstrap: [AppComponent],

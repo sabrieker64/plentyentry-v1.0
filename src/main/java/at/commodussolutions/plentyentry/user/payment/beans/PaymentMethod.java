@@ -2,6 +2,7 @@ package at.commodussolutions.plentyentry.user.payment.beans;
 
 
 import at.commodussolutions.plentyentry.user.payment.enums.PaymentType;
+import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,5 +35,9 @@ public class PaymentMethod {
 
     @Column(name = "IBAN")
     private Integer iban;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(foreignKey = @ForeignKey(name = "FK_USER_PAYMENT_METHOD"), referencedColumnName = "ID")
+    private User user;
 
 }

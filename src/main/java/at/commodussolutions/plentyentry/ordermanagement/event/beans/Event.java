@@ -1,13 +1,11 @@
 package at.commodussolutions.plentyentry.ordermanagement.event.beans;
 
+import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -38,5 +36,10 @@ public class Event {
 
     @Column(name = "TICKET_ID")
     private Long ticketId;
+
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "USER_ID_MAINTAINED_EVENTS")
+    private User user;
 
 }

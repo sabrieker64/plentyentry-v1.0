@@ -3,12 +3,15 @@ import {RouterModule, Routes} from '@angular/router';
 import {PlentyentryHomeComponent} from "../library/plentyentry-home/directory/plentyentry-home.component";
 
 const routes: Routes = [
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: PlentyentryHomeComponent, pathMatch: 'full'},
 
   {
     path: 'event',
     loadChildren: () => import('./event-tile/event-tile.module').then(m => m.EventTileModule)
+  },
+  {
+    path: 'user',
+    loadChildren: () => import('./login-register/login-register.module').then(m => m.LoginRegisterModule)
   }
 
 ];

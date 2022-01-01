@@ -7,9 +7,6 @@ import {PlentyentryHomeComponent} from './directory/plentyentry-home.component';
   declarations: [
     PlentyentryHomeComponent
   ],
-  exports: [
-    PlentyentryHomeComponent
-  ],
   imports: [
     CommonModule
   ]

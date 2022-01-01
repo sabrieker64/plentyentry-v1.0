@@ -10,10 +10,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Author: @Eker
@@ -24,10 +22,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable {
+public class User {
 
     @Id
     @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "FIRST_NAME")
@@ -58,21 +57,18 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_USER_MAINTAINED_EVENTS"))
-    private List<Event> maintainedEvents;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Event> maintainedEvents;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_USER_TICKET_ID"))
-    private List<Ticket> tickets = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Ticket> tickets;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_USER_CORONA_STAT_ID"))
     private CoronaStatus coronaStatus;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_USER_PAYMENT_ID"))
-    private List<PaymentMethod> paymentMethod = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<PaymentMethod> paymentMethod;
 
 
 }

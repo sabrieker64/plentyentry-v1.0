@@ -1,12 +1,7 @@
 package at.commodussolutions.plentyentry.user.userdata.rest;
 
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author: Eker
@@ -21,9 +16,8 @@ public interface UserRestService {
     @ResponseBody
     String getHello();
 
-    @GetMapping("/user")
+    @GetMapping("/user/{id}")
     @ResponseBody
-    List<UserDTO> getAllUser();
-    //End of testing Rest Calls
+    UserDTO getUserById(@PathVariable Long id);
 
 }

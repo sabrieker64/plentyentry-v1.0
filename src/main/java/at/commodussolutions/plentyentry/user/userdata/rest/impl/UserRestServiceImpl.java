@@ -7,8 +7,6 @@ import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 /**
  * Author: @Eker
  */
@@ -27,7 +25,7 @@ public class UserRestServiceImpl implements UserRestService {
     }
 
     @Override
-    public List<UserDTO> getAllUser() {
-        return userMapper.mapToListDTO(service.getAllUsers());
+    public UserDTO getUserById(Long id) {
+        return userMapper.mapToDTO(service.getUserById(id));
     }
 }
