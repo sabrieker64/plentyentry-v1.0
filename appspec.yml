@@ -4,19 +4,23 @@ files:
     - source:
         - target/plentyentry-application.jar
       destination: /home/ec2-user
+      overwrite: true
     - source:
         - scripts/
       destination: /home/ec2-user
+      overwrite: true
     - source:
         - plentyentry-frontend/
       destination: /home/ec2-user
+      overwrite: true
     - source:
         - plentyentry-frontend/dist/plentyentry-frontend/
       destination: /home/ec2-user
+      overwrite: true
     - source:
         - appspec.yml
       destination: /home/ec2-user
-    overwrite: true
+      overwrite: true
 permission:
   - object: /tmpDir
     pattern: "**"
