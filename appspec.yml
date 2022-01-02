@@ -32,12 +32,13 @@ hooks:
       timeout: 180
       runas: root
   ApplicationStart:
-    - location: scripts/start-backend.sh
-      timeout: 1000
-      runas: root
     - location: scripts/start-frontend.sh
       timeout: 1000
       runas: root
+    - location: scripts/start-backend.sh
+      timeout: 1000
+      runas: root
+
   ValidateService:
     - location: scripts/validate-service.sh
       timeout: 100
