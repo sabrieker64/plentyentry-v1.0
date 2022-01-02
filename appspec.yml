@@ -1,7 +1,6 @@
 version: 0.0
 os: linux
 files:
-  overwrite: true
     - source:
         - target/plentyentry-application.jar
       destination: /home/ec2-user
