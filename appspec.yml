@@ -3,19 +3,19 @@ os: linux
 files:
   - source:
       - target/plentyentry-application.jar
-    destination: /tmpDir
+    destination: /home/ec2-user
   - source:
       - scripts/
-    destination: /tmpDir
+    destination: /home/ec2-user
   - source:
       - plentyentry-frontend/
-    destination: /tmpDir
+    destination: /home/ec2-user
   - source:
       - plentyentry-frontend/dist/plentyentry-frontend/
-    destination: /tmpDir
+    destination: /home/ec2-user
   - source:
       - appspec.yml
-    destination: /tmpDir
+    destination: /home/ec2-user
 permission:
   - object: /tmpDir
     pattern: "**"
