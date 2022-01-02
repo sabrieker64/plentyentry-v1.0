@@ -19,8 +19,8 @@ files:
 permission:
   - object: /tmpDir
     pattern: "**"
-    owner: ec2-user
-    group: ec2-user
+    owner: root
+    group: root
 hooks:
   BeforeInstall:
     - location: scripts/before-install.sh
@@ -31,8 +31,10 @@ hooks:
   ApplicationStart:
     - location: scripts/start-backend.sh
       timeout: 1000
+      runas: root
     - location: scripts/start-frontend.sh
       timeout: 1000
+      runas: root
   ValidateService:
     - location: scripts/validate-service.sh
       timeout: 100
