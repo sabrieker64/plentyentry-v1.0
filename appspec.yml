@@ -3,7 +3,7 @@ os: linux
 files:
     - source:
         - target/plentyentry-application.jar
-    destination: /home/ec2-user
+      destination: /home/ec2-user
     - source:
         - scripts/
       destination: /home/ec2-user
