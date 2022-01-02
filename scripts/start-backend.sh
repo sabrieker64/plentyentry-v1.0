@@ -1,3 +1,3 @@
 #!/bin/bash
 cd /home/ec2-user
-mvn spring-boot:run
+java -jar plentyentry-application.jar
