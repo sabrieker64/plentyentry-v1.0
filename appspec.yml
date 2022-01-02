@@ -25,19 +25,14 @@ hooks:
   BeforeInstall:
     - location: scripts/before-install.sh
       timeout: 300
-      runas: ec2-user
   AfterInstall:
     - location: scripts/after-install.sh
       timeout: 180
-      runas: ec2-user
   ApplicationStart:
     - location: scripts/start-backend.sh
       timeout: 1000
-      runas: ec2-user
     - location: scripts/start-frontend.sh
       timeout: 1000
-      runas: ec2-user
   ValidateService:
     - location: scripts/validate-service.sh
       timeout: 100
-      runas: ec2-user
