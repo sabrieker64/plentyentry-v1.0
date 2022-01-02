@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-    - source:
+  - source:
         - target/plentyentry-application.jar
       destination: /home/ec2-user
     - source:
@@ -16,6 +16,7 @@ files:
     - source:
         - appspec.yml
       destination: /home/ec2-user
+    overwrite: true
 permission:
   - object: /tmpDir
     pattern: "**"
