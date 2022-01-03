@@ -8,8 +8,8 @@ files:
         - scripts/
       destination: /home/ec2-user/scripts
     - source:
-        - plentyentry-frontend/dist/plentyentry-frontend/
-      destination: /home/ec2-user/frontend/dist/plentyentry-frontend
+        - plentyentry-frontend/
+      destination: /home/ec2-user/frontend
     - source:
         - appspec.yml
       destination: /home/ec2-user

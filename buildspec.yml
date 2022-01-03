@@ -11,7 +11,7 @@ phases:
     commands:
       - echo $CODEBUILD_SRC_DIR
       - cd plentyentry-frontend/
-      - sudo yum update
+      - sudo yum update #just for testing
       - npm install -y npm@latest
       - npm install -g @angular/cli
   pre_build:
