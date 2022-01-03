@@ -3,16 +3,16 @@ os: linux
 files:
     - source:
         - target/plentyentry-application.jar
-      destination: /home/ec2-user
+      destination: /home/ec2-user/target
     - source:
         - scripts/
-      destination: /home/ec2-user
+      destination: /home/ec2-user/scripts
     - source:
         - plentyentry-frontend/
-      destination: /home/ec2-user
+      destination: /home/ec2-user/frontend
     - source:
         - plentyentry-frontend/dist/plentyentry-frontend/
-      destination: /home/ec2-user
+      destination: /home/ec2-user/frontend/dist/plentyentry-frontend
     - source:
         - appspec.yml
       destination: /home/ec2-user
