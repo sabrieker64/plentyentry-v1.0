@@ -29,22 +29,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "FIRST_NAME")
+    @Column(name = "FIRST_NAME", columnDefinition = ("VARCHAR2(50 CHAR)"))
     private String firstName;
 
-    @Column(name = "LAST_NAME")
+    @Column(name = "LAST_NAME", columnDefinition = ("VARCHAR2(50 CHAR)"))
     private String lastName;
 
-    @Column(name = "STREET")
+    @Column(name = "STREET", columnDefinition = ("VARCHAR2(100 CHAR)"))
     private String street;
 
-    @Column(name = "POST_CODE")
+    @Column(name = "POST_CODE", columnDefinition = ("VARCHAR2(10 CHAR)"))
     private String postCode;
 
-    @Column(name = "CITY")
+    @Column(name = "CITY", columnDefinition = ("VARCHAR2(50 CHAR)"))
     private String city;
 
-    @Column(name = "AGE")
+    @Column(name = "AGE", columnDefinition = ("NUMBER(11, 0)"))
     private Integer age;
 
     @Column(name = "SV_NUMBER")
