@@ -10,7 +10,7 @@ phases:
       nodejs: 12
     commands:
       - echo $CODEBUILD_SRC_DIR
-      - cd frontend
+      - cd plentyentry-frontend
       - npm install -y npm@latest
       - npm install -g @angular/cli
   pre_build:
@@ -24,7 +24,7 @@ phases:
       - echo Build started on `date`
       - ls
       - mvn clean install
-      - cd frontend
+      - cd plentyentry-frontend
       - ng build --prod --progress
       - cd ../
       - ls -l -F
