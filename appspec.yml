@@ -21,17 +21,17 @@ permission:
     group: root
 hooks:
   BeforeInstall:
-    - location: /home/ec2-user/scripts/before-install.sh
+    - location: scripts/before-install.sh
       timeout: 300
       runas: root
   AfterInstall:
-    - location: /home/ec2-user/scripts/after-install.sh
+    - location: scripts/after-install.sh
       timeout: 180
       runas: root
   ApplicationStart:
-    - location: /home/ec2-user/scripts/start-backend.sh
+    - location: scripts/start-backend.sh
       timeout: 1000
       runas: root
   ValidateService:
-    - location: /home/ec2-user/scripts/validate-service.sh
+    - location: scripts/validate-service.sh
       timeout: 100
