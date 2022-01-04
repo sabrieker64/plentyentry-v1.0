@@ -1,13 +1,14 @@
 version: 0.2
 env:
   variables:
-    BUILD_ENV: "prod"
-
+    BUILD_ENV: "qa"
+    S3_BUCKET: "{{S3_BUCKET}}"
+    BUILD_FOLDER: "dist"
 phases:
   install:
     runtime-versions:
       java: corretto11
-      nodejs: 12
+      nodejs: 17
     commands:
       - echo $CODEBUILD_SRC_DIR
       - cd plentyentry-frontend
@@ -41,3 +42,4 @@ artifacts:
     - plentyentry-frontend/src/*
     - plentyentry-frontend/src/app/*
     - plentyentry-frontend/dist/plentyentry-frontend/*
+  discard-paths: yes
