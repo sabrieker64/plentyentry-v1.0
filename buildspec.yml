@@ -3,7 +3,7 @@ env:
   variables:
     BUILD_ENV: "qa"
     S3_BUCKET: "{{S3_BUCKET}}"
-    BUILD_FOLDER: "dist"
+    BUILD_FOLDER: "dist/plentyentry-frontend"
 phases:
   install:
     runtime-versions:
@@ -38,7 +38,4 @@ artifacts:
     - target/plentyentry-application.jar
     - appspec.yml
     - scripts/*
-    - plentyentry-frontend/*
-    - plentyentry-frontend/src/*
-    - plentyentry-frontend/src/app/*
     - plentyentry-frontend/dist/plentyentry-frontend/*

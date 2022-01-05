@@ -8,9 +8,6 @@ files:
         - scripts/
       destination: /home/ec2-user/scripts
     - source:
-        - plentyentry-frontend/
-      destination: /home/ec2-user/frontend
-    - source:
         - appspec.yml
       destination: /home/ec2-user
 file_exists_behavior: OVERWRITE
