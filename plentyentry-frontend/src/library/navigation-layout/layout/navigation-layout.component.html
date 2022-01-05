@@ -1,9 +1,11 @@
 <mat-toolbar id="pe_toolbar">
   <button (click)="cartClicked()" aria-label="Example icon-button with menu icon" class="example-icon" mat-icon-button
-  routerLink="/user/cart">
+  routerLink="/user/1/cart">
     <mat-icon class="mat-icon-no-color">shopping_cart</mat-icon>
   </button>
+  <button mat-stroked-button routerLink="/event/overview">
   <h3 class="mat-h3" id="pe_name_h3">PlentyEntry</h3>
+  </button>
   <span class="example-spacer"></span>
   <button (click)="accountClick()" aria-label="Example icon-button with share icon" class="example-icon"
           mat-icon-button routerLink="/user/login">

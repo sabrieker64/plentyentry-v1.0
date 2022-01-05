@@ -5,6 +5,8 @@ import {PlentyentryHomeComponent} from "../library/plentyentry-home/directory/pl
 const routes: Routes = [
   {path: 'home', component: PlentyentryHomeComponent, pathMatch: 'full'},
 
+  {path: '**', redirectTo: 'event', pathMatch: 'full'},
+
   {
     path: 'event',
     loadChildren: () => import('./event-tile/event-tile.module').then(m => m.EventTileModule)
