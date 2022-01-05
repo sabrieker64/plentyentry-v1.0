@@ -32,7 +32,7 @@ phases:
       - ls -l -F
   post_build:
     commands:
-      - echo Tests Started
+      - echo making tests
       - mvn test
 artifacts:
   files:
