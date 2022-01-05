@@ -26,6 +26,7 @@ phases:
       - ls
       - mvn clean install
       - cd plentyentry-frontend
+      - rm -rf /dist
       - ng build --prod --progress
       - cd ../
       - ls -l -F
