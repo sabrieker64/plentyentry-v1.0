@@ -5,7 +5,10 @@ files:
         - plentyentry-application.jar
       destination: /home/ec2-user/target
     - source:
-        - scripts/
+        - before-install.sh
+        - after-install.sh
+        - start-backend.sh
+        - validate-service.sh
       destination: /home/ec2-user/scripts
     - source:
         - appspec.yml
