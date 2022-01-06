@@ -18,17 +18,17 @@ permission:
     group: root
 hooks:
   BeforeInstall:
-    - location: before-install.sh
+    - location: scripts/before-install.sh
       timeout: 300
       runas: root
   AfterInstall:
-    - location: after-install.sh
+    - location: scripts/after-install.sh
       timeout: 180
       runas: root
   ApplicationStart:
-    - location: start-backend.sh
+    - location: scripts/start-backend.sh
       timeout: 1000
       runas: root
   ValidateService:
-    - location: validate-service.sh
+    - location: scripts/validate-service.sh
       timeout: 100
