@@ -20,4 +20,4 @@ spring:
     password: SabDab2001
     username: admin
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://plentyentry-db.czqacdk2phl7.us-east-2.rds.amazonaws.com:3306/plentyentry
+    url: jdbc:mysql://plentyentry-db.czqacdk2phl7.us-east-2.rds.amazonaws.com:3306/plentyentry-db
