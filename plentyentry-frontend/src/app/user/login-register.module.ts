@@ -17,7 +17,8 @@ import {UserDetailComponent} from './user-detail/user-detail.component';
   ],
   imports: [
     CommonModule,
-    LoginRegisterRoutingModule
+    LoginRegisterRoutingModule,
+
   ]
 })
 export class LoginRegisterModule {

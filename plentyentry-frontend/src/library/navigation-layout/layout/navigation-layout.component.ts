@@ -14,14 +14,16 @@ export class NavigationLayoutComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  cartClicked() {
-    console.log('Cart Clicked');
-    //TODO: Make a User service and get the logged in user route by User id
-    return this.router.navigateByUrl('/user/' +1+'/cart');
+  cartClicked(event: any) {
+    if(event){
+      this.router.navigateByUrl('/user/1/cart');
+    }
+
   }
 
-  accountClick() {
-    console.log('Accoount Clicked');
-    return this.router.navigate(['/user/login']);
+  accountClick(event: any) {
+    if(event){
+      this.router.navigateByUrl('/user/login');
+    }
   }
 }

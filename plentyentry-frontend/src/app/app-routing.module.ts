@@ -9,7 +9,7 @@ const routes: Routes = [
 
   {
     path: 'event',
-    loadChildren: () => import('./event-tile/event-tile.module').then(m => m.EventTileModule)
+    loadChildren: () => import('./events/event-tile.module').then(m => m.EventTileModule)
   },
   {
     path: 'user',
