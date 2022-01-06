@@ -39,5 +39,5 @@ artifacts:
     - target/plentyentry-application.jar
     - appspec.yml
     - scripts/*
-    - plentyentry-frontend/*
-discard-paths: yes
+    - plentyentry-frontend/**
+  discard-paths: yes
