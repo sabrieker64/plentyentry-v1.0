@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {PlentyentryHomeComponent} from './directory/plentyentry-home.component';
+import {EventTileModule} from "../../app/events/event-tile.module";
 
 
 @NgModule({
@@ -8,7 +9,8 @@ import {PlentyentryHomeComponent} from './directory/plentyentry-home.component';
     PlentyentryHomeComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    EventTileModule
   ]
 })
 export class PlentyentryHomeModule {

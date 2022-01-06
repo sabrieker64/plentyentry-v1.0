@@ -6,10 +6,29 @@ import {CartComponent} from "./cart/cart.component";
 import {UserDetailComponent} from "./user-detail/user-detail.component";
 
 const routes: Routes = [
-  {path: 'register', component: RegisterComponent},
-  {path: 'login', component: LoginComponent},
-  {path: ':id/cart', component: CartComponent},
-  {path: ':id/detail', component: UserDetailComponent}
+
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+
+  {
+    path: 'register',
+    component: RegisterComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: ':id/cart',
+    component: CartComponent
+  },
+  {
+    path: ':id/detail',
+    component: UserDetailComponent
+  }
 ];
 
 @NgModule({

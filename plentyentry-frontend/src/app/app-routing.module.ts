@@ -3,9 +3,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {PlentyentryHomeComponent} from "../library/plentyentry-home/directory/plentyentry-home.component";
 
 const routes: Routes = [
-  {path: 'home', component: PlentyentryHomeComponent, pathMatch: 'full'},
-
-  {path: '**', redirectTo: 'event'},
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'home', component: PlentyentryHomeComponent},
 
   {
     path: 'event',
