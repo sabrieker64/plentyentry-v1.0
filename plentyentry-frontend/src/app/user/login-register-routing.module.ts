@@ -6,6 +6,7 @@ import {CartComponent} from "./cart/cart.component";
 import {UserDetailComponent} from "./user-detail/user-detail.component";
 
 const routes: Routes = [
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
 
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},

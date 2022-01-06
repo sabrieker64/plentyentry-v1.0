@@ -16,10 +16,12 @@ export class NavigationLayoutComponent implements OnInit {
 
   cartClicked() {
     console.log('Cart Clicked')
+    //TODO: Make a User service and get the logged in user route by User id
+    return this.router.navigateByUrl('/user/' +1+'/cart')
   }
 
   accountClick() {
     console.log('Accoount Clicked');
-    this.router.navigateByUrl('/user/login');
+    return this.router.navigateByUrl('/user/login');
   }
 }
