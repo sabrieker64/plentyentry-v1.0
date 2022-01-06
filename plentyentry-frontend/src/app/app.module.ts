@@ -18,9 +18,9 @@ import {RouterModule} from "@angular/router";
     BrowserAnimationsModule,
     NavigationLayoutModule,
     AngularMaterialModule,
-    AppRoutingModule,
     FooterLayoutModule,
-    RouterModule.forRoot([])
+    RouterModule.forRoot([]),
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

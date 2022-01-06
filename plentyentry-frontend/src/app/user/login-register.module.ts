@@ -6,6 +6,7 @@ import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from "./login/login.component";
 import {CartComponent} from './cart/cart.component';
 import {UserDetailComponent} from './user-detail/user-detail.component';
+import {AngularMaterialModule} from "../../library/anguler-material-module/anguler-material-module.module";
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import {UserDetailComponent} from './user-detail/user-detail.component';
   imports: [
     CommonModule,
     LoginRegisterRoutingModule,
-
+    AngularMaterialModule
   ]
 })
 export class LoginRegisterModule {

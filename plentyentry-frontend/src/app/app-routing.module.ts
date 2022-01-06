@@ -5,7 +5,7 @@ import {PlentyentryHomeComponent} from "../library/plentyentry-home/directory/pl
 const routes: Routes = [
   {path: 'home', component: PlentyentryHomeComponent, pathMatch: 'full'},
 
-  {path: '**', redirectTo: 'event', pathMatch: 'full'},
+  {path: '**', redirectTo: 'event'},
 
   {
     path: 'event',

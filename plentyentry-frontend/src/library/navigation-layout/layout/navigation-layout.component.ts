@@ -12,18 +12,16 @@ export class NavigationLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('This is our Navigation Layout');
   }
 
   cartClicked(event: any) {
-    if(event){
-      this.router.navigateByUrl('/user/1/cart');
-    }
-
+    return this.router.navigateByUrl('/user/1/cart');
   }
 
   accountClick(event: any) {
-    if(event){
-      this.router.navigateByUrl('/user/login');
-    }
+    return this.router.navigateByUrl('/user/login');
   }
+
+
 }
