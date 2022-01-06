@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {Router, Routes} from "@angular/router";
 
 @Component({
   selector: 'app-navigation-layout',
@@ -8,20 +8,20 @@ import {Router} from "@angular/router";
 })
 export class NavigationLayoutComponent implements OnInit {
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private route: Routes) {
   }
 
   ngOnInit(): void {
   }
 
   cartClicked() {
-    console.log('Cart Clicked')
+    console.log('Cart Clicked');
     //TODO: Make a User service and get the logged in user route by User id
-    return this.router.navigateByUrl('/user/' +1+'/cart')
+    return this.router.navigateByUrl('/user/' +1+'/cart');
   }
 
   accountClick() {
     console.log('Accoount Clicked');
-    return this.router.navigateByUrl('/user/login');
+    return this.router.navigate(['/user/login']);
   }
 }
