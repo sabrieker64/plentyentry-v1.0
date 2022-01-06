@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router, Routes} from "@angular/router";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navigation-layout',
@@ -8,7 +8,7 @@ import {Router, Routes} from "@angular/router";
 })
 export class NavigationLayoutComponent implements OnInit {
 
-  constructor(private router: Router, private route: Routes) {
+  constructor(private router: Router) {
   }
 
   ngOnInit(): void {

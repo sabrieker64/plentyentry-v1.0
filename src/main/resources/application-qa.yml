@@ -1,8 +1,6 @@
 server:
   port: 5000
 spring:
-  profiles:
-    active: qa
   jpa:
     hibernate:
       ddl-auto: update
