@@ -6,8 +6,14 @@ files:
       destination: /home/ec2-user/target
     - source:
         - before-install.sh
+      destination: /home/ec2-user/scripts
+    - source:
         - after-install.sh
+      destination: /home/ec2-user/scripts
+    - source:
         - start-backend.sh
+      destination: /home/ec2-user/scripts
+    - source:
         - validate-service.sh
       destination: /home/ec2-user/scripts
     - source:
