@@ -35,6 +35,9 @@ public class User {
     @Column(name = "LAST_NAME", columnDefinition = ("VARCHAR2(50 CHAR)"))
     private String lastName;
 
+    @Column(name = "EMAIL", columnDefinition = ("VARCHAR2(50 CHAR)"))
+    private String email;
+
     @Column(name = "STREET", columnDefinition = ("VARCHAR2(100 CHAR)"))
     private String street;
 

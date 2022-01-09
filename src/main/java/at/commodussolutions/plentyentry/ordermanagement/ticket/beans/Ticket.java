@@ -1,6 +1,7 @@
 package at.commodussolutions.plentyentry.ordermanagement.ticket.beans;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.enums.TicketStatus;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,8 +23,8 @@ public class Ticket {
     @Column(name = "QUANTITY")
     private Integer quantity;
 
-    @Column(name = "ACTIVITY")
-    private Boolean activity;
+    @Column(name = "STATUS")
+    private TicketStatus ticketStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_TICKET_EVENT_ID"), referencedColumnName = "ID")

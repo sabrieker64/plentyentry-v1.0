@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {LoginRegisterRoutingModule} from './login-register-routing.module';
+import {UserRoutingModule} from './user-routing.module';
 import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from "./login/login.component";
 import {CartComponent} from './cart/cart.component';
@@ -25,10 +25,10 @@ import {AppRoutingModule} from "../app-routing.module";
 
   imports: [
     CommonModule,
-    LoginRegisterRoutingModule,
+    UserRoutingModule,
     AngularMaterialModule,
     AppRoutingModule
   ]
 })
-export class LoginRegisterModule {
+export class UserRegisterModule {
 }

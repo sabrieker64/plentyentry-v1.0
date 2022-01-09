@@ -12,7 +12,6 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
-
   {
     path: 'register',
     component: RegisterComponent
@@ -35,5 +34,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class LoginRegisterRoutingModule {
+export class UserRoutingModule {
 }
