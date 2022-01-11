@@ -15,6 +15,8 @@ const routes: Routes = [
     component: EventTileOverviewComponent,
   }
 
+  //TODO: Event Detail Site
+
 ];
 
 @NgModule({
