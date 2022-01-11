@@ -1,8 +1,8 @@
-insert into user (ID, FIRST_NAME, LAST_NAME, STREET, POST_CODE, CITY, AGE, SV_NUMBER, BIRTHDAY)
-values (1, 'DummyUser', 'DummyLastName', 'Dummystreet', '6370', 'Kitzbühel', 22, 4667881, '2001-05-20');
+insert into user (FIRST_NAME, LAST_NAME, STREET, POST_CODE, CITY, AGE, SV_NUMBER, BIRTHDAY)
+values ( 'DummyUser', 'DummyLastName', 'Dummystreet', '6370', 'Kitzbühel', 22, 4667881, '2001-05-20');
 
-insert into EVENT (ID, DATE, DESCRIPTION, NAME, PRICE, TICKET_COUNTER, TICKET_ID, USER_ID_MAINTAINED_EVENTS)
-VALUES ( 1, '2022-01-20', 'Tst Event Description', 'Ellmau Event', 200, 100, 1, 1 );
+insert into EVENT ( DATE, DESCRIPTION, NAME, PRICE, TICKET_COUNTER, TICKET_ID, USER_ID_MAINTAINED_EVENTS)
+VALUES ('2022-01-20', 'Tst Event Description', 'Ellmau Event', 200, 100, 1, 1 );
 
-INSERT INTO TICKET (ID, QUANTITY, STATUS, EVENT_ID, USER_ID)
-VALUES ( 1, 100, 1, 1, 1 );
+INSERT INTO TICKET ( QUANTITY, STATUS, EVENT_ID, USER_ID)
+VALUES (100, 1, 1, 1 );

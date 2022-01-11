@@ -17,6 +17,7 @@ public class Event {
 
     @Id
     @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "NAME")
@@ -37,6 +38,10 @@ public class Event {
     @Column(name = "TICKET_ID")
     private Long ticketId;
 
+//TODO: Saving images on s3 bucket and checking the url if it exists
+
+    @Column(name = "IMAGE_URL")
+    private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "USER_ID_MAINTAINED_EVENTS")

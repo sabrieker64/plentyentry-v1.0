@@ -28,6 +28,7 @@ public class UserDTO {
     private String lastName;
     private String street;
     private String email;
+    private String password;
     private String postCode;
     private String city;
     private Integer age;
