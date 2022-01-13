@@ -3,6 +3,7 @@ package at.commodussolutions.plentyentry.user.userdata.mapper;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface UserMapper {
 
     UserDTO mapToDTO(User entity);
 
-    User mapToEntity(UserDTO dto);
+    User mapToEntity(UserDTO dto, @MappingTarget User entity);
 
     List<UserDTO> mapToListDTO(List<User> user);
 }

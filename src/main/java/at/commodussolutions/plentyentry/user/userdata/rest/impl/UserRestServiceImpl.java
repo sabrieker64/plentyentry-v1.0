@@ -1,5 +1,6 @@
 package at.commodussolutions.plentyentry.user.userdata.rest.impl;
 
+import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
 import at.commodussolutions.plentyentry.user.userdata.mapper.UserMapper;
 import at.commodussolutions.plentyentry.user.userdata.rest.UserRestService;
@@ -27,5 +28,13 @@ public class UserRestServiceImpl implements UserRestService {
     @Override
     public UserDTO getUserById(Long id) {
         return userMapper.mapToDTO(service.getUserById(id));
+    }
+
+    @Override
+    public UserDTO createUser(UserDTO userDTO) {
+        User user = new User();
+        userMapper.mapToEntity(userDTO, user);
+        user = service.registerNewUser(user);
+        return userMapper.mapToDTO(user);
     }
 }

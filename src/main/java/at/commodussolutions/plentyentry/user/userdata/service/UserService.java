@@ -9,4 +9,6 @@ import at.commodussolutions.plentyentry.user.userdata.beans.User;
 public interface UserService {
 
     User getUserById(Long id);
+
+    User registerNewUser(User user);
 }

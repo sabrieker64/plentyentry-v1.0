@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping("/api/backend")
+@RequestMapping(path = "/api/backend")
 public interface UserRestService {
 
     //This is for testing, please do not delete. Thanks
@@ -19,5 +19,9 @@ public interface UserRestService {
     @GetMapping("/user/{id}")
     @ResponseBody
     UserDTO getUserById(@PathVariable Long id);
+
+    @PostMapping
+    @ResponseBody
+    UserDTO createUser(@RequestBody UserDTO userDTO);
 
 }

@@ -76,10 +76,10 @@ public class User implements UserDetails {
     private Boolean isVerifiedAsEntertainer;
 
     @Column(name = "LOCKED")
-    private Boolean locked;
+    private Boolean locked = false;
 
     @Column(name = "ENABLED")
-    private Boolean enabled;
+    private Boolean enabled = false;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Event> maintainedEvents;
