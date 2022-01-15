@@ -1,22 +1,24 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-01-01 12:48:51.
+// Generated using typescript-generator version 2.32.889 on 2022-01-15 11:22:26.
 
 export interface UserDTO {
-  id: number;
-  firstName: string;
-  lastName: string;
-  street: string;
-  postCode: string;
-  city: string;
-  age: number;
-  svNumber: number;
-  birthday: Date;
-  userType: UserType;
-  maintainedEvents: EventDTO[];
-  tickets: TicketDTO[];
-  coronaStatus: CoronaStatusDTO;
-  paymentMethod: PaymentMethodDTO[];
+    id: number;
+    firstName: string;
+    lastName: string;
+    street: string;
+    email: string;
+    password: string;
+    postCode: string;
+    city: string;
+    age: number;
+    svNumber: number;
+    birthday: Date;
+    userType: UserType;
+    maintainedEvents: EventDTO[];
+    tickets: TicketDTO[];
+    coronaStatus: CoronaStatusDTO;
+    paymentMethod: PaymentMethodDTO[];
 }
 
 export interface EventDTO {
@@ -27,12 +29,13 @@ export interface EventDTO {
     price: number;
     ticketCounter: number;
     ticketId: number;
+    imageUrl: string;
 }
 
 export interface TicketDTO {
     id: number;
     quantity: number;
-    activity: boolean;
+    ticketStatus: TicketStatus;
     user: UserDTO;
     event: EventDTO;
 }
@@ -59,5 +62,7 @@ export interface PaymentMethodDTO {
 }
 
 export type UserType = "GUEST" | "CUSTOMER" | "ADMIN" | "MAINTAINER" | "SUPERADMIN";
+
+export type TicketStatus = "NOTUSED" | "USED" | "INUSE" | "EXPIRED" | "SELLED" | "NOTSELLED";
 
 export type PaymentType = "CREDIT_CARD" | "PAYPAL" | "BANK_TRANSFER";
