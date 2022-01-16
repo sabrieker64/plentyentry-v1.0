@@ -1,5 +1,7 @@
 package at.commodussolutions.plentyentry.user.userdata.service.impl;
 
+import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
 import at.commodussolutions.plentyentry.user.confirmation.email.EmailSender;
 import at.commodussolutions.plentyentry.user.confirmation.token.beans.ConfirmationToken;
 import at.commodussolutions.plentyentry.user.confirmation.token.service.impl.ConfirmationTokenServiceImpl;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -30,7 +33,10 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private TicketRepository ticketRepository;
 
     @Autowired
     private ConfirmationTokenServiceImpl confirmationTokenService;
@@ -41,7 +47,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User getUserById(Long id) {
-        return repository.getById(id);
+        return userRepository.getById(id);
     }
 
     @Override
@@ -59,13 +65,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     public String signUpUser(User user) {
-        boolean userExists = repository.findByEmail(user.getEmail()).isPresent();
+        boolean userExists = this.userRepository.findByEmail(user.getEmail()).isPresent();
         if(userExists) {
             throw new IllegalStateException("Email wird schon verwendet");
         }
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        repository.save(user);
+        this.userRepository.save(user);
 
         var token = createToken(user);
 
@@ -94,7 +100,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return repository.findByEmail(email)
+        return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND, email)));
     }
 
@@ -120,10 +126,32 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
+
     public User enableUser (String email) {
-        var enabledUser = repository.getByEmail(email);
+        var enabledUser = userRepository.getByEmail(email);
         enabledUser.setEnabled(true);
-        return repository.save(enabledUser);
+        return userRepository.save(enabledUser);
+    }
+
+
+    //user Service
+
+    @Override
+    public List<Ticket> getUserTickets(Long id) {
+        var loggedInUser = userRepository.getById(id);
+        return ticketRepository.findAllByUser(loggedInUser);
+    }
+
+    @Override
+    public String getUserCity(Long id) {
+        var loggedInUser = userRepository.getById(id);
+        return loggedInUser.getCity();
+    }
+
+    @Override
+    public Integer getUserAge(Long id) {
+        var loggedInUser = userRepository.getById(id);
+        return loggedInUser.getAge();
     }
 
 

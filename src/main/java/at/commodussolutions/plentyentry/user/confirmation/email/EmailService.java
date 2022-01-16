@@ -27,7 +27,7 @@ public class EmailService implements  EmailSender{
             helper.setText(email, true);
             helper.setTo(to);
             helper.setSubject("Confirm your Email");
-            helper.setFrom("hello@plentyentry.com");
+            helper.setFrom("welcome@plentyentry.com");
             mailSender.send(mimeMessage);
         }catch (
                 MessagingException e
