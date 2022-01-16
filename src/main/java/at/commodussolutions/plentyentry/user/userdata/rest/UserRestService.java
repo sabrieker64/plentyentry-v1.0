@@ -8,20 +8,21 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping(path = "/api/backend")
+@RequestMapping(path = "/api/backend/user")
 public interface UserRestService {
 
     //This is for testing, please do not delete. Thanks
-    @GetMapping("/hello")
-    @ResponseBody
-    String getHello();
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/{id}")
     @ResponseBody
     UserDTO getUserById(@PathVariable Long id);
 
     @PostMapping
     @ResponseBody
     UserDTO createUser(@RequestBody UserDTO userDTO);
+
+    @GetMapping("/confirm")
+    @ResponseBody
+    public String confirm(@RequestParam("token") String token);
 
 }

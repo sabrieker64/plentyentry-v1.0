@@ -1,4 +1,4 @@
-package at.commodussolutions.plentyentry.user.userdata.token;
+package at.commodussolutions.plentyentry.user.confirmation.token.beans;
 
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import lombok.AllArgsConstructor;

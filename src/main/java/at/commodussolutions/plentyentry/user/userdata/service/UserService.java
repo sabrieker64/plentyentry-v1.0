@@ -11,4 +11,6 @@ public interface UserService {
     User getUserById(Long id);
 
     User registerNewUser(User user);
+
+    String confirmToken(String token);
 }

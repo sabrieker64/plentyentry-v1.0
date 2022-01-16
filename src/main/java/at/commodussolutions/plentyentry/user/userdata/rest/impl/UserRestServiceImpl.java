@@ -16,14 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserRestServiceImpl implements UserRestService {
 
     @Autowired
-    UserService service;
+    private UserService service;
     @Autowired
-    UserMapper userMapper;
-
-    @Override
-    public String getHello() {
-        return "Hi Guys, Commodus Solutions first rest call";
-    }
+    private UserMapper userMapper;
 
     @Override
     public UserDTO getUserById(Long id) {
@@ -36,5 +31,10 @@ public class UserRestServiceImpl implements UserRestService {
         userMapper.mapToEntity(userDTO, user);
         user = service.registerNewUser(user);
         return userMapper.mapToDTO(user);
+    }
+
+    @Override
+    public String confirm(String token) {
+        return service.confirmToken(token);
     }
 }

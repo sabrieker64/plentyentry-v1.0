@@ -68,12 +68,11 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
-
     @Column(name = "LOGGED_IN")
-    private Boolean isLoggedIn;
+    private Boolean isLoggedIn = false;
 
     @Column(name = "VERIFIED_AS_ENTERTAINER")
-    private Boolean isVerifiedAsEntertainer;
+    private Boolean isVerifiedAsEntertainer = false;
 
     @Column(name = "LOCKED")
     private Boolean locked = false;
