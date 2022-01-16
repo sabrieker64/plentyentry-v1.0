@@ -1,3 +1,19 @@
+<div class="event-box">
+    <mat-grid-list cols="4" rowHeight="100px">
+      <mat-grid-tile *ngFor="let event of events"
+        [colspan]="4"
+        [rowspan]="2"
+        [style.background]="">
+        <div [style.background-image]="'url(event.imageUrl)'">
+          {{event.eventName}}
+          {{event.village}}
+          {{event.date}}
+          {{event.description}} {{event.village}}
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+</div>
+
 <div class="card-wrapper">
   <mat-card class="example-card">
     <mat-card-header>
@@ -15,6 +31,7 @@
     </mat-card-actions>
   </mat-card>
 </div>
+
 <div class="card-wrapper">
   <mat-card class="example-card">
     <mat-card-header>
