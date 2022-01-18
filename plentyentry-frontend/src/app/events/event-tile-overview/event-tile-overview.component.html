@@ -1,29 +1,69 @@
-<div class="event-box">
-    <mat-grid-list cols="4" rowHeight="100px">
-      <mat-grid-tile *ngFor="let event of events"
-        [colspan]="4"
-        [rowspan]="2"
-        [style.background]="">
-        <div [style.background-image]="'url(event.imageUrl)'">
-          {{event.eventName}}
-          {{event.village}}
-          {{event.date}}
-          {{event.description}} {{event.village}}
+
+
+
+<div class="list-wrapper">
+
+
+
+
+    <mat-grid-list cols="4" rowHeight="330px">
+
+      <!--
+      <ng-container *ngIf="event.colspan != 4 && event.rowspan != 5; then usualStyle; else specialStyle">
+        <ng-template #usualStyle>
+
+        </ng-template>
+
+        <ng-template #specialStyle>
+
+        </ng-template>
+      </ng-container>
+      !-->
+
+      <mat-grid-tile class="showBorder" *ngFor="let event of events"
+        [colspan]="event.colspan"
+        [rowspan]="event.rowspan"
+        [style.background-image]="event.imageUrl">
+
+        <div class="card-wrapper">
+          <div class="explicit-card">
+            <mat-card-header>
+              <div class="example-header-image" mat-card-avatar></div>
+              <mat-card-title class="mat-card-title">{{event.village}}</mat-card-title>
+              <mat-card-subtitle class="mat-card-subtitle">{{event.eventName}} {{event.date}}</mat-card-subtitle>
+            </mat-card-header>
+
+
+            <mat-card-content>
+              <p>{{event.description}} {{event.village}}</p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button (click)="buyClicked()" mat-button>Kaufen</button>
+              <button (click)="inToCartClicked()" mat-button>Warenkorb</button>
+            </mat-card-actions>
+          </div>
+
         </div>
+
+
+
       </mat-grid-tile>
     </mat-grid-list>
 </div>
 
-<div class="card-wrapper">
-  <mat-card class="example-card">
+
+
+<h1> TEST </h1>
+<div class="card-wrapper" *ngFor="let event of events">
+  <mat-card class="explicit-card">
     <mat-card-header>
-      <div class="example-header-image" mat-card-avatar></div>
-      <mat-card-title class="mat-card-title">Ellmau</mat-card-title>
-      <mat-card-subtitle class="mat-card-subtitle">27.12.2022</mat-card-subtitle>
+      <!-- <div class="example-header-image" mat-card-avatar></div> !-->
+      <mat-card-title class="mat-card-title">{{event.village}}</mat-card-title>
+      <mat-card-subtitle class="mat-card-subtitle">{{event.eventName}} {{event.date}}</mat-card-subtitle>
     </mat-card-header>
-    <img alt="Photo of a Shiba Inu" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+    <img alt="CHANGEIT" mat-card-image src="{{event.imageUrl}}">
     <mat-card-content>
-      <p>Dorfest Ellmau, ein Abenteuer das man nicht so leicht vergisst! Sichern sie sich jeztz die Tickets</p>
+      <p>{{event.description}} {{event.village}}</p>
     </mat-card-content>
     <mat-card-actions>
       <button (click)="buyClicked()" mat-button>Kaufen</button>
@@ -31,80 +71,3 @@
     </mat-card-actions>
   </mat-card>
 </div>
-
-<div class="card-wrapper">
-  <mat-card class="example-card">
-    <mat-card-header>
-      <div class="example-header-image" mat-card-avatar></div>
-      <mat-card-title>Ellmau</mat-card-title>
-      <mat-card-subtitle>27.12.2022</mat-card-subtitle>
-    </mat-card-header>
-    <img alt="Photo of a Shiba Inu" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
-    <mat-card-content>
-      <p>Dorfest Ellmau</p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button (click)="buyClicked()" mat-button>Kaufen</button>
-      <button (click)="inToCartClicked()" mat-button>Warenkorb</button>
-    </mat-card-actions>
-  </mat-card>
-</div>
-
-<div class="card-wrapper">
-  <mat-card class="example-card">
-    <mat-card-header>
-      <div class="example-header-image" mat-card-avatar></div>
-      <mat-card-title>Ellmau</mat-card-title>
-      <mat-card-subtitle>27.12.2022</mat-card-subtitle>
-    </mat-card-header>
-    <img alt="Photo of a Shiba Inu" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
-    <mat-card-content>
-      <p>Dorfest Ellmau</p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button (click)="buyClicked()" mat-button>Kaufen</button>
-      <button (click)="inToCartClicked()" mat-button>Warenkorb</button>
-    </mat-card-actions>
-  </mat-card>
-</div>
-
-<div class="card-wrapper">
-  <mat-card class="example-card">
-    <mat-card-header>
-      <div class="example-header-image" mat-card-avatar></div>
-      <mat-card-title>Ellmau</mat-card-title>
-      <mat-card-subtitle>27.12.2022</mat-card-subtitle>
-    </mat-card-header>
-    <img alt="Photo of a Shiba Inu" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
-    <mat-card-content>
-      <p>
-        Dorfest Ellmau
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button (click)="buyClicked()" mat-button>Kaufen</button>
-      <button (click)="inToCartClicked()" mat-button>Warenkorb</button>
-    </mat-card-actions>
-  </mat-card>
-</div>
-
-<div class="card-wrapper">
-  <mat-card class="example-card">
-    <mat-card-header>
-      <div class="example-header-image" mat-card-avatar></div>
-      <mat-card-title>Ellmau</mat-card-title>
-      <mat-card-subtitle>27.12.2022</mat-card-subtitle>
-    </mat-card-header>
-    <img alt="Photo of a Shiba Inu" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
-    <mat-card-content>
-      <p>
-        Dorfest Ellmau
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button (click)="buyClicked()" mat-button>Kaufen</button>
-      <button (click)="inToCartClicked()" mat-button>Warenkorb</button>
-    </mat-card-actions>
-  </mat-card>
-</div>
-
