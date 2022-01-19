@@ -8,14 +8,37 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  //border-style: solid;
+  margin-bottom: 20px !important;
 }
 
 .event-box {
   float: left;
 }
-
+/*
 .showBorder {
   border-style: solid;
+  margin-bottom: 20px !important;
+}
+
+ */
+
+.background-image {
+  border-radius: 25px;
+  min-width: 100% !important;
+  max-height: 100%;
+  position: absolute;
+  z-index: -100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  object-fit: cover;
+  /*
+  margin: auto;
+  object-fit: contain;
+
+   */
 }
 
 .tile-image {
@@ -29,6 +52,23 @@
 }
 
 .list-wrapper {
-  padding-left: 150px;
-  padding-right: 150px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.no-padding {
+  padding: 0px !important;
+}
+
+.customized-card-header {
+  text-align: center;
+  color: white;
+}
+
+.customized-card-header-avatar {
+  height: auto;
+  width: auto;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
 }

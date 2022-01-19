@@ -1,73 +1,28 @@
-
-
-
 <div class="list-wrapper">
+  <mat-card *ngFor="let event of events" class="card-wrapper">
+    <img src="{{event.imageUrl}}" class="background-image">
 
+    <div class="explicit-card">
 
-
-
-    <mat-grid-list cols="4" rowHeight="330px">
-
-      <!--
-      <ng-container *ngIf="event.colspan != 4 && event.rowspan != 5; then usualStyle; else specialStyle">
-        <ng-template #usualStyle>
-
-        </ng-template>
-
-        <ng-template #specialStyle>
-
-        </ng-template>
-      </ng-container>
-      !-->
-
-      <mat-grid-tile class="showBorder" *ngFor="let event of events"
-        [colspan]="event.colspan"
-        [rowspan]="event.rowspan"
-        [style.background-image]="event.imageUrl">
-
-        <div class="card-wrapper">
-          <div class="explicit-card">
-            <mat-card-header>
-              <div class="example-header-image" mat-card-avatar></div>
-              <mat-card-title class="mat-card-title">{{event.village}}</mat-card-title>
-              <mat-card-subtitle class="mat-card-subtitle">{{event.eventName}} {{event.date}}</mat-card-subtitle>
-            </mat-card-header>
-
-
-            <mat-card-content>
-              <p>{{event.description}} {{event.village}}</p>
-            </mat-card-content>
-            <mat-card-actions>
-              <button (click)="buyClicked()" mat-button>Kaufen</button>
-              <button (click)="inToCartClicked()" mat-button>Warenkorb</button>
-            </mat-card-actions>
-          </div>
-
+      <mat-card-header class="customized-card-header">
+        <div class="customized-card-header-avatar" mat-card-avatar>
+          <img src="/assets/icon_home.svg">
         </div>
+        <mat-card-title class="mat-card-title">
+          {{event.eventName}}
+        </mat-card-title>
+        <mat-card-subtitle class="mat-card-subtitle"></mat-card-subtitle>
+      </mat-card-header>
 
+      <mat-card-content>
+        <p>{{event.description}} {{event.village}}</p>
+      </mat-card-content>
 
+      <mat-card-actions>
+        <button (click)="buyClicked()" mat-button>Kaufen</button>
+        <button (click)="inToCartClicked()" mat-button>Warenkorb</button>
+      </mat-card-actions>
+    </div>
 
-      </mat-grid-tile>
-    </mat-grid-list>
-</div>
-
-
-
-<h1> TEST </h1>
-<div class="card-wrapper" *ngFor="let event of events">
-  <mat-card class="explicit-card">
-    <mat-card-header>
-      <!-- <div class="example-header-image" mat-card-avatar></div> !-->
-      <mat-card-title class="mat-card-title">{{event.village}}</mat-card-title>
-      <mat-card-subtitle class="mat-card-subtitle">{{event.eventName}} {{event.date}}</mat-card-subtitle>
-    </mat-card-header>
-    <img alt="CHANGEIT" mat-card-image src="{{event.imageUrl}}">
-    <mat-card-content>
-      <p>{{event.description}} {{event.village}}</p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button (click)="buyClicked()" mat-button>Kaufen</button>
-      <button (click)="inToCartClicked()" mat-button>Warenkorb</button>
-    </mat-card-actions>
   </mat-card>
 </div>
