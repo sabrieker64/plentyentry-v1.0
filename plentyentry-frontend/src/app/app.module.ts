@@ -7,6 +7,7 @@ import {NavigationLayoutModule} from "../library/navigation-layout/navigation-la
 import {FooterLayoutModule} from "../library/footer-layout/footer-layout.module";
 import {AngularMaterialModule} from "../library/anguler-material-module/anguler-material-module.module";
 import {RouterModule} from "@angular/router";
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import {RouterModule} from "@angular/router";
     NavigationLayoutModule,
     AngularMaterialModule,
     FooterLayoutModule,
+    HttpClientModule,
     RouterModule.forRoot([]),
     AppRoutingModule,
   ],

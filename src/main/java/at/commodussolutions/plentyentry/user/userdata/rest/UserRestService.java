@@ -2,6 +2,7 @@ package at.commodussolutions.plentyentry.user.userdata.rest;
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,13 +21,19 @@ public interface UserRestService {
     @ResponseBody
     UserDTO getUserById(@PathVariable Long id);
 
-    @PostMapping
+    @PostMapping("/register")
     @ResponseBody
     UserDTO createUser(@RequestBody UserDTO userDTO);
 
     @GetMapping("/confirm")
     @ResponseBody
     String confirm(@RequestParam("token") String token);
+
+
+    @GetMapping("/login")
+    @ResponseBody
+    @PreAuthorize("hasRole()")
+    UserDTO login(@PathVariable String username, String password);
 
 
 

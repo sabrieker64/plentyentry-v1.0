@@ -22,4 +22,6 @@ public interface UserService {
     String getUserCity(Long id);
 
     Integer getUserAge(Long id);
+
+    User userLogin(String username, String password);
 }

@@ -1,3 +1,5 @@
+jwt:
+  secret: 'kmCZ{4GnBOpX{mb¡NpQ“nzL7pne¶BIjdjCk12sY¶et36ZqgKeiTzN¢Byab6Z6fwgWBA7GWPtP8xssMQNh1bRCuo9F6¢wwT7FALX¶'
 server:
   port: 8080
 spring:

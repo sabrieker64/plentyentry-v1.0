@@ -45,6 +45,10 @@ public class UserRestServiceImpl implements UserRestService {
         return service.confirmToken(token);
     }
 
+    @Override
+    public UserDTO login(String username, String password) {
+        return userMapper.mapToDTO(service.userLogin(username, password));
+    }
 
 
     //USerService
