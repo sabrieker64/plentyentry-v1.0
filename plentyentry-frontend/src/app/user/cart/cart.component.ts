@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {LoginRegisterService} from "../service/login-register.service";
 
 @Component({
   selector: 'app-cart',
@@ -7,9 +8,11 @@ import {Component, OnInit} from '@angular/core';
 })
 export class CartComponent implements OnInit {
 
-  constructor() { }
+
+  constructor(private service: LoginRegisterService) { }
 
   ngOnInit(): void {
+    this.service.getFirstRestCall(2).pipe().subscribe(result => console.log(result));
   }
 
 }

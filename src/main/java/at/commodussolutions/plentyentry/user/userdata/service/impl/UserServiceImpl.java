@@ -2,6 +2,7 @@ package at.commodussolutions.plentyentry.user.userdata.service.impl;
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
+import at.commodussolutions.plentyentry.user.authentication.jwt.JwtTokenUtil;
 import at.commodussolutions.plentyentry.user.confirmation.email.EmailSender;
 import at.commodussolutions.plentyentry.user.confirmation.token.beans.ConfirmationToken;
 import at.commodussolutions.plentyentry.user.confirmation.token.service.impl.ConfirmationTokenServiceImpl;
@@ -12,6 +13,10 @@ import at.commodussolutions.plentyentry.user.userdata.validations.EmailValidator
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -40,6 +45,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private ConfirmationTokenServiceImpl confirmationTokenService;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    private AuthenticationManager authenticationManager;
+
 
     private final EmailValidator emailValidator;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -57,7 +67,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new IllegalStateException("email is not valid");
         }
         signUpUser(user);
-
         return user;
     }
 
@@ -154,6 +163,21 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return loggedInUser.getAge();
     }
 
+    @Override
+    public User userLogin(String username, String password) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(username, password));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        var encodedPassword = passwordEncoder.encode(password);
+        var userTryingToLogin = userRepository.findByEmail(username).orElseThrow();
+        String jwt = jwtTokenUtil.generateToken(userTryingToLogin);
+        if(userTryingToLogin.getPassword().equals(encodedPassword)) {
+            return userTryingToLogin;
+        }
+        return null;
+    }
 
 
     private String buildEmail(String name, String link) {

@@ -7,6 +7,7 @@ import {CartComponent} from './cart/cart.component';
 import {UserDetailComponent} from './user-detail/user-detail.component';
 import {AngularMaterialModule} from "../../library/anguler-material-module/anguler-material-module.module";
 import {AppRoutingModule} from "../app-routing.module";
+import {FlexModule} from "@angular/flex-layout";
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {AppRoutingModule} from "../app-routing.module";
     CommonModule,
     UserRoutingModule,
     AngularMaterialModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FlexModule
   ]
 })
 export class UserRegisterModule {
