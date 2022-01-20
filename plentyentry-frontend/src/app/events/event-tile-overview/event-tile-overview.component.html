@@ -1,4 +1,17 @@
 <div class="list-wrapper">
+
+  <div class="control-panel">
+    <mat-icon class="material-icons background-icon">
+      settings
+    </mat-icon>
+    <mat-icon class="material-icons background-icon">
+      translate
+    </mat-icon>
+    <mat-icon class="material-icons background-icon">
+      map
+    </mat-icon>
+  </div>
+
   <mat-card *ngFor="let event of events" class="card-wrapper">
     <img src="{{event.imageUrl}}" class="background-image">
 
@@ -6,22 +19,60 @@
 
       <mat-card-header class="customized-card-header">
         <div class="customized-card-header-avatar" mat-card-avatar>
-          <img src="/assets/icon_home.svg">
+          <mat-icon class="material-icons-outlined">
+            celebration
+          </mat-icon>
         </div>
         <mat-card-title class="mat-card-title">
+
           {{event.eventName}}
         </mat-card-title>
         <mat-card-subtitle class="mat-card-subtitle"></mat-card-subtitle>
       </mat-card-header>
 
-      <mat-card-content>
-        <p>{{event.description}} {{event.village}}</p>
+      <mat-card-content class="custom-padding">
+
+        <div class="event-extra-information">
+
+          <div class="event-extra-information-top">
+            <mat-icon class="material-icons-outlined">
+              location_on
+            </mat-icon>
+            {{event.village}}
+
+          </div>
+
+          <div class="event-extra-information-bottom">
+
+            <div class="event-extra-information-bottom-left">
+              <mat-icon class="material-icons-outlined">
+                event
+              </mat-icon>
+              <h4 class="custom-text">{{event.date}}</h4>
+
+            </div>
+
+            <div class="event-extra-information-bottom-right">
+              <mat-icon class="material-icons-outlined">
+                payments
+              </mat-icon>
+              <h4 class="custom-text">{{event.eventPrice}}</h4>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
       </mat-card-content>
 
+      <!--
       <mat-card-actions>
         <button (click)="buyClicked()" mat-button>Kaufen</button>
         <button (click)="inToCartClicked()" mat-button>Warenkorb</button>
       </mat-card-actions>
+      !-->
     </div>
 
   </mat-card>

@@ -4,15 +4,17 @@ export class EventTile {
   private _imageUrl: string;
   private _description: string;
   private _eventName: string;
+  private _eventPrice: number;
   private _colspan: number;
   private _rowspan: number;
 
-  constructor(village: string, date: string, eventName: string, colspan: number = 2, rowspan: number = 5) {
+  constructor(village: string, date: string, eventName: string, eventPrice: number, colspan: number = 2, rowspan: number = 5) {
     this._village = village;
     this._date = date;
     this._eventName = eventName;
     this._imageUrl = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
     this._description = 'Test for -> ';
+    this._eventPrice = eventPrice;
     this._colspan = colspan;
     this._rowspan = rowspan;
   }
@@ -72,5 +74,14 @@ export class EventTile {
 
   set rowspan(value: number) {
     this._rowspan = value;
+  }
+
+
+  get eventPrice(): number {
+    return this._eventPrice;
+  }
+
+  set eventPrice(value: number) {
+    this._eventPrice = value;
   }
 }

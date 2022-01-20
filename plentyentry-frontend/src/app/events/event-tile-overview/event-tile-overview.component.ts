@@ -33,10 +33,10 @@ export class EventTileOverviewComponent implements OnInit {
     var eventFieberbrunn: EventTile;
 
 
-    eventEllmau = new EventTile('Ellmau','27.12.2022', 'Schickis Houseparty',2,1);
-    eventSJO = new EventTile('Sankt Johann in Tirol','28.12.2022', 'Jogassn',2,2);
-    eventKitz = new EventTile('Kitzbühel','29.12.2022', 'Feuerwehrfest',2,1);
-    eventFieberbrunn = new EventTile('Fieberbrunn','30.12.2022', 'Bourbon Street',2,1);
+    eventEllmau = new EventTile('Ellmau','27.12.2022', 'Wirschtlparty Schicker', 10,2,1);
+    eventSJO = new EventTile('Sankt Johann in Tirol','28.12.2022', 'Bombenparty Gallab',15,2,2);
+    eventKitz = new EventTile('Kitzbühel','29.12.2022', 'Feuerwehrfest',30,2,1);
+    eventFieberbrunn = new EventTile('Fieberbrunn','30.12.2022', 'Bourbon Street',5,2,1);
 
     return [eventEllmau, eventSJO, eventKitz, eventFieberbrunn];
   }
