@@ -24,7 +24,6 @@
           </mat-icon>
         </div>
         <mat-card-title class="mat-card-title">
-
           {{event.eventName}}
         </mat-card-title>
         <mat-card-subtitle class="mat-card-subtitle"></mat-card-subtitle>
@@ -38,7 +37,8 @@
             <mat-icon class="material-icons-outlined">
               location_on
             </mat-icon>
-            {{event.village}}
+            <h4  class="custom-text">{{event.village}}</h4>
+
 
           </div>
 
@@ -76,4 +76,8 @@
     </div>
 
   </mat-card>
+
+
 </div>
+
+<app-footer-layout></app-footer-layout>

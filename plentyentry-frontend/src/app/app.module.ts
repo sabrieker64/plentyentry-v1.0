@@ -19,7 +19,6 @@ import {HttpClientModule} from "@angular/common/http";
     BrowserAnimationsModule,
     NavigationLayoutModule,
     AngularMaterialModule,
-    FooterLayoutModule,
     HttpClientModule,
     RouterModule.forRoot([]),
     AppRoutingModule,

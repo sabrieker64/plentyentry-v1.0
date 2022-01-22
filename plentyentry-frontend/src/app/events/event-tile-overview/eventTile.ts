@@ -8,11 +8,11 @@ export class EventTile {
   private _colspan: number;
   private _rowspan: number;
 
-  constructor(village: string, date: string, eventName: string, eventPrice: number, colspan: number = 2, rowspan: number = 5) {
+  constructor(village: string, date: string, imageUrl: string, eventName: string, eventPrice: number, colspan: number = 2, rowspan: number = 5) {
     this._village = village;
     this._date = date;
     this._eventName = eventName;
-    this._imageUrl = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
+    this._imageUrl = imageUrl;
     this._description = 'Test for -> ';
     this._eventPrice = eventPrice;
     this._colspan = colspan;
