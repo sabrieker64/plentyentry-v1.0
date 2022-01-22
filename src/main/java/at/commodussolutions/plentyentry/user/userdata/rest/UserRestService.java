@@ -35,12 +35,9 @@ public interface UserRestService {
     UserDTO createJwtToken(@RequestBody UserDTO userDTO);
 
 
-    @GetMapping("/login")
+    @GetMapping("/login/{username}/{password}")
     @ResponseBody
-    UserDTO login(@PathVariable String username, String password);
-
-
-
+    UserDTO login(@PathVariable String username, @PathVariable String password);
 
 
     //under this comment is everything for the userService please write the rest calls above this comment thanks boys

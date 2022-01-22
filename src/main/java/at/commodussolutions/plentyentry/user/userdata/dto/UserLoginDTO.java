@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserLoginDTO {
-
    private User user;
-    private String jwtToken;
+   private String jwtToken;
 }
