@@ -2,6 +2,7 @@ package at.commodussolutions.plentyentry.user.userdata.service.impl;
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
+import at.commodussolutions.plentyentry.security.PasswordEncoder;
 import at.commodussolutions.plentyentry.user.authentication.jwt.JwtTokenUtil;
 import at.commodussolutions.plentyentry.user.confirmation.email.EmailSender;
 import at.commodussolutions.plentyentry.user.confirmation.token.beans.ConfirmationToken;
@@ -10,7 +11,6 @@ import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import at.commodussolutions.plentyentry.user.userdata.validations.EmailValidator;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,9 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -35,8 +33,7 @@ import java.util.UUID;
 @Service
 @Slf4j
 @Transactional
-@AllArgsConstructor
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
@@ -48,12 +45,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    private final EmailValidator emailValidator;
-    private final BCryptPasswordEncoder passwordEncoder;
-    private final EmailSender emailSender;
+    @Autowired
+    private EmailValidator emailValidator;
+
+    @Autowired
+    private EmailSender emailSender;
 
     @Override
     public User getUserById(Long id) {
@@ -78,7 +80,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if(userExists) {
             throw new IllegalStateException("Email wird schon verwendet");
         }
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        String encodedPassword = passwordEncoder.bCryptPasswordEncoder().encode(user.getPassword());
         user.setPassword(encodedPassword);
         this.userRepository.save(user);
 
@@ -106,6 +108,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     private final static String USER_NOT_FOUND = "user with email %s not found";
+
+    public User createJwtToken(User user) {
+        String username = user.getEmail();
+        String password = user.getPassword();
+        userLogin(username, password);
+        final UserDetails userDetails = loadUserByUsername(username);
+        String newToken = jwtTokenUtil.generateJwtToken(user);
+        User userWithNewToken = userRepository.getByEmail(userDetails.getUsername());
+        userWithNewToken.setJwtToken(newToken);
+        return userWithNewToken;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -170,9 +183,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        var encodedPassword = passwordEncoder.encode(password);
+        var encodedPassword = passwordEncoder.bCryptPasswordEncoder().encode(password);
         var userTryingToLogin = userRepository.findByEmail(username).orElseThrow();
-        String jwt = jwtTokenUtil.generateToken(userTryingToLogin);
         if(userTryingToLogin.getPassword().equals(encodedPassword)) {
             return userTryingToLogin;
         }
