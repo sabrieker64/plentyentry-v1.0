@@ -20,7 +20,7 @@ import java.util.List;
 public class UserRestServiceImpl implements UserRestService {
 
     @Autowired
-    private UserService service;
+    private UserService userService;
     @Autowired
     private UserMapper userMapper;
 
@@ -29,42 +29,48 @@ public class UserRestServiceImpl implements UserRestService {
 
     @Override
     public UserDTO getUserById(Long id) {
-        return userMapper.mapToDTO(service.getUserById(id));
+        return userMapper.mapToDTO(userService.getUserById(id));
     }
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
         User user = new User();
         userMapper.mapToEntity(userDTO, user);
-        user = service.registerNewUser(user);
+        user = userService.registerNewUser(user);
         return userMapper.mapToDTO(user);
     }
 
     @Override
     public String confirm(String token) {
-        return service.confirmToken(token);
+        return userService.confirmToken(token);
+    }
+
+    @Override
+    public UserDTO createJwtToken(UserDTO userDTO) {
+        User user = userService.getUserById(userDTO.getId());
+        return userMapper.mapToDTO(userService.createJwtToken(user));
     }
 
     @Override
     public UserDTO login(String username, String password) {
-        return userMapper.mapToDTO(service.userLogin(username, password));
+        return userMapper.mapToDTO(userService.userLogin(username, password));
     }
 
 
-    //USerService
+    //UserService
 
     @Override
     public Integer getUserAge(Long id) {
-        return service.getUserAge(id);
+        return userService.getUserAge(id);
     }
 
     @Override
     public String getUserCity(Long id) {
-        return service.getUserCity(id);
+        return userService.getUserCity(id);
     }
 
     @Override
     public List<TicketDTO> getUserTickets(Long id) {
-        return ticketMapper.mapToListDTO(service.getUserTickets(id));
+        return ticketMapper.mapToListDTO(userService.getUserTickets(id));
     }
 }

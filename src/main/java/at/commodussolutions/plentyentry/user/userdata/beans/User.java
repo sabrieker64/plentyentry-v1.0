@@ -93,6 +93,9 @@ public class User implements UserDetails {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<PaymentMethod> paymentMethod;
 
+    @Column(name = "JWT_TOKEN")
+    private String jwtToken;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -2,6 +2,9 @@ package at.commodussolutions.plentyentry.user.userdata.service;
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 
@@ -9,7 +12,7 @@ import java.util.List;
  * Author: @Eker
  */
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     User getUserById(Long id);
 
@@ -24,4 +27,9 @@ public interface UserService {
     Integer getUserAge(Long id);
 
     User userLogin(String username, String password);
+
+    User createJwtToken(User user);
+
+    @Override
+    UserDetails loadUserByUsername(String s) throws UsernameNotFoundException;
 }

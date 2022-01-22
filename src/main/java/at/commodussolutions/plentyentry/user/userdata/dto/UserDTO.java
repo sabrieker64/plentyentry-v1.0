@@ -40,4 +40,5 @@ public class UserDTO {
     private List<TicketDTO> tickets;
     private CoronaStatusDTO coronaStatus;
     private List<PaymentMethodDTO> paymentMethod;
+    private String jwtToken;
 }
