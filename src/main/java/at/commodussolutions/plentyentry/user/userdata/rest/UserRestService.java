@@ -2,7 +2,6 @@ package at.commodussolutions.plentyentry.user.userdata.rest;
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/backend/user")
+@CrossOrigin
 public interface UserRestService {
 
     //This is for testing, please do not delete. Thanks
@@ -30,13 +30,14 @@ public interface UserRestService {
     String confirm(@RequestParam("token") String token);
 
 
-    @GetMapping("/login")
+    @PostMapping("/authenticate")
     @ResponseBody
-    @PreAuthorize("hasRole()")
-    UserDTO login(@PathVariable String username, String password);
+    UserDTO createJwtToken(@RequestBody UserDTO userDTO);
 
 
-
+    @GetMapping("/login/{username}/{password}")
+    @ResponseBody
+    UserDTO login(@PathVariable String username, @PathVariable String password);
 
 
     //under this comment is everything for the userService please write the rest calls above this comment thanks boys

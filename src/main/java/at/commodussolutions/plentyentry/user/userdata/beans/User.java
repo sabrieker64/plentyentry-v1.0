@@ -2,8 +2,8 @@ package at.commodussolutions.plentyentry.user.userdata.beans;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
-import at.commodussolutions.plentyentry.user.coronastate.beans.CoronaStatus;
 import at.commodussolutions.plentyentry.user.payment.beans.PaymentMethod;
+import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -68,6 +68,10 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
+    @Column(name = "USER_GENDER")
+    @Enumerated(EnumType.STRING)
+    private UserGender userGender;
+
     @Column(name = "LOGGED_IN")
     private Boolean isLoggedIn = false;
 
@@ -86,12 +90,11 @@ public class User implements UserDetails {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Ticket> tickets;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_USER_CORONA_STAT_ID"))
-    private CoronaStatus coronaStatus;
-
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<PaymentMethod> paymentMethod;
+
+    @Column(name = "JWT_TOKEN")
+    private String jwtToken;
 
 
     @Override
