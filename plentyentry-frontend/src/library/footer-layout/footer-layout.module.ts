@@ -3,6 +3,9 @@ import {CommonModule} from '@angular/common';
 import {FooterLayoutComponent} from './footer-layout/footer-layout.component';
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import {AngularMaterialModule} from "../anguler-material-module/anguler-material-module.module";
+import {MatSliderModule} from "@angular/material/slider";
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 
 @NgModule({
@@ -15,7 +18,10 @@ import {MatButtonModule} from "@angular/material/button";
   imports: [
     CommonModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    AngularMaterialModule,
+    MatSliderModule,
+    FlexLayoutModule
   ]
 })
 export class FooterLayoutModule {

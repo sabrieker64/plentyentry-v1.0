@@ -7,13 +7,31 @@ import {Component, OnInit} from '@angular/core';
 })
 export class FooterLayoutComponent implements OnInit {
 
+  showFooter = false;
+
+
   constructor() {
   }
 
   ngOnInit(): void {
   }
 
-  openFilter() {
-    console.log('Open filter dialog');
+  formatLabel(value: number) {
+    if (value >= 1000) {
+      return Math.round(value / 1000) + 'k';
+    }
+
+    return value;
   }
+
+  showFooterChange(){
+    this.showFooter = !this.showFooter;
+
+  }
+
+
+
+
+
+
 }

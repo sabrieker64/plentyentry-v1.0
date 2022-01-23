@@ -6,3 +6,42 @@ footer {
   justify-content: center;
   align-items: center;
 }
+
+.custom-text {
+  margin: 0px !important;
+}
+
+.filter-container {
+  background-color: white;
+}
+
+.full-filter-container {
+  display: block;
+}
+
+.filter-options-container{
+  display: flex;
+}
+
+.custom-menu-settings {
+  //position: relative !important;
+  //margin: 10px;
+  //padding: 10px;
+  background-color: #730C63;
+  border-radius: 25px;
+}
+
+.show-footer-change-button-settings {
+  text-align: center;
+}
+
+.dropdown-position {
+  position: absolute !important;
+  top: 100%; /* Bottom of button */
+  right: 0;
+  margin-left: -100px; /* More to the left */
+}
+
+.custom-slider-settings {
+  width: 100%;
+}
