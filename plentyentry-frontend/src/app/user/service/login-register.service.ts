@@ -9,13 +9,15 @@ import {UserDTO} from "../../definitions/objects";
 })
 export class LoginRegisterService {
 
-  private baseUrl: string = environment.baseUrl + 'api/backend';
+  private baseUrl: string = environment.baseUrl + 'api/backend/user';
 
   constructor(private http: HttpClient) {
   }
 
 
   public getFirstRestCall(id: number): Observable<UserDTO> {
-    return this.http.get<UserDTO>(`${this.baseUrl}/user/${id}`);
+    return this.http.get<UserDTO>(`${this.baseUrl}/${id}`);
   }
+
+//TODO: Mukiiii services erstellen
 }
