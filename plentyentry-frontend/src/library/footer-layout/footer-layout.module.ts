@@ -7,7 +7,6 @@ import {AngularMaterialModule} from "../anguler-material-module/anguler-material
 import {MatSliderModule} from "@angular/material/slider";
 import {FlexLayoutModule} from "@angular/flex-layout";
 
-
 @NgModule({
   declarations: [
     FooterLayoutComponent
@@ -18,8 +17,8 @@ import {FlexLayoutModule} from "@angular/flex-layout";
   imports: [
     CommonModule,
     MatIconModule,
-    MatButtonModule,
     AngularMaterialModule,
+    MatButtonModule,
     MatSliderModule,
     FlexLayoutModule
   ]

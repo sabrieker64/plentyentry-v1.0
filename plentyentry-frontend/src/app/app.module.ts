@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -8,7 +8,6 @@ import {FooterLayoutModule} from "../library/footer-layout/footer-layout.module"
 import {AngularMaterialModule} from "../library/anguler-material-module/anguler-material-module.module";
 import {RouterModule} from "@angular/router";
 import {HttpClientModule} from "@angular/common/http";
-
 
 @NgModule({
   declarations: [
@@ -23,7 +22,9 @@ import {HttpClientModule} from "@angular/common/http";
     RouterModule.forRoot([]),
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [
+
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {

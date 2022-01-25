@@ -45,4 +45,6 @@ export class EventTileOverviewComponent implements OnInit {
   get events(): EventTile[] {
     return this._events;
   }
+
+
 }
