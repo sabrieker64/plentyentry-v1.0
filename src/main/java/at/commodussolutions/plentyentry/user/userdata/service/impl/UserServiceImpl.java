@@ -8,15 +8,17 @@ import at.commodussolutions.plentyentry.user.confirmation.email.EmailSender;
 import at.commodussolutions.plentyentry.user.confirmation.token.beans.ConfirmationToken;
 import at.commodussolutions.plentyentry.user.confirmation.token.service.impl.ConfirmationTokenServiceImpl;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
+import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
+import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthResDTO;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import at.commodussolutions.plentyentry.user.userdata.validations.EmailValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -72,9 +74,6 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-
-
-
     public String signUpUser(User user) {
         boolean userExists = this.userRepository.findByEmail(user.getEmail()).isPresent();
         if(userExists) {
@@ -103,21 +102,27 @@ public class UserServiceImpl implements UserService {
         token.setExpiresAt(LocalDateTime.now().plusMinutes(15));
         token.setUser(user);
 
-       return confirmationTokenService.saveConfirmationToken(token);
+        return confirmationTokenService.saveConfirmationToken(token);
     }
 
 
     private final static String USER_NOT_FOUND = "user with email %s not found";
 
-    public User createJwtToken(User user) {
-        String username = user.getEmail();
-        String password = user.getPassword();
+    public UserAuthResDTO createJwtToken(UserAuthReqDTO userAuthReqDTO) throws Exception {
+        String username = userAuthReqDTO.getEmail();
+        String password = userAuthReqDTO.getPassword();
         userLogin(username, password);
-        final UserDetails userDetails = loadUserByUsername(username);
-        String newToken = jwtTokenUtil.generateJwtToken(user);
-        User userWithNewToken = userRepository.getByEmail(userDetails.getUsername());
-        userWithNewToken.setJwtToken(newToken);
-        return userWithNewToken;
+
+        UserDetails userDetails = loadUserByUsername(userAuthReqDTO.getEmail());
+        String newGeneratedToken = jwtTokenUtil.generateJwtToken(userDetails);
+        User userWithToken = userRepository.getByEmail(username);
+        userWithToken.setJwtToken(newGeneratedToken);
+        UserAuthResDTO userAuthResDTO = new UserAuthResDTO();
+
+        userAuthResDTO.setUser(userWithToken);
+        userAuthResDTO.setJwtToken(newGeneratedToken);
+        return userAuthResDTO;
+
     }
 
     @Override
@@ -177,18 +182,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User userLogin(String username, String password) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password));
+    public User findUserByUsername(String username) {
+        return userRepository.getByEmail(username);
+    }
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        var encodedPassword = passwordEncoder.bCryptPasswordEncoder().encode(password);
-        var userTryingToLogin = userRepository.findByEmail(username).orElseThrow();
-        if(userTryingToLogin.getPassword().equals(encodedPassword)) {
-            return userTryingToLogin;
+    private void userLogin(String username, String password) throws Exception {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        } catch (DisabledException e) {
+            throw new Exception("USER DISABLED", e);
+        } catch (BadCredentialsException e) {
+            throw new Exception("INVALID CREDENTIALS", e);
         }
-        return null;
     }
 
 
