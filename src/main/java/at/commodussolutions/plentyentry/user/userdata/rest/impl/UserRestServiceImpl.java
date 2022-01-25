@@ -46,14 +46,9 @@ public class UserRestServiceImpl implements UserRestService {
     }
 
     @Override
-    public UserDTO createJwtToken(UserDTO userDTO) {
-        User user = userService.getUserById(userDTO.getId());
+    public UserDTO createJwtToken(UserDTO userDTO) throws Exception {
+        User user = userService.findUserByUsername(userDTO.getEmail());
         return userMapper.mapToDTO(userService.createJwtToken(user));
-    }
-
-    @Override
-    public UserDTO login(String username, String password) {
-        return userMapper.mapToDTO(userService.userLogin(username, password));
     }
 
 

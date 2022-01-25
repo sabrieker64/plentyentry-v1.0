@@ -5,13 +5,19 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        synonyms: true
+        show_sql: true
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: none
   datasource:
     password: SabDab2001
     username: admin
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://plentyentry-db.czqacdk2phl7.us-east-2.rds.amazonaws.com:3306
+    url: jdbc:mysql://plentyentry-db.czqacdk2phl7.us-east-2.rds.amazonaws.com:3306/plentyentry
 
   mail:
     host: localhost

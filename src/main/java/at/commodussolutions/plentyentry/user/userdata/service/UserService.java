@@ -26,9 +26,10 @@ public interface UserService extends UserDetailsService {
 
     Integer getUserAge(Long id);
 
-    User userLogin(String username, String password);
+    User findUserByUsername(String username);
 
-    User createJwtToken(User user);
+
+    User createJwtToken(User user) throws Exception;
 
     @Override
     UserDetails loadUserByUsername(String s) throws UsernameNotFoundException;

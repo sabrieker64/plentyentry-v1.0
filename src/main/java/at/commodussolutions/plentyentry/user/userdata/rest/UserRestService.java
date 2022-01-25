@@ -32,13 +32,7 @@ public interface UserRestService {
 
     @PostMapping("/authenticate")
     @ResponseBody
-    UserDTO createJwtToken(@RequestBody UserDTO userDTO);
-
-
-    @GetMapping("/login/{username}/{password}")
-    @ResponseBody
-    UserDTO login(@PathVariable String username, @PathVariable String password);
-
+    UserDTO createJwtToken(@RequestBody UserDTO userDTO) throws Exception;
 
     //under this comment is everything for the userService please write the rest calls above this comment thanks boys
 

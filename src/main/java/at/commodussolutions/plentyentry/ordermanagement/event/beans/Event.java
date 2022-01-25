@@ -44,7 +44,7 @@ public class Event {
     private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "USER_ID_MAINTAINED_EVENTS")
+    @JoinColumn(name = "USER_ID_MAINTAINED_EVENTS", referencedColumnName = "ID")
     private User user;
 
 }
