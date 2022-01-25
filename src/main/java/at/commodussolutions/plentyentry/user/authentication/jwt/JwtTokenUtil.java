@@ -7,6 +7,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,9 +17,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 
 import static at.commodussolutions.plentyentry.user.authentication.constant.SecurityConstant.*;
@@ -31,12 +30,16 @@ public class JwtTokenUtil {
     private String secret;
 
 
+    public String generateJwtToken(UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
 
-    public String generateJwtToken(User user) {
-        String[] claims = getClaimsFromUser(user);
-        return JWT.create().withIssuer(COMMODUS_SOLUTIONS_PLENTYENTRY).withAudience(PLENTYENTRY_ADMINISTRATION)
-                .withIssuedAt(new Date()).withSubject(user.getId().toString()).withArrayClaim(AUTHORITIES, claims).withExpiresAt(new Date(System.currentTimeMillis()+ EXPIRATION_TIME))
-                .sign(HMAC512(secret.getBytes()));
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
     }
 
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimResolver) {

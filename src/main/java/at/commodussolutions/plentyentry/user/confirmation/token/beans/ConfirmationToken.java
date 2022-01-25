@@ -17,13 +17,15 @@ public class ConfirmationToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", nullable = false)
     private Long id;
-    @Column(nullable = false)
+    @Column(name = "TOKEN", nullable = false)
     private String token;
-    @Column(nullable = false)
+    @Column(name = "CREATED_AT", nullable = false)
     private LocalDateTime createdAt;
-    @Column(nullable = false)
+    @Column(name = "EXPIRES_AT", nullable = false)
     private LocalDateTime expiresAt;
+    @Column(name = "CONFIRMED_AT")
     private LocalDateTime confirmedAt;
 
     @ManyToOne
