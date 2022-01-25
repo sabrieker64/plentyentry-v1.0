@@ -1,5 +1,6 @@
 package at.commodussolutions.plentyentry.user.coronastate.beans;
 
+import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,5 +35,9 @@ public class CoronaStatus {
 
     @Column(name = "QUARANTINE")
     private Boolean quarantine;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
+    private User user;
 
 }

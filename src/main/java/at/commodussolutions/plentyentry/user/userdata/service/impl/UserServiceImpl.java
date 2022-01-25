@@ -1,23 +1,31 @@
 package at.commodussolutions.plentyentry.user.userdata.service.impl;
 
+import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
+import at.commodussolutions.plentyentry.security.PasswordEncoder;
+import at.commodussolutions.plentyentry.user.authentication.jwt.JwtTokenUtil;
 import at.commodussolutions.plentyentry.user.confirmation.email.EmailSender;
 import at.commodussolutions.plentyentry.user.confirmation.token.beans.ConfirmationToken;
 import at.commodussolutions.plentyentry.user.confirmation.token.service.impl.ConfirmationTokenServiceImpl;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
+import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
+import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthResDTO;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import at.commodussolutions.plentyentry.user.userdata.validations.EmailValidator;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -27,21 +35,33 @@ import java.util.UUID;
 @Service
 @Slf4j
 @Transactional
-@AllArgsConstructor
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private TicketRepository ticketRepository;
 
     @Autowired
     private ConfirmationTokenServiceImpl confirmationTokenService;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
-    private final EmailValidator emailValidator;
-    private final BCryptPasswordEncoder passwordEncoder;
-    private final EmailSender emailSender;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private EmailValidator emailValidator;
+
+    @Autowired
+    private EmailSender emailSender;
 
     @Override
     public User getUserById(Long id) {
-        return repository.getById(id);
+        return userRepository.getById(id);
     }
 
     @Override
@@ -51,21 +71,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new IllegalStateException("email is not valid");
         }
         signUpUser(user);
-
         return user;
     }
 
-
-
-
     public String signUpUser(User user) {
-        boolean userExists = repository.findByEmail(user.getEmail()).isPresent();
+        boolean userExists = this.userRepository.findByEmail(user.getEmail()).isPresent();
         if(userExists) {
             throw new IllegalStateException("Email wird schon verwendet");
         }
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        String encodedPassword = passwordEncoder.bCryptPasswordEncoder().encode(user.getPassword());
         user.setPassword(encodedPassword);
-        repository.save(user);
+        this.userRepository.save(user);
 
         var token = createToken(user);
 
@@ -86,15 +102,32 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         token.setExpiresAt(LocalDateTime.now().plusMinutes(15));
         token.setUser(user);
 
-       return confirmationTokenService.saveConfirmationToken(token);
+        return confirmationTokenService.saveConfirmationToken(token);
     }
 
 
     private final static String USER_NOT_FOUND = "user with email %s not found";
 
+    public UserAuthResDTO createJwtToken(UserAuthReqDTO userAuthReqDTO) throws Exception {
+        String username = userAuthReqDTO.getEmail();
+        String password = userAuthReqDTO.getPassword();
+        userLogin(username, password);
+
+        UserDetails userDetails = loadUserByUsername(userAuthReqDTO.getEmail());
+        String newGeneratedToken = jwtTokenUtil.generateJwtToken(userDetails);
+        User userWithToken = userRepository.getByEmail(username);
+        userWithToken.setJwtToken(newGeneratedToken);
+        UserAuthResDTO userAuthResDTO = new UserAuthResDTO();
+
+        userAuthResDTO.setUser(userWithToken);
+        userAuthResDTO.setJwtToken(newGeneratedToken);
+        return userAuthResDTO;
+
+    }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return repository.findByEmail(email)
+        return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND, email)));
     }
 
@@ -120,12 +153,48 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
+
     public User enableUser (String email) {
-        var enabledUser = repository.getByEmail(email);
+        var enabledUser = userRepository.getByEmail(email);
         enabledUser.setEnabled(true);
-        return repository.save(enabledUser);
+        return userRepository.save(enabledUser);
     }
 
+
+    //user Service
+
+    @Override
+    public List<Ticket> getUserTickets(Long id) {
+        var loggedInUser = userRepository.getById(id);
+        return ticketRepository.findAllByUser(loggedInUser);
+    }
+
+    @Override
+    public String getUserCity(Long id) {
+        var loggedInUser = userRepository.getById(id);
+        return loggedInUser.getCity();
+    }
+
+    @Override
+    public Integer getUserAge(Long id) {
+        var loggedInUser = userRepository.getById(id);
+        return loggedInUser.getAge();
+    }
+
+    @Override
+    public User findUserByUsername(String username) {
+        return userRepository.getByEmail(username);
+    }
+
+    private void userLogin(String username, String password) throws Exception {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        } catch (DisabledException e) {
+            throw new Exception("USER DISABLED", e);
+        } catch (BadCredentialsException e) {
+            throw new Exception("INVALID CREDENTIALS", e);
+        }
+    }
 
 
     private String buildEmail(String name, String link) {

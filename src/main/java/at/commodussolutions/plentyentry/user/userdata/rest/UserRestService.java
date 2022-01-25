@@ -1,7 +1,12 @@
 package at.commodussolutions.plentyentry.user.userdata.rest;
 
+import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
+import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
+import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthResDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author: Eker
@@ -9,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api/backend/user")
+@CrossOrigin
 public interface UserRestService {
 
     //This is for testing, please do not delete. Thanks
@@ -17,12 +23,32 @@ public interface UserRestService {
     @ResponseBody
     UserDTO getUserById(@PathVariable Long id);
 
-    @PostMapping
+    @PostMapping("/register")
     @ResponseBody
     UserDTO createUser(@RequestBody UserDTO userDTO);
 
     @GetMapping("/confirm")
     @ResponseBody
-    public String confirm(@RequestParam("token") String token);
+    String confirm(@RequestParam("token") String token);
+
+
+    @PostMapping("/authenticate")
+    @ResponseBody
+    UserAuthResDTO createJwtToken(@RequestBody UserAuthReqDTO userAuthReqDTO) throws Exception;
+
+    //under this comment is everything for the userService please write the rest calls above this comment thanks boys
+
+    @GetMapping("/service/getAge/{id}")
+    @ResponseBody
+    Integer getUserAge(@PathVariable Long id);
+
+    @GetMapping("/service/getCity/{id}")
+    @ResponseBody
+    String getUserCity(@PathVariable Long id);
+
+    @GetMapping("/service/getTickets/{id}")
+    @ResponseBody
+    List<TicketDTO> getUserTickets(@PathVariable Long id);
+
 
 }
