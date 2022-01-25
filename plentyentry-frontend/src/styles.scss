@@ -4,9 +4,13 @@ html {
   background-color: white;
   padding: 0;
   margin: 0;
+  height: 100vh;
 }
 
 body {
   padding: 0;
   margin: 0;
+  height: 100%;
+  //background: rgb(2,0,36);
+  //background: linear-gradient(135deg, rgba(2,0,36,1) 4%, rgba(115,12,99,1) 73%);
 }

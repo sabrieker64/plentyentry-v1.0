@@ -1,0 +1,75 @@
+$brand-color: #730C63;
+$white: #fff;
+$red: #D8000C;
+$lighter-red: #FFBABA;
+
+.register-box {
+  padding: 30px;
+
+  &--inner {
+    background: rgba( 115, 12, 99, 0.8 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 7.5px );
+    -webkit-backdrop-filter: blur( 7.5px );
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    border-radius: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 60px 30px;
+    color: $white;
+    font-family: 'Open Sans', sans-serif;
+
+    h1 {
+      text-align: center;
+      font-weight: 700;
+    }
+
+    input {
+      background: transparent;
+      border: none;
+      color: $white;
+      height: 30px;
+      outline: none;
+      position: relative;
+      transition: border-bottom-color 0.3s, max-width 0.3s;
+      border-radius: 5px;
+      width: 100%;
+
+      &.ng-touched.ng-invalid {
+        border: 1px solid $red;
+      }
+
+      &.ng-valid {
+        border-color: #28a745 !important;
+      }
+    }
+
+    .form-element {
+      position: relative;
+      margin-bottom: 30px;
+
+      label {
+        display: block;
+      }
+    }
+
+    .error-box {
+      background-color: $lighter-red;
+      border: 2px solid $red;
+      border-radius: 5px;
+      text-transform: uppercase;
+      color: $red;
+      font-weight: 800;
+      padding: 0 20px;
+    }
+  }
+
+  button {
+    font-size: 20px;
+    background: transparent;
+    border: 1px solid $white;
+    color: $white;
+    padding: 10px 15px;
+    border-radius: 5px;
+  }
+}

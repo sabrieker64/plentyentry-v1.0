@@ -8,6 +8,7 @@ import {UserDetailComponent} from './user-detail/user-detail.component';
 import {AngularMaterialModule} from "../../library/anguler-material-module/anguler-material-module.module";
 import {AppRoutingModule} from "../app-routing.module";
 import {FlexModule} from "@angular/flex-layout";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {FlexModule} from "@angular/flex-layout";
     UserRoutingModule,
     AngularMaterialModule,
     AppRoutingModule,
-    FlexModule
+    FlexModule,
+    FormsModule
   ]
 })
 export class UserRegisterModule {
