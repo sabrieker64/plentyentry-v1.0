@@ -84,13 +84,16 @@ public class User implements UserDetails {
     @Column(name = "ENABLED")
     private Boolean enabled = false;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    @Column(name = "USER_MAINTAINED_EVENTS")
     private Set<Event> maintainedEvents;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    @Column(name = "USER_TICKETS")
     private Set<Ticket> tickets;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    @Column(name = "USER_PAYMENT_METHOD")
     private Set<PaymentMethod> paymentMethod;
 
     @Column(name = "JWT_TOKEN")
