@@ -54,13 +54,10 @@
 
         --!-->
       </div>
-      <div class="custom-slider-settings">
-        <label for="customRange1" class="form-label">Example range</label>
-        <input type="range" class="form-range" id="customRange1">
-
-      </div>
+      <input type="range" class="form-range" min="0" max="100" value="0" #ref (change)="getRange(ref.value)"/>
     </div>
   </div>
-
-
 </footer>
+
+
+
