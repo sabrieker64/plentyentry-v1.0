@@ -3,6 +3,8 @@ package at.commodussolutions.plentyentry.user.userdata.rest.impl;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.mapper.TicketMapper;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
+import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
+import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthResDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
 import at.commodussolutions.plentyentry.user.userdata.mapper.UserMapper;
 import at.commodussolutions.plentyentry.user.userdata.rest.UserRestService;
@@ -46,9 +48,8 @@ public class UserRestServiceImpl implements UserRestService {
     }
 
     @Override
-    public UserDTO createJwtToken(UserDTO userDTO) throws Exception {
-        User user = userService.findUserByUsername(userDTO.getEmail());
-        return userMapper.mapToDTO(userService.createJwtToken(user));
+    public UserAuthResDTO createJwtToken(UserAuthReqDTO userAuthReqDTO) throws Exception {
+        return userService.createJwtToken(userAuthReqDTO);
     }
 
 

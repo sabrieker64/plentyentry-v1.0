@@ -8,6 +8,8 @@ import at.commodussolutions.plentyentry.user.confirmation.email.EmailSender;
 import at.commodussolutions.plentyentry.user.confirmation.token.beans.ConfirmationToken;
 import at.commodussolutions.plentyentry.user.confirmation.token.service.impl.ConfirmationTokenServiceImpl;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
+import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
+import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthResDTO;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import at.commodussolutions.plentyentry.user.userdata.validations.EmailValidator;
@@ -100,22 +102,26 @@ public class UserServiceImpl implements UserService {
         token.setExpiresAt(LocalDateTime.now().plusMinutes(15));
         token.setUser(user);
 
-       return confirmationTokenService.saveConfirmationToken(token);
+        return confirmationTokenService.saveConfirmationToken(token);
     }
 
 
     private final static String USER_NOT_FOUND = "user with email %s not found";
 
-    public User createJwtToken(User user) throws Exception {
-        String username = user.getEmail();
-        String password = user.getPassword();
+    public UserAuthResDTO createJwtToken(UserAuthReqDTO userAuthReqDTO) throws Exception {
+        String username = userAuthReqDTO.getEmail();
+        String password = userAuthReqDTO.getPassword();
         userLogin(username, password);
 
-        UserDetails userDetails = loadUserByUsername(user.getEmail());
+        UserDetails userDetails = loadUserByUsername(userAuthReqDTO.getEmail());
         String newGeneratedToken = jwtTokenUtil.generateJwtToken(userDetails);
         User userWithToken = userRepository.getByEmail(username);
         userWithToken.setJwtToken(newGeneratedToken);
-        return userWithToken;
+        UserAuthResDTO userAuthResDTO = new UserAuthResDTO();
+
+        userAuthResDTO.setUser(userWithToken);
+        userAuthResDTO.setJwtToken(newGeneratedToken);
+        return userAuthResDTO;
 
     }
 
