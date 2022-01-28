@@ -1,4 +1,11 @@
 package at.commodussolutions.plentyentry.ordermanagement.event.service;
 
-public class EventService {
+import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
+
+import java.util.List;
+
+public interface EventService {
+    List<Event> getAllEvents();
+
+    Event createNewEvent(Event event);
 }

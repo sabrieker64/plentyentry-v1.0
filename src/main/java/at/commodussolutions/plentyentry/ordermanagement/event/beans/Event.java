@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "EVENT")
@@ -40,8 +41,8 @@ public class Event {
 
 //TODO: Saving images on s3 bucket and checking the url if it exists
 
-    @Column(name = "IMAGE_URL")
-    private String imageUrl;
+    @ElementCollection
+    private List<String> imageUrls;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "USER_ID_MAINTAINED_EVENTS", referencedColumnName = "ID")
