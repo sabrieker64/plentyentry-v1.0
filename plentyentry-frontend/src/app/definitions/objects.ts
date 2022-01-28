@@ -1,35 +1,38 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.34.976 on 2022-01-16 12:24:29.
+// Generated using typescript-generator version 2.32.889 on 2022-01-27 20:45:45.
 
 export interface UserDTO {
     id: number;
     firstName: string;
-    lastName: string;
-    street: string;
-    email: string;
-    password: string;
-    postCode: string;
-    city: string;
-    age: number;
-    svNumber: number;
-    birthday: Date;
-    userType: UserType;
-    maintainedEvents: EventDTO[];
-    tickets: TicketDTO[];
-    coronaStatus: CoronaStatusDTO;
-    paymentMethod: PaymentMethodDTO[];
+  lastName: string;
+  street: string;
+  email: string;
+  password: string;
+  postCode: string;
+  city: string;
+  age: number;
+  svNumber: number;
+  birthday: Date;
+  userType: UserType;
+  userGender: UserGender;
+  maintainedEvents: EventDTO[];
+  tickets: TicketDTO[];
+  coronaStatus: CoronaStatusDTO;
+  paymentMethod: PaymentMethodDTO[];
+  jwtToken: string;
 }
 
 export interface EventDTO {
-    id: number;
-    name: string;
-    date: Date;
-    description: string;
-    price: number;
-    ticketCounter: number;
-    ticketId: number;
-    imageUrl: string;
+  id: number;
+  name: string;
+  date: Date;
+  description: string;
+  price: number;
+  ticketCounter: number;
+  ticketId: number;
+  imageUrls: string[];
+  userDTO: UserDTO;
 }
 
 export interface TicketDTO {
@@ -53,15 +56,17 @@ export interface CoronaStatusDTO {
 
 export interface PaymentMethodDTO {
     id: number;
-    paymentType: PaymentType;
-    creditCardNumber: number;
-    nameOnCard: string;
-    cvSecurityCode: number;
-    iban: number;
-    user: UserDTO;
+  paymentType: PaymentType;
+  creditCardNumber: number;
+  nameOnCard: string;
+  cvSecurityCode: number;
+  iban: number;
+  user: UserDTO;
 }
 
 export type UserType = "GUEST" | "CUSTOMER" | "ADMIN" | "MAINTAINER" | "SUPERADMIN";
+
+export type UserGender = "MALE" | "FEMALE" | "DIVERSE";
 
 export type TicketStatus = "NOTUSED" | "USED" | "INUSE" | "EXPIRED" | "SELLED" | "NOTSELLED";
 

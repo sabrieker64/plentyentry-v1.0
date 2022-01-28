@@ -32,8 +32,11 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatRippleModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
 import {MatChipsModule} from "@angular/material/chips";
+import {MatSliderModule} from "@angular/material/slider";
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 const materialModules = [
+  MatSliderModule,
   CdkTreeModule,
   MatAutocompleteModule,
   MatButtonModule,
@@ -65,7 +68,8 @@ const materialModules = [
   MatGridListModule,
   MatRadioModule,
   MatDatepickerModule,
-  MatTooltipModule
+  MatTooltipModule,
+  FlexLayoutModule,
 ];
 
 @NgModule({
