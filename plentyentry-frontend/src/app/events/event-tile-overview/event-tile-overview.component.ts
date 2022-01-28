@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EventTile} from "./eventTile";
+import {Observable} from "rxjs";
+import {EventDTO} from "../../definitions/objects";
 
 @Component({
   selector: 'app-event-tile-overview',
@@ -10,8 +12,11 @@ export class EventTileOverviewComponent implements OnInit {
 
   private _events: EventTile[];
 
+  private realEvents: Observable<EventDTO[]>;
+
   constructor() {
     this._events = this.getData();
+    this.realEvents = new Observable<EventDTO[]>();
   }
 
   ngOnInit(): void {

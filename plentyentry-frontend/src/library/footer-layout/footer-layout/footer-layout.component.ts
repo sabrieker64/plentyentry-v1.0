@@ -8,9 +8,10 @@ import {Component, OnInit} from '@angular/core';
 export class FooterLayoutComponent implements OnInit {
 
   showFooter = false;
-
+  rangeValue:number;
 
   constructor() {
+    this.rangeValue = 0;
   }
 
   ngOnInit(): void {
@@ -30,8 +31,14 @@ export class FooterLayoutComponent implements OnInit {
   }
 
 
+  getRange($event: Event) {
+    console.log(document.getElementById("customRange1"));
+    console.log($event);
+    console.log($event);
+  }
 
-
-
+  changeZoom(value: string) {
+    console.log(value);
+  }
 
 }

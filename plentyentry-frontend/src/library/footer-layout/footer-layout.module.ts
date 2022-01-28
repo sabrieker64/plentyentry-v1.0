@@ -6,6 +6,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {AngularMaterialModule} from "../anguler-material-module/anguler-material-module.module";
 import {MatSliderModule} from "@angular/material/slider";
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {FlexLayoutModule} from "@angular/flex-layout";
     AngularMaterialModule,
     MatButtonModule,
     MatSliderModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule
   ]
 })
 export class FooterLayoutModule {
