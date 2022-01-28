@@ -1,10 +1,12 @@
 package at.commodussolutions.plentyentry.ordermanagement.event.dto;
 
+import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -17,5 +19,6 @@ public class EventDTO {
     private Double price;
     private Integer ticketCounter;
     private Long ticketId;
-    private String imageUrl;
+    private List<String> imageUrls;
+    private UserDTO userDTO;
 }

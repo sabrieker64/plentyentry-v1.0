@@ -7,7 +7,9 @@ import {NavigationLayoutModule} from "../library/navigation-layout/navigation-la
 import {FooterLayoutModule} from "../library/footer-layout/footer-layout.module";
 import {AngularMaterialModule} from "../library/anguler-material-module/anguler-material-module.module";
 import {RouterModule} from "@angular/router";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {AuthService} from "./auth/auth.service";
+import {AuthInterceptor} from "./auth/auth.interceptor";
 
 
 @NgModule({
@@ -24,7 +26,7 @@ import {HttpClientModule} from "@angular/common/http";
     RouterModule.forRoot([]),
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [AuthService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent],
 })
 export class AppModule {

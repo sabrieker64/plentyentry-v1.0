@@ -1,4 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import {EventService} from "../service/event.service";
+import {merge, Observable} from "rxjs";
+import {EventDTO} from "../../definitions/objects";
+import {map, switchMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-event-tile-overview',
@@ -6,12 +10,20 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./event-tile-overview.component.scss']
 })
 export class EventTileOverviewComponent implements OnInit {
+  data: Observable<EventDTO[]>;
+  searchPressed: any;
 
-  constructor() {
+  constructor(private service: EventService) {
   }
 
   ngOnInit(): void {
-    console.log('This is our tile overview');
+    const loadDataEvent = merge(this.searchPressed).pipe(switchMap(() => this.loadEvent()));
+    this.data = loadDataEvent.pipe(map(data => this.finalize(data)))
+
+  }
+
+  private loadEvent(): Observable<EventDTO[]> {
+    return this.service.getAllEvents();
   }
 
   buyClicked() {
@@ -20,5 +32,9 @@ export class EventTileOverviewComponent implements OnInit {
 
   inToCartClicked() {
     console.log('In to Cart clicked');
+  }
+
+  private finalize(value: EventDTO[]): EventDTO[] {
+    return value;
   }
 }
