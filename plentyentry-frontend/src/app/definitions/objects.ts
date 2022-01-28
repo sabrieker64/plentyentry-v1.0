@@ -1,10 +1,10 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-01-27 20:45:45.
+// Generated using typescript-generator version 2.32.889 on 2022-01-28 17:15:54.
 
 export interface UserDTO {
-    id: number;
-    firstName: string;
+  id: number;
+  firstName: string;
   lastName: string;
   street: string;
   email: string;
@@ -55,7 +55,7 @@ export interface CoronaStatusDTO {
 }
 
 export interface PaymentMethodDTO {
-    id: number;
+  id: number;
   paymentType: PaymentType;
   creditCardNumber: number;
   nameOnCard: string;
