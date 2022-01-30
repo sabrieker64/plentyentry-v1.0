@@ -21,7 +21,7 @@ export class EventTileOverviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchPressed.emit(true);
-    this.service.getAllEvents().subscribe(data => this.dataObserver);
+    this.service.getAllEvents().subscribe(data => this.finalize(data));
     let loadDataEvent = merge(this.searchPressed).pipe(switchMap(() => this.loadEvent()));
     this.dataObserver = loadDataEvent.pipe(
       map(data => this.finalize(data)),
