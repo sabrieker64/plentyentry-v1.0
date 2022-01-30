@@ -1,5 +1,6 @@
 package at.commodussolutions.plentyentry.user.authentication.jwt;
 
+import at.commodussolutions.plentyentry.user.authentication.constant.SecurityConstant;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
@@ -33,47 +34,52 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private UserService userService;
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        if (request.getHeader(AUTHORIZATION).isEmpty() | request.getHeader(AUTHORIZATION).startsWith(TOKEN_PREFIX + "No Token")) {
+            if (request.getRequestURL().toString().contains("/api/backend/event/list")) {
+                return true;
+            }
+        }
+        return super.shouldNotFilter(request);
+    }
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String jwtToken = null;
         String username = null;
-
         if (request.getMethod().equalsIgnoreCase(OPTIONS_HTTP_METHOD)) {
             response.setStatus(HttpStatus.OK.value());
-        }else{
+        } else {
+
             String authorizationHeader = request.getHeader(AUTHORIZATION);
             if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
                 jwtToken = authorizationHeader.substring(7);
 
                 try {
-                   username =  jwtTokenUtil.getSubject(jwtToken);
+                    username =  jwtTokenUtil.getSubject(jwtToken);
                 }catch (IllegalArgumentException e) {
-                    log("Unable to get JWT Token");
+                    log(SecurityConstant.TOKEN_CANNOT_BE_VERIFIED);
                 }catch (ExpiredJwtException e) {
-                    log("Jwt token is expired");
+                    log(SecurityConstant.TOKEN_EXPIRED);
                 }
 
             }else {
                 log("jwt token dont startsWith our TOKEN_PREFIX");
-
             }
-
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null){
                 UserDetails userDetails = userService.loadUserByUsername(username);
 
                 if(jwtTokenUtil.isTokenValid(userDetails, jwtToken)){
-                   UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                           new UsernamePasswordAuthenticationToken
-                                   (userDetails, null, userDetails.getAuthorities());
+                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                            new UsernamePasswordAuthenticationToken
+                                    (userDetails, null, userDetails.getAuthorities());
 
-                   usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                   SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-
-
+                    usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                 }
             }
-
             filterChain.doFilter(request, response);
         }
 

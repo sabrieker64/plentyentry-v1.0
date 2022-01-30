@@ -1,5 +1,6 @@
 package at.commodussolutions.plentyentry.user.authentication.jwt;
 
+import at.commodussolutions.plentyentry.user.authentication.constant.SecurityConstant;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,6 @@ import java.io.IOException;
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, SecurityConstant.FORBIDDEN_MESSAGE);
     }
 }
