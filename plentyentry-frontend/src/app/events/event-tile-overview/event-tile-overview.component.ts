@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {EventService} from "../service/event.service";
-import {merge, Observable} from "rxjs";
+import {merge, Observable, of} from "rxjs";
 import {EventDTO} from "../../definitions/objects";
-import {map, switchMap} from "rxjs/operators";
+import {catchError, map, shareReplay, switchMap} from "rxjs/operators";
+import {EventTile} from "./eventTile";
 
 @Component({
   selector: 'app-event-tile-overview',
@@ -10,15 +11,22 @@ import {map, switchMap} from "rxjs/operators";
   styleUrls: ['./event-tile-overview.component.scss']
 })
 export class EventTileOverviewComponent implements OnInit {
-  data: Observable<EventDTO[]>;
-  searchPressed: any;
+  dataObserver: Observable<EventDTO[]>;
+  eventDTO: EventDTO[];
+  searchPressed = new EventEmitter<boolean>();
+  events: EventTile;
 
   constructor(private service: EventService) {
   }
 
   ngOnInit(): void {
-    const loadDataEvent = merge(this.searchPressed).pipe(switchMap(() => this.loadEvent()));
-    this.data = loadDataEvent.pipe(map(data => this.finalize(data)))
+    this.searchPressed.emit(true);
+    this.service.getAllEvents().subscribe(data => this.dataObserver);
+    let loadDataEvent = merge(this.searchPressed).pipe(switchMap(() => this.loadEvent()));
+    this.dataObserver = loadDataEvent.pipe(
+      map(data => this.finalize(data)),
+      catchError(() => this.handleError()),
+      shareReplay(1));
 
   }
 
@@ -35,6 +43,11 @@ export class EventTileOverviewComponent implements OnInit {
   }
 
   private finalize(value: EventDTO[]): EventDTO[] {
+    this.eventDTO = value;
     return value;
+  }
+
+  private handleError(): Observable<EventDTO[]> {
+    return of();
   }
 }

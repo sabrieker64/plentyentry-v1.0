@@ -1,8 +1,8 @@
 package at.commodussolutions.plentyentry.user.userdata.service.impl;
 
+import at.commodussolutions.plentyentry.backendConfig.security.PasswordEncoder;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
-import at.commodussolutions.plentyentry.security.PasswordEncoder;
 import at.commodussolutions.plentyentry.user.authentication.jwt.JwtTokenUtil;
 import at.commodussolutions.plentyentry.user.confirmation.email.EmailSender;
 import at.commodussolutions.plentyentry.user.confirmation.token.beans.ConfirmationToken;

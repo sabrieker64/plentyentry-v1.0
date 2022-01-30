@@ -19,6 +19,8 @@ public class EventDTO {
     private Double price;
     private Integer ticketCounter;
     private Long ticketId;
+    private String city;
+    private String address;
     private List<String> imageUrls;
     private UserDTO userDTO;
 }

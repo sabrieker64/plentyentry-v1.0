@@ -12,7 +12,7 @@ const routes: Routes = [
 
   {
     path: 'overview',
-    component: EventTileOverviewComponent,
+    component: EventTileOverviewComponent
   }
 
   //TODO: Event Detail Site

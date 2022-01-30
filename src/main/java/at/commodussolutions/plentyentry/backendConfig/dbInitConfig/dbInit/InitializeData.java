@@ -1,4 +1,4 @@
-package at.commodussolutions.plentyentry.dbInit;
+package at.commodussolutions.plentyentry.backendConfig.dbInitConfig.dbInit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

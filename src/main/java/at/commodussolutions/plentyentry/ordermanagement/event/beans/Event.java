@@ -39,6 +39,12 @@ public class Event {
     @Column(name = "TICKET_ID")
     private Long ticketId;
 
+    @Column(name = "ADDRESS")
+    private String address;
+
+    @Column(name = "CITY")
+    private String city;
+
 //TODO: Saving images on s3 bucket and checking the url if it exists
 
     @ElementCollection

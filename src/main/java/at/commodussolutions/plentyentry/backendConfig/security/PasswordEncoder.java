@@ -1,4 +1,4 @@
-package at.commodussolutions.plentyentry.security;
+package at.commodussolutions.plentyentry.backendConfig.security;
 
 
 import org.springframework.context.annotation.Bean;

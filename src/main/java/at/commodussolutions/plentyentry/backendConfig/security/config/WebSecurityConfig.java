@@ -1,7 +1,7 @@
-package at.commodussolutions.plentyentry.security.config;
+package at.commodussolutions.plentyentry.backendConfig.security.config;
 
 
-import at.commodussolutions.plentyentry.security.PasswordEncoder;
+import at.commodussolutions.plentyentry.backendConfig.security.PasswordEncoder;
 import at.commodussolutions.plentyentry.user.authentication.jwt.JwtAuthenticationEntryPoint;
 import at.commodussolutions.plentyentry.user.authentication.jwt.JwtAuthorizationFilter;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
