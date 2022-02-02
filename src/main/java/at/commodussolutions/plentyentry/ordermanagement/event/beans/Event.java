@@ -5,10 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -51,8 +51,8 @@ public class Event {
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "EVENT_IMAGE_URLS", joinColumns = @JoinColumn(name = "EVENT_ID"))
-    @Nullable
-    private Set<String> imageUrls = new HashSet<>();
+    @Column(name = "IMAGE_URLS")
+    private List<String> eventImageUrls = new ArrayList<>();
 
     @ManyToMany(mappedBy = "entertainedEvents")
     private Set<User> entertainers;

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -21,7 +22,7 @@ public class EventDTO {
     private Long ticketId;
     private String city;
     private String address;
-    private Set<String> imageUrls;
+    private List<String> eventImageUrls;
     private Set<UserDTO> entertainers;
 
 }
