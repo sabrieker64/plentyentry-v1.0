@@ -1,40 +1,40 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-01-28 17:53:01.
+// Generated using typescript-generator version 2.32.889 on 2022-02-02 18:19:50.
 
 export interface UserDTO {
-  id: number;
-  firstName: string;
-  lastName: string;
-  street: string;
-  email: string;
-  password: string;
-  postCode: string;
-  city: string;
-  age: number;
-  svNumber: number;
-  birthday: Date;
-  userType: UserType;
-  userGender: UserGender;
-  maintainedEvents: EventDTO[];
-  tickets: TicketDTO[];
-  coronaStatus: CoronaStatusDTO;
-  paymentMethod: PaymentMethodDTO[];
-  jwtToken: string;
+    id: number;
+    firstName: string;
+    lastName: string;
+    street: string;
+    email: string;
+    password: string;
+    postCode: string;
+    city: string;
+    age: number;
+    svNumber: number;
+    birthday: Date;
+    userType: UserType;
+    userGender: UserGender;
+    maintainedEvents: EventDTO[];
+    tickets: TicketDTO[];
+    coronaStatus: CoronaStatusDTO;
+    paymentMethod: PaymentMethodDTO[];
+    jwtToken: string;
 }
 
 export interface EventDTO {
-  id: number;
-  name: string;
-  date: Date;
-  description: string;
-  price: number;
-  ticketCounter: number;
-  ticketId: number;
-  city: string;
-  address: string;
-  imageUrls: string[];
-  userDTO: UserDTO;
+    id: number;
+    name: string;
+    date: Date;
+    description: string;
+    price: number;
+    ticketCounter: number;
+    ticketId: number;
+    city: string;
+    address: string;
+    imageUrls: string[];
+    userDTO: UserDTO;
 }
 
 export interface TicketDTO {
@@ -57,13 +57,13 @@ export interface CoronaStatusDTO {
 }
 
 export interface PaymentMethodDTO {
-  id: number;
-  paymentType: PaymentType;
-  creditCardNumber: number;
-  nameOnCard: string;
-  cvSecurityCode: number;
-  iban: number;
-  user: UserDTO;
+    id: number;
+    paymentType: PaymentType;
+    creditCardNumber: number;
+    nameOnCard: string;
+    cvSecurityCode: number;
+    iban: number;
+    user: UserDTO;
 }
 
 export type UserType = "GUEST" | "CUSTOMER" | "ADMIN" | "MAINTAINER" | "SUPERADMIN";

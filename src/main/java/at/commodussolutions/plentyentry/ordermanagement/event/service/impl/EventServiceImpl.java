@@ -1,7 +1,11 @@
 package at.commodussolutions.plentyentry.ordermanagement.event.service.impl;
+/**
+ * Author: @Mina
+ */
 
 
 import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
+import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
 import at.commodussolutions.plentyentry.ordermanagement.event.service.EventService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +29,16 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event createNewEvent(Event event) {
+        return eventRepository.save(event);
+    }
+
+    @Override
+    public Event getEventById(Long id) {
+        return eventRepository.getById(id);
+    }
+
+    @Override
+    public Event updateEventById(Event event) {
         return eventRepository.save(event);
     }
 }

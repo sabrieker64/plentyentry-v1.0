@@ -14,6 +14,14 @@ public interface EventRestService {
     @ResponseBody
     List<EventDTO> getAllEvents();
 
+    @GetMapping("/{id}")
+    @ResponseBody
+    EventDTO getEventById(@PathVariable Long id);
+
+    @PutMapping()
+    @ResponseBody
+    EventDTO updateEventById(@RequestBody EventDTO updatedEvent);
+
     @PostMapping()
     @ResponseBody
     EventDTO createNewEvent(@RequestBody EventDTO eventDTO);

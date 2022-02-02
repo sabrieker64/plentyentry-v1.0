@@ -1,5 +1,6 @@
 package at.commodussolutions.plentyentry.user.userdata.rest.impl;
 
+import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.mapper.TicketMapper;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
@@ -68,5 +69,11 @@ public class UserRestServiceImpl implements UserRestService {
     @Override
     public List<TicketDTO> getUserTickets(Long id) {
         return ticketMapper.mapToListDTO(userService.getUserTickets(id));
+    }
+
+    @Override
+    public UserDTO updateUser(UserDTO updatedUser) {
+        User user = userService.getUserById(updatedUser.getId());
+        return userMapper.mapToDTO(userService.updateUser(user));
     }
 }

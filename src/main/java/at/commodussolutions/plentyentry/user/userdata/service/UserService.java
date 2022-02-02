@@ -35,4 +35,6 @@ public interface UserService extends UserDetailsService {
 
     @Override
     UserDetails loadUserByUsername(String s) throws UsernameNotFoundException;
+
+    User updateUser(User user);
 }

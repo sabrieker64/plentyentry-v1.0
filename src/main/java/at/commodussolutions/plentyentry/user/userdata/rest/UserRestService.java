@@ -51,4 +51,7 @@ public interface UserRestService {
     List<TicketDTO> getUserTickets(@PathVariable Long id);
 
 
+    @PutMapping
+    @ResponseBody
+    UserDTO updateUser(UserDTO updatedUser);
 }
