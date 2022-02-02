@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "EVENT")
@@ -47,11 +49,12 @@ public class Event {
 
 //TODO: Saving images on s3 bucket and checking the url if it exists
 
-    @ElementCollection
-    private List<String> imageUrls;
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "EVENT_IMAGE_URLS", joinColumns = @JoinColumn(name = "EVENT_ID"))
+    @Nullable
+    private Set<String> imageUrls = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "USER_ID_MAINTAINED_EVENTS", referencedColumnName = "ID")
-    private User user;
+    @ManyToMany(mappedBy = "entertainedEvents")
+    private Set<User> entertainers;
 
 }

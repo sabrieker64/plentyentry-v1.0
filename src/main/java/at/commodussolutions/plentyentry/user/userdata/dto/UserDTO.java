@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Author: @Eker
@@ -38,7 +39,7 @@ public class UserDTO {
     private LocalDate birthday;
     private UserType userType;
     private UserGender userGender;
-    private List<EventDTO> maintainedEvents;
+    private Set<EventDTO> events;
     private List<TicketDTO> tickets;
     private CoronaStatusDTO coronaStatus;
     private List<PaymentMethodDTO> paymentMethod;
