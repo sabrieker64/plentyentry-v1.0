@@ -35,8 +35,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        if (request.getHeader(AUTHORIZATION).isEmpty() | request.getHeader(AUTHORIZATION).startsWith(TOKEN_PREFIX + "No Token")) {
-            if (request.getRequestURL().toString().contains("/api/backend/event/list")) {
+        if (request.getRequestURL().toString().contains("/api/backend/event/list")) {
+            if (request.getHeader(AUTHORIZATION).isEmpty() | request.getHeader(AUTHORIZATION).startsWith(TOKEN_PREFIX + "No Token")) {
                 return true;
             }
         }

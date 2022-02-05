@@ -16,6 +16,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -84,17 +85,16 @@ public class User implements UserDetails {
     @Column(name = "ENABLED")
     private Boolean enabled = false;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
-    @Column(name = "USER_MAINTAINED_EVENTS")
-    private Set<Event> maintainedEvents;
+    @ManyToMany
+    @JoinTable(name = "ENTERTAINED_EVENTS", joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "EVENT_ID"))
+    private Set<Event> entertainedEvents;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
-    @Column(name = "USER_TICKETS")
-    private Set<Ticket> tickets;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Ticket> tickets = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
-    @Column(name = "USER_PAYMENT_METHOD")
-    private Set<PaymentMethod> paymentMethod;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<PaymentMethod> paymentMethod = new HashSet<>();
 
     @Column(name = "JWT_TOKEN")
     private String jwtToken;

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -21,6 +22,7 @@ public class EventDTO {
     private Long ticketId;
     private String city;
     private String address;
-    private List<String> imageUrls;
-    private UserDTO userDTO;
+    private List<String> eventImageUrls;
+    private Set<UserDTO> entertainers;
+
 }
