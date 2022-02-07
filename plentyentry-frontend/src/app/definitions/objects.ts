@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-02-01 23:21:49.
+// Generated using typescript-generator version 2.32.889 on 2022-02-06 19:36:25.
 
 export interface UserDTO {
   id: number;
@@ -16,7 +16,7 @@ export interface UserDTO {
   birthday: Date;
   userType: UserType;
   userGender: UserGender;
-  maintainedEvents: EventDTO[];
+  events: EventDTO[];
   tickets: TicketDTO[];
   coronaStatus: CoronaStatusDTO;
   paymentMethod: PaymentMethodDTO[];
@@ -33,8 +33,8 @@ export interface EventDTO {
   ticketId: number;
   city: string;
   address: string;
-  imageUrls: string[];
-  userDTO: UserDTO;
+  eventImageUrls: string[];
+  entertainers: UserDTO[];
 }
 
 export interface TicketDTO {
