@@ -5,8 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +13,6 @@ import java.util.List;
 @Slf4j
 @Service
 @Profile({"development", "test"})
-@ConditionalOnMissingBean()
-@ConditionalOnProperty()
 public class InitializeDatabaseService implements ApplicationRunner {
 
     @Autowired(required = false)
