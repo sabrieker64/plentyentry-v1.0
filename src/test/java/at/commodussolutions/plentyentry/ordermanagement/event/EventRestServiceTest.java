@@ -2,9 +2,12 @@ package at.commodussolutions.plentyentry.ordermanagement.event;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
+import at.commodussolutions.plentyentry.user.userdata.dbInit.UserInitializer;
+import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +42,27 @@ public class EventRestServiceTest {
     @Autowired
     private EventRepository eventRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     private final static String baseUrl = "/api/backend/event";
+
+    @Autowired
+    private UserInitializer userInitializer;
+
+
+    @BeforeEach
+    void createData() {
+        if (userInitializer.shouldDataBeInitialized()) {
+            userInitializer.initData();
+        }
+    }
 
 
     @Test
     void getAllEventTest() throws Exception {
+
+        var allUsers = userRepository.findAll();
 
         var getAllEvents = eventRepository.findAll();
         var firstResult = getAllEvents.get(0);

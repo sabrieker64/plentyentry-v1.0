@@ -1,6 +1,7 @@
 package at.commodussolutions.plentyentry.user.userdata.dbInit;
 
 import at.commodussolutions.plentyentry.backendConfig.dbInitConfig.dbInit.InitializeDatabase;
+import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +16,17 @@ public class UserInitializer implements InitializeDatabase {
 
     @Override
     public String initializeName() {
-        return null;
+        return "User Group";
     }
 
     @Override
     public String initializerName() {
-        return null;
+        return "User Initializer";
     }
 
     @Override
     public boolean shouldDataBeInitialized() {
-        return false;
+        return true;
     }
 
     @Override
@@ -35,6 +36,13 @@ public class UserInitializer implements InitializeDatabase {
 
     @Override
     public void initData() {
-
+        //User Test 1
+        User user = new User();
+        user.setEnabled(true);
+        user.setEmail("test@hotmail.com");
+        user.setPassword("password");
+        user.setFirstName("DummyFirstName");
+        user.setLastName("DummyLastName");
+        userRepository.save(user);
     }
 }
