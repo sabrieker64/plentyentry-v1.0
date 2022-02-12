@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -29,7 +28,7 @@ public class EventInitializer implements InitializeDatabase {
 
     @Override
     public boolean shouldDataBeInitialized() {
-        return true;
+        return eventRepository.count() == 0;
     }
 
     @Override
