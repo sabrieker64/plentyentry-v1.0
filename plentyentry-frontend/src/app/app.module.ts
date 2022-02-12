@@ -10,11 +10,14 @@ import {RouterModule} from "@angular/router";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthService} from "./auth/auth.service";
 import {AuthInterceptor} from "./auth/auth.interceptor";
+import { NavigationComponent } from './navigation/navigation.component';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
@@ -25,6 +28,7 @@ import {AuthInterceptor} from "./auth/auth.interceptor";
     HttpClientModule,
     RouterModule.forRoot([]),
     AppRoutingModule,
+    MatIconModule,
   ],
   providers: [AuthService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent],
