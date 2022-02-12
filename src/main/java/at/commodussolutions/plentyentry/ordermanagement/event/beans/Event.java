@@ -52,7 +52,7 @@ public class Event {
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "EVENT_IMAGE_URLS", joinColumns = @JoinColumn(name = "EVENT_ID"))
     @Column(name = "IMAGE_URLS")
-    private List<String> eventImageUrls = new ArrayList<>();
+    private List<String> eventImageUrls;
 
     @ManyToMany(mappedBy = "entertainedEvents")
     private Set<User> entertainers;

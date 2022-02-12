@@ -1,5 +1,6 @@
 package at.commodussolutions.plentyentry.ordermanagement.event;
 
+import at.commodussolutions.plentyentry.ordermanagement.event.dbInit.EventInitializer;
 import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
 import at.commodussolutions.plentyentry.user.userdata.dbInit.UserInitializer;
@@ -50,22 +51,31 @@ public class EventRestServiceTest {
     @Autowired
     private UserInitializer userInitializer;
 
+    @Autowired
+    private EventInitializer eventInitializer;
 
     @BeforeEach
     void createData() {
+        if (eventInitializer.shouldDataBeInitialized()) {
+            eventInitializer.initData();
+        }
+        /*
         if (userInitializer.shouldDataBeInitialized()) {
             userInitializer.initData();
-        }
+        }*/
     }
 
 
     @Test
     void getAllEventTest() throws Exception {
 
-        var allUsers = userRepository.findAll();
+
+        //var allUsers = userRepository.findAll();
 
         var getAllEvents = eventRepository.findAll();
         var firstResult = getAllEvents.get(0);
+
+
 
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl + "/list")
                         .accept(MediaType.APPLICATION_JSON)
