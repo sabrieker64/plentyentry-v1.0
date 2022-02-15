@@ -11,13 +11,15 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthService} from "./auth/auth.service";
 import {AuthInterceptor} from "./auth/auth.interceptor";
 import { NavigationComponent } from './navigation/navigation.component';
-import {MatIconModule} from '@angular/material/icon';
-
+import {NgxSplideModule} from 'ngx-splide';
+import {EventTileModule} from "./events/event-tile.module";
+import {SetActiveClassDirective} from "../library/directives/setActiveClass.directive";
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent
+    NavigationComponent,
+    SetActiveClassDirective
   ],
   imports: [
     BrowserModule,
@@ -28,7 +30,8 @@ import {MatIconModule} from '@angular/material/icon';
     HttpClientModule,
     RouterModule.forRoot([]),
     AppRoutingModule,
-    MatIconModule,
+    NgxSplideModule,
+    EventTileModule
   ],
   providers: [AuthService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent],

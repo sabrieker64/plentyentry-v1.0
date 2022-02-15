@@ -3,231 +3,232 @@
 <div class="register-box">
   <div class="register-box--inner">
     <h1>Register</h1>
-    <div class="form-element">
-      <label for="forname">Vorname</label>
-      <input
-        required
-        minlength="3"
-        ngModel
-        name="forname"
-        #forname="ngModel"
-        id="forname"
-        type="text"
-        placeholder="John"
-        [(ngModel)]="fname">
-      <div
-        class="error-box"
-        *ngIf="forname.touched && !forname.valid">
-        <p
-          *ngIf="forname.hasError('required')"
-        >*Dieses Eingabe Feld darf nicht leer sein</p>
-        <p
-          *ngIf="forname.hasError('minlength')">
-          *Bitte Mindestlänge von {{ forname.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ forname.getError('minlength').actualLength }} Zeichen
-        </p>
+      <div class="register-box--form">
+        <div class="form-element">
+          <input
+            required
+            minlength="3"
+            ngModel
+            name="forname"
+            #forname="ngModel"
+            id="forname"
+            type="text"
+            placeholder="Vorname"
+            [(ngModel)]="fname">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">badge</mat-icon>
+          <div
+            class="error-box"
+            *ngIf="forname.touched && !forname.valid">
+            <p
+              *ngIf="forname.hasError('required')"
+            >*Dieses Eingabe Feld darf nicht leer sein</p>
+            <p
+              *ngIf="forname.hasError('minlength')">
+              *Bitte Mindestlänge von {{ forname.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ forname.getError('minlength').actualLength }} Zeichen
+            </p>
+          </div>
+        </div>
+        <div class="form-element">
+          <input
+            required
+            minlength="3"
+            name="lastname"
+            ngModel
+            #lastname="ngModel"
+            id="lastname"
+            type="text"
+            placeholder="Nachname"
+            [(ngModel)]="lname">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">badge</mat-icon>
+          <div
+            class="error-box"
+            *ngIf="lastname.touched && !lastname.valid">
+            <p
+              *ngIf="lastname.hasError('required')"
+            >*Dieses Eingabe Feld darf nicht leer sein</p>
+            <p
+              *ngIf="lastname.hasError('minlength')">
+              *Bitte Mindestlänge von {{ lastname.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ lastname.getError('minlength').actualLength }} Zeichen
+            </p>
+          </div>
+        </div>
+        <div class="form-element">
+          <input
+            required
+            minlength="3"
+            name="city"
+            ngModel
+            #city="ngModel"
+            id="city"
+            type="text"
+            placeholder="Stadt"
+            [(ngModel)]="place">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">apartment</mat-icon>
+          <div
+            class="error-box"
+            *ngIf="city.touched && !city.valid">
+            <p
+              *ngIf="city.hasError('required')"
+            >*Dieses Eingabe Feld darf nicht leer sein</p>
+            <p
+              *ngIf="city.hasError('minlength')">
+              *Bitte Mindestlänge von {{ city.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ city.getError('minlength').actualLength }} Zeichen
+            </p>
+          </div>
+        </div>
+        <div class="form-element">
+          <input
+            required
+            minlength="3"
+            name="adress"
+            ngModel
+            #adress="ngModel"
+            id="adress"
+            type="text"
+            placeholder="Adresse"
+            [(ngModel)]="adrss">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
+          <div
+            class="error-box"
+            *ngIf="adress.touched && !adress.valid">
+            <p
+              *ngIf="adress.hasError('required')"
+            >*Dieses Eingabe Feld darf nicht leer sein</p>
+            <p
+              *ngIf="adress.hasError('minlength')">
+              *Bitte Mindestlänge von {{ adress.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ adress.getError('minlength').actualLength }} Zeichen
+            </p>
+          </div>
+        </div>
+        <div class="form-element">
+          <input
+            required
+            minlength="3"
+            name="zip"
+            ngModel
+            #zip="ngModel"
+            id="zip"
+            type="number"
+            placeholder="PLZ"
+            [(ngModel)]="zipcode">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">markunread_mailbox</mat-icon>
+          <div
+            class="error-box"
+            *ngIf="zip.touched && !zip.valid">
+            <p
+              *ngIf="zip.hasError('required')"
+            >*Dieses Eingabe Feld darf nicht leer sein</p>
+            <p
+              *ngIf="zip.hasError('minlength')">
+              *Bitte Mindestlänge von {{ zip.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ zip.getError('minlength').actualLength }} Zeichen
+            </p>
+          </div>
+        </div>
+        <div class="form-element">
+          <input
+            required
+            minlength="6"
+            name="sin"
+            ngModel
+            #sin="ngModel"
+            id="sin"
+            type="number"
+            placeholder="Sozialversicherungsnummer"
+            [(ngModel)]="socialinsurancenumber">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">health_and_safety</mat-icon>
+          <div
+            class="error-box"
+            *ngIf="sin.touched && !sin.valid">
+            <p
+              *ngIf="sin.hasError('required')"
+            >*Dieses Eingabe Feld darf nicht leer sein</p>
+            <p
+              *ngIf="sin.hasError('minlength')">
+              *Bitte Mindestlänge von {{ sin.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ sin.getError('minlength').actualLength }} Zeichen
+            </p>
+          </div>
+        </div>
+        <div class="form-element">
+          <input
+            required
+            minlength="6"
+            name="birthday"
+            ngModel
+            #birthday="ngModel"
+            id="birthday"
+            type="number"
+            placeholder="Geburtsdatum"
+            [(ngModel)]="bday">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">cake</mat-icon>
+          <div
+            class="error-box"
+            *ngIf="birthday.touched && !birthday.valid">
+            <p
+              *ngIf="birthday.hasError('required')"
+            >*Dieses Eingabe Feld darf nicht leer sein</p>
+            <p
+              *ngIf="birthday.hasError('minlength')">
+              *Bitte Mindestlänge von {{ birthday.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ birthday.getError('minlength').actualLength }} Zeichen
+            </p>
+          </div>
+        </div>
+        <div class="form-element">
+          <input
+            required
+            minlength="3"
+            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            ngModel
+            name="email"
+            #email="ngModel"
+            id="email"
+            type="email"
+            placeholder="E-Mail"
+            [(ngModel)]="mail">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">mail</mat-icon>
+          <div
+            class="error-box"
+            *ngIf="email.touched && !email.valid">
+            <p
+              *ngIf="email.hasError('required')"
+            >*Dieses Eingabe Feld darf nicht leer sein</p>
+            <p
+              *ngIf="email.hasError('minlength')">
+              *Bitte Mindestlänge von {{ email.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ email.getError('minlength').actualLength }} Zeichen
+            </p>
+            <p
+              *ngIf="email.hasError('pattern')"
+            >*Dies ist keine Email</p>
+          </div>
+        </div>
+        <div class="form-element">
+          <input
+            required
+            minlength="8"
+            pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{0,}$"
+            name="password"
+            ngModel
+            #password="ngModel"
+            id="password"
+            type="password"
+            placeholder="Passwort"
+            [(ngModel)]="pass">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">lock</mat-icon>
+          <div
+            class="error-box"
+            *ngIf="password.touched && !password.valid">
+            <p
+              *ngIf="password.hasError('required')"
+            >*Dieses Eingabe Feld darf nicht leer sein</p>
+            <p
+              *ngIf="password.hasError('minlength')">
+              *Bitte Mindestlänge von {{ password.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ password.getError('minlength').actualLength }} Zeichen
+            </p>
+            <p
+              *ngIf="password.hasError('pattern')"
+            >*Entspricht nicht unseren Vorgaben(min 1 Groß-Kleinbuchstabe, min 1 Ziffer, min 1 Sonderzeichen)</p>
+          </div>
+        </div>
+        <button (click)="postRegister()">Register now</button>
       </div>
-    </div>
-    <div class="form-element">
-      <label for="lastname">Nachname</label>
-      <input
-        required
-        minlength="3"
-        name="lastname"
-        ngModel
-        #lastname="ngModel"
-        id="lastname"
-        type="text"
-        placeholder="Doe"
-        [(ngModel)]="lname">
-      <div
-        class="error-box"
-        *ngIf="lastname.touched && !lastname.valid">
-        <p
-          *ngIf="lastname.hasError('required')"
-        >*Dieses Eingabe Feld darf nicht leer sein</p>
-        <p
-          *ngIf="lastname.hasError('minlength')">
-          *Bitte Mindestlänge von {{ lastname.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ lastname.getError('minlength').actualLength }} Zeichen
-        </p>
-      </div>
-    </div>
-    <div class="form-element">
-      <label for="city">Stadt</label>
-      <input
-        required
-        minlength="3"
-        name="city"
-        ngModel
-        #city="ngModel"
-        id="city"
-        type="text"
-        placeholder="Home is where the mountains are"
-        [(ngModel)]="place">
-      <div
-        class="error-box"
-        *ngIf="city.touched && !city.valid">
-        <p
-          *ngIf="city.hasError('required')"
-        >*Dieses Eingabe Feld darf nicht leer sein</p>
-        <p
-          *ngIf="city.hasError('minlength')">
-          *Bitte Mindestlänge von {{ city.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ city.getError('minlength').actualLength }} Zeichen
-        </p>
-      </div>
-    </div>
-    <div class="form-element">
-      <label for="adress">Adresse</label>
-      <input
-        required
-        minlength="3"
-        name="adress"
-        ngModel
-        #adress="ngModel"
-        id="adress"
-        type="text"
-        placeholder="Home is where the mountains are"
-        [(ngModel)]="adrss">
-      <div
-        class="error-box"
-        *ngIf="adress.touched && !adress.valid">
-        <p
-          *ngIf="adress.hasError('required')"
-        >*Dieses Eingabe Feld darf nicht leer sein</p>
-        <p
-          *ngIf="adress.hasError('minlength')">
-          *Bitte Mindestlänge von {{ adress.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ adress.getError('minlength').actualLength }} Zeichen
-        </p>
-      </div>
-    </div>
-    <div class="form-element">
-      <label for="zip">PLZ</label>
-      <input
-        required
-        minlength="3"
-        name="zip"
-        ngModel
-        #zip="ngModel"
-        id="zip"
-        type="number"
-        placeholder="Home is where the mountains are"
-        [(ngModel)]="zipcode">
-      <div
-        class="error-box"
-        *ngIf="zip.touched && !zip.valid">
-        <p
-          *ngIf="zip.hasError('required')"
-        >*Dieses Eingabe Feld darf nicht leer sein</p>
-        <p
-          *ngIf="zip.hasError('minlength')">
-          *Bitte Mindestlänge von {{ zip.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ zip.getError('minlength').actualLength }} Zeichen
-        </p>
-      </div>
-    </div>
-    <div class="form-element">
-      <label for="sin">Sozialversicherungsnummer</label>
-      <input
-        required
-        minlength="6"
-        name="sin"
-        ngModel
-        #sin="ngModel"
-        id="sin"
-        type="number"
-        placeholder="Home is where the mountains are"
-        [(ngModel)]="socialinsurancenumber">
-      <div
-        class="error-box"
-        *ngIf="sin.touched && !sin.valid">
-        <p
-          *ngIf="sin.hasError('required')"
-        >*Dieses Eingabe Feld darf nicht leer sein</p>
-        <p
-          *ngIf="sin.hasError('minlength')">
-          *Bitte Mindestlänge von {{ sin.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ sin.getError('minlength').actualLength }} Zeichen
-        </p>
-      </div>
-    </div>
-    <div class="form-element">
-      <label for="birthday">Geburtsdatum</label>
-      <input
-        required
-        minlength="6"
-        name="birthday"
-        ngModel
-        #birthday="ngModel"
-        id="birthday"
-        type="number"
-        placeholder="Home is where the mountains are"
-        [(ngModel)]="bday">
-      <div
-        class="error-box"
-        *ngIf="birthday.touched && !birthday.valid">
-        <p
-          *ngIf="birthday.hasError('required')"
-        >*Dieses Eingabe Feld darf nicht leer sein</p>
-        <p
-          *ngIf="birthday.hasError('minlength')">
-          *Bitte Mindestlänge von {{ birthday.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ birthday.getError('minlength').actualLength }} Zeichen
-        </p>
-      </div>
-    </div>
-    <div class="form-element">
-      <label for="email">E-Mail</label>
-      <input
-        required
-        minlength="3"
-        pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-        ngModel
-        name="email"
-        #email="ngModel"
-        id="email"
-        type="email"
-        placeholder="john@doe.com"
-        [(ngModel)]="mail">
-
-      <div
-        class="error-box"
-        *ngIf="email.touched && !email.valid">
-        <p
-          *ngIf="email.hasError('required')"
-        >*Dieses Eingabe Feld darf nicht leer sein</p>
-        <p
-          *ngIf="email.hasError('minlength')">
-          *Bitte Mindestlänge von {{ email.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ email.getError('minlength').actualLength }} Zeichen
-        </p>
-        <p
-          *ngIf="email.hasError('pattern')"
-        >*Dies ist keine Email</p>
-      </div>
-    </div>
-    <div class="form-element">
-      <label for="password">Passwort</label>
-      <input
-        required
-        minlength="8"
-        pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{0,}$"
-        name="password"
-        ngModel
-        #password="ngModel"
-        id="password"
-        type="password"
-        placeholder="Passwort"
-        [(ngModel)]="pass">
-      <div
-        class="error-box"
-        *ngIf="password.touched && !password.valid">
-        <p
-          *ngIf="password.hasError('required')"
-        >*Dieses Eingabe Feld darf nicht leer sein</p>
-        <p
-          *ngIf="password.hasError('minlength')">
-          *Bitte Mindestlänge von {{ password.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ password.getError('minlength').actualLength }} Zeichen
-        </p>
-        <p
-          *ngIf="password.hasError('pattern')"
-        >*Entspricht nicht unseren Vorgaben(min 1 Groß-Kleinbuchstabe, min 1 Ziffer, min 1 Sonderzeichen)</p>
-      </div>
-    </div>
-    <button (click)="postRegister()">Log in</button>
   </div>
 </div>

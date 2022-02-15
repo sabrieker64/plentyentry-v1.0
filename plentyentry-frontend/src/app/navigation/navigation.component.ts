@@ -6,19 +6,25 @@ import {Component, OnInit, Renderer2} from '@angular/core';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-  lastClickedNavItem: any;
+  navItems: {iconName: string, isActive:boolean, route: string}[];
 
-  constructor(private renderer: Renderer2) { }
+  constructor(private renderer: Renderer2) {
+    this.navItems = [
+      {iconName: 'shopping_cart', isActive: false, route: '/user/1/cart'},
+      {iconName: 'favorite', isActive:false, route: '/'},
+      {iconName: 'home', isActive: true, route: '/event/overview'},
+      {iconName: 'manage_accounts', isActive: false, route: '/user/login'}];
+  }
 
   ngOnInit(): void {
   }
 
-  onNavItemClick(event: Event) {
-    this.renderer.addClass(event.currentTarget, 'active');
-    if (this.lastClickedNavItem != undefined) {
-      this.renderer.removeClass(this.lastClickedNavItem, 'active');
+  onNavItemClick(selectedNavItem: {iconName: string, isActive:boolean, route: string}) {
+
+    for (let navItem of this.navItems) {
+      navItem.isActive = false;
     }
 
-    this.lastClickedNavItem = event.currentTarget;
+    selectedNavItem.isActive = true;
   }
 }

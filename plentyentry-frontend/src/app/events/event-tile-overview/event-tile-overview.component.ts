@@ -2,8 +2,8 @@ import {Component, EventEmitter, OnInit} from '@angular/core';
 import {EventService} from "../service/event.service";
 import {merge, Observable, of} from "rxjs";
 import {EventDTO} from "../../definitions/objects";
-import {catchError, map, shareReplay, switchMap} from "rxjs/operators";
-import {EventTile} from "./eventTile";
+import {catchError, filter, map, shareReplay, switchMap} from "rxjs/operators";
+import {EventTileModel} from "./eventTile.model";
 
 @Component({
   selector: 'app-event-tile-overview',
@@ -14,7 +14,10 @@ export class EventTileOverviewComponent implements OnInit {
   dataObserver: Observable<EventDTO[]>;
   eventDTO: EventDTO[];
   searchPressed = new EventEmitter<boolean>();
-  events: EventTile;
+  events: EventTileModel;
+  currentFilter: Element;
+  isTarget: boolean = false;
+  filters: {name: string, isActive: boolean}[];
 
   constructor(private service: EventService) {
   }
@@ -27,7 +30,15 @@ export class EventTileOverviewComponent implements OnInit {
       map(data => this.finalize(data)),
       catchError(() => this.handleError()),
       shareReplay(1));
+    this.filters = [
+      {name: 'Top Events', isActive: false},
+      {name: 'In meiner Nähe', isActive: false},
+      {name: 'In Kürze', isActive: false},
+    ]
+  }
 
+  console(event: Event) {
+    console.log(typeof event.target);
   }
 
   private loadEvent(): Observable<EventDTO[]> {
@@ -49,5 +60,14 @@ export class EventTileOverviewComponent implements OnInit {
 
   private handleError(): Observable<EventDTO[]> {
     return of();
+  }
+
+  onClickFilter(selectedFilter: {name: string, isActive:boolean}) {
+
+    for (let filter of this.filters) {
+      filter.isActive = false;
+    }
+
+    selectedFilter.isActive = true;
   }
 }

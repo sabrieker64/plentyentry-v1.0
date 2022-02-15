@@ -1,31 +1,10 @@
 <nav class="main-navigation">
   <ul>
-    <li>
-      <a class="main-navigation--item" (click)="onNavItemClick($event)">
+    <li *ngFor="let navItem of navItems">
+      <a class="main-navigation--item" [ngClass]="{'active': navItem.isActive }" routerLink="{{ navItem.route }}" (click)="onNavItemClick(navItem)">
         <span class="circle circle--outter"></span>
         <span class="circle circle--inner"></span>
-        <mat-icon aria-hidden="false" aria-label="Example home icon">shopping_cart</mat-icon>
-      </a>
-    </li>
-    <li>
-      <a class="main-navigation--item" (click)="onNavItemClick($event)">
-        <span class="circle circle--outter"></span>
-        <span class="circle circle--inner"></span>
-        <mat-icon aria-hidden="false" aria-label="Example home icon">favorite</mat-icon>
-      </a>
-    </li>
-    <li>
-      <a class="main-navigation--item" (click)="onNavItemClick($event)">
-        <span class="circle circle--outter"></span>
-        <span class="circle circle--inner"></span>
-        <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
-      </a>
-    </li>
-    <li>
-      <a class="main-navigation--item" (click)="onNavItemClick($event)">
-        <span class="circle circle--outter"></span>
-        <span class="circle circle--inner"></span>
-        <mat-icon aria-hidden="false" aria-label="Example home icon">manage_accounts</mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Example home icon">{{ navItem.iconName }}</mat-icon>
       </a>
     </li>
   </ul>

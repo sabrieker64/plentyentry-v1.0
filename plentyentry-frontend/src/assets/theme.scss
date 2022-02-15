@@ -1,4 +1,50 @@
 //Variables
 @import "variables";
 @import "base";
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
+
+.container {
+  max-width: 1450px;
+  padding-left: 60px;
+  padding-right: 60px;
+  margin: 0 auto;
+
+  @media screen and (max-width: 650px) {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+.mat-raised-button {
+  text-transform: uppercase;
+
+  &.mat-primary {
+    background-color: $brand-color;
+  }
+}
+
+.form-element {
+  margin-bottom: 25px;
+
+  &.two-items {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      width: 100%;
+
+      &:first-child {
+        margin-right: 12px;
+      }
+
+      &:last-child {
+        margin-left: 12px;
+      }
+    }
+  }
+
+  a {
+    color: $brand-color;
+  }
+}

@@ -1,0 +1,73 @@
+/**************************
+      Project Colors
+**************************/
+$brand-color: #7f73d4;
+$second-color: #808080;
+$black: #000;
+$white: #fff;
+$lighter-brand: rgba($brand-color, 0.2);
+
+/**************************
+      Typography
+**************************/
+$font-family-base: 'Open Sans', sans-serif;
+$font-family-special: 'Lora', serif;
+$font-size-base: 16px;
+$font-size-small: 12px;
+$font-weight-tiny: 300;
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+$font-weight-bolder: 900;
+
+$h1-font-size:                80px;
+$h2-font-size:                65px;
+$h3-font-size:                45px;
+$h4-font-size:                30px;
+$h5-font-size:                25px;
+$h6-font-size:                $font-size-base !default;
+
+$h1-min-font-size:            50px;
+$h2-min-font-size:            40px;
+$h3-min-font-size:            35px;
+$h4-min-font-size:            25px;
+$h5-min-font-size:            25px;
+$h6-min-font-size:            $h6-font-size;
+
+$lead-font-size:			  18px;
+$lead-min-font-size:		  16px;
+
+/***********************************************************************
+    FLUID TYPO (https://css-tricks.com/snippets/css/fluid-typography/)
+***********************************************************************/
+$fluid-min-vw: 600px;
+$fluid-max-vw: 1200px;
+
+/*******************
+    CONTAINER
+********************/
+$container-padding: 60px;
+$container-max-width: 1255px;
+$container-max-width--narrow: 960px;
+
+/***************************************************************
+    BREAKPOINTS https://www.mediaevent.de/css/breakpoints.html
+***************************************************************/
+$breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+) !default;
+
+/*****************
+     Filters
+******************/
+$filter-white: brightness(0) invert(1);
+
+/****************************
+    Project Spezific
+*****************************/
+$border-radius: 5px;
+$border-radius-cards: 10px;
+$grid-gap: 30px;

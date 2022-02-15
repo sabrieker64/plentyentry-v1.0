@@ -6,6 +6,7 @@ import {EventTileRoutingModule} from "./event-tile-routing.module";
 import {EventTileOverviewComponent} from "./event-tile-overview/event-tile-overview.component";
 import {FormsModule} from "@angular/forms";
 import {FooterLayoutModule} from "../../library/footer-layout/footer-layout.module";
+import {NgxSplideModule} from "ngx-splide";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {FooterLayoutModule} from "../../library/footer-layout/footer-layout.modu
         AngularMaterialModule,
         EventTileRoutingModule,
         AppRoutingModule,
-        FormsModule
+        FormsModule,
+        NgxSplideModule
     ]
 })
 export class EventTileModule {
