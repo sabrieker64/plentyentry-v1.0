@@ -12,7 +12,7 @@ phases:
     commands:
       - echo $CODEBUILD_SRC_DIR
       - cd plentyentry-frontend
-      - npm install -g npm@8.5npm
+      - npm install -y npm@latest
       - npm install -g @angular/cli
   pre_build:
     commands:
