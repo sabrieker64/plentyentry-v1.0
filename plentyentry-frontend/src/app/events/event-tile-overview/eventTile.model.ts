@@ -1,4 +1,4 @@
-export class EventTile {
+export class EventTileModel {
   private _village: string;
   private _date: string;
   private _imageUrl: string;

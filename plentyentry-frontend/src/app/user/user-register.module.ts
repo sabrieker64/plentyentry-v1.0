@@ -8,7 +8,7 @@ import {UserDetailComponent} from './user-detail/user-detail.component';
 import {AngularMaterialModule} from "../../library/anguler-material-module/anguler-material-module.module";
 import {AppRoutingModule} from "../app-routing.module";
 import {FlexModule} from "@angular/flex-layout";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -25,14 +25,15 @@ import {FormsModule} from "@angular/forms";
     RegisterComponent
   ],
 
-  imports: [
-    CommonModule,
-    UserRoutingModule,
-    AngularMaterialModule,
-    AppRoutingModule,
-    FlexModule,
-    FormsModule
-  ]
+    imports: [
+        CommonModule,
+        UserRoutingModule,
+        AngularMaterialModule,
+        AppRoutingModule,
+        FlexModule,
+        FormsModule,
+        ReactiveFormsModule
+    ]
 })
 export class UserRegisterModule {
 }

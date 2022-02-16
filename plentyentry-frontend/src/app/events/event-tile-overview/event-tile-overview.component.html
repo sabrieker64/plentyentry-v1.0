@@ -1,84 +1,156 @@
+<div class="container">
 
-<div class="list-wrapper">
-
-  <div class="control-panel">
-    <mat-icon class="material-icons background-icon">
-      settings
-    </mat-icon>
-    <mat-icon class="material-icons background-icon">
-      translate
-    </mat-icon>
-    <mat-icon class="material-icons background-icon">
-      map
-    </mat-icon>
+  <div class="event-overview--view-switch">
+    <span>
+      <mat-icon aria-hidden="false" aria-label="Example home icon">article</mat-icon>
+    </span>
+    <span>
+      <mat-icon aria-hidden="false" aria-label="Example home icon">map</mat-icon>
+    </span>
   </div>
 
-  <mat-card *ngFor="let event of dataObserver | async" class="card-wrapper">
-   <!-- <img src="{{event.imageUrls}}" class="background-image" alt="">-->
+  <div class="event-overview--greeting">
+    <p><span class="text-brand-color">Willkommen</span> User,</p>
+    <p>5 neue Events in deiner Nähe</p>
+  </div>
 
-    <div class="explicit-card">
+  <div class="event-overview--search">
+    <form>
+      <input type="text" name="filterword" placeholder="Search Events">
+      <mat-icon aria-hidden="false" aria-label="Example home icon">search</mat-icon>
+    </form>
+  </div>
 
-      <mat-card-header class="customized-card-header">
-        <div class="customized-card-header-avatar" mat-card-avatar>
-          <mat-icon class="material-icons-outlined">
-            celebration
-          </mat-icon>
-        </div>
-        <mat-card-title class="mat-card-title">
-          {{event.name}}
-        </mat-card-title>
-        <mat-card-subtitle class="mat-card-subtitle"></mat-card-subtitle>
-      </mat-card-header>
+  <ul class="event-overview--filter">
+    <li class="filter-item" *ngFor="let filter of filters" [ngClass]="{'active': filter.isActive}" (click)="onClickFilter(filter)">{{ filter.name }}</li>
+  </ul>
 
-      <mat-card-content class="custom-padding">
+  <div class="splide-container">
+    <splide [options]="
+    {
+      perPage: 4,
+      gap: 30,
+      pagination: false,
+      breakpoints: {
+        '1200': {
+          perPage: 4
+        },
+        '1000': {
+          perPage: 3
+        },
+        '800': {
+          perPage: 2,
+          padding: {right: 0},
+          arrows: true
+        },
+        '600': {
+          perPage: 1,
+          padding: {right: 85},
+          arrows: false
+        }
+      }
+    }
+      ">
+      <splide-slide>
+        <section class="event-card">
+          <div class="event-card--inner">
 
-        <div class="event-extra-information">
-
-          <div class="event-extra-information-top">
-            <mat-icon class="material-icons-outlined">
-              location_on
-            </mat-icon>
-            <h4 class="custom-text">{{event.city}}</h4>
-
-
-          </div>
-
-          <div class="event-extra-information-bottom">
-
-            <div class="event-extra-information-bottom-left">
-              <mat-icon class="material-icons-outlined">
-                event
-              </mat-icon>
-              <h4 class="custom-text">{{event.date}}</h4>
-
+            <div class="event-card--date">
+              <h3>31</h3>
+              <h3>Dez</h3>
             </div>
 
-            <div class="event-extra-information-bottom-right">
-              <mat-icon class="material-icons-outlined">
-                payments
-              </mat-icon>
-              <h4 class="custom-text">{{event.price}}</h4>
+            <figure class="event-card--thumbnail">
+              <img src="../../../assets/event.jpg">
+            </figure>
 
+            <div class="event-card--information">
+            <span>
+              <h1>Dorf-Fest</h1>
+              <small>Ellmau in Tirol</small>
+            </span>
+              <span>
+
+            </span>
+            </div>
+          </div>
+        </section>
+      </splide-slide>
+      <splide-slide>
+        <section class="event-card">
+          <div class="event-card--inner">
+
+            <div class="event-card--date">
+              <h3>31</h3>
+              <h3>Dez</h3>
             </div>
 
+            <figure class="event-card--thumbnail">
+              <img src="../../../assets/event.jpg">
+            </figure>
+
+            <div class="event-card--information">
+            <span>
+              <h1>Techno Party</h1>
+              <small>Ellmau in Tirol</small>
+            </span>
+              <span>
+
+            </span>
+            </div>
           </div>
+        </section>
+      </splide-slide>
+      <splide-slide>
+        <section class="event-card">
+          <div class="event-card--inner">
 
-        </div>
+            <div class="event-card--date">
+              <h3>31</h3>
+              <h3>Dez</h3>
+            </div>
 
+            <figure class="event-card--thumbnail">
+              <img src="../../../assets/event.jpg">
+            </figure>
 
-      </mat-card-content>
+            <div class="event-card--information">
+            <span>
+              <h1>Ü31 Party</h1>
+              <small>Ellmau in Tirol</small>
+            </span>
+              <span>
 
-      <!--
-      <mat-card-actions>
-        <button (click)="buyClicked()" mat-button>Kaufen</button>
-        <button (click)="inToCartClicked()" mat-button>Warenkorb</button>
-      </mat-card-actions>
-      !-->
-    </div>
+            </span>
+            </div>
+          </div>
+        </section>
+      </splide-slide>
+      <splide-slide>
+        <section class="event-card">
+          <div class="event-card--inner">
 
-  </mat-card>
+            <div class="event-card--date">
+              <h3>31</h3>
+              <h3>Dez</h3>
+            </div>
 
+            <figure class="event-card--thumbnail">
+              <img src="../../../assets/event.jpg">
+            </figure>
 
+            <div class="event-card--information">
+            <span>
+              <h1>Jahrmarkt</h1>
+              <small>Ellmau in Tirol</small>
+            </span>
+              <span>
+
+            </span>
+            </div>
+          </div>
+        </section>
+      </splide-slide>
+    </splide>
+  </div>
 </div>
-
-<app-footer-layout></app-footer-layout>

@@ -1,67 +1,63 @@
-<p>This is the Logn Pagee</p>
+<div class="container">
 
-<button (click)="openRegisterView()">Regestrieren sie sich jetzt</button>
-<div class="login-box">
-  <div class="login-box--inner">
-    <h1>Log In</h1>
-      <div class="form-element">
-        <label for="email">E-Mail</label>
+  <div class="login-box">
+    <div class="login-greeting">
+      <h1>Log in</h1>
+    </div>
 
-        <input
-          required
-          minlength="3"
-          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-          ngModel
-          name="email"
-          #email="ngModel"
-          id="email"
-          type="email"
-          placeholder="john@doe.com"
-          [(ngModel)]="mail">
 
-        <div
-          class="error-box"
-          *ngIf="email.touched && !email.valid">
-          <p
-            *ngIf="email.hasError('required')"
-          >*Dieses Eingabe Feld darf nicht leer sein</p>
-          <p
-            *ngIf="email.hasError('minlength')">
-            *Bitte Mindestlänge von {{ email.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ email.getError('minlength').actualLength }} Zeichen
-          </p>
-          <p
-            *ngIf="email.hasError('pattern')"
-          >*Dies ist keine Email</p>
-        </div>
-      </div>
-      <div class="form-element">
-        <label for="password">Passwort</label>
-        <input
-          required
-          minlength="8"
-          pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{0,}$"
-          name="password"
-          ngModel
-          #password="ngModel"
-          id="password"
-          type="password"
-          placeholder="Passwort"
-          [(ngModel)]="pass">
-        <div
-          class="error-box"
-          *ngIf="password.touched && !password.valid">
-          <p
-            *ngIf="password.hasError('required')"
-          >*Dieses Eingabe Feld darf nicht leer sein</p>
-          <p
-            *ngIf="password.hasError('minlength')">
-            *Bitte Mindestlänge von {{ password.getError('minlength').requiredLength }} Zeichen beachten, momentan nur {{ password.getError('minlength').actualLength }} Zeichen
-          </p>
-          <p
-            *ngIf="password.hasError('pattern')"
-          >*Entspricht nicht unseren Vorgaben(min 1 Groß-Kleinbuchstabe, min 1 Ziffer, min 1 Sonderzeichen)</p>
-        </div>
-      </div>
-      <button (click)="postLogin()">Log in</button>
+
+    <mat-form-field appearance="outline">
+      <mat-label>E-Mail</mat-label>
+
+      <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">email</mat-icon></span>
+
+      <input matInput required type="email" [formControl]="emailFormControl" [(ngModel)]="email">
+
+      <button *ngIf="email" matSuffix mat-icon-button aria-label="Clear" (click)="email=''">
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+        Bitte geben Sie eine gültige E-Mail Adresse ein
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Email ist ein <strong>Pflichtfeld</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Passwort</mat-label>
+      <span matPrefix><mat-icon aria-hidden="false" aria-label="Example home icon">lock</mat-icon></span>
+
+      <input matInput required type="password" #passwort [formControl]="passwordFormControl" [(ngModel)]="password">
+
+      <button *ngIf="password" matSuffix mat-icon-button aria-label="Clear" (click)="password=''">
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
+        Passwort ist zu kurz, mindestens 8 Zeichen
+      </mat-error>
+      <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('required') && !passwordFormControl.hasError('minlength')">
+        Passwort entspricht nicht den Vorgaben
+      </mat-error>
+      <mat-error *ngIf="passwordFormControl.hasError('required')">
+        Passwort ist ein <strong>Pflichtfeld</strong>
+      </mat-error>
+
+      <mat-hint align="end">{{passwort.value.length}} / {{passwordMinLength}}</mat-hint>
+      <mat-hint align="start">Beachten Sie die Passwort vorgabe </mat-hint>
+    </mat-form-field>
+
+    <div class="form-element two-items">
+      <button mat-raised-button color="basic" (click)="openRegisterView()">Registrieren</button>
+      <button mat-raised-button color="primary">Anmelden</button>
+    </div>
+    <div class="form-element two-items">
+      <mat-checkbox color="primary">Remember me?</mat-checkbox>
+      <a href="#">Passwort vergessen?</a>
+    </div>
   </div>
 </div>
+

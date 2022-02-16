@@ -1,18 +1,50 @@
-@import '~@angular/material/theming';
-
-@include mat-core();
-
-
-$my-app-primary: mat-palette($mat-blue-grey);
-$my-app-accent: mat-palette($mat-pink, 500, 900, A100);
-$my-app-warn: mat-palette($mat-deep-orange);
-$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
-@include angular-material-theme($my-app-theme);
+//Variables
+@import "variables";
+@import "base";
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 
-.alternate-theme {
-  $alternate-primary: mat-palette($mat-light-blue);
-  $alternate-accent: mat-palette($mat-yellow, 400);
-  $alternate-theme: mat-light-theme($alternate-primary, $alternate-accent);
-  @include angular-material-theme($alternate-theme);
+.container {
+  max-width: 1450px;
+  padding-left: 60px;
+  padding-right: 60px;
+  margin: 0 auto;
+
+  @media screen and (max-width: 650px) {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+.mat-raised-button {
+  text-transform: uppercase;
+
+  &.mat-primary {
+    background-color: $brand-color;
+  }
+}
+
+.form-element {
+  margin-bottom: 25px;
+
+  &.two-items {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      width: 100%;
+
+      &:first-child {
+        margin-right: 12px;
+      }
+
+      &:last-child {
+        margin-left: 12px;
+      }
+    }
+  }
+
+  a {
+    color: $brand-color;
+  }
 }
