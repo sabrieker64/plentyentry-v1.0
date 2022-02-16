@@ -1,5 +1,52 @@
 @import "src/assets/theme";
 
+@import "src/assets/theme";
+
+.register-greeting {
+  background-color: $brand-color;
+  padding: 10px;
+  text-align: center;
+  color: $white;
+  text-transform: uppercase;
+  border-radius: 5px;
+  margin: 35px 0;
+}
+
+.register-box {
+  padding-bottom: 30px;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.mat-form-field {
+  width: 100%;
+  overflow: hidden;
+
+  .mat-icon {
+    margin-right: 15px;
+  }
+
+  ::ng-deep {
+
+    &input {
+      background-color: transparent !important;
+      font-size: 18px;
+    }
+  }
+}
+
+.form-element.two-items {
+  margin-top: 30px;
+}
+
+:not(.mat-focused) {
+  ::ng-deep .mat-form-field-label {
+    left: 20px;
+  }
+}
+
+
+
 .register-box {
   padding: 30px 30px 100px 30px;
   max-width: 750px;
@@ -63,14 +110,18 @@
     padding: 10px;
     width: 100%;
     border-radius: 10px;
-    background-color: $brand-color;
+
     border: none;
     color: $white;
-    margin-top: 30px;
+
   }
 }
 
 .two-items {
   display: flex;
   justify-content: space-between;
+}
+
+.mat-icon {
+  color: $brand-color;
 }
