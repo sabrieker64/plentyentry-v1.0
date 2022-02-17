@@ -14,6 +14,7 @@ import {NgxSplideModule} from 'ngx-splide';
 import {EventTileModule} from "./events/event-tile.module";
 import {SetActiveClassDirective} from "../library/directives/setActiveClass.directive";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import {HashLocationStrategy, LocationStrategy} from "@angular/common";
     AngularMaterialModule,
     FooterLayoutModule,
     HttpClientModule,
-    //RouterModule.forRoot([]),
+    RouterModule.forRoot([]),
     AppRoutingModule,
     NgxSplideModule,
     EventTileModule
