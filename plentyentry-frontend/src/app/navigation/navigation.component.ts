@@ -1,4 +1,5 @@
 import {Component, OnInit, Renderer2} from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navigation',
@@ -6,25 +7,25 @@ import {Component, OnInit, Renderer2} from '@angular/core';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-  navItems: {iconName: string, isActive:boolean, route: string}[];
+  navItems: { iconName: string, isActive: boolean, route: string }[];
+  selectedNavItem: { iconName: string, isActive: boolean, route: string };
 
-  constructor(private renderer: Renderer2) {
+  constructor(private renderer: Renderer2, private router: Router) {
     this.navItems = [
       {iconName: 'shopping_cart', isActive: false, route: '/user/1/cart'},
-      {iconName: 'favorite', isActive:false, route: '/'},
+      {iconName: 'favorite', isActive: false, route: '/'},
       {iconName: 'home', isActive: true, route: '/event/overview'},
       {iconName: 'manage_accounts', isActive: false, route: '/user/login'}];
+
   }
 
   ngOnInit(): void {
   }
 
   onNavItemClick(selectedNavItem: {iconName: string, isActive:boolean, route: string}) {
-
     for (let navItem of this.navItems) {
       navItem.isActive = false;
     }
-
     selectedNavItem.isActive = true;
   }
 }
