@@ -13,7 +13,6 @@ import {NavigationComponent} from './navigation/navigation.component';
 import {NgxSplideModule} from 'ngx-splide';
 import {EventTileModule} from "./events/event-tile.module";
 import {SetActiveClassDirective} from "../library/directives/setActiveClass.directive";
-import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {RouterModule} from "@angular/router";
 
 @NgModule({
@@ -35,8 +34,7 @@ import {RouterModule} from "@angular/router";
     EventTileModule
   ],
   providers: [AuthService,
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-    {provide: LocationStrategy, useClass: HashLocationStrategy}],
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent],
 })
 export class AppModule {
