@@ -54,7 +54,6 @@ public class EventInitializer implements InitializeDatabase {
         event.setAddress("Miau miau Cat Cat");
         event.setCity("Seini Hons");
         event.setEventImageUrls(eventImageUrls);
-
         //Build Data
         eventRepository.save(event);
 
