@@ -1,16 +1,11 @@
 package at.commodussolutions.plentyentry.ordermanagement.event;
 
-import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
 import at.commodussolutions.plentyentry.ordermanagement.event.dbInit.EventInitializer;
 import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import at.commodussolutions.plentyentry.ordermanagement.event.mapper.EventMapper;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
-import at.commodussolutions.plentyentry.user.userdata.dbInit.UserInitializer;
-import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.mail.imap.protocol.ID;
-import org.hibernate.Hibernate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,17 +22,18 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
 @ContextConfiguration
+@Transactional
 public class EventRestServiceTest {
 
     @Autowired
@@ -88,13 +84,16 @@ public class EventRestServiceTest {
 
     @Test
     void getEventById() throws Exception {
-        var firstEvent = eventRepository.findById(1L).orElse(null);
-        // WHY DO I HAVE TO USE VAR???
-        //Hibernate.initialize(firstEvent.getEventImageUrls());
-        //EventDTO firstEventDTO = eventMapper.mapToDTO(firstEvent);
+        var allList = eventRepository.findAll();
+        var firstEvent = eventRepository.findById(allList.get(0).getId()).orElse(null);
+        Assertions.assertNotNull(firstEvent);
+        //Lazy Loading fehler war das wir keine eigene Transaction geöffnet haben für die tests, gelöst
+        //TODO: bei den getById aufrufen oder deleteBy id keine hard codierten Zahlen eingeben sonder so wie bei var allList
+        //TODO: eine selektieren und von dem die id holen sonst kann es krachen
+        //TODO: findById(1) -> das ist schlecht findById(allList.get(0).getId) -> das ist gut
 
 
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl + "/1")
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl + "/" + firstEvent.getId())
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -161,8 +160,9 @@ public class EventRestServiceTest {
         newEvent.setCity("Fieberbrooklyn");
         newEvent.setEventImageUrls(eventImageUrls);
 
-        MvcResult postNewEvent = mvc.perform(MockMvcRequestBuilders.post(baseUrl,newEvent)
+        MvcResult postNewEvent = mvc.perform(MockMvcRequestBuilders.post(baseUrl)
                         .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(newEvent))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
