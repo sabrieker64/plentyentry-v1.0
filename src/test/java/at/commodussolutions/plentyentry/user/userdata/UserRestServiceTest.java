@@ -1,6 +1,5 @@
 package at.commodussolutions.plentyentry.user.userdata;
 
-import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dbInit.UserInitializer;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
@@ -115,10 +114,7 @@ public class UserRestServiceTest {
                 new TypeReference<UserDTO>() {
                 });
 
-        var allUser = userRepository.findAll();
-        var newUserFromRepository = userRepository.findById(allUser.get(1).getId()).orElse(null);
-
-
+        var newUserFromRepository = userRepository.findById(result.getId()).orElseThrow();
 
         Assertions.assertEquals(result.getFirstName(), newUserFromRepository.getFirstName());
     }
