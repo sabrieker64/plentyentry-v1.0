@@ -2,7 +2,6 @@ package at.commodussolutions.plentyentry.ordermanagement.event;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.dbInit.EventInitializer;
 import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
-import at.commodussolutions.plentyentry.ordermanagement.event.mapper.EventMapper;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,16 +49,12 @@ public class EventRestServiceTest {
     @Autowired
     private EventInitializer eventInitializer;
 
-    @Autowired
-    private EventMapper eventMapper;
-
     @BeforeEach
     void createData() {
         if (eventInitializer.shouldDataBeInitialized()) {
             eventInitializer.initData();
         }
     }
-
 
     @Test
     void getAllEventTest() throws Exception {
@@ -112,11 +107,13 @@ public class EventRestServiceTest {
     @Test
     void updateEventById() throws Exception {
 
-        var firstEvent = eventRepository.findById(1L).orElse(null);
+        var allList = eventRepository.findAll();
+        var firstEvent = eventRepository.findById(allList.get(0).getId()).orElse(null);
         firstEvent.setCity("KITZBICHI");
 
         MvcResult updateFirstEvent = mvc.perform(MockMvcRequestBuilders.put(baseUrl,firstEvent)
                         .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(firstEvent))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
