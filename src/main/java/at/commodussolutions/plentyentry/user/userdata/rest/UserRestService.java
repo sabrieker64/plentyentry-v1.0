@@ -4,7 +4,6 @@ import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthResDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
-import at.commodussolutions.plentyentry.user.userdata.dto.UserRegisterDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +35,10 @@ public interface UserRestService {
     @PostMapping("/authenticate")
     @ResponseBody
     UserAuthResDTO createJwtToken(@RequestBody UserAuthReqDTO userAuthReqDTO) throws Exception;
+
+    @GetMapping("/login")
+    @ResponseBody
+    UserDTO userLogin(@RequestBody UserLoginDTO userLoginDTO) throws Exception;
 
     //under this comment is everything for the userService please write the rest calls above this comment thanks boys
 
