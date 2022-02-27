@@ -14,9 +14,20 @@ export class LoginRegisterService {
   constructor(private http: HttpClient) {
   }
 
-
   public getFirstRestCall(id: number): Observable<UserDTO> {
     return this.http.get<UserDTO>(`${this.baseUrl}/${id}`);
+  }
+
+  public login(username:string, password:string) {
+    this.http.post('http://httpbin.org/post', {username: username, password: password}).toPromise().then( data => {
+      console.log(data);
+    })
+  }
+
+  public register(gender:string, firstname:string, lastname:string, birthday:string, email:string, svNumber:string, adress:string, zipCode:string, city:string) {
+    this.http.post('http://httpbin.org/post', {gender: gender, firstname: firstname, lastname: lastname, birthday: birthday, email: email, svNumber: svNumber, adress: adress, zipCode: zipCode, city: city}).toPromise().then( data => {
+      console.log(data);
+    })
   }
 
 //TODO: Mukiiii services erstellen

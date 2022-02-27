@@ -1,96 +1,117 @@
-<p>This is the Register Page</p>
+<div class="container">
 
-<div class="register-box">
-  <div class="register-greeting">
-    <h1>Registrierung</h1>
-  </div>
+  <form action="post" (submit)="gender.errors || firstname.errors || lastname.errors || email.errors ? false : register(gender.value, firstname.value, lastname.value, birthday.value, email.value, svNumber.value, adress.value, zipcode.value, city.value)">
+    <div class="form-container form-container--column">
 
-  <mat-form-field appearance="outline">
-    <mat-label>Vorname</mat-label>
+      <h1 class="form-headline">Register</h1>
 
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">badge</mat-icon></span>
+      <div class="two-columns">
+        <div class="form-container--column">
+          <mat-form-field appearance="outline">
+            <mat-label>Geschlecht</mat-label>
+            <mat-select name="gender"
+                        ngModel
+                        #gender="ngModel"
+                        required
+            >
+              <mat-option value="Divers">Divers</mat-option>
+              <mat-option value="Weiblich">Weiblich</mat-option>
+              <mat-option value="Männlich">Männlich</mat-option>
+            </mat-select>
+            <mat-error *ngIf="gender.invalid && (gender.dirty || gender.touched)">
+              <p *ngIf="gender.errors?.required"><strong>Geschlecht</strong> darf nicht leer sein</p>
+            </mat-error>
+          </mat-form-field>
 
-    <input matInput required type="text" [formControl]="textFormControl">
+          <mat-form-field class="form-element full-width" appearance="outline">
+            <mat-label>Vorname</mat-label>
+            <input matInput placeholder="Max" name="firstname"
+                   ngModel
+                   #firstname="ngModel"
+                   required
+                   minlength="2"
+            >
+            <mat-error *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">
+              <p *ngIf="firstname.errors?.required"><strong>Vorname</strong> darf nicht leer sein</p>
+              <p *ngIf="firstname.errors?.minlength"><strong>Vorname</strong> muss mindestens 2 Zeichen lang sein</p>
+            </mat-error>
+          </mat-form-field>
 
-    <mat-error *ngIf="textFormControl.hasError('minlength')">
-      Bitte mindestlänge beachten
-    </mat-error>
-  </mat-form-field>
+          <mat-form-field class="form-element full-width" appearance="outline">
+            <mat-label>Nachname</mat-label>
+            <input matInput placeholder="Mustermann" name="lasname"
+                   ngModel
+                   #lastname="ngModel"
+                   required
+                   minlength="2"
+            >
+            <mat-error *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)">
+              <p *ngIf="lastname.errors?.required"><strong>Nachname</strong> darf nicht leer sein</p>
+              <p *ngIf="lastname.errors?.minlength"><strong>Nachname</strong> muss mindestens 2 Zeichen lang sein</p>
+            </mat-error>
+          </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Nachname</mat-label>
+          <mat-form-field appearance="outline">
+            <mat-label>Geburtsdatum</mat-label>
+            <input matInput [matDatepicker]="picker1" [formControl]="date" name="birthday" #birthday>
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
 
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">badge</mat-icon></span>
+        <div class="form-container--column">
+          <mat-form-field class="form-element full-width" appearance="outline">
+            <mat-label>E-Mail</mat-label>
+            <input matInput placeholder="max@mustermann.com" name="email"
+                   ngModel
+                   #email="ngModel"
+                   required
+                   pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+            >
+            <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
+              <p *ngIf="email.errors?.required"><strong>E-Mail</strong> darf nicht leer sein</p>
+              <p *ngIf="email.errors?.pattern"><strong>E-Mail</strong> muss gültig sein</p>
+            </mat-error>
+          </mat-form-field>
 
-    <input matInput required type="text">
+          <mat-form-field class="form-element full-width" appearance="outline">
+            <mat-label>Sozialversicherungsnummer</mat-label>
+            <input matInput placeholder="0123456789" name="svNumber"
+                   ngModel
+                   #svNumber="ngModel"
+                   pattern="^[0-9]*$"
+                   minlength="10"
+            >
+            <mat-error *ngIf="svNumber.invalid && (svNumber.dirty || svNumber.touched)">
+              <p *ngIf="svNumber.errors?.pattern"><strong>SV Nummer</strong> darf nur Zahlen enthalten</p>
+              <p *ngIf="svNumber.errors?.minlength"><strong>SV Nummer</strong> muss mindestens 10 Zeichen lang sein</p>
+            </mat-error>
+          </mat-form-field>
 
-  </mat-form-field>
+          <mat-form-field class="form-element full-width" appearance="outline">
+            <mat-label>Adresse</mat-label>
+            <input matInput placeholder="Musterstraße 1/1" #adress>
+          </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Stadt</mat-label>
+          <div class="form-element two-columns">
+            <mat-form-field class="form-element full-width" appearance="outline">
+              <mat-label>Postleitzahl</mat-label>
+              <input matInput placeholder="1234" #zipcode>
+            </mat-form-field>
 
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">apartment</mat-icon></span>
+            <mat-form-field class="form-element" appearance="outline">
+              <mat-label>Stadt</mat-label>
+              <input matInput placeholder="Musterstadt" #city>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
 
-    <input matInput required type="text">
+      <div class="form-element">
+        <button mat-raised-button color="primary" (click)="console(birthday)">Anmelden</button>
+      </div>
 
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Adresse</mat-label>
-
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon></span>
-
-    <input matInput required type="text">
-
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Postleitzahl</mat-label>
-
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">markunread_mailbox</mat-icon></span>
-
-    <input matInput required type="text">
-
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Versicherungsnummer</mat-label>
-
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">health_and_safety</mat-icon></span>
-
-    <input matInput required type="text">
-
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Geburtstag</mat-label>
-
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">cake</mat-icon></span>
-
-    <input matInput required type="text">
-
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>E-Mail</mat-label>
-
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">email</mat-icon></span>
-
-    <input matInput required type="text">
-
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Passwort</mat-label>
-
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">lock</mat-icon></span>
-
-    <input matInput required type="text">
-
-  </mat-form-field>
-
-  <div class="form-element two-items" style="margin-bottom: 50px;">
-    <button mat-raised-button color="primary">Anmelden</button>
-  </div>
+    </div>
+  </form>
 
 </div>

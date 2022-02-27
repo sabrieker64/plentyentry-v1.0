@@ -16,7 +16,6 @@ export class NavigationComponent implements OnInit {
       {iconName: 'favorite', isActive: false, route: '/'},
       {iconName: 'home', isActive: true, route: '/event/overview'},
       {iconName: 'manage_accounts', isActive: false, route: '/user/login'}];
-
   }
 
   ngOnInit(): void {

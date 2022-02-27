@@ -35,6 +35,7 @@
             "styles": [
               "src/styles.scss",
               "src/assets/theme.scss",
+              "src/material-theme.scss",
               "node_modules/@splidejs/splide/dist/css/splide.min.css",
               "node_modules/@splidejs/splide/dist/css/themes/splide-default.min.css"
             ],
