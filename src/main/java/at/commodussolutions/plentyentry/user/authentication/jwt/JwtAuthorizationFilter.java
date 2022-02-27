@@ -38,7 +38,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         if (request.getRemoteHost().equals("localhost")) {
             return true;
         }
-        if (request.getRequestURL().toString().contains("/api/backend/event/list")) {
+        if (request.getRequestURL().toString().contains("/api/backend/event/list") || request.getRequestURL().toString().contains("/api/backend/user/register")) {
             if (request.getHeader(AUTHORIZATION).isEmpty() | request.getHeader(AUTHORIZATION).startsWith(TOKEN_PREFIX + "No Token")) {
                 return true;
             }
@@ -48,7 +48,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
         String jwtToken = null;
         String username = null;
         if (request.getMethod().equalsIgnoreCase(OPTIONS_HTTP_METHOD)) {

@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {LoginRegisterService} from "../service/login-register.service";
+import {UserRegisterDTO} from "../../definitions/objects";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -9,20 +11,25 @@ import {LoginRegisterService} from "../service/login-register.service";
 })
 export class RegisterComponent implements OnInit {
   date = new FormControl(new Date());
+  userRegisterDTO: UserRegisterDTO = <UserRegisterDTO>{};
 
-  constructor(private loginRegisterService: LoginRegisterService) {
+  constructor(private loginRegisterService: LoginRegisterService, private router: Router) {
 
   }
 
-  console(data:any) {
+  console(data: any) {
 
   }
 
   ngOnInit(): void {
   }
 
-  register(gender:string, firstname:string, lastname:string, birthday:string, email:string, svNumber:string, adress:string, zipcode:string, city:string) {
-    this.loginRegisterService.register(gender, firstname, lastname, birthday, email, svNumber, adress, zipcode, city);
+
+  register() {
+    this.loginRegisterService.registerNewUser(this.userRegisterDTO).toPromise().then(() => {
+      this.router.navigateByUrl('/user/login');
+    })
+
   }
 
 }

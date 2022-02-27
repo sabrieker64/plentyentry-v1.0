@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-02-12 12:17:24.
+// Generated using typescript-generator version 2.32.889 on 2022-02-27 19:29:44.
 
 export interface UserDTO {
     id: number;
@@ -27,22 +27,34 @@ export interface EventDTO {
     id: number;
     name: string;
     date: Date;
-    description: string;
-    price: number;
-    ticketCounter: number;
-    ticketId: number;
-    city: string;
-    address: string;
-    eventImageUrls: string[];
-    entertainers: UserDTO[];
+  description: string;
+  price: number;
+  ticketCounter: number;
+  ticketId: number;
+  city: string;
+  address: string;
+  eventImageUrls: string[];
+  entertainers: UserDTO[];
+}
+
+export interface UserRegisterDTO {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  city: string;
+  postCode: string;
+  street: string;
+  birthday: Date;
+  userGender: UserGender;
 }
 
 export interface TicketDTO {
-    id: number;
-    quantity: number;
-    ticketStatus: TicketStatus;
-    user: UserDTO;
-    event: EventDTO;
+  id: number;
+  quantity: number;
+  ticketStatus: TicketStatus;
+  user: UserDTO;
+  event: EventDTO;
 }
 
 export interface CoronaStatusDTO {

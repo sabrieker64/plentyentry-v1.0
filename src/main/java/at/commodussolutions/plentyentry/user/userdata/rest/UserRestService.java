@@ -4,6 +4,7 @@ import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthResDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
+import at.commodussolutions.plentyentry.user.userdata.dto.UserRegisterDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public interface UserRestService {
 
     @PostMapping("/register")
     @ResponseBody
-    UserDTO createUser(@RequestBody UserDTO userDTO);
+    UserDTO createUser(@RequestBody UserRegisterDTO userRegisterDTO);
 
     @GetMapping("/confirm")
     @ResponseBody

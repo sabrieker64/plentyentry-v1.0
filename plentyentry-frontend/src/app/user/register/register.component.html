@@ -1,6 +1,5 @@
 <div class="container">
-
-  <form action="post" (submit)="gender.errors || firstname.errors || lastname.errors || email.errors ? false : register(gender.value, firstname.value, lastname.value, birthday.value, email.value, svNumber.value, adress.value, zipcode.value, city.value)">
+  <form #registerForm="ngForm" (ngSubmit)="registerForm.form.valid && register()">
     <div class="form-container form-container--column">
 
       <h1 class="form-headline">Register</h1>
@@ -12,11 +11,10 @@
             <mat-select name="gender"
                         ngModel
                         #gender="ngModel"
-                        required
-            >
-              <mat-option value="Divers">Divers</mat-option>
-              <mat-option value="Weiblich">Weiblich</mat-option>
-              <mat-option value="Männlich">Männlich</mat-option>
+                        required [(ngModel)]="userRegisterDTO.userGender">
+              <mat-option value="DIVERSE">Divers</mat-option>
+              <mat-option value="FEMALE">Weiblich</mat-option>
+              <mat-option value="MALE">Männlich</mat-option>
             </mat-select>
             <mat-error *ngIf="gender.invalid && (gender.dirty || gender.touched)">
               <p *ngIf="gender.errors?.required"><strong>Geschlecht</strong> darf nicht leer sein</p>
@@ -29,7 +27,7 @@
                    ngModel
                    #firstname="ngModel"
                    required
-                   minlength="2"
+                   minlength="2" [(ngModel)]="userRegisterDTO.firstName"
             >
             <mat-error *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">
               <p *ngIf="firstname.errors?.required"><strong>Vorname</strong> darf nicht leer sein</p>
@@ -39,11 +37,11 @@
 
           <mat-form-field class="form-element full-width" appearance="outline">
             <mat-label>Nachname</mat-label>
-            <input matInput placeholder="Mustermann" name="lasname"
+            <input matInput placeholder="Mustermann" name="lastname"
                    ngModel
                    #lastname="ngModel"
                    required
-                   minlength="2"
+                   minlength="2" [(ngModel)]="userRegisterDTO.lastName"
             >
             <mat-error *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)">
               <p *ngIf="lastname.errors?.required"><strong>Nachname</strong> darf nicht leer sein</p>
@@ -53,7 +51,8 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Geburtsdatum</mat-label>
-            <input matInput [matDatepicker]="picker1" [formControl]="date" name="birthday" #birthday>
+            <input matInput [matDatepicker]="picker1" [formControl]="date" name="birthday" #birthday
+                   [(ngModel)]="userRegisterDTO.birthday">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
@@ -66,7 +65,7 @@
                    ngModel
                    #email="ngModel"
                    required
-                   pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+                   pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" [(ngModel)]="userRegisterDTO.email"
             >
             <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
               <p *ngIf="email.errors?.required"><strong>E-Mail</strong> darf nicht leer sein</p>
@@ -75,40 +74,39 @@
           </mat-form-field>
 
           <mat-form-field class="form-element full-width" appearance="outline">
-            <mat-label>Sozialversicherungsnummer</mat-label>
-            <input matInput placeholder="0123456789" name="svNumber"
-                   ngModel
-                   #svNumber="ngModel"
-                   pattern="^[0-9]*$"
-                   minlength="10"
-            >
-            <mat-error *ngIf="svNumber.invalid && (svNumber.dirty || svNumber.touched)">
-              <p *ngIf="svNumber.errors?.pattern"><strong>SV Nummer</strong> darf nur Zahlen enthalten</p>
-              <p *ngIf="svNumber.errors?.minlength"><strong>SV Nummer</strong> muss mindestens 10 Zeichen lang sein</p>
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="form-element full-width" appearance="outline">
             <mat-label>Adresse</mat-label>
-            <input matInput placeholder="Musterstraße 1/1" #adress>
+            <input matInput placeholder="Musterstraße 1/1" name="street" [(ngModel)]="userRegisterDTO.street">
           </mat-form-field>
 
           <div class="form-element two-columns">
             <mat-form-field class="form-element full-width" appearance="outline">
               <mat-label>Postleitzahl</mat-label>
-              <input matInput placeholder="1234" #zipcode>
+              <input matInput placeholder="1234" name="postCode" [(ngModel)]="userRegisterDTO.postCode">
             </mat-form-field>
 
             <mat-form-field class="form-element" appearance="outline">
               <mat-label>Stadt</mat-label>
-              <input matInput placeholder="Musterstadt" #city>
+              <input matInput placeholder="Musterstadt" name="city" [(ngModel)]="userRegisterDTO.city">
+            </mat-form-field>
+
+            <mat-form-field class="form-element full-width" appearance="outline">
+              <mat-label>Passwort</mat-label>
+              <input matInput placeholder="Max" name="password" type="password"
+                     ngModel
+                     #password="ngModel"
+                     pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                     required [(ngModel)]="userRegisterDTO.password">
+              <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
+                <p *ngIf="password.errors?.required"><strong>Passwort</strong> darf nicht leer sein</p>
+                <p *ngIf="password.errors?.pattern"><strong>Passwort</strong> Richtlinien beachten</p>
+              </mat-error>
             </mat-form-field>
           </div>
         </div>
       </div>
 
       <div class="form-element">
-        <button mat-raised-button color="primary" (click)="console(birthday)">Anmelden</button>
+        <button mat-raised-button color="primary" type="submit">Anmelden</button>
       </div>
 
     </div>
