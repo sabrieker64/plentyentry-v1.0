@@ -1,8 +1,6 @@
 package at.commodussolutions.plentyentry.user.userdata.dbInit;
 
 import at.commodussolutions.plentyentry.backendConfig.dbInitConfig.dbInit.InitializeDatabase;
-import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
-import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 @Component
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -32,7 +29,7 @@ public class UserInitializer implements InitializeDatabase {
 
     @Override
     public boolean shouldDataBeInitialized() {
-        return true;
+        return userRepository.count() == 0;
     }
 
     @Override
@@ -42,7 +39,6 @@ public class UserInitializer implements InitializeDatabase {
 
     @Override
     public void initData() {
-
         //User Test 1
         User user = new User();
         user.setFirstName("John");
@@ -66,8 +62,6 @@ public class UserInitializer implements InitializeDatabase {
         user.setPaymentMethod(null);
         user.setJwtToken(null);
         user.setEnabled(true);
-
-
         userRepository.save(user);
     }
 

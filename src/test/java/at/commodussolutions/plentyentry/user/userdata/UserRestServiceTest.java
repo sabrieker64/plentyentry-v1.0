@@ -2,6 +2,7 @@ package at.commodussolutions.plentyentry.user.userdata;
 
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dbInit.UserInitializer;
+import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
@@ -52,13 +53,29 @@ public class UserRestServiceTest {
 
     @BeforeEach
     void createData() {
-        if(userInitializer.shouldDataBeInitialized()) {
+        if (userInitializer.shouldDataBeInitialized()) {
             userInitializer.initData();
         }
     }
 
+    //TODO: LOOK how we are loading the password of the users from database, maybe the crypt algorithm does not work fine
     @Test
-    void getUserById() throws Exception {
+    void userLoginTest() throws Exception {
+        var defaultUser = userRepository.findAll().get(0);
+
+        UserAuthReqDTO userAuthReqDTO = new UserAuthReqDTO();
+        userAuthReqDTO.setEmail(defaultUser.getEmail());
+        userAuthReqDTO.setPassword(defaultUser.getPassword());
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(baseUrl + "/authenticate")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userAuthReqDTO)))
+                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
+    }
+
+    @Test
+    void getUserByIdTest() throws Exception {
 
         var allUser = userRepository.findAll();
         var firstUser = userRepository.findById(allUser.get(0).getId()).orElse(null);
@@ -77,7 +94,7 @@ public class UserRestServiceTest {
     }
 
     @Test
-    void createUser() throws Exception {
+    void createUserTest() throws Exception {
 
         //User Test 1
         User user = new User();

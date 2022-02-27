@@ -18,9 +18,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
-import static at.commodussolutions.plentyentry.user.authentication.constant.SecurityConstant.OPTIONS_HTTP_METHOD;
-import static at.commodussolutions.plentyentry.user.authentication.constant.SecurityConstant.TOKEN_PREFIX;
+import static at.commodussolutions.plentyentry.user.authentication.constant.SecurityConstant.*;
 import static com.sun.activation.registries.LogSupport.log;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -38,7 +38,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         if (request.getRemoteHost().equals("localhost")) {
             return true;
         }
-        if (request.getRequestURL().toString().contains("/api/backend/event/list")) {
+        if (request.getRequestURL().toString().contains(Arrays.stream(PUBLIC_URLS).toString())) {
             if (request.getHeader(AUTHORIZATION).isEmpty() | request.getHeader(AUTHORIZATION).startsWith(TOKEN_PREFIX + "No Token")) {
                 return true;
             }
