@@ -10,6 +10,7 @@ import at.commodussolutions.plentyentry.user.confirmation.token.service.impl.Con
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthResDTO;
+import at.commodussolutions.plentyentry.user.userdata.dto.UserLoginDTO;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import at.commodussolutions.plentyentry.user.userdata.validations.EmailValidator;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -137,12 +139,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User loginUser(UserLoginDTO userLoginDTO) throws Exception {
+        User userFoundWithTypedEmail;
+        userFoundWithTypedEmail = findUserByUsername(userLoginDTO.getEmail());
+        String encodeTypedPasswordFromLogin = passwordEncoder.bCryptPasswordEncoder().encode(userLoginDTO.getPassword());
+        if (!Objects.equals(encodeTypedPasswordFromLogin, userFoundWithTypedEmail.getPassword())) {
+            throw new BadCredentialsException("Email oder Password ist falsch");
+        }
+        return userFoundWithTypedEmail;
+    }
+
+    @Override
     @Transactional
     public String confirmToken(String token) {
         ConfirmationToken confirmationToken = confirmationTokenService.getByToken(token)
                 .orElseThrow(() -> new IllegalStateException("token not found"));
 
-        if(confirmationToken.getConfirmedAt() != null){
+        if (confirmationToken.getConfirmedAt() != null) {
             throw new IllegalStateException("email already confirmed");
         }
 
