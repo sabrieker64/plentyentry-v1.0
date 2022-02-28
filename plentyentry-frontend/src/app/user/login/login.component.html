@@ -1,6 +1,6 @@
 <div class="container">
 
-  <form method="post" >
+  <form #loginForm="ngForm" [formGroup]="loginFormGroup" (ngSubmit)="loginForm.form.valid && authenticate() ">
 
     <div class="form-container form-container--column">
 
@@ -8,40 +8,30 @@
 
         <mat-form-field class="form-element full-width" appearance="outline">
           <mat-label>Login Name</mat-label>
-          <input matInput placeholder="max@mustermann.com" [(ngModel)]="usernameValue" name="username"
-                 ngModel
-                 #username="ngModel"
-                 required
-                 pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
-          >
-          <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
-            <p *ngIf="username.errors?.required"><strong>Username</strong> darf nicht leer sein</p>
-            <p *ngIf="username.errors?.pattern"><strong>Username</strong> muss gültig sein</p>
+          <input matInput placeholder="max@mustermann.com" [(ngModel)]="userAuthReqDTO.email" name="email"
+                 formControlName="email">
+          <mat-error *ngIf="loginFormGroup.get('email')?.errors">
+            <p *ngIf="loginFormGroup.get('email')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+            <p *ngIf="loginFormGroup.get('email')?.hasError('pattern')">Die ist keine gültige E-Mail Adresse</p>
           </mat-error>
-          <button *ngIf="usernameValue" matSuffix mat-icon-button aria-label="Clear" (click)="usernameValue=''">
+          <button *ngIf="userAuthReqDTO.email" matSuffix mat-icon-button aria-label="Clear" (click)="userAuthReqDTO.email=''">
             <mat-icon color="primary">close</mat-icon>
           </button>
           <mat-hint>E-Mail oder Benutzername eingeben</mat-hint>
         </mat-form-field>
 
-        <mat-form-field class="form-element full-width" appearance="outline">
-          <mat-label>Passwort</mat-label>
-          <input matInput placeholder="*****" type="password" [(ngModel)]="passwordValue" name="password"
-                 ngModel
-                 #password="ngModel"
-                 required
-                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-          >
-          <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
-            <p *ngIf="password.errors?.required"><strong>Passwort</strong> darf nicht leer sein</p>
-            <p *ngIf="password.errors?.pattern"><strong>Passwort</strong> muss Richtlinien entsprechen</p>
-          </mat-error>
-          <button *ngIf="passwordValue" matSuffix mat-icon-button aria-label="Clear" (click)="passwordValue=''">
-            <mat-icon color="primary">close</mat-icon>
-          </button>
-          <mat-hint align="end">{{passwordValue.length}} / 8</mat-hint>
-          <mat-hint>Passwort Vorgaben beachten</mat-hint>
-        </mat-form-field>
+      <mat-form-field class="form-element full-width" appearance="outline">
+        <mat-label>Passwort</mat-label>
+        <input matInput placeholder="Max" [(ngModel)]="userAuthReqDTO.password" name="password" type="password"
+               formControlName="password">
+        <button *ngIf="userAuthReqDTO.password" matSuffix mat-icon-button aria-label="Clear" (click)="userAuthReqDTO.password=''">
+          <mat-icon color="primary">close</mat-icon>
+        </button>
+        <mat-error *ngIf="loginFormGroup.get('password')?.errors">
+          <p *ngIf="loginFormGroup.get('password')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+          <p *ngIf="loginFormGroup.get('password')?.hasError('pattern')">Dies entspricht nicht den Passwort Vorgaben</p>
+        </mat-error>
+      </mat-form-field>
 
         <div class="form-element">
           <a href="#">Passwort vergessen?</a>
@@ -49,7 +39,7 @@
 
         <div class="form-element two-columns full-width">
           <button mat-raised-button color="basic" routerLink="/user/register">Registrieren</button>
-          <button mat-raised-button color="primary" type="submit" value="submit">Anmelden</button>
+          <button mat-raised-button color="primary" type="submit" value="submit" [disabled]="!loginForm.form.valid">Anmelden</button>
         </div>
 
     </div>

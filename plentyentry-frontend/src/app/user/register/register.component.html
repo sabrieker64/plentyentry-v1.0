@@ -16,7 +16,7 @@
               <mat-option value="MALE">Männlich</mat-option>
             </mat-select>
             <mat-error *ngIf="registerFormGroup.get('gender')?.errors">
-              <p *ngIf="registerFormGroup.get('gender')?.hasError('required')">{{  }}</p>
+              <p *ngIf="registerFormGroup.get('gender')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
             </mat-error>
           </mat-form-field>
 
@@ -26,8 +26,8 @@
                    formControlName="firstname"
                    [(ngModel)]="userRegisterDTO.firstName">
             <mat-error *ngIf="registerFormGroup.get('firstname')?.errors">
-              <p *ngIf="registerFormGroup.get('firstname')?.hasError('required')"><strong>Geschlecht</strong> darf nicht leer sein</p>
-              <p *ngIf="registerFormGroup.get('firstname')?.hasError('minlength')"><strong>Geschlecht</strong> mindestens 2</p>
+              <p *ngIf="registerFormGroup.get('firstname')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+              <p *ngIf="registerFormGroup.get('firstname')?.hasError('minlength')">Bitte Mindestlänge beachten</p>
             </mat-error>
           </mat-form-field>
 
@@ -37,8 +37,8 @@
                    formControlName="lastname"
                    [(ngModel)]="userRegisterDTO.lastName">
             <mat-error *ngIf="registerFormGroup.get('lastname')?.errors">
-              <p *ngIf="registerFormGroup.get('lastname')?.hasError('required')"><strong>Geschlecht</strong> darf nicht leer sein</p>
-              <p *ngIf="registerFormGroup.get('lastname')?.hasError('minlength')"><strong>Geschlecht</strong> mindestens 2</p>
+              <p *ngIf="registerFormGroup.get('lastname')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+              <p *ngIf="registerFormGroup.get('lastname')?.hasError('minlength')">Bitte Mindestlänge beachten</p>
             </mat-error>
           </mat-form-field>
 
@@ -59,8 +59,8 @@
                    formControlName="email"
                    [(ngModel)]="userRegisterDTO.email">
             <mat-error *ngIf="registerFormGroup.get('email')?.errors">
-              <p *ngIf="registerFormGroup.get('email')?.hasError('required')"><strong>Geschlecht</strong> darf nicht leer sein</p>
-              <p *ngIf="registerFormGroup.get('email')?.hasError('pattern')"><strong>Geschlecht</strong> bitte Vorschrift</p>
+              <p *ngIf="registerFormGroup.get('email')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+              <p *ngIf="registerFormGroup.get('email')?.hasError('pattern')">Die ist keine gültige E-Mail Adresse</p>
             </mat-error>
           </mat-form-field>
 
@@ -86,8 +86,8 @@
                      formControlName="password"
                      [(ngModel)]="userRegisterDTO.password">
               <mat-error *ngIf="registerFormGroup.get('password')?.errors">
-                <p *ngIf="registerFormGroup.get('password')?.hasError('required')"><strong>Geschlecht</strong> darf nicht leer sein</p>
-                <p *ngIf="registerFormGroup.get('password')?.hasError('pattern')"><strong>Geschlecht</strong> bitte Vorschrift</p>
+                <p *ngIf="registerFormGroup.get('password')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+                <p *ngIf="registerFormGroup.get('password')?.hasError('pattern')">Dies entspricht nicht den Passwort Vorgaben</p>
               </mat-error>
             </mat-form-field>
             <mat-form-field class="form-element full-width" appearance="outline">
@@ -95,8 +95,8 @@
               <input matInput placeholder="Max" name="confirmPassword" type="password"
                      formControlName="confirmPassword">
               <mat-error *ngIf="registerFormGroup.get('confirmPassword')?.errors">
-                <p *ngIf="registerFormGroup.get('confirmPassword')?.hasError('required')"><strong>Geschlecht</strong> darf nicht leer sein</p>
-                <p *ngIf="registerFormGroup.get('confirmPassword')?.hasError('crossFieldValidator')"><strong>Geschlecht</strong> stimmen nicht überein</p>
+                <p *ngIf="registerFormGroup.get('confirmPassword')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+                <p *ngIf="registerFormGroup.get('confirmPassword')?.hasError('crossFieldValidator')">Passwörter stimmen nicht überein</p>
               </mat-error>
             </mat-form-field>
           </div>

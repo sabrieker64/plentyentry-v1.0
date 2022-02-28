@@ -2,22 +2,15 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs";
-import {UserDTO, UserRegisterDTO} from "../../definitions/objects";
+import {UserAuthReqDTO, UserDTO, UserRegisterDTO} from "../../definitions/objects";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginRegisterService {
-  regex: {
+  regex: {passwort: string, email: string} = {
     passwort: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$',
     email: '^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$'
-  }
-
-  message: {
-  noEmptyField: 'Dieses Feld darf nicht leer sein',
-  noNumbers: 'Dieses Feld darf keine Ziffern enthalten',
-  noLetters: 'Dieses Feld darf keine Buhstaben enthalten',
-  wrongPattern: 'Bitte die Vorschriften für dieses Feld beachten',
   }
 
   private baseUrl: string = environment.baseUrl + 'api/backend/user';
@@ -34,14 +27,9 @@ export class LoginRegisterService {
     return this.http.post<UserDTO>(`${this.baseUrl}` + '/register', userRegisterDTO);
   }
 
-//TODO: Mukiiii services erstellen
-}
-
-export interface Errormesages {
-  errorMessages: {
-    noEmptyField: 'Dieses Feld darf nicht leer sein',
-    noNumbers: 'Dieses Feld darf keine Ziffern enthalten',
-    noLetters: 'Dieses Feld darf keine Buhstaben enthalten',
-    wrongPattern: 'Bitte die Vorschriften für dieses Feld beachten',
+  public authenticateUser(userAuthReqDTO: UserAuthReqDTO): Observable<UserDTO> {
+    return this.http.post<UserDTO>(`${this.baseUrl}` + '/authenticate', userAuthReqDTO);
   }
+
+//TODO: Mukiiii services erstellen
 }

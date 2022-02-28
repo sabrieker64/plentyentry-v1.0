@@ -9,7 +9,6 @@ import {LoginRegisterService} from "../service/login-register.service";
 import {UserRegisterDTO} from "../../definitions/objects";
 import {Router} from "@angular/router";
 import {crossFieldValidator} from "../../../library/custom-validators/crossField.validator";
-import {Errormesages} from "../service/login-register.service";
 
 @Component({
   selector: 'app-register',
@@ -19,14 +18,12 @@ import {Errormesages} from "../service/login-register.service";
 export class RegisterComponent implements OnInit {
   registerFormGroup: FormGroup;
   userRegisterDTO: UserRegisterDTO = <UserRegisterDTO>{};
-  errorMessages: Errormesages;
 
   constructor(private loginRegisterService: LoginRegisterService, private router: Router, private fb: FormBuilder) {
 
   }
 
   ngOnInit(): void {
-
 
     this.registerFormGroup = this.fb.group({
       "gender": new FormControl('', [Validators.required]),
@@ -45,6 +42,7 @@ export class RegisterComponent implements OnInit {
 
   register() {
     this.loginRegisterService.registerNewUser(this.userRegisterDTO).toPromise().then((data) => {
+      console.log(data)
       this.router.navigateByUrl('/user/login');
     })
   }
