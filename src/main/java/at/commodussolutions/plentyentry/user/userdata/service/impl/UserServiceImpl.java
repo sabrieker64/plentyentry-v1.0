@@ -10,7 +10,6 @@ import at.commodussolutions.plentyentry.user.confirmation.token.beans.Confirmati
 import at.commodussolutions.plentyentry.user.confirmation.token.service.impl.ConfirmationTokenServiceImpl;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
-import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthResDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserLoginDTO;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
@@ -126,7 +125,7 @@ public class UserServiceImpl implements UserService {
 
     private final static String USER_NOT_FOUND = "user with email %s not found";
 
-    public UserAuthResDTO createJwtToken(UserAuthReqDTO userAuthReqDTO) throws Exception {
+    public User createJwtToken(UserAuthReqDTO userAuthReqDTO) throws Exception {
         String username = userAuthReqDTO.getEmail();
         String password = userAuthReqDTO.getPassword();
         userLogin(username, password);
@@ -135,11 +134,11 @@ public class UserServiceImpl implements UserService {
         String newGeneratedToken = jwtTokenUtil.generateJwtToken(userDetails);
         User userWithToken = userRepository.getByEmail(username);
         userWithToken.setJwtToken(newGeneratedToken);
-        UserAuthResDTO userAuthResDTO = new UserAuthResDTO();
+        User user = new User();
 
-        userAuthResDTO.setUser(userWithToken);
-        userAuthResDTO.setJwtToken(newGeneratedToken);
-        return userAuthResDTO;
+        user = userWithToken;
+        user.setJwtToken(newGeneratedToken);
+        return user;
 
     }
 

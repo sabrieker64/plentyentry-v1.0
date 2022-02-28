@@ -58,20 +58,27 @@ public class UserRestServiceTest {
         }
     }
 
-    //TODO: LOOK how we are loading the password of the users from database, maybe the crypt algorithm does not work fine
+    //Password must be set manually, because of the Ecrypt Reader he reads in non crypt format but writes in crypt so that was the problem
     @Test
     void userLoginTest() throws Exception {
         var defaultUser = userRepository.findAll().get(0);
-
         UserAuthReqDTO userAuthReqDTO = new UserAuthReqDTO();
         userAuthReqDTO.setEmail(defaultUser.getEmail());
-        userAuthReqDTO.setPassword(defaultUser.getPassword());
+        userAuthReqDTO.setPassword("password");
 
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(baseUrl + "/authenticate")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userAuthReqDTO)))
                 .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
+        UserDTO userDTO = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8), UserDTO.class);
+
+        Assertions.assertEquals(defaultUser.getId(), userDTO.getId());
+        Assertions.assertEquals(defaultUser.getEmail(), userDTO.getEmail());
+        Assertions.assertEquals(defaultUser.getPassword(), userDTO.getPassword());
+        Assertions.assertEquals(defaultUser.getFirstName(), userDTO.getFirstName());
+        Assertions.assertEquals(defaultUser.getLastName(), userDTO.getLastName());
+        Assertions.assertEquals(defaultUser.getBirthday(), userDTO.getBirthday());
     }
 
     @Test
@@ -90,6 +97,8 @@ public class UserRestServiceTest {
                 new TypeReference<UserDTO>() {
                 });
 
+        //TODO: mehr Assertions bitte und oben die typreference brauchst du nicht beim user login test kannst du es dir anschauen solange es keine liste ist die wir
+        //TODO: zurück kriegen dann reicht die einzelne DTO.class bsp:  UserDTO userDTOAfterAuth = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8), UserDTO.class);
         Assertions.assertEquals(firstUser.getEmail(), result.getEmail());
     }
 
@@ -113,7 +122,6 @@ public class UserRestServiceTest {
         user.setIsLoggedIn(true);
         user.setIsVerifiedAsEntertainer(true);
         user.setLocked(false);
-        //TODO
         user.setEntertainedEvents(null);
         user.setTickets(null);
         user.setPaymentMethod(null);
@@ -133,6 +141,7 @@ public class UserRestServiceTest {
 
         var newUserFromRepository = userRepository.findById(result.getId()).orElseThrow();
 
+        //TODO: bitte möglichst viel asssertions aufbauen
         Assertions.assertEquals(result.getFirstName(), newUserFromRepository.getFirstName());
     }
 

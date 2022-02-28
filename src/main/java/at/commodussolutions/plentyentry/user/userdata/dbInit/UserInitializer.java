@@ -5,6 +5,7 @@ import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
+import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,9 @@ import java.time.LocalDate;
 public class UserInitializer implements InitializeDatabase {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public String initializeName() {
@@ -56,13 +60,12 @@ public class UserInitializer implements InitializeDatabase {
         user.setIsLoggedIn(true);
         user.setIsVerifiedAsEntertainer(true);
         user.setLocked(false);
-        //TODO
         user.setEntertainedEvents(null);
         user.setTickets(null);
         user.setPaymentMethod(null);
         user.setJwtToken(null);
         user.setEnabled(true);
-        userRepository.save(user);
+        userService.registerNewUser(user);
     }
 
 }
