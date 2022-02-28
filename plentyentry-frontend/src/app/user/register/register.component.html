@@ -1,5 +1,5 @@
 <div class="container">
-  <form #registerForm="ngForm" (ngSubmit)="registerForm.form.valid && register()">
+  <form #registerForm="ngForm" [formGroup]="registerFormGroup" (ngSubmit)="registerForm.form.valid && register()">
     <div class="form-container form-container--column">
 
       <h1 class="form-headline">Register</h1>
@@ -9,49 +9,43 @@
           <mat-form-field appearance="outline">
             <mat-label>Geschlecht</mat-label>
             <mat-select name="gender"
-                        ngModel
-                        #gender="ngModel"
-                        required [(ngModel)]="userRegisterDTO.userGender">
+                        formControlName="gender"
+                        [(ngModel)]="userRegisterDTO.userGender">
               <mat-option value="DIVERSE">Divers</mat-option>
               <mat-option value="FEMALE">Weiblich</mat-option>
               <mat-option value="MALE">Männlich</mat-option>
             </mat-select>
-            <mat-error *ngIf="gender.invalid && (gender.dirty || gender.touched)">
-              <p *ngIf="gender.errors?.required"><strong>Geschlecht</strong> darf nicht leer sein</p>
+            <mat-error *ngIf="registerFormGroup.get('gender')?.errors">
+              <p *ngIf="registerFormGroup.get('gender')?.hasError('required')">{{  }}</p>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field class="form-element full-width" appearance="outline">
             <mat-label>Vorname</mat-label>
             <input matInput placeholder="Max" name="firstname"
-                   ngModel
-                   #firstname="ngModel"
-                   required
-                   minlength="2" [(ngModel)]="userRegisterDTO.firstName"
-            >
-            <mat-error *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">
-              <p *ngIf="firstname.errors?.required"><strong>Vorname</strong> darf nicht leer sein</p>
-              <p *ngIf="firstname.errors?.minlength"><strong>Vorname</strong> muss mindestens 2 Zeichen lang sein</p>
+                   formControlName="firstname"
+                   [(ngModel)]="userRegisterDTO.firstName">
+            <mat-error *ngIf="registerFormGroup.get('firstname')?.errors">
+              <p *ngIf="registerFormGroup.get('firstname')?.hasError('required')"><strong>Geschlecht</strong> darf nicht leer sein</p>
+              <p *ngIf="registerFormGroup.get('firstname')?.hasError('minlength')"><strong>Geschlecht</strong> mindestens 2</p>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field class="form-element full-width" appearance="outline">
             <mat-label>Nachname</mat-label>
             <input matInput placeholder="Mustermann" name="lastname"
-                   ngModel
-                   #lastname="ngModel"
-                   required
-                   minlength="2" [(ngModel)]="userRegisterDTO.lastName"
-            >
-            <mat-error *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)">
-              <p *ngIf="lastname.errors?.required"><strong>Nachname</strong> darf nicht leer sein</p>
-              <p *ngIf="lastname.errors?.minlength"><strong>Nachname</strong> muss mindestens 2 Zeichen lang sein</p>
+                   formControlName="lastname"
+                   [(ngModel)]="userRegisterDTO.lastName">
+            <mat-error *ngIf="registerFormGroup.get('lastname')?.errors">
+              <p *ngIf="registerFormGroup.get('lastname')?.hasError('required')"><strong>Geschlecht</strong> darf nicht leer sein</p>
+              <p *ngIf="registerFormGroup.get('lastname')?.hasError('minlength')"><strong>Geschlecht</strong> mindestens 2</p>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Geburtsdatum</mat-label>
-            <input matInput [matDatepicker]="picker1" [formControl]="date" name="birthday" #birthday
+            <input matInput [matDatepicker]="picker1" name="birthday"
+                   formControlName="birthday"
                    [(ngModel)]="userRegisterDTO.birthday">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
@@ -62,43 +56,47 @@
           <mat-form-field class="form-element full-width" appearance="outline">
             <mat-label>E-Mail</mat-label>
             <input matInput placeholder="max@mustermann.com" name="email"
-                   ngModel
-                   #email="ngModel"
-                   required
-                   pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" [(ngModel)]="userRegisterDTO.email"
-            >
-            <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
-              <p *ngIf="email.errors?.required"><strong>E-Mail</strong> darf nicht leer sein</p>
-              <p *ngIf="email.errors?.pattern"><strong>E-Mail</strong> muss gültig sein</p>
+                   formControlName="email"
+                   [(ngModel)]="userRegisterDTO.email">
+            <mat-error *ngIf="registerFormGroup.get('email')?.errors">
+              <p *ngIf="registerFormGroup.get('email')?.hasError('required')"><strong>Geschlecht</strong> darf nicht leer sein</p>
+              <p *ngIf="registerFormGroup.get('email')?.hasError('pattern')"><strong>Geschlecht</strong> bitte Vorschrift</p>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field class="form-element full-width" appearance="outline">
             <mat-label>Adresse</mat-label>
-            <input matInput placeholder="Musterstraße 1/1" name="street" [(ngModel)]="userRegisterDTO.street">
+            <input matInput placeholder="Musterstraße 1/1" name="street" formControlName="unrequired" [(ngModel)]="userRegisterDTO.street">
           </mat-form-field>
 
           <div class="form-element two-columns">
             <mat-form-field class="form-element full-width" appearance="outline">
               <mat-label>Postleitzahl</mat-label>
-              <input matInput placeholder="1234" name="postCode" [(ngModel)]="userRegisterDTO.postCode">
+              <input matInput placeholder="1234" name="postCode" formControlName="unrequired" [(ngModel)]="userRegisterDTO.postCode">
             </mat-form-field>
 
             <mat-form-field class="form-element" appearance="outline">
               <mat-label>Stadt</mat-label>
-              <input matInput placeholder="Musterstadt" name="city" [(ngModel)]="userRegisterDTO.city">
+              <input matInput placeholder="Musterstadt" name="city" formControlName="unrequired" [(ngModel)]="userRegisterDTO.city">
             </mat-form-field>
 
             <mat-form-field class="form-element full-width" appearance="outline">
               <mat-label>Passwort</mat-label>
               <input matInput placeholder="Max" name="password" type="password"
-                     ngModel
-                     #password="ngModel"
-                     pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-                     required [(ngModel)]="userRegisterDTO.password">
-              <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
-                <p *ngIf="password.errors?.required"><strong>Passwort</strong> darf nicht leer sein</p>
-                <p *ngIf="password.errors?.pattern"><strong>Passwort</strong> Richtlinien beachten</p>
+                     formControlName="password"
+                     [(ngModel)]="userRegisterDTO.password">
+              <mat-error *ngIf="registerFormGroup.get('password')?.errors">
+                <p *ngIf="registerFormGroup.get('password')?.hasError('required')"><strong>Geschlecht</strong> darf nicht leer sein</p>
+                <p *ngIf="registerFormGroup.get('password')?.hasError('pattern')"><strong>Geschlecht</strong> bitte Vorschrift</p>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-element full-width" appearance="outline">
+              <mat-label>Passwort wiederholen</mat-label>
+              <input matInput placeholder="Max" name="confirmPassword" type="password"
+                     formControlName="confirmPassword">
+              <mat-error *ngIf="registerFormGroup.get('confirmPassword')?.errors">
+                <p *ngIf="registerFormGroup.get('confirmPassword')?.hasError('required')"><strong>Geschlecht</strong> darf nicht leer sein</p>
+                <p *ngIf="registerFormGroup.get('confirmPassword')?.hasError('crossFieldValidator')"><strong>Geschlecht</strong> stimmen nicht überein</p>
               </mat-error>
             </mat-form-field>
           </div>
@@ -106,7 +104,7 @@
       </div>
 
       <div class="form-element">
-        <button mat-raised-button color="primary" type="submit">Anmelden</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.form.valid">Anmelden</button>
       </div>
 
     </div>

@@ -19,10 +19,6 @@ export class LoginComponent implements OnInit {
 
   }
 
-  login(username:string, password:string) {
-    this.loginRegisterService.login(username, password);
-  }
-
   openRegisterView() {
     return this.router.navigateByUrl('/user/register');
   }

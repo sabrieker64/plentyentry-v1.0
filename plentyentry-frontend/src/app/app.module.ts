@@ -13,6 +13,7 @@ import {AuthInterceptor} from "./auth/auth.interceptor";
 import { NavigationComponent } from './navigation/navigation.component';
 import {NgxSplideModule} from 'ngx-splide';
 import {EventTileModule} from "./events/event-tile.module";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,9 @@ import {EventTileModule} from "./events/event-tile.module";
     RouterModule.forRoot([]),
     AppRoutingModule,
     NgxSplideModule,
-    EventTileModule
+    EventTileModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [AuthService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent],
