@@ -3,7 +3,6 @@ package at.commodussolutions.plentyentry.user.userdata.service;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
-import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthResDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserLoginDTO;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,7 +30,7 @@ public interface UserService extends UserDetailsService {
 
     User findUserByUsername(String username);
 
-    UserAuthResDTO createJwtToken(UserAuthReqDTO userAuthReqDTO) throws Exception;
+    User createJwtToken(UserAuthReqDTO userAuthReqDTO) throws Exception;
 
     @Override
     UserDetails loadUserByUsername(String s) throws UsernameNotFoundException;

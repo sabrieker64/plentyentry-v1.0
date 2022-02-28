@@ -1,6 +1,7 @@
 package at.commodussolutions.plentyentry.user.userdata.service.impl;
 
 import at.commodussolutions.plentyentry.backendConfig.security.PasswordEncoder;
+import at.commodussolutions.plentyentry.backendConfig.utils.PlentyEntryBackendUtils;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
 import at.commodussolutions.plentyentry.user.authentication.jwt.JwtTokenUtil;
@@ -9,13 +10,13 @@ import at.commodussolutions.plentyentry.user.confirmation.token.beans.Confirmati
 import at.commodussolutions.plentyentry.user.confirmation.token.service.impl.ConfirmationTokenServiceImpl;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
-import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthResDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserLoginDTO;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import at.commodussolutions.plentyentry.user.userdata.validations.EmailValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -26,9 +27,11 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Author: @Eker
@@ -61,6 +64,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private EmailSender emailSender;
 
+    @Autowired
+    private Environment environment;
+
+    private final PlentyEntryBackendUtils backendUtils;
+
+    public UserServiceImpl(PlentyEntryBackendUtils backendUtils) {
+        this.backendUtils = backendUtils;
+    }
+
     @Override
     public User getUserById(Long id) {
         return userRepository.getById(id);
@@ -69,7 +81,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User registerNewUser(User user) {
         boolean isValidEmail = emailValidator.test(user.getEmail());
-        if(!isValidEmail){
+        if (!isValidEmail) {
             throw new IllegalStateException("email is not valid");
         }
         signUpUser(user);
@@ -78,7 +90,7 @@ public class UserServiceImpl implements UserService {
 
     public String signUpUser(User user) {
         boolean userExists = this.userRepository.findByEmail(user.getEmail()).isPresent();
-        if(userExists) {
+        if (userExists) {
             throw new IllegalStateException("Email wird schon verwendet");
         }
         String encodedPassword = passwordEncoder.bCryptPasswordEncoder().encode(user.getPassword());
@@ -86,11 +98,14 @@ public class UserServiceImpl implements UserService {
         this.userRepository.save(user);
 
         var token = createToken(user);
-
-        String link = "http://localhost:8080/api/backend/user/confirm?token=" + token.getToken();
-                emailSender.send(user.getEmail(), buildEmail(user.getLastName(), link));
+        //IF you are testing, you dont need the maildev server just open the confirmation link to enable the user !!Please do not change
+        if (Objects.equals(Arrays.stream(this.environment.getActiveProfiles()).collect(Collectors.toList()).get(0), "test")) {
+            log.info("The Profile is on test that means no Email would be send, just call the Confirmation Link to enable the user");
+        } else {
+            String link = this.backendUtils.getHost() + "api/backend/user/confirm?token=" + token.getToken();
+            emailSender.send(user.getEmail(), buildEmail(user.getLastName(), link));
+        }
         return token.getToken();
-
     }
 
 
@@ -110,7 +125,7 @@ public class UserServiceImpl implements UserService {
 
     private final static String USER_NOT_FOUND = "user with email %s not found";
 
-    public UserAuthResDTO createJwtToken(UserAuthReqDTO userAuthReqDTO) throws Exception {
+    public User createJwtToken(UserAuthReqDTO userAuthReqDTO) throws Exception {
         String username = userAuthReqDTO.getEmail();
         String password = userAuthReqDTO.getPassword();
         userLogin(username, password);
@@ -119,11 +134,11 @@ public class UserServiceImpl implements UserService {
         String newGeneratedToken = jwtTokenUtil.generateJwtToken(userDetails);
         User userWithToken = userRepository.getByEmail(username);
         userWithToken.setJwtToken(newGeneratedToken);
-        UserAuthResDTO userAuthResDTO = new UserAuthResDTO();
+        User user = new User();
 
-        userAuthResDTO.setUser(userWithToken);
-        userAuthResDTO.setJwtToken(newGeneratedToken);
-        return userAuthResDTO;
+        user = userWithToken;
+        user.setJwtToken(newGeneratedToken);
+        return user;
 
     }
 

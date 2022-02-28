@@ -1,3 +1,5 @@
+pe:
+  baseHost: 'http://localhost:8080/'
 spring:
   jpa:
     hibernate:

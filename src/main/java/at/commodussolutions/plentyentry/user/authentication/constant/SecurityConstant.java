@@ -12,6 +12,6 @@ public class SecurityConstant {
     public static final String ACCESS_DENIED_MESSAGE = "You dont have the permission to access this page";
     public static final String TOKEN_EXPIRED = "Your Token is Expired please login again";
     public static final String OPTIONS_HTTP_METHOD = "OPTIONS";
-    public static final String[] PUBLIC_URLS = {"/api/backend/user/login", "/api/backend/user/register", "/api/backend/user/resetpassword/**" };
+    public static final String[] PUBLIC_URLS = {"/api/backend/user/authenticate", "/api/backend/user/register", "/api/backend/user/resetpassword/**"};
 
 }
