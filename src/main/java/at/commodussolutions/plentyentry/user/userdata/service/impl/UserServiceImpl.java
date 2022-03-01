@@ -11,6 +11,7 @@ import at.commodussolutions.plentyentry.user.confirmation.token.service.impl.Con
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserLoginDTO;
+import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import at.commodussolutions.plentyentry.user.userdata.validations.EmailValidator;
@@ -95,6 +96,9 @@ public class UserServiceImpl implements UserService {
         }
         String encodedPassword = passwordEncoder.bCryptPasswordEncoder().encode(user.getPassword());
         user.setPassword(encodedPassword);
+        if (user.getUserType() == null) {
+            user.setUserType(UserType.CUSTOMER);
+        }
         this.userRepository.save(user);
 
         var token = createToken(user);
@@ -134,8 +138,7 @@ public class UserServiceImpl implements UserService {
         String newGeneratedToken = jwtTokenUtil.generateJwtToken(userDetails);
         User userWithToken = userRepository.getByEmail(username);
         userWithToken.setJwtToken(newGeneratedToken);
-        User user = new User();
-
+        User user;
         user = userWithToken;
         user.setJwtToken(newGeneratedToken);
         return user;

@@ -65,7 +65,7 @@ public class UserInitializer implements InitializeDatabase {
         user.setPaymentMethod(null);
         user.setJwtToken(null);
         user.setEnabled(true);
-        userService.registerNewUser(user);
+        userRepository.save(user);
     }
 
 }

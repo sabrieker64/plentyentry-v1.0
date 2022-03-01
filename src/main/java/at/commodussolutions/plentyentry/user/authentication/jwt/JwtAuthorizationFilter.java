@@ -56,14 +56,14 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         } else {
 
             String authorizationHeader = request.getHeader(AUTHORIZATION);
-            if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
+            if (!authorizationHeader.contains("No Token") && authorizationHeader.startsWith(TOKEN_PREFIX)) {
                 jwtToken = authorizationHeader.substring(7);
 
                 try {
-                    username =  jwtTokenUtil.getSubject(jwtToken);
-                }catch (IllegalArgumentException e) {
+                    username = jwtTokenUtil.getSubject(jwtToken);
+                } catch (IllegalArgumentException e) {
                     log(SecurityConstant.TOKEN_CANNOT_BE_VERIFIED);
-                }catch (ExpiredJwtException e) {
+                } catch (ExpiredJwtException e) {
                     log(SecurityConstant.TOKEN_EXPIRED);
                 }
 
