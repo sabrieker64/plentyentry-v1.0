@@ -8,7 +8,6 @@ import at.commodussolutions.plentyentry.user.userdata.dto.UserLoginDTO;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +26,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.transaction.Transactional;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 
@@ -114,6 +112,8 @@ public class UserRestServiceTest {
 
         var newUserFromRepository = userRepository.findById(result.getId()).orElseThrow();
 
+
+        //todo More Assertionsssssssssss!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         Assertions.assertEquals(result.getFirstName(), newUserFromRepository.getFirstName());
     }
 
@@ -122,7 +122,13 @@ public class UserRestServiceTest {
         var allUser = userRepository.findAll();
         var firstUser = userRepository.findById(allUser.get(0).getId()).orElse(null);
 
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl + "/confirm&token="+firstUser.getJwtToken())
+        //todo conirmation token is not jwtToken confirmation token is just to verify the email after register
+        //todo den confirmation test würde ich nach dem register einbauen weil du da den confirmation token kriegst
+        //todo dann kannst du direkt schauen danach ob der user enabled ist
+        assert firstUser != null;
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl +
+                                //todo thats not right there
+                                "/confirm&token=" + firstUser.getJwtToken())
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -132,11 +138,15 @@ public class UserRestServiceTest {
 
         System.out.printf(resultToken);
 
+        //todo you should check after the confiramtion of user.getEnabled is true
+
         Assertions.assertEquals(resultToken, resultToken);
     }
 
+    //And this is userLoginTest because authentication and returning an jwtToken equals to login,
+    // login means authentication to show user specific data
     @Test
-    void createJwtTokenTest() throws Exception {
+    void userLoginTest() throws Exception {
         var defaultUser = userRepository.findAll().get(0);
         UserAuthReqDTO userAuthReqDTO = new UserAuthReqDTO();
         userAuthReqDTO.setEmail(defaultUser.getEmail());
@@ -159,8 +169,8 @@ public class UserRestServiceTest {
 
 
     //WHY GETTING 401?!
-    @Test
-    public void userLoginTest() throws Exception {
+    //TODO: this test is bullshit for login its enough to test the authentication
+    public void bullshitTest() throws Exception {
 
 
         var defaultUser = userRepository.findAll().get(0);
@@ -203,6 +213,7 @@ public class UserRestServiceTest {
         var allUser = userRepository.findAll();
         var firstUser = userRepository.findById(allUser.get(0).getId()).orElse(null);
 
+        assert firstUser != null;
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl + "/service/getAge/" +firstUser.getId())
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -219,6 +230,7 @@ public class UserRestServiceTest {
         var allUser = userRepository.findAll();
         var firstUser = userRepository.findById(allUser.get(0).getId()).orElse(null);
 
+        assert firstUser != null;
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl + "/service/getCity/" +firstUser.getId())
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -235,12 +247,14 @@ public class UserRestServiceTest {
         var allUser = userRepository.findAll();
         var firstUser = userRepository.findById(allUser.get(0).getId()).orElse(null);
 
+        //And try to assert for not null if you trying dynamic loaded data to look if there is anything in there before setting or getting objects
+        assert firstUser != null;
         firstUser.setFirstName("Super");
         firstUser.setLastName("Mario");
         firstUser.setUserGender(UserGender.MALE);
         firstUser.setAge(22);
 
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put(baseUrl )
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put(baseUrl)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(firstUser))
                         .contentType(MediaType.APPLICATION_JSON))
