@@ -4,9 +4,11 @@ import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dbInit.UserInitializer;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
+import at.commodussolutions.plentyentry.user.userdata.dto.UserLoginDTO;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +27,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.transaction.Transactional;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 
@@ -55,28 +58,6 @@ public class UserRestServiceTest {
         if (userInitializer.shouldDataBeInitialized()) {
             userInitializer.initData();
         }
-    }
-
-    @Test
-    void userLoginTest() throws Exception {
-        var defaultUser = userRepository.findAll().get(0);
-        UserAuthReqDTO userAuthReqDTO = new UserAuthReqDTO();
-        userAuthReqDTO.setEmail(defaultUser.getEmail());
-        userAuthReqDTO.setPassword("password");
-
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(baseUrl + "/authenticate")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(userAuthReqDTO)))
-                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
-        UserDTO userDTO = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8), UserDTO.class);
-
-        Assertions.assertEquals(defaultUser.getId(), userDTO.getId());
-        Assertions.assertEquals(defaultUser.getEmail(), userDTO.getEmail());
-        Assertions.assertEquals(defaultUser.getPassword(), userDTO.getPassword());
-        Assertions.assertEquals(defaultUser.getFirstName(), userDTO.getFirstName());
-        Assertions.assertEquals(defaultUser.getLastName(), userDTO.getLastName());
-        Assertions.assertEquals(defaultUser.getBirthday(), userDTO.getBirthday());
     }
 
     @Test
@@ -136,6 +117,142 @@ public class UserRestServiceTest {
         Assertions.assertEquals(result.getFirstName(), newUserFromRepository.getFirstName());
     }
 
+    @Test
+    public void confirmTest() throws Exception {
+        var allUser = userRepository.findAll();
+        var firstUser = userRepository.findById(allUser.get(0).getId()).orElse(null);
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl + "/confirm&token="+firstUser.getJwtToken())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        String resultToken = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8), String.class);
+
+        System.out.printf(resultToken);
+
+        Assertions.assertEquals(resultToken, resultToken);
+    }
+
+    @Test
+    void createJwtTokenTest() throws Exception {
+        var defaultUser = userRepository.findAll().get(0);
+        UserAuthReqDTO userAuthReqDTO = new UserAuthReqDTO();
+        userAuthReqDTO.setEmail(defaultUser.getEmail());
+        userAuthReqDTO.setPassword("password");
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(baseUrl + "/authenticate")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userAuthReqDTO)))
+                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
+        UserDTO userDTO = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8), UserDTO.class);
+
+        Assertions.assertEquals(defaultUser.getId(), userDTO.getId());
+        Assertions.assertEquals(defaultUser.getEmail(), userDTO.getEmail());
+        Assertions.assertEquals(defaultUser.getPassword(), userDTO.getPassword());
+        Assertions.assertEquals(defaultUser.getFirstName(), userDTO.getFirstName());
+        Assertions.assertEquals(defaultUser.getLastName(), userDTO.getLastName());
+        Assertions.assertEquals(defaultUser.getBirthday(), userDTO.getBirthday());
+    }
 
 
+    //WHY GETTING 401?!
+    @Test
+    public void userLoginTest() throws Exception {
+
+
+        var defaultUser = userRepository.findAll().get(0);
+        UserAuthReqDTO userAuthReqDTO = new UserAuthReqDTO();
+        userAuthReqDTO.setEmail(defaultUser.getEmail());
+        userAuthReqDTO.setPassword("password");
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(baseUrl + "/authenticate")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userAuthReqDTO)))
+                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
+        UserDTO userDTO = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8), UserDTO.class);
+
+        Assertions.assertEquals(defaultUser.getId(), userDTO.getId());
+
+
+        //DOWN THERE ISN'T WORKING
+
+        UserLoginDTO userLoginDTO = new UserLoginDTO();
+        userLoginDTO.setEmail(defaultUser.getEmail());
+        userLoginDTO.setPassword("password");
+        userLoginDTO.setJwtToken(userDTO.getJwtToken());
+
+        MvcResult mvcResultLogin = mvc.perform(MockMvcRequestBuilders.get(baseUrl + "/login")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userLoginDTO))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        UserDTO resultLogin = objectMapper.readValue(mvcResultLogin.getResponse().getContentAsString(StandardCharsets.UTF_8), UserDTO.class);
+
+
+        Assertions.assertEquals(userLoginDTO.getEmail(), resultLogin.getEmail());
+    }
+
+    @Test
+    public void getUserAgeTest() throws Exception {
+        var allUser = userRepository.findAll();
+        var firstUser = userRepository.findById(allUser.get(0).getId()).orElse(null);
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl + "/service/getAge/" +firstUser.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        Integer result = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8), Integer.class);
+
+        Assertions.assertEquals(firstUser.getAge(), result);
+    }
+
+    @Test
+    public void getUserCityTest() throws Exception {
+        var allUser = userRepository.findAll();
+        var firstUser = userRepository.findById(allUser.get(0).getId()).orElse(null);
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl + "/service/getCity/" +firstUser.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        String result = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        Assertions.assertEquals(firstUser.getCity(), result);
+    }
+
+    @Test
+    public void updateUserTest() throws Exception {
+        var allUser = userRepository.findAll();
+        var firstUser = userRepository.findById(allUser.get(0).getId()).orElse(null);
+
+        firstUser.setFirstName("Super");
+        firstUser.setLastName("Mario");
+        firstUser.setUserGender(UserGender.MALE);
+        firstUser.setAge(22);
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put(baseUrl )
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(firstUser))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        UserDTO updatedUser = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8), UserDTO.class);
+
+        Assertions.assertEquals(firstUser.getFirstName(), updatedUser.getFirstName());
+        Assertions.assertEquals(firstUser.getLastName(), updatedUser.getLastName());
+        Assertions.assertEquals(firstUser.getUserGender(), updatedUser.getUserGender());
+        Assertions.assertEquals(firstUser.getAge(), updatedUser.getAge());
+
+    }
 }

@@ -24,13 +24,13 @@
     "@material/fab": "^13.0.0",
     "@splidejs/splide": "^3.6.12",
     "bootstrap": "3.4.1",
-    "npm": "^8.3.2",
+    "npm": "^8.5.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^13.1.4",
+    "@angular-devkit/build-angular": "^13.2.5",
     "@angular/cli": "~13.1.2",
     "@angular/compiler-cli": "~13.1.1",
     "@types/jasmine": "~3.10.3",
