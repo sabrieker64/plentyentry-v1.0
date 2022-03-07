@@ -1,6 +1,7 @@
 package at.commodussolutions.plentyentry.user.userdata.rest;
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
+import at.commodussolutions.plentyentry.user.userdata.dto.*;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserLoginDTO;
@@ -25,7 +26,7 @@ public interface UserRestService {
 
     @PostMapping("/register")
     @ResponseBody
-    UserDTO createUser(@RequestBody UserDTO userDTO);
+    UserDTO createUser(@RequestBody UserRegisterDTO userRegisterDTO);
 
     @GetMapping("/confirm")
     @ResponseBody
