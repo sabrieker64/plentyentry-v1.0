@@ -7,7 +7,6 @@ import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,7 +57,6 @@ public class UserRestServiceTest {
         }
     }
 
-    //Password must be set manually, because of the Ecrypt Reader he reads in non crypt format but writes in crypt so that was the problem
     @Test
     void userLoginTest() throws Exception {
         var defaultUser = userRepository.findAll().get(0);
@@ -93,12 +91,8 @@ public class UserRestServiceTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        UserDTO result = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
-                new TypeReference<UserDTO>() {
-                });
+        UserDTO result = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8), UserDTO.class);
 
-        //TODO: mehr Assertions bitte und oben die typreference brauchst du nicht beim user login test kannst du es dir anschauen solange es keine liste ist die wir
-        //TODO: zurück kriegen dann reicht die einzelne DTO.class bsp:  UserDTO userDTOAfterAuth = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8), UserDTO.class);
         Assertions.assertEquals(firstUser.getEmail(), result.getEmail());
     }
 
@@ -135,13 +129,10 @@ public class UserRestServiceTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        UserDTO result = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
-                new TypeReference<UserDTO>() {
-                });
+        UserDTO result = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8), UserDTO.class);
 
         var newUserFromRepository = userRepository.findById(result.getId()).orElseThrow();
 
-        //TODO: bitte möglichst viel asssertions aufbauen
         Assertions.assertEquals(result.getFirstName(), newUserFromRepository.getFirstName());
     }
 

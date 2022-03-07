@@ -82,11 +82,6 @@ public class EventRestServiceTest {
         var allList = eventRepository.findAll();
         var firstEvent = eventRepository.findById(allList.get(0).getId()).orElse(null);
         Assertions.assertNotNull(firstEvent);
-        //Lazy Loading fehler war das wir keine eigene Transaction geöffnet haben für die tests, gelöst
-        //TODO: bei den getById aufrufen oder deleteBy id keine hard codierten Zahlen eingeben sonder so wie bei var allList
-        //TODO: eine selektieren und von dem die id holen sonst kann es krachen
-        //TODO: findById(1) -> das ist schlecht findById(allList.get(0).getId) -> das ist gut
-
 
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl + "/" + firstEvent.getId())
                         .accept(MediaType.APPLICATION_JSON)
@@ -168,7 +163,7 @@ public class EventRestServiceTest {
 
 
 
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl + "/3")
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl + "/" + resultOfNewEvent.getId())
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
