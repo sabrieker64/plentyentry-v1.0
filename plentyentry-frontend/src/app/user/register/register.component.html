@@ -1,96 +1,113 @@
-<p>This is the Register Page</p>
+<div class="container">
+  <form #registerForm="ngForm" [formGroup]="registerFormGroup" (ngSubmit)="registerForm.form.valid && register()">
+    <div class="form-container form-container--column">
 
-<div class="register-box">
-  <div class="register-greeting">
-    <h1>Registrierung</h1>
-  </div>
+      <h1 class="form-headline">Register</h1>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Vorname</mat-label>
+      <div class="two-columns">
+        <div class="form-container--column">
+          <mat-form-field appearance="outline">
+            <mat-label>Geschlecht</mat-label>
+            <mat-select name="gender"
+                        formControlName="gender"
+                        [(ngModel)]="userRegisterDTO.userGender">
+              <mat-option value="DIVERSE">Divers</mat-option>
+              <mat-option value="FEMALE">Weiblich</mat-option>
+              <mat-option value="MALE">Männlich</mat-option>
+            </mat-select>
+            <mat-error *ngIf="registerFormGroup.get('gender')?.errors">
+              <p *ngIf="registerFormGroup.get('gender')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+            </mat-error>
+          </mat-form-field>
 
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">badge</mat-icon></span>
+          <mat-form-field class="form-element full-width" appearance="outline">
+            <mat-label>Vorname</mat-label>
+            <input matInput placeholder="Max" name="firstname"
+                   formControlName="firstname"
+                   [(ngModel)]="userRegisterDTO.firstName">
+            <mat-error *ngIf="registerFormGroup.get('firstname')?.errors">
+              <p *ngIf="registerFormGroup.get('firstname')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+              <p *ngIf="registerFormGroup.get('firstname')?.hasError('minlength')">Bitte Mindestlänge beachten</p>
+            </mat-error>
+          </mat-form-field>
 
-    <input matInput required type="text" [formControl]="textFormControl">
+          <mat-form-field class="form-element full-width" appearance="outline">
+            <mat-label>Nachname</mat-label>
+            <input matInput placeholder="Mustermann" name="lastname"
+                   formControlName="lastname"
+                   [(ngModel)]="userRegisterDTO.lastName">
+            <mat-error *ngIf="registerFormGroup.get('lastname')?.errors">
+              <p *ngIf="registerFormGroup.get('lastname')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+              <p *ngIf="registerFormGroup.get('lastname')?.hasError('minlength')">Bitte Mindestlänge beachten</p>
+            </mat-error>
+          </mat-form-field>
 
-    <mat-error *ngIf="textFormControl.hasError('minlength')">
-      Bitte mindestlänge beachten
-    </mat-error>
-  </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Geburtsdatum</mat-label>
+            <input matInput [matDatepicker]="picker1" name="birthday"
+                   formControlName="birthday"
+                   [(ngModel)]="userRegisterDTO.birthday">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Nachname</mat-label>
+        <div class="form-container--column">
+          <mat-form-field class="form-element full-width" appearance="outline">
+            <mat-label>E-Mail</mat-label>
+            <input matInput placeholder="max@mustermann.com" name="email"
+                   formControlName="email"
+                   [(ngModel)]="userRegisterDTO.email">
+            <mat-error *ngIf="registerFormGroup.get('email')?.errors">
+              <p *ngIf="registerFormGroup.get('email')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+              <p *ngIf="registerFormGroup.get('email')?.hasError('pattern')">Die ist keine gültige E-Mail Adresse</p>
+            </mat-error>
+          </mat-form-field>
 
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">badge</mat-icon></span>
+          <mat-form-field class="form-element full-width" appearance="outline">
+            <mat-label>Adresse</mat-label>
+            <input matInput placeholder="Musterstraße 1/1" name="street" formControlName="unrequired" [(ngModel)]="userRegisterDTO.street">
+          </mat-form-field>
 
-    <input matInput required type="text">
+          <div class="form-element two-columns">
+            <mat-form-field class="form-element full-width" appearance="outline">
+              <mat-label>Postleitzahl</mat-label>
+              <input matInput placeholder="1234" name="postCode" formControlName="unrequired" [(ngModel)]="userRegisterDTO.postCode">
+            </mat-form-field>
 
-  </mat-form-field>
+            <mat-form-field class="form-element" appearance="outline">
+              <mat-label>Stadt</mat-label>
+              <input matInput placeholder="Musterstadt" name="city" formControlName="unrequired" [(ngModel)]="userRegisterDTO.city">
+            </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Stadt</mat-label>
+            <mat-form-field class="form-element full-width" appearance="outline">
+              <mat-label>Passwort</mat-label>
+              <input matInput placeholder="Max" name="password" type="password"
+                     formControlName="password"
+                     [(ngModel)]="userRegisterDTO.password">
+              <mat-error *ngIf="registerFormGroup.get('password')?.errors">
+                <p *ngIf="registerFormGroup.get('password')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+                <p *ngIf="registerFormGroup.get('password')?.hasError('pattern')">Dies entspricht nicht den Passwort Vorgaben</p>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-element full-width" appearance="outline">
+              <mat-label>Passwort wiederholen</mat-label>
+              <input matInput placeholder="Max" name="confirmPassword" type="password"
+                     formControlName="confirmPassword">
+              <mat-error *ngIf="registerFormGroup.get('confirmPassword')?.errors">
+                <p *ngIf="registerFormGroup.get('confirmPassword')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+                <p *ngIf="registerFormGroup.get('confirmPassword')?.hasError('crossFieldValidator')">Passwörter stimmen nicht überein</p>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
 
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">apartment</mat-icon></span>
+      <div class="form-element">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.form.valid">Anmelden</button>
+      </div>
 
-    <input matInput required type="text">
-
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Adresse</mat-label>
-
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon></span>
-
-    <input matInput required type="text">
-
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Postleitzahl</mat-label>
-
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">markunread_mailbox</mat-icon></span>
-
-    <input matInput required type="text">
-
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Versicherungsnummer</mat-label>
-
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">health_and_safety</mat-icon></span>
-
-    <input matInput required type="text">
-
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Geburtstag</mat-label>
-
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">cake</mat-icon></span>
-
-    <input matInput required type="text">
-
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>E-Mail</mat-label>
-
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">email</mat-icon></span>
-
-    <input matInput required type="text">
-
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Passwort</mat-label>
-
-    <span matPrefix ><mat-icon aria-hidden="false" aria-label="Example home icon">lock</mat-icon></span>
-
-    <input matInput required type="text">
-
-  </mat-form-field>
-
-  <div class="form-element two-items" style="margin-bottom: 50px;">
-    <button mat-raised-button color="primary">Anmelden</button>
-  </div>
+    </div>
+  </form>
 
 </div>

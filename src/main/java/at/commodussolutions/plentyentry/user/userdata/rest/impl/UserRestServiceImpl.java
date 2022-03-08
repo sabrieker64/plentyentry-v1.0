@@ -6,6 +6,7 @@ import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserLoginDTO;
+import at.commodussolutions.plentyentry.user.userdata.dto.UserRegisterDTO;
 import at.commodussolutions.plentyentry.user.userdata.mapper.UserMapper;
 import at.commodussolutions.plentyentry.user.userdata.rest.UserRestService;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
@@ -35,9 +36,9 @@ public class UserRestServiceImpl implements UserRestService {
     }
 
     @Override
-    public UserDTO createUser(UserDTO userDTO) {
+    public UserDTO createUser(UserRegisterDTO userRegisterDTO) {
         User user = new User();
-        userMapper.mapToEntity(userDTO, user);
+        userMapper.mapToEntityForRegister(userRegisterDTO, user);
         user = userService.registerNewUser(user);
         return userMapper.mapToDTO(user);
     }

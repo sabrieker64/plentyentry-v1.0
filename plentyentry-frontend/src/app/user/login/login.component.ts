@@ -1,16 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {HttpClient} from "@angular/common/http";
-import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
-import {ErrorStateMatcher} from "@angular/material/core";
-
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
+import {LoginRegisterService} from "../service/login-register.service";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {UserAuthReqDTO} from "../../definitions/objects";
 
 @Component({
   selector: 'app-login-register',
@@ -19,21 +11,25 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 
 export class LoginComponent implements OnInit {
-  email = '';
-  password = '';
-  passwordMinLength = 8;
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  passwordFormControl = new FormControl('', [Validators.required, Validators.minLength(this.passwordMinLength), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{0,}$')]);
+  userAuthReqDTO: UserAuthReqDTO = <UserAuthReqDTO>{};
+  loginFormGroup: FormGroup;
 
-  constructor(private router: Router) {
-
+  constructor(private router: Router, private loginRegisterService: LoginRegisterService, private fb: FormBuilder) {
   }
 
-  log(model:object) {console.log(model);}
-
   ngOnInit(): void {
-    console.log('this is the login component');
-    console.log(this.passwordFormControl)
+
+    this.loginFormGroup = this.fb.group({
+      "email": new FormControl('', [Validators.required, Validators.pattern(this.loginRegisterService.regex.email)]),
+      "password": new FormControl('', [Validators.required, Validators.pattern(this.loginRegisterService.regex.passwort)])
+    });
+  }
+
+  authenticate() {
+    this.loginRegisterService.authenticateUser(this.userAuthReqDTO).toPromise().then((data) => {
+      console.log(data)
+      //this.router.navigateByUrl('/user/login');
+    })
   }
 
   openRegisterView() {

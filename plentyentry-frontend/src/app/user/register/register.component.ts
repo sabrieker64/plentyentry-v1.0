@@ -1,6 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {FormControl, Validators} from "@angular/forms";
+import {
+  FormControl,
+  FormBuilder,
+  Validators,
+  FormGroup
+} from "@angular/forms";
+import {LoginRegisterService} from "../service/login-register.service";
+import {UserRegisterDTO} from "../../definitions/objects";
+import {Router} from "@angular/router";
+import {crossFieldValidator} from "../../../library/custom-validators/crossField.validator";
 
 @Component({
   selector: 'app-register',
@@ -8,55 +16,36 @@ import {FormControl, Validators} from "@angular/forms";
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  vorname = '';
-  url: string = "http://httpbin.org/post";
-  fname: string;
-  lname: string;
-  place: string;
-  adrss: string;
-  zipcode: string;
-  socialinsurancenumber: number;
-  bday: number;
-  pass: string;
-  mail: string;
-  textFormControl = new FormControl('', [Validators.minLength(2)]);
-  email = '';
-  password = '1';
-  passwordMinLength = 8;
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  passwordFormControl = new FormControl('', [Validators.required, Validators.minLength(this.passwordMinLength), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{0,}$')]);
+  registerFormGroup: FormGroup;
+  userRegisterDTO: UserRegisterDTO = <UserRegisterDTO>{};
 
-  constructor(private http: HttpClient) {
-    this.fname = "";
-    this.lname = "";
-    this.place = "";
-    this.adrss = "";
-    this.zipcode = "";
-    this.socialinsurancenumber = 123456;
-    this.bday = 123456;
-    this.pass = "";
-    this.mail = "";
-  }
+  constructor(private loginRegisterService: LoginRegisterService, private router: Router, private fb: FormBuilder) {
 
-  postRegister() {
-    this.http.post(this.url, {
-      fname: this.fname,
-      lname: this.lname,
-      city: this.place,
-      adress: this.adrss,
-      zipcode: this.zipcode,
-      socialinsurancenumber: this.socialinsurancenumber,
-      bday: this.bday,
-      pass: this.pass,
-      mail: this.mail,
-      password: this.pass,
-      email: this.mail
-    }).toPromise().then((data: any) => {
-      console.log(data);
-    })
   }
 
   ngOnInit(): void {
+
+    this.registerFormGroup = this.fb.group({
+      "gender": new FormControl('', [Validators.required]),
+      "firstname": new FormControl('', [Validators.required, Validators.minLength(2)]),
+      "lastname": new FormControl('', [Validators.required, Validators.minLength(2)]),
+      "birthday": new FormControl(new Date()),
+      "email": new FormControl('', [Validators.required, Validators.pattern(this.loginRegisterService.regex.email)]),
+      "password": new FormControl('', [Validators.required, Validators.pattern(this.loginRegisterService.regex.passwort)]),
+      "confirmPassword": new FormControl('', [Validators.required]),
+      "unrequired": new FormControl()
+    }, {
+      validator: crossFieldValidator('password', 'confirmPassword')
+    });
+
   }
 
+  register() {
+    this.loginRegisterService.registerNewUser(this.userRegisterDTO).toPromise().then((data) => {
+      console.log(data)
+      this.router.navigateByUrl('/user/login');
+    })
+  }
 }
+
+

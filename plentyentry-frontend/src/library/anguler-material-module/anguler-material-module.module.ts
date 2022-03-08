@@ -34,6 +34,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatSliderModule} from "@angular/material/slider";
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {MatNativeDateModule} from "@angular/material/core";
 
 const materialModules = [
   MatSliderModule,
@@ -70,6 +71,7 @@ const materialModules = [
   MatDatepickerModule,
   MatTooltipModule,
   FlexLayoutModule,
+  MatNativeDateModule,
 ];
 
 @NgModule({

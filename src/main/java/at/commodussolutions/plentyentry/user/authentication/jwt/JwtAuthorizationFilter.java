@@ -18,9 +18,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 
-import static at.commodussolutions.plentyentry.user.authentication.constant.SecurityConstant.*;
+import static at.commodussolutions.plentyentry.user.authentication.constant.SecurityConstant.OPTIONS_HTTP_METHOD;
+import static at.commodussolutions.plentyentry.user.authentication.constant.SecurityConstant.TOKEN_PREFIX;
 import static com.sun.activation.registries.LogSupport.log;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -38,7 +38,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         if (request.getRemoteHost().equals("localhost")) {
             return true;
         }
-        if (request.getRequestURL().toString().contains(Arrays.stream(PUBLIC_URLS).toString())) {
+        if (request.getRequestURL().toString().contains("/api/backend/event/list") || request.getRequestURL().toString().contains("/api/backend/user/register")) {
             if (request.getHeader(AUTHORIZATION).isEmpty() | request.getHeader(AUTHORIZATION).startsWith(TOKEN_PREFIX + "No Token")) {
                 return true;
             }
@@ -56,14 +56,14 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         } else {
 
             String authorizationHeader = request.getHeader(AUTHORIZATION);
-            if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
+            if (!authorizationHeader.contains("No Token") && authorizationHeader.startsWith(TOKEN_PREFIX)) {
                 jwtToken = authorizationHeader.substring(7);
 
                 try {
-                    username =  jwtTokenUtil.getSubject(jwtToken);
-                }catch (IllegalArgumentException e) {
+                    username = jwtTokenUtil.getSubject(jwtToken);
+                } catch (IllegalArgumentException e) {
                     log(SecurityConstant.TOKEN_CANNOT_BE_VERIFIED);
-                }catch (ExpiredJwtException e) {
+                } catch (ExpiredJwtException e) {
                     log(SecurityConstant.TOKEN_EXPIRED);
                 }
 

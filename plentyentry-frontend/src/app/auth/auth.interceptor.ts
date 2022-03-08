@@ -20,7 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((err) => {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 401) {
-            //TODO: navigate to logout/or login page
+            console.log("No token found");
           }
         }
         return throwError(err);
