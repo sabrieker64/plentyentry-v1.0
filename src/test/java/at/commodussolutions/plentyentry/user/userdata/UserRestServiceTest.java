@@ -1,13 +1,19 @@
 package at.commodussolutions.plentyentry.user.userdata;
 
+import at.commodussolutions.plentyentry.user.confirmation.token.repository.ConfirmationTokenRepository;
+import at.commodussolutions.plentyentry.user.coronastate.repository.CoronaStatusRepository;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dbInit.UserInitializer;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserLoginDTO;
+import at.commodussolutions.plentyentry.user.userdata.dto.UserRegisterDTO;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
+import at.commodussolutions.plentyentry.user.userdata.mapper.UserMapper;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
+import at.commodussolutions.plentyentry.user.userdata.service.UserService;
+import at.commodussolutions.plentyentry.user.userdata.service.impl.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,7 +52,16 @@ public class UserRestServiceTest {
     private UserRepository userRepository;
 
     @Autowired
+    private UserServiceImpl userService;
+
+    @Autowired
     private UserInitializer userInitializer;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private CoronaStatusRepository coronaStatusRepository;
 
     private final static String baseUrl = "/api/backend/user";
 
@@ -110,54 +125,94 @@ public class UserRestServiceTest {
 
         UserDTO result = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8), UserDTO.class);
 
-        var newUserFromRepository = userRepository.findById(result.getId()).orElseThrow();
+        User newUserFromRepository = userRepository.findById(result.getId()).orElseThrow();
 
-
-        //todo More Assertionsssssssssss!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         Assertions.assertEquals(result.getFirstName(), newUserFromRepository.getFirstName());
+        Assertions.assertEquals(result.getLastName(), newUserFromRepository.getLastName());
+        Assertions.assertEquals(result.getAge(), newUserFromRepository.getAge());
+        Assertions.assertEquals(result.getBirthday(), newUserFromRepository.getBirthday());
+        Assertions.assertEquals(result.getCity(), newUserFromRepository.getCity());
+        Assertions.assertEquals(result.getId(), newUserFromRepository.getId());
+        Assertions.assertEquals(result.getPostCode(), newUserFromRepository.getPostCode());
+        Assertions.assertEquals(result.getCoronaStatus(), newUserFromRepository);
     }
 
     @Test
     public void confirmTest() throws Exception {
-        var allUser = userRepository.findAll();
-        var firstUser = userRepository.findById(allUser.get(0).getId()).orElse(null);
 
-        //todo conirmation token is not jwtToken confirmation token is just to verify the email after register
-        //todo den confirmation test würde ich nach dem register einbauen weil du da den confirmation token kriegst
-        //todo dann kannst du direkt schauen danach ob der user enabled ist
-        assert firstUser != null;
+        String firstName="Super";
+        String lastName="Mario";
+        String email="super@mario.at";
+        String password="password";
+        String city="Kitzbichi";
+        String postCode="6666";
+        String street="Geht di nix uh";
+        LocalDate birthday=LocalDate.now();
+        UserGender userGender=UserGender.MALE;
+
+        UserRegisterDTO userRegisterDTO = new UserRegisterDTO();
+        userRegisterDTO.setFirstName(firstName);
+        userRegisterDTO.setLastName(lastName);
+        userRegisterDTO.setEmail(email);
+        userRegisterDTO.setPassword(password);
+        userRegisterDTO.setCity(city);
+        userRegisterDTO.setPostCode(postCode);
+        userRegisterDTO.setStreet(street);
+        userRegisterDTO.setBirthday(birthday);
+        userRegisterDTO.setUserGender(userGender);
+
+        MvcResult mvcResultRegisteredUser = mvc.perform(MockMvcRequestBuilders.post(baseUrl +
+                                "/register")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userRegisterDTO))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        UserDTO registeredUser = objectMapper.readValue(mvcResultRegisteredUser.getResponse().getContentAsString(StandardCharsets.UTF_8), UserDTO.class);
+
+        Assertions.assertEquals(userRegisterDTO.getEmail(), registeredUser.getEmail());
+        Assertions.assertEquals(userRegisterDTO.getFirstName(), registeredUser.getFirstName());
+        Assertions.assertEquals(userRegisterDTO.getLastName(), registeredUser.getLastName());
+        Assertions.assertEquals(userRegisterDTO.getBirthday(), registeredUser.getBirthday());
+
+        User registeredUserEntity = new User();
+        var token = userService.createToken(userMapper.mapToEntity(registeredUser,registeredUserEntity));
+        assert registeredUserEntity != null;
+
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl +
-                                //todo thats not right there
-                                "/confirm&token=" + firstUser.getJwtToken())
+                                "/confirm?token=" + token.getToken())
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        String resultToken = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8), String.class);
-
-        System.out.printf(resultToken);
-
-        //todo you should check after the confiramtion of user.getEnabled is true
-
-        Assertions.assertEquals(resultToken, resultToken);
+        var updatedUserToken = userRepository.findById(registeredUserEntity.getId()).orElse(null);
+        Assertions.assertEquals(true, updatedUserToken.getEnabled());
     }
 
-    //And this is userLoginTest because authentication and returning an jwtToken equals to login,
-    // login means authentication to show user specific data
     @Test
     void userLoginTest() throws Exception {
-        var defaultUser = userRepository.findAll().get(0);
+        User defaultUser = userRepository.findAll().get(0);
+        var token = userService.createToken(defaultUser);
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl +
+                                "/confirm?token=" + token.getToken())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
         UserAuthReqDTO userAuthReqDTO = new UserAuthReqDTO();
         userAuthReqDTO.setEmail(defaultUser.getEmail());
         userAuthReqDTO.setPassword("password");
 
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(baseUrl + "/authenticate")
+        MvcResult mvcResultFinal = mvc.perform(MockMvcRequestBuilders.post(baseUrl + "/authenticate")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userAuthReqDTO)))
                 .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
-        UserDTO userDTO = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8), UserDTO.class);
+        UserDTO userDTO = objectMapper.readValue(mvcResultFinal.getResponse().getContentAsString(StandardCharsets.UTF_8), UserDTO.class);
 
         Assertions.assertEquals(defaultUser.getId(), userDTO.getId());
         Assertions.assertEquals(defaultUser.getEmail(), userDTO.getEmail());
@@ -165,47 +220,6 @@ public class UserRestServiceTest {
         Assertions.assertEquals(defaultUser.getFirstName(), userDTO.getFirstName());
         Assertions.assertEquals(defaultUser.getLastName(), userDTO.getLastName());
         Assertions.assertEquals(defaultUser.getBirthday(), userDTO.getBirthday());
-    }
-
-
-    //WHY GETTING 401?!
-    //TODO: this test is bullshit for login its enough to test the authentication
-    public void bullshitTest() throws Exception {
-
-
-        var defaultUser = userRepository.findAll().get(0);
-        UserAuthReqDTO userAuthReqDTO = new UserAuthReqDTO();
-        userAuthReqDTO.setEmail(defaultUser.getEmail());
-        userAuthReqDTO.setPassword("password");
-
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(baseUrl + "/authenticate")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(userAuthReqDTO)))
-                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
-        UserDTO userDTO = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8), UserDTO.class);
-
-        Assertions.assertEquals(defaultUser.getId(), userDTO.getId());
-
-
-        //DOWN THERE ISN'T WORKING
-
-        UserLoginDTO userLoginDTO = new UserLoginDTO();
-        userLoginDTO.setEmail(defaultUser.getEmail());
-        userLoginDTO.setPassword("password");
-        userLoginDTO.setJwtToken(userDTO.getJwtToken());
-
-        MvcResult mvcResultLogin = mvc.perform(MockMvcRequestBuilders.get(baseUrl + "/login")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(userLoginDTO))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        UserDTO resultLogin = objectMapper.readValue(mvcResultLogin.getResponse().getContentAsString(StandardCharsets.UTF_8), UserDTO.class);
-
-
-        Assertions.assertEquals(userLoginDTO.getEmail(), resultLogin.getEmail());
     }
 
     @Test
@@ -247,7 +261,6 @@ public class UserRestServiceTest {
         var allUser = userRepository.findAll();
         var firstUser = userRepository.findById(allUser.get(0).getId()).orElse(null);
 
-        //And try to assert for not null if you trying dynamic loaded data to look if there is anything in there before setting or getting objects
         assert firstUser != null;
         firstUser.setFirstName("Super");
         firstUser.setLastName("Mario");
@@ -267,6 +280,5 @@ public class UserRestServiceTest {
         Assertions.assertEquals(firstUser.getLastName(), updatedUser.getLastName());
         Assertions.assertEquals(firstUser.getUserGender(), updatedUser.getUserGender());
         Assertions.assertEquals(firstUser.getAge(), updatedUser.getAge());
-
     }
 }
