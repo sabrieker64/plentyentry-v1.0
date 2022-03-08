@@ -26,8 +26,9 @@ export class LoginComponent implements OnInit {
   }
 
   authenticate() {
-    this.loginRegisterService.authenticateUser(this.userAuthReqDTO).toPromise().then((data) => {
-      console.log(data)
+    this.loginRegisterService.authenticateUser(this.userAuthReqDTO).toPromise().then((userDTO) => {
+      localStorage.setItem('token', userDTO.jwtToken);
+      this.router.navigateByUrl('user/' + userDTO.id + '/detail')
       //this.router.navigateByUrl('/user/login');
     })
   }
