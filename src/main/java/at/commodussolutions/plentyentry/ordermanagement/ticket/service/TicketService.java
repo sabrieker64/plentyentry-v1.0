@@ -8,11 +8,11 @@ import java.util.List;
 @Service
 public interface TicketService {
 
-    public List<Ticket> getAllTickets();
+    List<Ticket> getAllTickets();
 
-    public Ticket getTicketById(Long id);
+    Ticket getTicketById(Long id);
 
-    public Ticket updateTicketById(Ticket updatedTicket);
+    Ticket updateTicketById(Ticket updatedTicket);
 
-    public Ticket createNewTicket(Ticket ticket);
+    Ticket createNewTicket(Ticket ticket);
 }
