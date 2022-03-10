@@ -14,7 +14,7 @@ export class UserDetailService {
   constructor(private http: HttpClient) {
   }
 
-  public getUserDTO(userId: string): Observable<UserDTO> {
+  public getUserById(userId: number): Observable<UserDTO> {
     return this.http.get<UserDTO>(`${this.baseUrl}/${userId}`);
   }
 

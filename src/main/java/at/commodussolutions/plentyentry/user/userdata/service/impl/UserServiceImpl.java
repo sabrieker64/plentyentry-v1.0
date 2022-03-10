@@ -182,7 +182,6 @@ public class UserServiceImpl implements UserService {
         if(expiredAt.isBefore(LocalDateTime.now())) {
             throw new IllegalStateException("token expired");
         }
-
         confirmationTokenService.setConfirmedAt(token);
         enableUser(confirmationToken.getUser().getEmail());
             return "confirmed";

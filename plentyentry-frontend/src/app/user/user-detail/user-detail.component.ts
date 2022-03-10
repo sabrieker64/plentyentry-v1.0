@@ -4,6 +4,7 @@ import {UserDetailService} from "../service/user-detail.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {crossFieldValidator} from "../../../library/custom-validators/crossField.validator";
 import {LoginRegisterService} from "../service/login-register.service";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -14,8 +15,10 @@ import {LoginRegisterService} from "../service/login-register.service";
 export class UserDetailComponent implements OnInit {
   registerFormGroup: FormGroup;
   userDTO: UserDTO = <UserDTO>{};
+  paramUserId: number;
 
-  constructor(private userDetailService: UserDetailService, private fb: FormBuilder, private loginRegisterService: LoginRegisterService) {
+  constructor(private userDetailService: UserDetailService, private fb: FormBuilder,
+              private loginRegisterService: LoginRegisterService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -32,7 +35,7 @@ export class UserDetailComponent implements OnInit {
       validator: crossFieldValidator('password', 'confirmPassword')
     });
 
-    this.userDetailService.getUserDTO('2').toPromise().then((UserDTO) => {
+    this.userDetailService.getUserById(this.userDTO.id).toPromise().then((UserDTO) => {
       this.userDTO = UserDTO;
     })
   }
@@ -42,5 +45,6 @@ export class UserDetailComponent implements OnInit {
       console.log(UserDTO);
     })
   }
+
 
 }
