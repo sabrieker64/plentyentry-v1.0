@@ -1,18 +1,15 @@
 package at.commodussolutions.plentyentry.user.userdata;
 
-import at.commodussolutions.plentyentry.user.confirmation.token.repository.ConfirmationTokenRepository;
 import at.commodussolutions.plentyentry.user.coronastate.repository.CoronaStatusRepository;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dbInit.UserInitializer;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
-import at.commodussolutions.plentyentry.user.userdata.dto.UserLoginDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserRegisterDTO;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import at.commodussolutions.plentyentry.user.userdata.mapper.UserMapper;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
-import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import at.commodussolutions.plentyentry.user.userdata.service.impl.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
@@ -134,7 +131,6 @@ public class UserRestServiceTest {
         Assertions.assertEquals(result.getCity(), newUserFromRepository.getCity());
         Assertions.assertEquals(result.getId(), newUserFromRepository.getId());
         Assertions.assertEquals(result.getPostCode(), newUserFromRepository.getPostCode());
-        Assertions.assertEquals(result.getCoronaStatus(), newUserFromRepository);
     }
 
     @Test
