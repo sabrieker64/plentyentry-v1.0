@@ -10,15 +10,17 @@ import {RouterModule} from "@angular/router";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthService} from "./auth/auth.service";
 import {AuthInterceptor} from "./auth/auth.interceptor";
-import { NavigationComponent } from './navigation/navigation.component';
+import {NavigationComponent} from './navigation/navigation.component';
 import {NgxSplideModule} from 'ngx-splide';
 import {EventTileModule} from "./events/event-tile.module";
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {PaymentCheckoutComponent} from './payment/checkout/payment-checkout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent
+    NavigationComponent,
+    PaymentCheckoutComponent
   ],
   imports: [
     BrowserModule,

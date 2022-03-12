@@ -4,14 +4,16 @@ package at.commodussolutions.plentyentry.user.payment.beans;
 import at.commodussolutions.plentyentry.user.payment.enums.PaymentType;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Table(name = "PAYMENT_METHOD")
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentMethod {
@@ -24,6 +26,12 @@ public class PaymentMethod {
     @Column(name = "PAYMENT_TYPE")
     @Enumerated(EnumType.STRING)
     private PaymentType paymentType;
+
+    @Column(name = "PAYPAL_CLIENT_TOKEN")
+    private String paypalClientToken;
+
+    @Column(name = "PAYPAL_CLIENT_TOKEN_EXPIRES_AT")
+    private String paypalClientTokenExpiresIn;
 
     @Column(name = "CREDIT_CARD_NUMBER")
     private Integer creditCardNumber;

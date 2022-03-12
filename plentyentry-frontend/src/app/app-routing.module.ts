@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {PlentyentryHomeComponent} from "../library/plentyentry-home/directory/plentyentry-home.component";
 
 const routes: Routes = [
- // {path: '**', redirectTo: 'event', pathMatch: 'full'},
+  // {path: '**', redirectTo: 'event', pathMatch: 'full'},
   {path: 'home', component: PlentyentryHomeComponent},
 
   {
@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: 'user',
     loadChildren: () => import('./user/user-register.module').then(m => m.UserRegisterModule)
+  },
+  {
+    path: 'payment',
+    loadChildren: () => import('./payment/payment-checkout.module').then(m => m.PaymentCheckoutModule)
   }
 
 ];
