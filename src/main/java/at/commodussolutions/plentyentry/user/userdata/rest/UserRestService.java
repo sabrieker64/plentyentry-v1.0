@@ -58,5 +58,5 @@ public interface UserRestService {
 
     @PutMapping
     @ResponseBody
-    UserDTO updateUser(UserDTO updatedUser);
+    UserDTO updateUser(@RequestBody UserDTO updatedUser);
 }
