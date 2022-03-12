@@ -1,10 +1,10 @@
 package at.commodussolutions.plentyentry.user.userdata.rest;
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
-import at.commodussolutions.plentyentry.user.userdata.dto.*;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserLoginDTO;
+import at.commodussolutions.plentyentry.user.userdata.dto.UserRegisterDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,9 +33,15 @@ public interface UserRestService {
     String confirm(@RequestParam("token") String token);
 
 
+    //This is for login
     @PostMapping("/authenticate")
     @ResponseBody
     UserDTO createJwtToken(@RequestBody UserAuthReqDTO userAuthReqDTO) throws Exception;
+
+    //This is after Login to load the user after succesfully auth
+    @GetMapping
+    @ResponseBody
+    UserDTO loadUserByJWTToken();
 
     @GetMapping("/login")
     @ResponseBody

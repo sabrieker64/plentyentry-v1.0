@@ -38,4 +38,6 @@ public interface UserService extends UserDetailsService {
     User updateUser(User user);
 
     User loginUser(UserLoginDTO userLoginDTO) throws Exception;
+
+    User getUserByJWTToken();
 }

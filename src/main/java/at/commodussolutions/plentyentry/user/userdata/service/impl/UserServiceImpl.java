@@ -25,6 +25,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.WebRequest;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -33,6 +34,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 /**
  * Author: @Eker
@@ -67,6 +70,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private Environment environment;
+
+    private WebRequest webRequest;
 
     private final PlentyEntryBackendUtils backendUtils;
 
@@ -165,6 +170,13 @@ public class UserServiceImpl implements UserService {
             throw new BadCredentialsException("Email oder Password ist falsch");
         }
         return userFoundWithTypedEmail;
+    }
+
+    @Override
+    public User getUserByJWTToken() {
+        var jwtToken = webRequest.getHeader(AUTHORIZATION);
+        var username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+        return findUserByUsername(username);
     }
 
     @Override

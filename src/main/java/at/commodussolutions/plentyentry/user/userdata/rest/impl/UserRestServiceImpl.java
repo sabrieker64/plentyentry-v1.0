@@ -54,6 +54,11 @@ public class UserRestServiceImpl implements UserRestService {
     }
 
     @Override
+    public UserDTO loadUserByJWTToken() {
+        return userMapper.mapToDTO(userService.getUserByJWTToken());
+    }
+
+    @Override
     public UserDTO userLogin(UserLoginDTO userLoginDTO) throws Exception {
         return userMapper.mapToDTO(userService.loginUser(userLoginDTO));
     }
