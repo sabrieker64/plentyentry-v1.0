@@ -8,7 +8,7 @@ export class AuthService {
   getToken(): string {
     let token = localStorage.getItem('token');
     if (token === null) {
-      return "No Token";
+      return "No token";
     }
     return token;
   }

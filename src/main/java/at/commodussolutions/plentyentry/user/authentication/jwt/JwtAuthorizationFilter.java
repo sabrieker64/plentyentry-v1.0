@@ -56,9 +56,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         } else {
 
             String authorizationHeader = request.getHeader(AUTHORIZATION);
-            if (!authorizationHeader.contains("No Token") && authorizationHeader.startsWith(TOKEN_PREFIX)) {
+            if (authorizationHeader == null) {
+                authorizationHeader = "Baerer No token";
+            }
+            if (!authorizationHeader.contains("No token") && authorizationHeader.startsWith(TOKEN_PREFIX)) {
                 jwtToken = authorizationHeader.substring(7);
-
                 try {
                     username = jwtTokenUtil.getSubject(jwtToken);
                 } catch (IllegalArgumentException e) {
@@ -67,7 +69,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     log(SecurityConstant.TOKEN_EXPIRED);
                 }
 
-            }else {
+            } else {
                 log("jwt token dont startsWith our TOKEN_PREFIX");
             }
 

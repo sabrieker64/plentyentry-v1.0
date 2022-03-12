@@ -83,7 +83,7 @@ public class JwtTokenUtil {
     private JWTVerifier getJWTVerifier() {
         JWTVerifier jwtVerifier;
         try {
-            Algorithm algorithm = HMAC512(secret);
+            Algorithm algorithm = HMAC512(Base64.getDecoder().decode(secret));
             jwtVerifier = JWT.require(algorithm).withIssuer(COMMODUS_SOLUTIONS_PLENTYENTRY).build();
         }catch (JWTVerificationException exception) {
             throw new JWTVerificationException(TOKEN_CANNOT_BE_VERIFIED);
