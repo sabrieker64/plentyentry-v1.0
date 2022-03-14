@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping({"/api/backend/payment"})
 public class PayPalRestServiceImpl implements PayPalRestService {
 
     private final String successURL = "/pay/successful";
@@ -25,8 +24,7 @@ public class PayPalRestServiceImpl implements PayPalRestService {
     @Autowired
     private PlentyEntryBackendUtils plentyEntryBackendUtils;
 
-    @GetMapping("/pay")
-    @ResponseBody
+    @Override
     public String paymentPayPal(@ModelAttribute("order") Order order) throws PayPalRESTException {
         try {
             Payment payment = payPalService.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(), order.getIntent(), order.getDescirption(),
