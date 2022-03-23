@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping({"/api/backend/storage"})
 public class AwsBucketRestServiceImpl {
 
-    private AmazonClient amazonClient;
+    private final AmazonClient amazonClient;
 
     @Autowired
     AwsBucketRestServiceImpl(AmazonClient amazonClient) {
