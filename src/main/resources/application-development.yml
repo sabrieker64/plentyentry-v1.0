@@ -35,16 +35,25 @@ spring:
     properties:
       mail:
        smtp:
-          ssl:
-            trust: "*"
-          auth: true
-          starttls:
-            enable: true
-          connectiontimout: 5000
-          timeout: 3000
-          writetimeout: 5000
+         ssl:
+           trust: "*"
+           auth: true
+         starttls:
+           enable: true
+         connectiontimout: 5000
+         timeout: 3000
+         writetimeout: 5000
 paypal:
   mode: sandbox
   client:
     id: AdDrxG2Q61wNJlHzVSxh6rfcIP7I_mD1YzG51t8tNiHm_odgJz3j6Zt1FtrtQb3zDzBOaALq8SkT9FOH
     secret: EKQm5_ysdbIDZ2CJgQ65kmI95xkLHn6rSzMBl675VtxtDzIuYSf8srSSotKWAX00LtPK_lXdeC-Hrf1C
+stripe:
+  mode: development
+  public-key: pk_test_51Kfr2HDAXhrIxCz9JbKqmWo6ZTaUMBUPhY1iukliuy0iRqRoxFVv93oOTnst1mwW2XZMHXqFRLLK3BAmIDCI9CAe00tV99Snt1
+  private-key: sk_test_51Kfr2HDAXhrIxCz9mhNotfY56zLN1kLUAMK5dQFAY1Ptgk2rvvkrMu6hIabFKylT1mRcYa8U3osRUjqHz5wWGGOD00dvbwtdrV
+amazonProperties:
+  endpointUrl: https://s3.us-east-2.amazonaws.com
+  accessKey: XXXXXXXXXXXXXXXXX
+  secretKey: XXXXXXXXXXXXXXXXXXXXXXXXXX
+  bucketName: your-bucket-name

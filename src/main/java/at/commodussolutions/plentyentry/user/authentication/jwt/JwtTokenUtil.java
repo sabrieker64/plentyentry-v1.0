@@ -26,7 +26,7 @@ import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 @Component
 public class JwtTokenUtil {
 
-    @Value("{$jwt.secret}")
+    @Value("${jwt.secret}")
     private String secret;
 
 
