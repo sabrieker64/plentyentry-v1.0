@@ -192,7 +192,7 @@ public class UserRestServiceTest {
         User defaultUser = userRepository.findAll().get(0);
         var token = userService.createToken(defaultUser);
 
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl +
+        mvc.perform(MockMvcRequestBuilders.get(baseUrl +
                                 "/confirm?token=" + token.getToken())
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -208,7 +208,8 @@ public class UserRestServiceTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userAuthReqDTO)))
                 .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
-        UserDTO userDTO = objectMapper.readValue(mvcResultFinal.getResponse().getContentAsString(StandardCharsets.UTF_8), UserDTO.class);
+        UserDTO userDTO = objectMapper.readValue(mvcResultFinal.getResponse().getContentAsString(StandardCharsets.UTF_8),
+                UserDTO.class);
 
         Assertions.assertEquals(defaultUser.getId(), userDTO.getId());
         Assertions.assertEquals(defaultUser.getEmail(), userDTO.getEmail());

@@ -1,5 +1,5 @@
 jwt:
-  secret: 'kmCZ{4GnBOpX{mb¡NpQ“nzL7pne¶BIjdjCk12sY¶et36ZqgKeiTzN¢Byab6Z6fwgWBA7GWPtP8xssMQNh1bRCuo9F6¢wwT7FALX¶'
+  secret: '5v8y/B?D(G+KbPeS'
 pe:
   baseHost: 'http://ec2-3-144-231-140.us-east-2.compute.amazonaws.com:8080/'
 server:
