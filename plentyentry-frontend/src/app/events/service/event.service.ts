@@ -19,5 +19,8 @@ export class EventService {
     return this.http.get<EventDTO[]>(`${this.BASE_URL}/list`);
   }
 
+  public getEventDetails(eventId: number): Observable<EventDTO> {
+    return this.http.get<EventDTO>(`${this.BASE_URL}/${eventId}`)
+  }
 
 }

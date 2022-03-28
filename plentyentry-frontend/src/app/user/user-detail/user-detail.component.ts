@@ -35,7 +35,7 @@ export class UserDetailComponent implements OnInit {
       validator: crossFieldValidator('password', 'confirmPassword')
     });
 
-    this.userDetailService.getUserById(this.userDTO.id).toPromise().then((UserDTO) => {
+    this.userDetailService.getUserByJWTToken().toPromise().then((UserDTO) => {
       this.userDTO = UserDTO;
     })
   }

@@ -1,9 +1,8 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {EventService} from "../service/event.service";
-import {merge, Observable, of} from "rxjs";
 import {EventDTO} from "../../definitions/objects";
-import {catchError, filter, map, shareReplay, switchMap} from "rxjs/operators";
 import {EventTileModel} from "./eventTile.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-event-tile-overview',
@@ -11,38 +10,40 @@ import {EventTileModel} from "./eventTile.model";
   styleUrls: ['./event-tile-overview.component.scss']
 })
 export class EventTileOverviewComponent implements OnInit {
-  dataObserver: Observable<EventDTO[]>;
-  eventDTO: EventDTO[];
+  eventDTO: EventDTO[] = <EventDTO[]>{};
   searchPressed = new EventEmitter<boolean>();
   events: EventTileModel;
   currentFilter: Element;
   isTarget: boolean = false;
   filters: {name: string, isActive: boolean}[];
 
-  constructor(private service: EventService) {
+  constructor(private eventService: EventService, private router: Router) {
   }
 
   ngOnInit(): void {
     this.searchPressed.emit(true);
-    this.service.getAllEvents().subscribe(data => this.finalize(data));
-    let loadDataEvent = merge(this.searchPressed).pipe(switchMap(() => this.loadEvent()));
-    this.dataObserver = loadDataEvent.pipe(
-      map(data => this.finalize(data)),
-      catchError(() => this.handleError()),
-      shareReplay(1));
     this.filters = [
       {name: 'Top Events', isActive: false},
       {name: 'In meiner Nähe', isActive: false},
       {name: 'In Kürze', isActive: false},
     ]
+
+    this.eventService.getAllEvents().toPromise().then((eventDTO) => {
+      this.eventDTO = eventDTO;
+    });
   }
 
-  console(event: Event) {
-    console.log(typeof event.target);
+  getEventDetail(eventId: number) {
+    this.router.navigateByUrl('overview/detail/' + eventId);
+    console.log(eventId);
   }
 
-  private loadEvent(): Observable<EventDTO[]> {
-    return this.service.getAllEvents();
+  getMonth(date: Date): string {
+    return new Date(date).toLocaleDateString('de-DE', {month: 'long'});
+  }
+
+  getDay(date: Date) {
+    return new Date(date).toLocaleDateString('de-DE', {day: 'numeric'});
   }
 
   buyClicked() {
@@ -51,15 +52,6 @@ export class EventTileOverviewComponent implements OnInit {
 
   inToCartClicked() {
     console.log('In to Cart clicked');
-  }
-
-  private finalize(value: EventDTO[]): EventDTO[] {
-    this.eventDTO = value;
-    return value;
-  }
-
-  private handleError(): Observable<EventDTO[]> {
-    return of();
   }
 
   onClickFilter(selectedFilter: {name: string, isActive:boolean}) {
