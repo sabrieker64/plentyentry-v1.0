@@ -27,6 +27,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -72,6 +73,9 @@ public class UserServiceImpl implements UserService {
     private Environment environment;
 
     private WebRequest webRequest;
+
+    @Autowired
+    private HttpServletRequest servletRequest;
 
     private final PlentyEntryBackendUtils backendUtils;
 
@@ -174,8 +178,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByJWTToken() {
-        var jwtToken = webRequest.getHeader(AUTHORIZATION);
-        var username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+        var jwtToken = servletRequest.getHeader(AUTHORIZATION);
+        var username = jwtTokenUtil.getUsernameFromToken(jwtToken.replace("Bearer ", ""));
         return findUserByUsername(username);
     }
 
