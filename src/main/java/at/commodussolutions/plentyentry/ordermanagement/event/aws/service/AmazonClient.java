@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Objects;
 
 @Service
 public class AmazonClient {
@@ -42,7 +43,7 @@ public class AmazonClient {
         try {
             File file = convertMultiPartToFile(multipartFile);
             String fileName = generateFileName(multipartFile);
-            fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
+            fileUrl = endpointUrl + "/eventtest/firstEvent/" + fileName;
             uploadFileTos3bucket(fileName, file);
             file.delete();
         } catch (Exception e) {
@@ -53,7 +54,7 @@ public class AmazonClient {
 
 
     private void uploadFileTos3bucket(String fileName, File file) {
-        s3Client.putObject(new PutObjectRequest(bucketName, fileName, file)
+        s3Client.putObject(new PutObjectRequest(bucketName, "eventtest/firstEvent/"+fileName, file)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
     }
 
@@ -62,7 +63,7 @@ public class AmazonClient {
     }
 
     private File convertMultiPartToFile(MultipartFile file) throws IOException {
-        File convFile = new File(file.getOriginalFilename());
+        File convFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
         FileOutputStream fos = new FileOutputStream(convFile);
         fos.write(file.getBytes());
         fos.close();
@@ -71,7 +72,8 @@ public class AmazonClient {
 
     public String deleteFileFromS3Bucket(String fileUrl) {
         String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
-        s3Client.deleteObject(new DeleteObjectRequest(bucketName + "/", fileName));
+
+        s3Client.deleteObject(bucketName, "eventtest/firstEvent/"+fileName);
         return "Successfully deleted";
     }
 }

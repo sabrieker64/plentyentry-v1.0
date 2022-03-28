@@ -25,7 +25,7 @@ public class AwsBucketRestServiceImpl {
 
     @DeleteMapping("/deleteFile")
     @ResponseBody
-    public String deleteFile(String url) {
+    public String deleteFile(@RequestParam String url) {
         return this.amazonClient.deleteFileFromS3Bucket(url);
     }
 }
