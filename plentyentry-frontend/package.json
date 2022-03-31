@@ -23,6 +23,7 @@
     "@angular/router": "~13.1.1",
     "@material/fab": "^13.0.0",
     "@splidejs/splide": "^3.6.12",
+    "@stripe/stripe-js": "^1.26.0",
     "bootstrap": "3.4.1",
     "npm": "^8.5.3",
     "rxjs": "~6.6.0",

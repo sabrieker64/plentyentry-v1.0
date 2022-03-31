@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-03-23 21:48:38.
+// Generated using typescript-generator version 2.32.889 on 2022-03-31 20:57:57.
 
 export interface UserDTO {
     id: number;
@@ -52,6 +52,14 @@ export interface UserRegisterDTO {
 export interface UserAuthReqDTO {
     email: string;
     password: string;
+}
+
+export interface CreatePaymentResponse {
+    clientSecret: string;
+}
+
+export interface CreatePayment {
+    items: any[];
 }
 
 export interface TicketDTO {

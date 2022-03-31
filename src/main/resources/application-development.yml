@@ -1,5 +1,5 @@
 jwt:
-  secret: '5v8y/B?D(G+KbPeS'
+  secret: 'plentyentrycommodus'
 pe:
   baseHost: 'http://localhost:8080/'
 server:

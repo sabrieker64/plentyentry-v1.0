@@ -1,14 +1,11 @@
-package at.commodussolutions.plentyentry.ordermanagement.stripe.acceptpayment;
+package at.commodussolutions.plentyentry.ordermanagement.stripe.acceptpayment.service.impl;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import com.stripe.param.PaymentIntentCreateParams;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
-public class AcceptPayment {
-
-    @Value("${stripe.private-key}")
-    private String stripeApiKey;
-
+@Configuration
+public class StripeAcceptPaymentService {
 
     public PaymentIntentCreateParams acceptPaymentWithEventDetails(EventDTO eventDTO) {
         return PaymentIntentCreateParams.builder()
@@ -21,7 +18,10 @@ public class AcceptPayment {
                                 .build()).build();
     }
 
-    //This is the call for accepting payment
-    // PaymentIntent paymentIntent = PaymentIntent.create(acceptPaymentWithEventDetails())
+
+    public static int calculateOrderAmount(Object[] items) {
+        // todo calc the invoiceAmount
+        return 1400;
+    }
 
 }
