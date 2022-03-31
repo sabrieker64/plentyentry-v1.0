@@ -1,25 +1,27 @@
 package at.commodussolutions.plentyentry.ordermanagement.event.aws.service;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Service
 public class AmazonClient {
+
     private AmazonS3 s3Client;
 
     @Value("${amazonProperties.endpointUrl}")
@@ -52,10 +54,64 @@ public class AmazonClient {
         return fileUrl;
     }
 
+    public List<String> listFiles(String username, String eventName) {
+
+        ListObjectsRequest listObjectsRequest =
+                new ListObjectsRequest()
+                        .withBucketName(bucketName);
+
+        List<String> keys = new ArrayList<>();
+
+        ObjectListing objects = s3Client.listObjects(listObjectsRequest);
+
+        while (true) {
+            List<S3ObjectSummary> objectSummaries = objects.getObjectSummaries();
+            if (objectSummaries.size() < 1) {
+                break;
+            }
+
+            for (S3ObjectSummary item : objectSummaries) {
+                if (!item.getKey().endsWith("/") && item.getKey().contains(username) &&item.getKey().contains(eventName))
+                    keys.add(endpointUrl+"/"+item.getKey());
+            }
+
+            objects = s3Client.listNextBatchOfObjects(objects);
+        }
+
+        return keys;
+    }
+
+    public ByteArrayOutputStream  downloadFile(String keyName) {
+        try {
+            S3Object s3object = s3Client.getObject(new GetObjectRequest(bucketName, keyName));
+
+            InputStream is = s3object.getObjectContent();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            int len;
+            byte[] buffer = new byte[4096];
+            while ((len = is.read(buffer, 0, buffer.length)) != -1) {
+                outputStream.write(buffer, 0, len);
+            }
+
+            return outputStream;
+        } catch (IOException ioException) {
+            System.out.println("IOException: " + ioException.getMessage());
+        } catch (AmazonServiceException serviceException) {
+            System.out.println("AmazonServiceException Message:    " + serviceException.getMessage());
+            throw serviceException;
+        } catch (AmazonClientException clientException) {
+            System.out.println("AmazonClientException Message: " + clientException.getMessage());
+            throw clientException;
+        }
+
+        return null;
+    }
+
 
     private void uploadFileTos3bucket(String fileName, File file) {
         s3Client.putObject(new PutObjectRequest(bucketName, "eventtest/firstEvent/"+fileName, file)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
+
     }
 
     private String generateFileName(MultipartFile multiPart) {
