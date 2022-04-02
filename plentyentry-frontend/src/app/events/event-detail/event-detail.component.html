@@ -1,0 +1,56 @@
+<div class="container">
+
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>{{ eventDTO.name }}</mat-card-title>
+    </mat-card-header>
+    <div class="splide-container">
+      <splide [options]="
+    {
+      perPage: 1,
+      pagination: false,
+      gap: 30
+    }
+      ">
+        <splide-slide>
+          <figure class="event-card--thumbnail">
+            <img src="../../../assets/event.jpg">
+          </figure>
+        </splide-slide>
+        <splide-slide>
+          <figure class="event-card--thumbnail">
+            <img src="../../../assets/event.jpg">
+          </figure>
+        </splide-slide>
+        <splide-slide>
+          <figure class="event-card--thumbnail">
+            <img src="../../../assets/event.jpg">
+          </figure>
+        </splide-slide>
+      </splide>
+    </div>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item>{{ eventDTO.city }}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>{{ eventDTO.address }}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>{{ eventDTO.date }}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>{{ eventDTO.description }}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item mat-align-tabs="center">
+          <button mat-raised-button color="primary">Ticket kaufen</button>
+          <button mat-raised-button>Veranstalter</button>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<p>{{ eventDTO.id }}</p>
+
+<p></p>
+<p></p>
+<p></p>
+<p>{{ eventDTO.description }}</p>
