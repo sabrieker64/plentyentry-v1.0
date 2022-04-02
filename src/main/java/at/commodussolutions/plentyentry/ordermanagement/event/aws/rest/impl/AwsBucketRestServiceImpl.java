@@ -25,8 +25,8 @@ public class AwsBucketRestServiceImpl {
 
     @PostMapping("/uploadFile")
     @ResponseBody
-    public String uploadFile(MultipartFile file) {
-        return this.amazonClient.uploadFile(file);
+    public String uploadFile(@RequestPart("file") MultipartFile file,@RequestPart UserEventData userEventData) {
+        return this.amazonClient.uploadFile(file, userEventData);
     }
 
     @PostMapping("/listFiles")
@@ -35,8 +35,8 @@ public class AwsBucketRestServiceImpl {
         return this.amazonClient.listFiles(userEventData.getUsername(), userEventData.getEventName());
     }
 
-    @GetMapping(value = "/download/{filename}")
-    public ResponseEntity<byte[]> downloadFile(@PathVariable String filename) {
+    @GetMapping(value = "/download")
+    public ResponseEntity<byte[]> downloadFile(@RequestParam String filename) {
         ByteArrayOutputStream downloadInputStream = this.amazonClient.downloadFile(filename);
 
         return ResponseEntity.ok()
@@ -47,10 +47,18 @@ public class AwsBucketRestServiceImpl {
 
     @DeleteMapping("/deleteFile")
     @ResponseBody
-    public String deleteFile(@RequestParam String url) {
-        return this.amazonClient.deleteFileFromS3Bucket(url);
+    public String deleteFile(@RequestParam String url, @RequestBody UserEventData userEventData) {
+        return this.amazonClient.deleteFileFromS3Bucket(url,userEventData);
     }
 
+    @DeleteMapping("/deleteFiles")
+    @ResponseBody
+    public String deleteFiles(@RequestBody UserEventData userEventData) {
+        for (String url : userEventData.getUrls()) {
+            this.amazonClient.deleteFileFromS3Bucket(url,userEventData);
+        }
+        return "Deleted Files";
+    }
 
     private MediaType contentType(String filename) {
         String[] fileArrSplit = filename.split("\\.");

@@ -1,5 +1,6 @@
 package at.commodussolutions.plentyentry.ordermanagement.event.aws.service;
 
+import at.commodussolutions.plentyentry.ordermanagement.event.aws.beans.UserEventData;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
@@ -10,6 +11,7 @@ import com.amazonaws.services.s3.model.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
@@ -39,13 +41,16 @@ public class AmazonClient {
         this.s3Client = new AmazonS3Client(credentials);
     }
 
-    public String uploadFile(MultipartFile multipartFile) {
+    public String uploadFile(MultipartFile multipartFile, UserEventData userEventData) {
+
 
         String fileUrl = "";
         try {
             File file = convertMultiPartToFile(multipartFile);
             String fileName = generateFileName(multipartFile);
-            fileUrl = endpointUrl + "/eventtest/firstEvent/" + fileName;
+            //String path = "/PrototypeUsername/PrototypeEvent/";
+            String path = "/"+userEventData.getUsername()+"/"+userEventData.getEventName()+"/";
+            fileUrl = endpointUrl + path + fileName;
             uploadFileTos3bucket(fileName, file);
             file.delete();
         } catch (Exception e) {
@@ -109,7 +114,8 @@ public class AmazonClient {
 
 
     private void uploadFileTos3bucket(String fileName, File file) {
-        s3Client.putObject(new PutObjectRequest(bucketName, "eventtest/firstEvent/"+fileName, file)
+        String path = "PrototypeUsername/PrototypeEvent/";
+        s3Client.putObject(new PutObjectRequest(bucketName, path+fileName, file)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
 
     }
@@ -126,10 +132,13 @@ public class AmazonClient {
         return convFile;
     }
 
-    public String deleteFileFromS3Bucket(String fileUrl) {
+    public String deleteFileFromS3Bucket(String fileUrl, UserEventData userEventData) {
         String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
-
-        s3Client.deleteObject(bucketName, "eventtest/firstEvent/"+fileName);
+        String path = userEventData.getUsername()+"/"+userEventData.getEventName()+"/";
+        s3Client.deleteObject(bucketName, path+fileName);
         return "Successfully deleted";
     }
+
+
+
 }
