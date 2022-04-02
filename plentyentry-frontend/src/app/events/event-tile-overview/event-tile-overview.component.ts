@@ -34,7 +34,7 @@ export class EventTileOverviewComponent implements OnInit {
   }
 
   getEventDetail(eventId: number) {
-    this.router.navigateByUrl('overview/detail/' + eventId);
+    this.router.navigateByUrl('/' + eventId);
     console.log(eventId);
   }
 
