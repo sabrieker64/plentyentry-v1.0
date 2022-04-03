@@ -1,6 +1,6 @@
 package at.commodussolutions.plentyentry.ordermanagement.event.aws.service;
 
-import at.commodussolutions.plentyentry.ordermanagement.event.aws.beans.UserEventData;
+import at.commodussolutions.plentyentry.ordermanagement.event.aws.dto.AWSEventImagesUploadDTO;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
@@ -41,22 +41,25 @@ public class AmazonClient {
         this.s3Client = new AmazonS3Client(credentials);
     }
 
-    public String uploadFile(MultipartFile multipartFile, UserEventData userEventData) {
+    public List<String> uploadFiles(MultipartFile[] multipartFiles, AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
+        List<String> fileUrls = new ArrayList<>();
+        String path = "/"+awsEventImagesUploadDTO.getUsername()+"/"+awsEventImagesUploadDTO.getEventName()+"/";
 
+        for (MultipartFile multipartFile:multipartFiles) {
+            String fileUrl = "";
+            try {
+                File file = convertMultiPartToFile(multipartFile);
+                String fileName = generateFileName(multipartFile);
+                fileUrl = endpointUrl + path + fileName;
+                uploadFileTos3bucket(fileName, file);
+                file.delete();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            fileUrls.add(fileUrl);
 
-        String fileUrl = "";
-        try {
-            File file = convertMultiPartToFile(multipartFile);
-            String fileName = generateFileName(multipartFile);
-            //String path = "/PrototypeUsername/PrototypeEvent/";
-            String path = "/"+userEventData.getUsername()+"/"+userEventData.getEventName()+"/";
-            fileUrl = endpointUrl + path + fileName;
-            uploadFileTos3bucket(fileName, file);
-            file.delete();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        return fileUrl;
+        return fileUrls;
     }
 
     public List<String> listFiles(String username, String eventName) {
@@ -86,9 +89,10 @@ public class AmazonClient {
         return keys;
     }
 
-    public ByteArrayOutputStream  downloadFile(String keyName) {
+    public ByteArrayOutputStream  downloadFile(String keyName, AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
+        String path = awsEventImagesUploadDTO.getUsername()+"/"+awsEventImagesUploadDTO.getEventName()+"/";
         try {
-            S3Object s3object = s3Client.getObject(new GetObjectRequest(bucketName, keyName));
+            S3Object s3object = s3Client.getObject(new GetObjectRequest(bucketName, path+ keyName));
 
             InputStream is = s3object.getObjectContent();
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -132,9 +136,9 @@ public class AmazonClient {
         return convFile;
     }
 
-    public String deleteFileFromS3Bucket(String fileUrl, UserEventData userEventData) {
+    public String deleteFileFromS3Bucket(String fileUrl, AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
         String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
-        String path = userEventData.getUsername()+"/"+userEventData.getEventName()+"/";
+        String path = awsEventImagesUploadDTO.getUsername()+"/"+awsEventImagesUploadDTO.getEventName()+"/";
         s3Client.deleteObject(bucketName, path+fileName);
         return "Successfully deleted";
     }

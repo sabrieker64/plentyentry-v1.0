@@ -1,6 +1,7 @@
 package at.commodussolutions.plentyentry.ordermanagement.event.aws.rest.impl;
 
-import at.commodussolutions.plentyentry.ordermanagement.event.aws.beans.UserEventData;
+
+import at.commodussolutions.plentyentry.ordermanagement.event.aws.dto.AWSEventImagesUploadDTO;
 import at.commodussolutions.plentyentry.ordermanagement.event.aws.service.AmazonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,39 +25,48 @@ public class AwsBucketRestServiceImpl {
         this.amazonClient = amazonClient;
     }
 
-    @PostMapping("/uploadFile")
+    @PostMapping("/uploadFiles")
     @ResponseBody
-    public String uploadFile(@RequestPart("file") MultipartFile file,@RequestPart UserEventData userEventData) {
-        return this.amazonClient.uploadFile(file, userEventData);
+    public List<String> uploadFiles(@RequestPart("files") MultipartFile[] files,@RequestPart AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
+        return this.amazonClient.uploadFiles(files, awsEventImagesUploadDTO);
     }
 
     @PostMapping("/listFiles")
     @ResponseBody
-    public List<String> listFile(@RequestBody UserEventData userEventData) {
-        return this.amazonClient.listFiles(userEventData.getUsername(), userEventData.getEventName());
+    public List<String> listFiles(@RequestBody AWSEventImagesUploadDTO eventImagesUploadDTO) {
+        return this.amazonClient.listFiles(eventImagesUploadDTO.getUsername(), eventImagesUploadDTO.getEventName());
     }
 
     @GetMapping(value = "/download")
-    public ResponseEntity<byte[]> downloadFile(@RequestParam String filename) {
-        ByteArrayOutputStream downloadInputStream = this.amazonClient.downloadFile(filename);
+    public List<ResponseEntity<byte[]>> downloadFile(@RequestParam String[] filenames, @RequestPart AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
 
-        return ResponseEntity.ok()
-                .contentType(contentType(filename))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
-                .body(downloadInputStream.toByteArray());
+        List<ResponseEntity<byte[]>> responseEntity = new ArrayList<>();
+        for(String filename : filenames) {
+            ByteArrayOutputStream downloadInputStream = this.amazonClient.downloadFile(filename, awsEventImagesUploadDTO);
+            ResponseEntity<byte[]> tempResponsEntity = ResponseEntity.ok()
+                    .contentType(contentType(filename))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                    .body(downloadInputStream.toByteArray());
+            responseEntity.add(tempResponsEntity);
+        }
+
+        return responseEntity;
     }
 
+    /* DO WE NEED THIS?
     @DeleteMapping("/deleteFile")
     @ResponseBody
-    public String deleteFile(@RequestParam String url, @RequestBody UserEventData userEventData) {
-        return this.amazonClient.deleteFileFromS3Bucket(url,userEventData);
+    public String deleteFile(@RequestParam String url, @RequestBody AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
+        return this.amazonClient.deleteFileFromS3Bucket(url,awsEventImagesUploadDTO);
     }
+
+     */
 
     @DeleteMapping("/deleteFiles")
     @ResponseBody
-    public String deleteFiles(@RequestBody UserEventData userEventData) {
-        for (String url : userEventData.getUrls()) {
-            this.amazonClient.deleteFileFromS3Bucket(url,userEventData);
+    public String deleteFiles(@RequestBody AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
+        for (String url : awsEventImagesUploadDTO.getUrls()) {
+            this.amazonClient.deleteFileFromS3Bucket(url,awsEventImagesUploadDTO);
         }
         return "Deleted Files";
     }
