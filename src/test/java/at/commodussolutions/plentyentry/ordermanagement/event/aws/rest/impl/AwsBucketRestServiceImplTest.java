@@ -1,6 +1,7 @@
 package at.commodussolutions.plentyentry.ordermanagement.event.aws.rest.impl;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.aws.dto.AWSEventImagesUploadDTO;
+import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -103,7 +105,7 @@ public class AwsBucketRestServiceImplTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        List<String> resultList =  objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
+        List<ResponseEntity<byte[]>> resultList =  objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
                 new TypeReference<>() {
                 });
 
@@ -149,11 +151,11 @@ public class AwsBucketRestServiceImplTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        String endResultList =  objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
+        resultList =  objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
                 new TypeReference<>() {
                 });
 
-        Assertions.assertEquals("Deleted Files",endResultList);
+        Assertions.assertEquals("Deleted",resultList.get(0));
 
     }
 }

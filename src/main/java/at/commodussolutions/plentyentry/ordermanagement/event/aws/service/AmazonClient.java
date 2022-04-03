@@ -136,11 +136,10 @@ public class AmazonClient {
         return convFile;
     }
 
-    public String deleteFileFromS3Bucket(String fileUrl, AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
+    public void deleteFileFromS3Bucket(String fileUrl, AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
         String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
         String path = awsEventImagesUploadDTO.getUsername()+"/"+awsEventImagesUploadDTO.getEventName()+"/";
         s3Client.deleteObject(bucketName, path+fileName);
-        return "Successfully deleted";
     }
 
 

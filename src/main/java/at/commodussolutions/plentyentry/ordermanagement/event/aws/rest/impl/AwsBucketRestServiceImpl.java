@@ -64,11 +64,13 @@ public class AwsBucketRestServiceImpl {
 
     @DeleteMapping("/deleteFiles")
     @ResponseBody
-    public String deleteFiles(@RequestBody AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
+    public ArrayList<String> deleteFiles(@RequestBody AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
         for (String url : awsEventImagesUploadDTO.getUrls()) {
             this.amazonClient.deleteFileFromS3Bucket(url,awsEventImagesUploadDTO);
         }
-        return "Deleted Files";
+        ArrayList<String> temp = new ArrayList<String>();
+        temp.add("Deleted");
+        return temp;
     }
 
     private MediaType contentType(String filename) {
