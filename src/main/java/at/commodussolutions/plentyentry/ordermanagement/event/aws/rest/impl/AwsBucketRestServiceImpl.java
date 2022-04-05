@@ -27,7 +27,7 @@ public class AwsBucketRestServiceImpl {
 
     @PostMapping("/uploadFiles")
     @ResponseBody
-    public List<String> uploadFiles(@RequestPart("files") MultipartFile[] files,@RequestPart AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
+    public List<String> uploadFiles(@RequestParam(value = "files") List<MultipartFile> files, @RequestPart(name="awsEventImagesUploadDTO") AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
         return this.amazonClient.uploadFiles(files, awsEventImagesUploadDTO);
     }
 
@@ -37,7 +37,9 @@ public class AwsBucketRestServiceImpl {
         return this.amazonClient.listFiles(eventImagesUploadDTO.getUsername(), eventImagesUploadDTO.getEventName());
     }
 
+    /*
     @GetMapping(value = "/download")
+    @ResponseBody
     public List<ResponseEntity<byte[]>> downloadFile(@RequestParam String[] filenames, @RequestPart AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
 
         List<ResponseEntity<byte[]>> responseEntity = new ArrayList<>();
@@ -52,6 +54,8 @@ public class AwsBucketRestServiceImpl {
 
         return responseEntity;
     }
+
+     */
 
     /* DO WE NEED THIS?
     @DeleteMapping("/deleteFile")

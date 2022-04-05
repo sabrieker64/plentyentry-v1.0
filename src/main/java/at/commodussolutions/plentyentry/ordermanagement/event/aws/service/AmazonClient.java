@@ -41,7 +41,7 @@ public class AmazonClient {
         this.s3Client = new AmazonS3Client(credentials);
     }
 
-    public List<String> uploadFiles(MultipartFile[] multipartFiles, AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
+    public List<String> uploadFiles(List<MultipartFile> multipartFiles, AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
         List<String> fileUrls = new ArrayList<>();
         String path = "/"+awsEventImagesUploadDTO.getUsername()+"/"+awsEventImagesUploadDTO.getEventName()+"/";
 
@@ -51,7 +51,11 @@ public class AmazonClient {
                 File file = convertMultiPartToFile(multipartFile);
                 String fileName = generateFileName(multipartFile);
                 fileUrl = endpointUrl + path + fileName;
-                uploadFileTos3bucket(fileName, file);
+
+                String tempPath = awsEventImagesUploadDTO.getUsername()+"/"+awsEventImagesUploadDTO.getEventName()+"/";
+                s3Client.putObject(new PutObjectRequest(bucketName, tempPath+fileName, file)
+                        .withCannedAcl(CannedAccessControlList.PublicRead));
+
                 file.delete();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -79,7 +83,7 @@ public class AmazonClient {
             }
 
             for (S3ObjectSummary item : objectSummaries) {
-                if (!item.getKey().endsWith("/") && item.getKey().contains(username) &&item.getKey().contains(eventName))
+                if (!item.getKey().endsWith("/") && item.getKey().equals(username) &&item.getKey().equals(eventName))
                     keys.add(endpointUrl+"/"+item.getKey());
             }
 
@@ -116,13 +120,6 @@ public class AmazonClient {
         return null;
     }
 
-
-    private void uploadFileTos3bucket(String fileName, File file) {
-        String path = "PrototypeUsername/PrototypeEvent/";
-        s3Client.putObject(new PutObjectRequest(bucketName, path+fileName, file)
-                .withCannedAcl(CannedAccessControlList.PublicRead));
-
-    }
 
     private String generateFileName(MultipartFile multiPart) {
         return new Date().getTime() + "-" + multiPart.getOriginalFilename().replace(" ", "_");

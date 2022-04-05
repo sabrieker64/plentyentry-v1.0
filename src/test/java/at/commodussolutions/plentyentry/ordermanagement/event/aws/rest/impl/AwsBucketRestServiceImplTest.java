@@ -48,43 +48,47 @@ public class AwsBucketRestServiceImplTest {
     @Value("classpath:images/mina_tattoo.jpg")
     Resource resourceFile;
 
+    @Value("classpath:images/1806-tuerkei-818-dunkel-maxpane-818-290-jpg--8ae8dd9828dbe9dc-.jpg")
+    Resource resourceFile2;
+
     public AWSEventImagesUploadDTO getAWSEventImagesUploadDTO() {
-        AWSEventImagesUploadDTO AWSEventImagesUploadDTO = new AWSEventImagesUploadDTO();
-        AWSEventImagesUploadDTO.setUsername("PrototypeUsername");
-        AWSEventImagesUploadDTO.setEventName("PrototypeEvent");
-        return AWSEventImagesUploadDTO;
+        AWSEventImagesUploadDTO awsEventImagesUploadDTO = new AWSEventImagesUploadDTO();
+        awsEventImagesUploadDTO.setUsername("PrototypeUsername");
+        awsEventImagesUploadDTO.setEventName("PrototypeEvent");
+        return awsEventImagesUploadDTO;
     }
 
     @Test
     public void uploadFiles() throws Exception {
 
+
+        //FIRST DELETE ALL FILES
+        deleteFiles();
+
+
+        //UPLOAD
         Assertions.assertNotNull(resourceFile);
-
-        List<MockMultipartFile> files = new ArrayList<>();
-
-        MockMultipartFile firstFile = new MockMultipartFile(
-                "files",resourceFile.getFilename(),
-                MediaType.MULTIPART_FORM_DATA_VALUE,
-                resourceFile.getInputStream());
-
-        Assertions.assertNotNull(firstFile);
-
-        MockMultipartFile file = new MockMultipartFile("files", resourceFile.getFilename(), MediaType.MULTIPART_FORM_DATA_VALUE, resourceFile.getInputStream());
-
-        MockMultipartFile secondFile = new MockMultipartFile(
-                "files",resourceFile.getFilename(),
-                MediaType.MULTIPART_FORM_DATA_VALUE,
-                resourceFile.getInputStream());
-
-        Assertions.assertNotNull(firstFile);
+        Assertions.assertNotNull(resourceFile2);
 
 
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(baseUrl+"/uploadFiles")
-                        .accept(MediaType.MULTIPART_FORM_DATA)
-                        .content(file.getBytes())
-                        .accept(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(getAWSEventImagesUploadDTO()))
-                        .contentType(MediaType.MULTIPART_FORM_DATA))
+        var awsEventImagesUploadDTO = getAWSEventImagesUploadDTO();
+        MockMultipartFile file2 = new MockMultipartFile("files", resourceFile2.getFilename(), MediaType.APPLICATION_JSON_VALUE, resourceFile2.getInputStream());
+
+        MockMultipartFile file = new MockMultipartFile("files", resourceFile.getFilename(), MediaType.APPLICATION_JSON_VALUE, resourceFile.getInputStream());
+
+        MockMultipartFile jsonFile = new MockMultipartFile("awsEventImagesUploadDTO", "", "application/json", ("{" +
+                "\"username\":" + "\""+awsEventImagesUploadDTO.getUsername()+"\""+","+
+                "\"eventName\":" + "\""+awsEventImagesUploadDTO.getEventName()+"\"}"
+
+        ).getBytes());
+
+        Assertions.assertNotNull(file);
+        Assertions.assertNotNull(file2);
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.multipart(baseUrl+"/uploadFiles")
+                        .file(file)
+                        .file(file2)
+                        .file(jsonFile))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
@@ -92,31 +96,82 @@ public class AwsBucketRestServiceImplTest {
                 new TypeReference<>() {
                 });
 
-        Assertions.assertEquals(1,resultList.size());
-    }
 
-    @Test
-    public void listFiles() throws Exception {
 
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(baseUrl+"/listFiles")
+        //LISTFILES
+        MvcResult listFilesMvcResult = mvc.perform(MockMvcRequestBuilders.post(baseUrl+"/listFiles")
                         .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(getAWSEventImagesUploadDTO()))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        List<ResponseEntity<byte[]>> resultList =  objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
+        List<String> listFilesResultList =  objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
                 new TypeReference<>() {
                 });
 
-        //Assertions.assertEquals("https://eventimagesbucket.s3-us-east-2.amazonaws.com/PrototypeUsername/PrototypeEvent/1648892320691-mina_tattoo.jpg", resultList.get(0));
-        Assertions.assertEquals(3,resultList.size());
+
+        //CHECK UPLOAD
+        Assertions.assertEquals(listFilesResultList.size(),resultList.size());
+
 
     }
 
-    public void downloadFiles() {
+    @Test
+    public void listFiles() throws Exception {
+
+        //FIRST DELETE
+        deleteFiles();
+
+        //UPLOADFILES
+        Assertions.assertNotNull(resourceFile);
+        Assertions.assertNotNull(resourceFile2);
+
+
+        var awsEventImagesUploadDTO = getAWSEventImagesUploadDTO();
+        MockMultipartFile file2 = new MockMultipartFile("files", resourceFile2.getFilename(), MediaType.APPLICATION_JSON_VALUE, resourceFile2.getInputStream());
+
+        MockMultipartFile file = new MockMultipartFile("files", resourceFile.getFilename(), MediaType.APPLICATION_JSON_VALUE, resourceFile.getInputStream());
+
+        MockMultipartFile jsonFile = new MockMultipartFile("awsEventImagesUploadDTO", "", "application/json", ("{" +
+                "\"username\":" + "\""+awsEventImagesUploadDTO.getUsername()+"\""+","+
+                "\"eventName\":" + "\""+awsEventImagesUploadDTO.getEventName()+"\"}"
+
+        ).getBytes());
+
+        Assertions.assertNotNull(file);
+        Assertions.assertNotNull(file2);
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.multipart(baseUrl+"/uploadFiles")
+                        .file(file)
+                        .file(file2)
+                        .file(jsonFile))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        List<String> resultList =  objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
+                new TypeReference<>() {
+                });
+
+
+        //LISTFILES
+        MvcResult listMvcResult = mvc.perform(MockMvcRequestBuilders.post(baseUrl+"/listFiles")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(getAWSEventImagesUploadDTO()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        List<String> listResultList =  objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
+                new TypeReference<>() {
+                });
+
+
+
+        Assertions.assertEquals(resultList.size(),listResultList.size());
 
     }
+
 
     @Test
     public void deleteFiles() throws Exception {
@@ -128,7 +183,7 @@ public class AwsBucketRestServiceImplTest {
         //GETFILES
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(baseUrl+"/listFiles")
                         .accept(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(getAWSEventImagesUploadDTO()))
+                        .content(objectMapper.writeValueAsString(awsEventImagesUploadDTO))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
@@ -140,7 +195,6 @@ public class AwsBucketRestServiceImplTest {
         for(String result : resultList) {
             urls.add(result);
         }
-
         awsEventImagesUploadDTO.setUrls(urls);
 
 
@@ -155,7 +209,20 @@ public class AwsBucketRestServiceImplTest {
                 new TypeReference<>() {
                 });
 
-        Assertions.assertEquals("Deleted",resultList.get(0));
+
+        //LISTFILES TO CHECK IF EVERY FILE GOT DELETED
+        MvcResult listMvcResult = mvc.perform(MockMvcRequestBuilders.post(baseUrl+"/listFiles")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(awsEventImagesUploadDTO))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        List<String> listResultList =  objectMapper.readValue(listMvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
+                new TypeReference<>() {
+                });
+
+        Assertions.assertEquals(0,listResultList.size());
 
     }
 }
