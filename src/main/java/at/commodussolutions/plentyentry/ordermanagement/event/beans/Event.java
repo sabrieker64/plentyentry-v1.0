@@ -1,5 +1,6 @@
 package at.commodussolutions.plentyentry.ordermanagement.event.beans;
 
+import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -46,6 +47,14 @@ public class Event {
 
     @Column(name = "CITY")
     private String city;
+
+    //MINA
+
+    @ManyToOne
+    @JoinColumn(name="SHOPPINGCART_ID", nullable=false)
+    private ShoppingCart shoppingCart;
+
+    //MINA END
 
 //TODO: Saving images on s3 bucket and checking the url if it exists
 
