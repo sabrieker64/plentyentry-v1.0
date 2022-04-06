@@ -13,7 +13,6 @@ export class PaymentService {
   constructor(private http: HttpClient) {
   }
 
-
   public makePayment(createPayment: CreatePayment): Observable<CreatePaymentResponse> {
     return this.http.post<CreatePaymentResponse>(`${this.baseUrl}/create-payment-intent`, createPayment);
   }
