@@ -27,7 +27,7 @@ public class PayPalRestServiceImpl implements PayPalRestService {
     @Override
     public String paymentPayPal(@ModelAttribute("order") Order order) throws PayPalRESTException {
         try {
-            Payment payment = payPalService.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(), order.getIntent(), order.getDescirption(),
+            Payment payment = payPalService.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(), order.getIntent(), order.getDescription(),
                     plentyEntryBackendUtils.getHost() + cancelURL, plentyEntryBackendUtils.getHost() + successURL);
             for (Links links : payment.getLinks()) {
                 if (links.getRel().equals("approval_url")) {

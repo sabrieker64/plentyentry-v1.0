@@ -3,17 +3,17 @@ package at.commodussolutions.plentyentry.ordermanagement.ticket.beans;
 import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.enums.TicketStatus;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "TICKET")
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class Ticket {
     @Id
     @Column(name = "ID")
