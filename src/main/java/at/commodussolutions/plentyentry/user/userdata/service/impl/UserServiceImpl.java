@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public String signUpUser(User user) {
+    private String signUpUser(User user) {
         boolean userExists = this.userRepository.findByEmail(user.getEmail()).isPresent();
         if (userExists) {
             throw new IllegalStateException("Email wird schon verwendet");

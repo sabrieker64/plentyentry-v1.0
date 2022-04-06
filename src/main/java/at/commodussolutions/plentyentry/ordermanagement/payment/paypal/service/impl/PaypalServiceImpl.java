@@ -1,32 +1,34 @@
-package at.commodussolutions.plentyentry.user.payment.paypal.service.impl;
+package at.commodussolutions.plentyentry.ordermanagement.payment.paypal.service.impl;
 
-import at.commodussolutions.plentyentry.user.payment.paypal.service.PayPalService;
+import at.commodussolutions.plentyentry.ordermanagement.payment.paypal.service.PaypalService;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PayPalServiceImpl implements PayPalService {
+@Transactional
+@Slf4j
+public class PaypalServiceImpl implements PaypalService {
 
     @Autowired
     private APIContext apiContext;
 
 
-    public Payment createPayment(
-            Double total, String currency, String method,
-            String intent, String description, String cancelUrl,
-            String successUrl) throws PayPalRESTException {
-
+    public Payment createPayment(Double total, String currency, String method,
+                                 String intent, String description, String cancelUrl,
+                                 String successUrl) throws PayPalRESTException {
         Amount amount = new Amount();
         amount.setCurrency(currency);
-        total = new BigDecimal(total).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        total = new BigDecimal(total).setScale(2, RoundingMode.CEILING).doubleValue();
         amount.setTotal(String.format("%.2f", total));
 
         Transaction transaction = new Transaction();
@@ -38,6 +40,7 @@ public class PayPalServiceImpl implements PayPalService {
 
         Payer payer = new Payer();
         payer.setPaymentMethod(method);
+
 
         Payment payment = new Payment();
         payment.setIntent(intent);

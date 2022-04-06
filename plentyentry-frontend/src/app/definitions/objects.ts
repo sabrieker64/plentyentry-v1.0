@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-03-27 18:00:32.
+// Generated using typescript-generator version 2.32.889 on 2022-04-06 22:33:38.
 
 export interface UserDTO {
     id: number;
@@ -42,24 +42,32 @@ export interface UserRegisterDTO {
     lastName: string;
     email: string;
     password: string;
-    city: string;
-    postCode: string;
-    street: string;
-    birthday: Date;
-    userGender: UserGender;
+  city: string;
+  postCode: string;
+  street: string;
+  birthday: Date;
+  userGender: UserGender;
 }
 
 export interface UserAuthReqDTO {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
+}
+
+export interface CreatePaymentResponse {
+  clientSecret: string;
+}
+
+export interface CreatePayment {
+  items: any[];
 }
 
 export interface TicketDTO {
-    id: number;
-    quantity: number;
-    ticketStatus: TicketStatus;
-    user: UserDTO;
-    event: EventDTO;
+  id: number;
+  quantity: number;
+  ticketStatus: TicketStatus;
+  user: UserDTO;
+  event: EventDTO;
 }
 
 export interface CoronaStatusDTO {
