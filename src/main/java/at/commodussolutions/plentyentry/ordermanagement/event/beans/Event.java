@@ -48,14 +48,6 @@ public class Event {
     @Column(name = "CITY")
     private String city;
 
-    //MINA
-
-    @ManyToOne
-    @JoinColumn(name="SHOPPINGCART_ID", nullable=false)
-    private ShoppingCart shoppingCart;
-
-    //MINA END
-
 //TODO: Saving images on s3 bucket and checking the url if it exists
 
     @ElementCollection(fetch = FetchType.LAZY)

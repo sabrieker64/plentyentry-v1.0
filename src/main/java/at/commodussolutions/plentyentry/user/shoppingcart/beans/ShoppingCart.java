@@ -1,10 +1,9 @@
 package at.commodussolutions.plentyentry.user.shoppingcart.beans;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -15,7 +14,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "SHOPPINGCART")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShoppingCart {
@@ -29,6 +29,6 @@ public class ShoppingCart {
     private User user;
 
     @OneToMany(mappedBy="shoppingCart")
-    private Set<Event> events;
+    private Set<Ticket> tickets;
 
 }

@@ -1,0 +1,28 @@
+package at.commodussolutions.plentyentry.user.shoppingcart.service.impl;
+
+
+import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
+import at.commodussolutions.plentyentry.user.shoppingcart.repository.ShoppingCartRepository;
+import at.commodussolutions.plentyentry.user.shoppingcart.service.ShoppingCartService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class ShoppingCartServiceImpl implements ShoppingCartService {
+
+    @Autowired
+    private ShoppingCartRepository shoppingCartRepository;
+
+    @Override
+    public ShoppingCart createNewShoppingCart(ShoppingCart shoppingCart) {
+        return shoppingCartRepository.save(shoppingCart);
+    }
+
+    @Override
+    public ShoppingCart getShoppingCartById(Long id) {
+        return shoppingCartRepository.getById(id);
+    }
+
+    @Override
+    public ShoppingCart updateShoppingCartById(ShoppingCart shoppingCart) {
+        return shoppingCartRepository.save(shoppingCart);
+    }
+}

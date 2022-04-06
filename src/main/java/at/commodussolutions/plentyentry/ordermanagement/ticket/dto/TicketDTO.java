@@ -2,6 +2,7 @@ package at.commodussolutions.plentyentry.ordermanagement.ticket.dto;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.enums.TicketStatus;
+import at.commodussolutions.plentyentry.user.shoppingcart.dto.ShoppingCartDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,4 +17,5 @@ public class TicketDTO {
     private TicketStatus ticketStatus;
     private UserDTO user;
     private EventDTO event;
+    private ShoppingCartDTO shoppingCart;
 }
