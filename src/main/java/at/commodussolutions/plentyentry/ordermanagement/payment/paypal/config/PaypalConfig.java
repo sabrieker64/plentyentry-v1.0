@@ -1,4 +1,4 @@
-package at.commodussolutions.plentyentry.user.payment.paypal.config;
+package at.commodussolutions.plentyentry.ordermanagement.payment.paypal.config;
 
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.OAuthTokenCredential;
@@ -11,14 +11,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class PaypalConfiguration {
+public class PaypalConfig {
+
     @Value("${paypal.client.id}")
     private String clientId;
+
     @Value("${paypal.client.secret}")
     private String clientSecret;
+
     @Value("${paypal.mode}")
     private String mode;
-
 
     @Bean
     public Map<String, String> paypalSdkConfig() {
@@ -27,16 +29,16 @@ public class PaypalConfiguration {
         return configMap;
     }
 
-
     @Bean
-    public OAuthTokenCredential oAuthTokenCredentials() {
+    public OAuthTokenCredential oAuthTokenCredential() {
         return new OAuthTokenCredential(clientId, clientSecret, paypalSdkConfig());
     }
 
     @Bean
     public APIContext apiContext() throws PayPalRESTException {
-        APIContext context = new APIContext(oAuthTokenCredentials().getClientID(), oAuthTokenCredentials().getClientSecret(), mode);
+        APIContext context = new APIContext(oAuthTokenCredential().getAccessToken());
         context.setConfigurationMap(paypalSdkConfig());
         return context;
     }
+
 }
