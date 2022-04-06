@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {CreatePayment, CreatePaymentResponse} from "../../definitions/objects";
 import {Observable} from "rxjs";
+import {CreatePayment, CreatePaymentResponse} from "../../definitions/objects";
 
 @Injectable({
   providedIn: 'root'

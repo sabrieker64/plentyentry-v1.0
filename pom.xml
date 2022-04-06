@@ -220,9 +220,10 @@
                         <class>at.commodussolutions.plentyentry.user.userdata.dto.UserRegisterDTO</class>
                         <class>at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO</class>
                         <class>
-                            at.commodussolutions.plentyentry.ordermanagement.stripe.acceptpayment.dto.CreatePaymentResponse
+                            at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.CreatePaymentResponse
                         </class>
-                        <class>at.commodussolutions.plentyentry.ordermanagement.stripe.acceptpayment.dto.CreatePayment
+                        <class>
+                            at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.CreatePayment
                         </class>
                     </classes>
                     <outputKind>module</outputKind>
