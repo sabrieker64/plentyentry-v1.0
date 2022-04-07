@@ -35,12 +35,12 @@ public class TicketInitializer implements InitializeDatabase {
 
     @Override
     public String initializeName() {
-        return null;
+        return "Ticket Group";
     }
 
     @Override
     public String initializerName() {
-        return null;
+        return "Ticket Initializer";
     }
 
     @Override
@@ -96,13 +96,13 @@ public class TicketInitializer implements InitializeDatabase {
         User user = new User();
         user.setFirstName("John");
         user.setLastName("Doe");
-        user.setEmail("jogassn@neu.com");
+        user.setEmail("jogassntest@neu.com");
         user.setPassword("password");
         user.setStreet("Johnny Street 11");
         user.setPostCode("63380");
         user.setCity("Kufstein");
         user.setAge(20);
-        user.setSvNumber(1234564789);
+        user.setSvNumber(214564789);
         user.setBirthday(LocalDate.now());
         user.setUserType(UserType.ADMIN);
         user.setUserGender(UserGender.MALE);

@@ -102,7 +102,7 @@ public class User implements UserDetails {
 
     //MINA
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "SHOPPINGCART_ID", referencedColumnName = "SHOPPINGCART_ID")
+    @JoinColumn(name = "SHOPPINGCART_ID", referencedColumnName = "ID")
     private ShoppingCart shoppingCart;
     //MINA END
 

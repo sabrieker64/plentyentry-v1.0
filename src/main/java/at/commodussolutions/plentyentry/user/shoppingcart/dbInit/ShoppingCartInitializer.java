@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Component
 @RequiredArgsConstructor
@@ -63,17 +64,29 @@ public class ShoppingCartInitializer implements InitializeDatabase {
     @Override
     public void initData() {
 
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCartRepository.save(shoppingCart);
+
+
         User user = initUser();
+        shoppingCartRepository.findAll().get(0).setUser(user);
+
         Event event = initEvent();
 
         Set<Ticket> tickets = new HashSet<>();
         Ticket ticket = initTicket(event,user);
 
         tickets.add(ticket);
-
-        ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart.setUser(user);
         shoppingCart.setTickets(tickets);
+
+        shoppingCartRepository.save(shoppingCartRepository.findAll().get(0));
+
+        User updateUserShoppinCart = userRepository.findByEmail("jogassn@neuneu.com").get();
+        updateUserShoppinCart.setShoppingCart(shoppingCartRepository.findAll().get(0));
+
+        userRepository.save(updateUserShoppinCart);
+
+
     }
 
     public User initUser() {
@@ -99,6 +112,7 @@ public class ShoppingCartInitializer implements InitializeDatabase {
         user.setPaymentMethod(null);
         user.setJwtToken(null);
         user.setEnabled(true);
+        //user.setShoppingCart(shoppingCartRepository.findAll().get(0));
         userService.registerNewUser(user);
 
         return userRepository.findAll().get(0);
@@ -132,6 +146,7 @@ public class ShoppingCartInitializer implements InitializeDatabase {
         ticket1.setTicketStatus(TicketStatus.NOTSELLED);
         ticket1.setEvent(event);
         ticket1.setUser(user);
+        ticket1.setShoppingCart(shoppingCartRepository.findAll().get(0));
         ticketRepository.save(ticket1);
 
         return ticketRepository.findAll().get(0);

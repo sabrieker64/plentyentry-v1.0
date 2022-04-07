@@ -28,7 +28,7 @@ public class ShoppingCart {
     @OneToOne(mappedBy = "shoppingCart")
     private User user;
 
-    @OneToMany(mappedBy="shoppingCart")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "shoppingCart")
     private Set<Ticket> tickets;
 
 }
