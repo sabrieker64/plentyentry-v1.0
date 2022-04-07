@@ -156,6 +156,11 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.8.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>1.12.186</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -220,9 +225,10 @@
                         <class>at.commodussolutions.plentyentry.user.userdata.dto.UserRegisterDTO</class>
                         <class>at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO</class>
                         <class>
-                            at.commodussolutions.plentyentry.ordermanagement.stripe.acceptpayment.dto.CreatePaymentResponse
+                            at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.CreatePaymentResponse
                         </class>
-                        <class>at.commodussolutions.plentyentry.ordermanagement.stripe.acceptpayment.dto.CreatePayment
+                        <class>
+                            at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.CreatePayment
                         </class>
                     </classes>
                     <outputKind>module</outputKind>
