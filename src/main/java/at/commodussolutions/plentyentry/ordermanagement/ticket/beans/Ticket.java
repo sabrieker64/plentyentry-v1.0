@@ -38,7 +38,7 @@ public class Ticket {
     //MINA
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey = @ForeignKey(name = "SHOPPINGCART_ID"),referencedColumnName = "ID")
+    @JoinColumn(foreignKey = @ForeignKey(name = "FK_SHOPPINGCART_ID"),referencedColumnName = "ID")
     private ShoppingCart shoppingCart;
 
     //MINA END

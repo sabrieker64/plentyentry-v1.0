@@ -1,6 +1,7 @@
 package at.commodussolutions.plentyentry.user.shoppingcart.dbInit;
 
 import at.commodussolutions.plentyentry.backendConfig.dbInitConfig.dbInit.InitializeDatabase;
+import at.commodussolutions.plentyentry.backendConfig.security.PasswordEncoder;
 import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
@@ -34,6 +35,9 @@ public class ShoppingCartInitializer implements InitializeDatabase {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private TicketRepository ticketRepository;
@@ -95,7 +99,7 @@ public class ShoppingCartInitializer implements InitializeDatabase {
         user.setFirstName("John");
         user.setLastName("Doe");
         user.setEmail("jogassn@neuneu.com");
-        user.setPassword("password");
+        user.setPassword(passwordEncoder.bCryptPasswordEncoder().encode("password"));
         user.setStreet("Johnny Street 11");
         user.setPostCode("63380");
         user.setCity("Kufstein");
@@ -112,8 +116,8 @@ public class ShoppingCartInitializer implements InitializeDatabase {
         user.setPaymentMethod(null);
         user.setJwtToken(null);
         user.setEnabled(true);
-        //user.setShoppingCart(shoppingCartRepository.findAll().get(0));
-        userService.registerNewUser(user);
+        user.setShoppingCart(shoppingCartRepository.findAll().get(0));
+        userRepository.save(user);
 
         return userRepository.findAll().get(0);
     }

@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-04-06 22:33:38.
+// Generated using typescript-generator version 2.32.889 on 2022-04-07 19:42:29.
 
 export interface UserDTO {
     id: number;
@@ -42,32 +42,33 @@ export interface UserRegisterDTO {
     lastName: string;
     email: string;
     password: string;
-  city: string;
-  postCode: string;
-  street: string;
-  birthday: Date;
-  userGender: UserGender;
+    city: string;
+    postCode: string;
+    street: string;
+    birthday: Date;
+    userGender: UserGender;
 }
 
 export interface UserAuthReqDTO {
-  email: string;
-  password: string;
+    email: string;
+    password: string;
 }
 
 export interface CreatePaymentResponse {
-  clientSecret: string;
+    clientSecret: string;
 }
 
 export interface CreatePayment {
-  items: any[];
+    items: any[];
 }
 
 export interface TicketDTO {
-  id: number;
-  quantity: number;
-  ticketStatus: TicketStatus;
-  user: UserDTO;
-  event: EventDTO;
+    id: number;
+    quantity: number;
+    ticketStatus: TicketStatus;
+    user: UserDTO;
+    event: EventDTO;
+    shoppingCart: ShoppingCartDTO;
 }
 
 export interface CoronaStatusDTO {
@@ -89,6 +90,93 @@ export interface PaymentMethodDTO {
     cvSecurityCode: number;
     iban: number;
     user: UserDTO;
+}
+
+export interface ShoppingCartDTO {
+    id: number;
+    user: User;
+    events: Event[];
+}
+
+export interface User extends UserDetails {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    street: string;
+    postCode: string;
+    city: string;
+    age: number;
+    svNumber: number;
+    birthday: Date;
+    userType: UserType;
+    userGender: UserGender;
+    isLoggedIn: boolean;
+    isVerifiedAsEntertainer: boolean;
+    locked: boolean;
+    entertainedEvents: Event[];
+    tickets: Ticket[];
+    paymentMethod: PaymentMethod[];
+    jwtToken: string;
+    shoppingCart: ShoppingCart;
+}
+
+export interface Event {
+    id: number;
+    name: string;
+    date: Date;
+    description: string;
+    price: number;
+    ticketCounter: number;
+    ticketId: number;
+    address: string;
+    city: string;
+    eventImageUrls: string[];
+    entertainers: User[];
+}
+
+export interface Ticket {
+    id: number;
+    quantity: number;
+    ticketStatus: TicketStatus;
+    event: Event;
+    user: User;
+    shoppingCart: ShoppingCart;
+}
+
+export interface PaymentMethod {
+    id: number;
+    paymentType: PaymentType;
+    paypalClientToken: string;
+    paypalClientTokenExpiresIn: string;
+    creditCardNumber: number;
+    nameOnCard: string;
+    cvSecurityCode: number;
+    iban: number;
+    user: User;
+}
+
+export interface ShoppingCart {
+    id: number;
+    user: User;
+    tickets: Ticket[];
+}
+
+export interface GrantedAuthority extends Serializable {
+    authority: string;
+}
+
+export interface UserDetails extends Serializable {
+    enabled: boolean;
+    username: string;
+    password: string;
+    credentialsNonExpired: boolean;
+    accountNonExpired: boolean;
+    authorities: GrantedAuthority[];
+    accountNonLocked: boolean;
+}
+
+export interface Serializable {
 }
 
 export type UserType = "GUEST" | "CUSTOMER" | "ADMIN" | "MAINTAINER" | "SUPERADMIN";

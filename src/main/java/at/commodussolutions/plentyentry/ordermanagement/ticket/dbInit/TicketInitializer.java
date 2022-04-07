@@ -1,6 +1,7 @@
 package at.commodussolutions.plentyentry.ordermanagement.ticket.dbInit;
 
 import at.commodussolutions.plentyentry.backendConfig.dbInitConfig.dbInit.InitializeDatabase;
+import at.commodussolutions.plentyentry.backendConfig.security.PasswordEncoder;
 import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
@@ -28,7 +29,7 @@ public class TicketInitializer implements InitializeDatabase {
     private UserRepository userRepository;
 
     @Autowired
-    private UserService userService;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private EventRepository eventRepository;
@@ -97,7 +98,7 @@ public class TicketInitializer implements InitializeDatabase {
         user.setFirstName("John");
         user.setLastName("Doe");
         user.setEmail("jogassntest@neu.com");
-        user.setPassword("password");
+        user.setPassword(passwordEncoder.bCryptPasswordEncoder().encode("password"));
         user.setStreet("Johnny Street 11");
         user.setPostCode("63380");
         user.setCity("Kufstein");
@@ -114,7 +115,7 @@ public class TicketInitializer implements InitializeDatabase {
         user.setPaymentMethod(null);
         user.setJwtToken(null);
         user.setEnabled(true);
-        userService.registerNewUser(user);
+        userRepository.save(user);
 
         return userRepository.findAll().get(0);
     }
