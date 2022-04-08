@@ -7,7 +7,7 @@ env:
 phases:
   install:
     runtime-versions:
-      java: coretto17
+      java: coretto11
       nodejs: latest
     commands:
       - echo $CODEBUILD_SRC_DIR
