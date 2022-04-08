@@ -23,8 +23,8 @@ file_exists_behavior: OVERWRITE
 permission:
   - object: /tmp
     pattern: "**"
-    owner: root
-    group: root
+    owner: ec2-user
+    group: ec2-user
 hooks:
   BeforeInstall:
     - location: before-install.sh
