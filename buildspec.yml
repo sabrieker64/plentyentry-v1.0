@@ -7,7 +7,7 @@ env:
 phases:
   install:
     runtime-versions:
-      java: corretto11
+      java: 17.0.2+8-LTS
       nodejs: latest
     commands:
       - echo $CODEBUILD_SRC_DIR

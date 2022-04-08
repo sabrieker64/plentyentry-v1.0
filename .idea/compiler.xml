@@ -18,7 +18,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="plentyentry-backend" target="11" />
-      <module name="plentyentry-commodus-solutions" target="11" />
+      <module name="plentyentry-commodus-solutions" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
