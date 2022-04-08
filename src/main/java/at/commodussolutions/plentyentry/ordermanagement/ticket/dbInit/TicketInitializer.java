@@ -26,6 +26,9 @@ public class TicketInitializer implements InitializeDatabase {
     @Autowired
     private EventRepository eventRepository;
 
+    @Autowired
+    private TicketBuilder ticketBuilder;
+
     @Override
     public String initializeName() {
         return "Ticket Group";
@@ -48,11 +51,6 @@ public class TicketInitializer implements InitializeDatabase {
 
     @Override
     public void initData() {
-        Ticket ticket1 = new Ticket();
-        ticket1.setQuantity(2);
-        ticket1.setTicketStatus(TicketStatus.NOTSELLED);
-        ticket1.setEvent(null);
-        ticket1.setUser(null);
-        ticketRepository.save(ticket1);
+        ticketBuilder.buildTicket();
     }
 }

@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-04-08 14:32:26.
+// Generated using typescript-generator version 2.32.889 on 2022-04-08 21:36:18.
 
 export interface UserDTO {
     id: number;
@@ -94,89 +94,8 @@ export interface PaymentMethodDTO {
 
 export interface ShoppingCartDTO {
     id: number;
-    user: User;
-    events: Event[];
-}
-
-export interface User extends UserDetails {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    street: string;
-    postCode: string;
-    city: string;
-    age: number;
-    svNumber: number;
-    birthday: Date;
-    userType: UserType;
-    userGender: UserGender;
-    isLoggedIn: boolean;
-    isVerifiedAsEntertainer: boolean;
-    locked: boolean;
-    entertainedEvents: Event[];
-    tickets: Ticket[];
-    paymentMethod: PaymentMethod[];
-    jwtToken: string;
-    shoppingCart: ShoppingCart;
-}
-
-export interface Event {
-    id: number;
-    name: string;
-    date: Date;
-    description: string;
-    price: number;
-    ticketCounter: number;
-    ticketId: number;
-    address: string;
-    city: string;
-    eventImageUrls: string[];
-    entertainers: User[];
-}
-
-export interface Ticket {
-    id: number;
-    quantity: number;
-    ticketStatus: TicketStatus;
-    event: Event;
-    user: User;
-    shoppingCart: ShoppingCart;
-}
-
-export interface PaymentMethod {
-    id: number;
-    paymentType: PaymentType;
-    paypalClientToken: string;
-    paypalClientTokenExpiresIn: string;
-    creditCardNumber: number;
-    nameOnCard: string;
-    cvSecurityCode: number;
-    iban: number;
-    user: User;
-}
-
-export interface ShoppingCart {
-    id: number;
-    user: User;
-    tickets: Ticket[];
-}
-
-export interface GrantedAuthority extends Serializable {
-    authority: string;
-}
-
-export interface UserDetails extends Serializable {
-    enabled: boolean;
-    authorities: GrantedAuthority[];
-    accountNonExpired: boolean;
-    accountNonLocked: boolean;
-    credentialsNonExpired: boolean;
-    username: string;
-    password: string;
-}
-
-export interface Serializable {
+    user: UserDTO;
+    tickets: TicketDTO[];
 }
 
 export type UserType = "GUEST" | "CUSTOMER" | "ADMIN" | "MAINTAINER" | "SUPERADMIN";

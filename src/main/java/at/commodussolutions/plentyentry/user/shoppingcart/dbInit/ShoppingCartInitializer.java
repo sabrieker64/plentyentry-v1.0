@@ -16,10 +16,6 @@ public class ShoppingCartInitializer implements InitializeDatabase {
     @Autowired
     private ShoppingCartBuilder shoppingCartBuilder;
 
-    @Autowired
-    private UserRepository userRepository;
-
-
     @Override
     public String initializeName() {
         return "ShoppingCart Group";

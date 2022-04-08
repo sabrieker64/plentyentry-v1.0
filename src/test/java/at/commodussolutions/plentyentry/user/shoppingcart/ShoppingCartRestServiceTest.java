@@ -1,13 +1,18 @@
-package at.commodussolutions.plentyentry.ordermanagement.ticket;
+package at.commodussolutions.plentyentry.user.shoppingcart;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.dbInit.EventInitializer;
-import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import at.commodussolutions.plentyentry.ordermanagement.event.mapper.EventMapper;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dbInit.TicketInitializer;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.enums.TicketStatus;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
+import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
+import at.commodussolutions.plentyentry.user.shoppingcart.dbInit.ShoppingCartInitializer;
+import at.commodussolutions.plentyentry.user.shoppingcart.dto.ShoppingCartDTO;
+import at.commodussolutions.plentyentry.user.shoppingcart.mapper.ShoppingCartMapper;
+import at.commodussolutions.plentyentry.user.shoppingcart.repository.ShoppingCartRepository;
 import at.commodussolutions.plentyentry.user.userdata.dbInit.UserInitializer;
 import at.commodussolutions.plentyentry.user.userdata.mapper.UserMapper;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
@@ -30,9 +35,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.transaction.Transactional;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
@@ -40,13 +45,14 @@ import java.util.List;
 @AutoConfigureMockMvc
 @ContextConfiguration
 @Transactional
-public class TicketRestServiceTest {
+public class ShoppingCartRestServiceTest {
 
     @Autowired
     private MockMvc mvc;
 
     @Autowired
     private ObjectMapper objectMapper;
+
 
     @Autowired
     private TicketRepository ticketRepository;
@@ -57,7 +63,7 @@ public class TicketRestServiceTest {
     @Autowired
     private UserRepository userRepository;
 
-    private final static String baseUrl = "/api/backend/ticket";
+    private final static String baseUrl = "/api/backend/shoppingcart";
 
     @Autowired
     private TicketInitializer ticketInitializer;
@@ -74,6 +80,15 @@ public class TicketRestServiceTest {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private ShoppingCartMapper shoppingCartMapper;
+
+    @Autowired
+    private ShoppingCartRepository shoppingCartRepository;
+
+    @Autowired
+    private ShoppingCartInitializer shoppingCartInitializer;
+
     @BeforeEach
     void createData() {
         if (ticketInitializer.shouldDataBeInitialized()) {
@@ -85,30 +100,12 @@ public class TicketRestServiceTest {
         if (userInitializer.shouldDataBeInitialized()) {
             userInitializer.initData();
         }
+        if (shoppingCartInitializer.shouldDataBeInitialized()) {
+            shoppingCartInitializer.initData();
+        }
     }
 
-    @Test
-    void getAllTicketsTest() throws Exception {
-
-        var firstTicket = ticketRepository.findAll().get(0);
-
-        //STACKOVERFLOW????
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl + "/list")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        List<TicketDTO> resultList = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
-                new TypeReference<List<TicketDTO>>() {
-                });
-
-        Assertions.assertEquals(firstTicket.getEvent(), resultList.get(0).getEvent());
-
-    }
-
-    @Test
-    void getTicketByID() throws Exception {
+    void getShoppingCartByID() throws Exception {
         var firstTicket = ticketRepository.findAll().get(0);
 
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl + "/"+firstTicket.getId())
@@ -126,26 +123,35 @@ public class TicketRestServiceTest {
     }
 
     @Test
-    void updateTicketByID() throws Exception {
+    void updateShoppingCartByID() throws Exception {
+        var firstShoppingCart = shoppingCartRepository.findAll().get(0);
         var firstTicket = ticketRepository.findAll().get(0);
+        var firstUser = userRepository.findAll().get(0);
+
+        Set<Ticket> ticketSet = new HashSet<>();
+        ticketSet.add(firstTicket);
+
+        firstShoppingCart.setUser(firstUser);
+        firstShoppingCart.setTickets(ticketSet);
+
 
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put(baseUrl)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(firstTicket)))
+                        .content(objectMapper.writeValueAsString(firstShoppingCart)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        TicketDTO resultTicket = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
-                new TypeReference<TicketDTO>() {
+        ShoppingCartDTO resultShoppingCart = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
+                new TypeReference<ShoppingCartDTO>() {
                 });
 
-        Assertions.assertEquals(firstTicket.getEvent(), resultTicket.getEvent());
+        Assertions.assertEquals(firstShoppingCart.getUser(), resultShoppingCart.getUser());
 
     }
 
     @Test
-    void createTicket() throws Exception {
+    void createShoppingCart() throws Exception {
 
         var ticket = new TicketDTO();
         var event = eventRepository.findAll().get(0);
@@ -171,7 +177,4 @@ public class TicketRestServiceTest {
         Assertions.assertEquals(ticket.getEvent(), resultTicket.getEvent());
 
     }
-
-
-
 }
