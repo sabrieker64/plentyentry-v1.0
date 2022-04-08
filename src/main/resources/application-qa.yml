@@ -1,5 +1,5 @@
 jwt:
-  secret: '5v8y/B?D(G+KbPeS'
+  secret: 'plentyentrycommodus'
 pe:
   baseHost: 'http://ec2-3-144-231-140.us-east-2.compute.amazonaws.com:8080/'
 server:
@@ -50,7 +50,7 @@ stripe:
   public-key: pk_test_51Kfr2HDAXhrIxCz9JbKqmWo6ZTaUMBUPhY1iukliuy0iRqRoxFVv93oOTnst1mwW2XZMHXqFRLLK3BAmIDCI9CAe00tV99Snt1
   private-key: sk_test_51Kfr2HDAXhrIxCz9mhNotfY56zLN1kLUAMK5dQFAY1Ptgk2rvvkrMu6hIabFKylT1mRcYa8U3osRUjqHz5wWGGOD00dvbwtdrV
 amazonProperties:
-  endpointUrl: https://s3.us-east-2.amazonaws.com
-  accessKey: XXXXXXXXXXXXXXXXX
-  secretKey: XXXXXXXXXXXXXXXXXXXXXXXXXX
-  bucketName: your-bucket-name
+  endpointUrl: https://eventimagesbucket.s3-us-east-2.amazonaws.com
+  accessKey: AKIAU3CJ5DRKN27DX2N3
+  secretKey: jYVkHrEFUr4Vy7Uf7vBqNISc3JH2TdrC2JxBEnrE
+  bucketName: eventimagesbucket

@@ -8,6 +8,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Function;
 
@@ -37,8 +39,9 @@ public class JwtTokenUtil {
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setIssuer(COMMODUS_SOLUTIONS_PLENTYENTRY)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS512, secret)
+                .signWith(SignatureAlgorithm.HS512, Base64.encodeBase64(secret.getBytes(StandardCharsets.UTF_8)))
                 .compact();
     }
 
@@ -75,22 +78,18 @@ public class JwtTokenUtil {
     }
 
     private Claims getAllClaimsFromToken(String token) {
-        //JWTVerifier jwtVerifier = getJWTVerifier();
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-                //jwtVerifier.verify(token).getClaim(AUTHORITIES).asArray(String.class);
+        return Jwts.parser().setSigningKey(Base64.encodeBase64(secret.getBytes(StandardCharsets.UTF_8))).parseClaimsJws(token).getBody();
     }
 
     private JWTVerifier getJWTVerifier() {
         JWTVerifier jwtVerifier;
         try {
-            Algorithm algorithm = HMAC512(Base64.getDecoder().decode(secret));
+            Algorithm algorithm = HMAC512(Base64.encodeBase64(secret.getBytes(StandardCharsets.UTF_8)));
             jwtVerifier = JWT.require(algorithm).withIssuer(COMMODUS_SOLUTIONS_PLENTYENTRY).build();
         }catch (JWTVerificationException exception) {
             throw new JWTVerificationException(TOKEN_CANNOT_BE_VERIFIED);
-
         }
         return jwtVerifier;
-
     }
 
     private String[] getClaimsFromUser(User user) {
