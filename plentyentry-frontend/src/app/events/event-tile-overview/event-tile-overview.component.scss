@@ -59,25 +59,7 @@
     position: relative;
 
     input {
-      background: rgba($brand-color, 0.2);
-      border: none;
-      height: 45px;
       width: 100%;
-      border-radius: 5px;
-      padding-left: 50px;
-
-      &:focus, &:active {
-        outline: none;
-        border: 2px solid $brand-color;
-      }
-    }
-
-    .mat-icon {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 10px;
-      color: #B7B7B7;
     }
   }
 
@@ -172,4 +154,21 @@
     align-items: center;
     border-radius: 10px;
   }
+}
+
+.mat-tab {
+
+  &-group {
+    box-shadow: none;
+
+    @media screen and (max-width: 450px) {
+      padding: 0;
+      max-width: unset;
+    }
+  }
+}
+
+.splide-container {
+  margin-top: 30px;
+  margin-left: 30px;
 }

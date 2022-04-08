@@ -1,0 +1,31 @@
+.event-card {
+  &--thumbnail {
+    height: 100%;
+    width: 100%;
+    min-height: 450px;
+    overflow: hidden;
+
+    @media screen and (max-width: 450px) {
+      min-height: 250px;
+    }
+
+    img {
+      object-fit: cover;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+    }
+  }
+}
+
+.mat-card {
+  padding: 0;
+  margin-top: 20px;
+  margin-bottom: 50px;
+
+  .mat-list-item-content {
+    justify-content: center;
+  }
+}
