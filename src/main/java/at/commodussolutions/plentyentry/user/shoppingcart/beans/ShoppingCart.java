@@ -1,9 +1,11 @@
 package at.commodussolutions.plentyentry.user.shoppingcart.beans;
 
-import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -28,6 +30,7 @@ public class ShoppingCart {
     @OneToOne(mappedBy = "shoppingCart")
     private User user;
 
+    @Column(name = "TICKETS")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "shoppingCart")
     private Set<Ticket> tickets;
 
