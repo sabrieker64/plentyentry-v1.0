@@ -6,6 +6,7 @@ import at.commodussolutions.plentyentry.user.payment.beans.PaymentMethod;
 import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
+import at.commodussolutions.plentyentry.user.userdata.listener.UserListener;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ import java.util.Set;
 @Entity
 @Table(name = "USER")
 @Data
+@EntityListeners(UserListener.class)
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
@@ -102,7 +104,7 @@ public class User implements UserDetails {
 
     //MINA
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "SHOPPINGCART_ID", referencedColumnName = "ID")
+    @JoinColumn(name = "SHOPPINGCART_ID", referencedColumnName = "ID",nullable = true)
     private ShoppingCart shoppingCart;
     //MINA END
 

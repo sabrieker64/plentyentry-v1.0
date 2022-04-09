@@ -10,6 +10,7 @@ import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -29,31 +30,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     UserRepository userRepository;
 
     @Override
-    public ShoppingCart createNewShoppingCart(User user) {
+    public ShoppingCart createNewShoppingCart(ShoppingCart shoppingCart) {
 
-        ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart.setUser(user);
-        ShoppingCart shoppingCartReturn = shoppingCartRepository.save(new ShoppingCart());
-
-
-        /*
-        if(shoppingCart.getTickets().iterator().hasNext() && shoppingCart.getTickets()!=null) {
-            while(shoppingCart.getTickets().iterator().hasNext()) {
-                Ticket ticket = shoppingCart.getTickets().iterator().next();
-                ticket.setShoppingCart(shoppingCartReturn);
-                ticketRepository.save(ticket);
-            }
-        }
-
-         */
-
-        User userUpdateShoppingCart = userRepository.findByEmail(user.getEmail()).get();
-
-        userUpdateShoppingCart.setShoppingCart(shoppingCartReturn);
-
-        userRepository.save(userUpdateShoppingCart);
-
-        return shoppingCartReturn;
+        return shoppingCartRepository.save(shoppingCart);
     }
 
     @Override

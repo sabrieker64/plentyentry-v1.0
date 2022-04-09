@@ -31,7 +31,9 @@ public class ShoppingCartRestServiceImpl implements ShoppingCartRestService {
     }
 
     @Override
-    public ShoppingCartDTO createNewShoppingCart(User user) {
-        return shoppingCartMapper.mapToDTO(shoppingCartService.createNewShoppingCart(user));
+    public ShoppingCartDTO createNewShoppingCart(ShoppingCartDTO shoppingCartDTO) {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCartMapper.mapToEntity(shoppingCartDTO, shoppingCart);
+        return shoppingCartMapper.mapToDTO(shoppingCartService.createNewShoppingCart(shoppingCart));
     }
 }

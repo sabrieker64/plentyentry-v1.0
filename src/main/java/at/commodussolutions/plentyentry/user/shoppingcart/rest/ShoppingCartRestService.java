@@ -18,6 +18,6 @@ public interface ShoppingCartRestService {
 
     @PostMapping()
     @ResponseBody
-    ShoppingCartDTO createNewShoppingCart(@RequestBody User user);
+    ShoppingCartDTO createNewShoppingCart(@RequestBody ShoppingCartDTO updatedShoppingCart);
 
 }

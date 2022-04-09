@@ -73,6 +73,5 @@ public class UserBuilder {
         user.setJwtToken(null);
         user.setEnabled(true);
         userRepository.save(user);
-
     }
 }
