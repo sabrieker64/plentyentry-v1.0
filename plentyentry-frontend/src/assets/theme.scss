@@ -1,68 +1,71 @@
 //Variables
 @import "variables";
 @import "base";
+@import "mixins";
 
 .container {
-  max-width: 1450px;
-  padding-left: 60px;
-  padding-right: 60px;
+  max-width: $container-max-width;
+  padding-left: $container-padding-left;
+  padding-right: $container-padding-right;
   margin: 0 auto;
 
-  @media screen and (max-width: 650px) {
-    padding-left: 30px;
-    padding-right: 30px;
+  @media screen and (max-width: 600px) {
+    padding-left: $container-padding-left / 2;
+    padding-right: $container-padding-right / 2;
   }
 }
 
+.box {
+  @include fluid-property('padding', $fluid-min-vw, $fluid-max-vw, 30px, 60px);
+  max-width: 800px;
+  margin: 80px auto;
+  position: relative;
+  border-radius: $border-radius;
 
-//Form
-.form-container {
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 50px;
-  margin-bottom: 95px;
-  padding: 30px;
-  box-shadow: 0px 0px 25px 0px rgba(0,0,0,0.2);
-
-  @media screen and (max-width: 475px) {
-    margin-top: 25px;
+  &--shadow {
+    box-shadow: $box-shadow;
   }
+}
 
-  &--column {
-    display: grid;
-    grid-row-gap: $form-gap;
+//grid
+.grid {
+  display: grid;
+  @include fluid-property('grid-gap', $fluid-min-vw, $fluid-max-vw, $grid-gap/2, $grid-gap);
 
-    @media screen and (max-width: 475px) {
-      grid-row-gap: $form-gap / 2;
+
+  &.cols {
+
+    &--1 {
       grid-template-columns: 1fr;
     }
+
+    &--2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    &--3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .cols--full-width {
+    grid-column: 1/-1;
   }
 }
 
-.two-columns {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: $form-gap;
+.form {
 
-  @media screen and (max-width: 475px) {
-    gap: $form-gap / 2;
-    grid-template-columns: 1fr;
+  &--full-width {
+    width: 100%;
   }
 }
 
-.three-columns {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: $form-gap;
+.error-box {
+  background-color: #FF0000FF !important;
 
-  @media screen and (max-width: 980px) {
-    gap: $form-gap / 2;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media screen and (max-width: 475px) {
-    gap: $form-gap / 2;
-    grid-template-columns: 1fr;
+  button {
+    color: $white !important;
+    border: 1px solid $white !important;
   }
 }
+

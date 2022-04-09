@@ -16,8 +16,18 @@ export class EventService {
   }
 
   public getAllEvents(): Observable<EventDTO[]> {
-    return this.http.get<EventDTO[]>(`${this.BASE_URL}/list`);
+    return this.http.get<EventDTO[]>(`${this.BASE_URL}` + '/list');
   }
 
+  public getEventById(eventId: number): Observable<EventDTO> {
+    return this.http.get<EventDTO>(`${this.BASE_URL}/` + eventId);
+  }
 
+  public updateEventById(eventDTO: EventDTO): Observable<EventDTO> {
+    return this.http.put<EventDTO>(`${this.BASE_URL}`, eventDTO);
+  }
+
+  public createEvent(eventDTO: EventDTO): Observable<EventDTO> {
+    return this.http.post<EventDTO>(`${this.BASE_URL}`, eventDTO);
+  }
 }

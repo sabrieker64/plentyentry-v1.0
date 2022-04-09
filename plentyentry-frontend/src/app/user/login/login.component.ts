@@ -3,6 +3,8 @@ import {Router} from "@angular/router";
 import {LoginRegisterService} from "../service/login-register.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserAuthReqDTO} from "../../definitions/objects";
+import {HttpErrorResponse} from "@angular/common/http";
+import {ErrorService} from "../../../library/error-handling/error.service";
 
 @Component({
   selector: 'app-login-register',
@@ -14,7 +16,7 @@ export class LoginComponent implements OnInit {
   userAuthReqDTO: UserAuthReqDTO = <UserAuthReqDTO>{};
   loginFormGroup: FormGroup;
 
-  constructor(private router: Router, private loginRegisterService: LoginRegisterService, private fb: FormBuilder) {
+  constructor(private router: Router, private loginRegisterService: LoginRegisterService, private fb: FormBuilder, private errorHandling: ErrorService) {
   }
 
   ngOnInit(): void {
@@ -28,12 +30,9 @@ export class LoginComponent implements OnInit {
   authenticate() {
     this.loginRegisterService.authenticateUser(this.userAuthReqDTO).toPromise().then((userDTO) => {
       localStorage.setItem('token', userDTO.jwtToken);
-      this.router.navigateByUrl('user/' + userDTO.id + '/detail');
-      //this.router.navigateByUrl('/user/login');
+      this.router.navigateByUrl('/event/overview');
+    }).catch((error: HttpErrorResponse) => {
+      this.errorHandling.openErrorBox(error.message);
     })
-  }
-
-  openRegisterView() {
-    return this.router.navigateByUrl('/user/register');
   }
 }

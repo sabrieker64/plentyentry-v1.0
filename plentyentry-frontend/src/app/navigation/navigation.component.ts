@@ -1,5 +1,6 @@
 import {Component, OnInit, Renderer2} from '@angular/core';
 import {Router} from "@angular/router";
+import {NavigationService} from "./navigation.service";
 
 @Component({
   selector: 'app-navigation',
@@ -10,7 +11,7 @@ export class NavigationComponent implements OnInit {
   navItems: { iconName: string, isActive: boolean, route: string }[];
   selectedNavItem: { iconName: string, isActive: boolean, route: string };
 
-  constructor(private renderer: Renderer2, private router: Router) {
+  constructor(private renderer: Renderer2, private router: Router, private navigationService: NavigationService) {
     this.navItems = [
       {iconName: 'shopping_cart', isActive: false, route: '/user/1/cart'},
       {iconName: 'favorite', isActive: false, route: '/'},
@@ -26,5 +27,11 @@ export class NavigationComponent implements OnInit {
       navItem.isActive = false;
     }
     selectedNavItem.isActive = true;
+
+    if (selectedNavItem.iconName == 'manage_accounts') {
+      this.navigationService.confirmToken().toPromise().then((data) => {
+        console.log(data)
+      })
+    }
   }
 }

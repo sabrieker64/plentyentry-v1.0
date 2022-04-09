@@ -1,0 +1,18 @@
+@import "../../../assets/theme";
+
+.form-headline {
+  background-color: $brand-color;
+  padding: 1rem;
+  color: $white;
+  text-transform: uppercase;
+  min-width: 250px;
+  text-align: center;
+  position: absolute;
+  left: -30px;
+  @include fluid-property('top', $fluid-min-vw, $fluid-max-vw, 30px, 60px);
+  border-radius: $border-radius;
+}
+
+.grid.cols--1 {
+  padding-top: 95px;
+}

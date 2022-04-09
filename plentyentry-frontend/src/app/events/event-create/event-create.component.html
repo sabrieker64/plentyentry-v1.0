@@ -1,0 +1,114 @@
+<div class="container-splide">
+  <splide [options]="
+    {
+      perPage: 1,
+      pagination: false
+    }
+      ">
+    <splide-slide>
+      <figure class="image-thumbnail">
+        <img src="../../../assets/event.jpg">
+      </figure>
+    </splide-slide>
+    <splide-slide>
+      <figure class="image-thumbnail">
+        <img src="../../../assets/event.jpg">
+      </figure>
+    </splide-slide>
+    <splide-slide>
+      <figure class="image-thumbnail">
+        <img src="../../../assets/event.jpg">
+      </figure>
+    </splide-slide>
+  </splide>
+
+  <div class="event-name box--shadow margin-bottom--standard">
+    <h2>{{ eventDTO.name }}</h2>
+    <h4>Die coolen Events GmbH</h4>
+  </div>
+
+  <h3 class="event-headline">Eventinfo:</h3>
+
+  <div class="grid cols--1 container">
+
+    <div class="event-detail--box box--shadow">
+      <div class="event-detail--box-1">
+        <mat-icon style="color: #ffffff;" class="icon" aria-hidden="false" aria-label="outlined icon">badge</mat-icon>
+      </div>
+      <div class="event-detail--box-2">
+        <mat-form-field class="form-element full-width" appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Mustername" [(ngModel)]="eventDTO.name" type="text">
+          <mat-hint>Event Name eingeben</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="event-detail--box box--shadow">
+      <div class="event-detail--box-1">
+        <mat-icon style="color: #ffffff;" class="icon" aria-hidden="false" aria-label="outlined icon">home</mat-icon>
+      </div>
+      <div class="event-detail--box-2">
+        <mat-form-field class="form-element full-width" appearance="outline">
+          <mat-label>Stadt</mat-label>
+          <input matInput placeholder="Musterstadt" [(ngModel)]="eventDTO.city" type="text">
+          <mat-hint>Event Stadt eingeben</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="event-detail--box box--shadow">
+      <div class="event-detail--box-1">
+        <mat-icon style="color: #ffffff;" class="icon" aria-hidden="false" aria-label="outlined icon">location_on
+        </mat-icon>
+      </div>
+      <div class="event-detail--box-2">
+        <mat-form-field class="form-element full-width" appearance="outline">
+          <mat-label>Adresse</mat-label>
+          <input matInput placeholder="Musteradresse" [(ngModel)]="eventDTO.address" type="text">
+          <mat-hint>Event Adresse eingeben</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="event-detail--box box--shadow">
+      <div class="event-detail--box-1">
+        <mat-icon style="color: #ffffff;" class="icon" aria-hidden="false" aria-label="outlined icon">today</mat-icon>
+      </div>
+      <div class="event-detail--box-2">
+        <mat-form-field appearance="outline" class="event-date--formfield">
+          <mat-label>Datum</mat-label>
+          <input matInput [matDatepicker]="picker1"
+                 [(ngModel)]="eventDTO.date">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+          <mat-hint>Event Datum eingeben</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="event-detail--box box--shadow">
+      <div class="event-detail--box-1">
+        <mat-icon style="color: #ffffff;" class="icon" aria-hidden="false" aria-label="outlined icon">paid</mat-icon>
+      </div>
+      <div class="event-detail--box-2">
+        <mat-form-field class="form-element full-width" appearance="outline">
+          <mat-label>Preis</mat-label>
+          <input matInput placeholder="Musterpreis" [(ngModel)]="eventDTO.price" type="text">
+          <mat-hint>Event Preis eingeben</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="description-box box--shadow">
+      <mat-form-field class="form-element full-width" appearance="outline" style="width: 100%">
+        <mat-label>Beschreibung</mat-label>
+        <textarea matInput [(ngModel)]="eventDTO.description"></textarea>
+        <mat-hint>Event Beschreibung eingeben</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="primary" (click)="createEvent()">Erstellen</button>
+
+  </div>
+</div>

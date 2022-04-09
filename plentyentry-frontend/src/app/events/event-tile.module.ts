@@ -7,11 +7,17 @@ import {EventTileOverviewComponent} from "./event-tile-overview/event-tile-overv
 import {FormsModule} from "@angular/forms";
 import {FooterLayoutModule} from "../../library/footer-layout/footer-layout.module";
 import {NgxSplideModule} from "ngx-splide";
+import {EventDetailComponent} from './event-detail/event-detail.component';
+import {EventCreateComponent} from './event-create/event-create.component';
+import {EventUpdateComponent} from "./event-update/event-update.component";
 
 
 @NgModule({
   declarations: [
-    EventTileOverviewComponent
+    EventTileOverviewComponent,
+    EventDetailComponent,
+    EventUpdateComponent,
+    EventCreateComponent,
   ],
   exports: [
     EventTileOverviewComponent

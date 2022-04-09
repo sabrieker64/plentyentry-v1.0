@@ -1,9 +1,9 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {EventService} from "../service/event.service";
-import {merge, Observable, of} from "rxjs";
 import {EventDTO} from "../../definitions/objects";
-import {catchError, filter, map, shareReplay, switchMap} from "rxjs/operators";
-import {EventTileModel} from "./eventTile.model";
+import {Router} from "@angular/router";
+import {HttpErrorResponse} from "@angular/common/http";
+import {ErrorService} from "../../../library/error-handling/error.service";
 
 @Component({
   selector: 'app-event-tile-overview',
@@ -11,63 +11,32 @@ import {EventTileModel} from "./eventTile.model";
   styleUrls: ['./event-tile-overview.component.scss']
 })
 export class EventTileOverviewComponent implements OnInit {
-  dataObserver: Observable<EventDTO[]>;
-  eventDTO: EventDTO[];
-  searchPressed = new EventEmitter<boolean>();
-  events: EventTileModel;
-  currentFilter: Element;
-  isTarget: boolean = false;
-  filters: {name: string, isActive: boolean}[];
+  allEvents: EventDTO[];
 
-  constructor(private service: EventService) {
+  constructor(private service: EventService, private router: Router, private errorHandling: ErrorService) {
   }
 
   ngOnInit(): void {
-    this.searchPressed.emit(true);
-    this.service.getAllEvents().subscribe(data => this.finalize(data));
-    let loadDataEvent = merge(this.searchPressed).pipe(switchMap(() => this.loadEvent()));
-    this.dataObserver = loadDataEvent.pipe(
-      map(data => this.finalize(data)),
-      catchError(() => this.handleError()),
-      shareReplay(1));
-    this.filters = [
-      {name: 'Top Events', isActive: false},
-      {name: 'In meiner Nähe', isActive: false},
-      {name: 'In Kürze', isActive: false},
-    ]
+    this.loadEvents();
   }
 
-  console(event: Event) {
-    console.log(typeof event.target);
+  private loadEvents() {
+    this.service.getAllEvents().toPromise().then((events) => {
+      this.allEvents = events;
+    }).catch((error: HttpErrorResponse) => {
+      this.errorHandling.openErrorBox(error.message);
+    });
   }
 
-  private loadEvent(): Observable<EventDTO[]> {
-    return this.service.getAllEvents();
+  getMonth(date: Date): string {
+    return new Date(date).toLocaleDateString('de-DE', {month: 'long'});
   }
 
-  buyClicked() {
-    console.log('buying clicked');
+  getDay(date: Date): string {
+    return new Date(date).toLocaleDateString('de-DE', {day: 'numeric'});
   }
 
-  inToCartClicked() {
-    console.log('In to Cart clicked');
-  }
-
-  private finalize(value: EventDTO[]): EventDTO[] {
-    this.eventDTO = value;
-    return value;
-  }
-
-  private handleError(): Observable<EventDTO[]> {
-    return of();
-  }
-
-  onClickFilter(selectedFilter: {name: string, isActive:boolean}) {
-
-    for (let filter of this.filters) {
-      filter.isActive = false;
-    }
-
-    selectedFilter.isActive = true;
+  getEventDetail(eventId: number) {
+    this.router.navigateByUrl('/event-detail/' + eventId);
   }
 }
