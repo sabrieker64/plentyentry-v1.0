@@ -84,6 +84,7 @@ public class UserRestServiceImpl implements UserRestService {
     @Override
     public UserDTO updateUser(UserDTO updatedUser) {
         User user = userService.getUserById(updatedUser.getId());
+        userMapper.mapToEntity(updatedUser, user);
         return userMapper.mapToDTO(userService.updateUser(user));
     }
 }
