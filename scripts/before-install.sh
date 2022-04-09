@@ -1,5 +1,5 @@
 #!/bin/bash
-export FOLDER=/home/ec2-user/server
+export FOLDER=/home/ec2-user
 if [ -d $FOLDER ]
 then
  rm -rf $FOLDER
