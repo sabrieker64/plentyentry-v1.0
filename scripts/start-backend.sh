@@ -1,2 +1,2 @@
 #!/bin/bash
-java -jar -Dspring.profiles.active=qa /home/ec2-user/server/plentyentry-application.jar > backend-log.txt
+sudo java -jar -Dspring.profiles.active=qa /home/ec2-user/server/plentyentry-application.jar > /dev/null 2> /dev/null < /dev/null &

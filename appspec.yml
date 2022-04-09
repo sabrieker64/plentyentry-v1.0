@@ -32,10 +32,14 @@ hooks:
       runas: ec2-user
   AfterInstall:
     - location: after-install.sh
-      timeout: 180
+      timeout: 300
       runas: ec2-user
   ApplicationStart:
     - location: start-backend.sh
+      timeout: 1000
+      runas: ec2-user
+  ApplicationStop:
+    - location: stop-backend.sh
       timeout: 1000
       runas: ec2-user
   ValidateService:
