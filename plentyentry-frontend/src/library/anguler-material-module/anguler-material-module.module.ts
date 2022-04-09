@@ -29,12 +29,11 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatSortModule} from "@angular/material/sort";
 import {MatSelectModule} from "@angular/material/select";
-import {MatRippleModule} from "@angular/material/core";
+import {MatNativeDateModule, MatRippleModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatSliderModule} from "@angular/material/slider";
 import {FlexLayoutModule} from "@angular/flex-layout";
-import {MatNativeDateModule} from "@angular/material/core";
 
 const materialModules = [
   MatSliderModule,

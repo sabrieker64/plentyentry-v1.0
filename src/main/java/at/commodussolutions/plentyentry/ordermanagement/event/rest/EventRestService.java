@@ -8,6 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/backend/event")
+@CrossOrigin
 public interface EventRestService {
 
     @GetMapping("/list")
