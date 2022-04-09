@@ -21,7 +21,7 @@ const routes: Routes = [
     component: EventDetailComponent
   },
   {
-    path: 'event/:id/update',
+    path: ':id/update',
     component: EventUpdateComponent
   },
   {

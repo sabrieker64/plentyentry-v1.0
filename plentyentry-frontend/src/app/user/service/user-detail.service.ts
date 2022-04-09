@@ -14,8 +14,8 @@ export class UserDetailService {
   constructor(private http: HttpClient) {
   }
 
-  public getUserByJWTToken(): Observable<UserDTO> {
-    return this.http.get<UserDTO>(`${this.baseUrl}`);
+  public getUserById(userId: number): Observable<UserDTO> {
+    return this.http.get<UserDTO>(`${this.baseUrl}/${userId}`);
   }
 
   public updateUser(userDTO: UserDTO): Observable<UserDTO> {
