@@ -1,43 +1,27 @@
 version: 0.0
 os: linux
 files:
-    - source:
-        - plentyentry-application.jar
-      destination: /
-    - source:
-        - before-install.sh
-      destination: /
-    - source:
-        - after-install.sh
-      destination: /
-    - source:
-        - start-backend.sh
-      destination: /
-    - source:
-        - validate-service.sh
-      destination: /
-    - source:
-        - appspec.yml
-      destination: /
+  - source: /
+    desitnation: /home/ec2-user/server
 file_exists_behavior: OVERWRITE
 permission:
-  - object: /tmp
+  - object: /
     pattern: "**"
-    owner: root
-    group: root
+    owner: ec2-user
+    group: ec2-user
 hooks:
   BeforeInstall:
     - location: before-install.sh
       timeout: 300
-      runas: root
+      runas: ec2-user
   AfterInstall:
     - location: after-install.sh
       timeout: 180
-      runas: root
+      runas: ec2-user
   ApplicationStart:
     - location: start-backend.sh
       timeout: 1000
-      runas: root
+      runas: ec2-user
   ValidateService:
     - location: validate-service.sh
-      timeout: 100
+      timeout: 300
