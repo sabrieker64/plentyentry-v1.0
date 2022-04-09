@@ -1,10 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {
-  FormControl,
-  FormBuilder,
-  Validators,
-  FormGroup
-} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginRegisterService} from "../service/login-register.service";
 import {UserRegisterDTO} from "../../definitions/objects";
 import {Router} from "@angular/router";
