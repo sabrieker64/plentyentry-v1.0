@@ -1,44 +1,48 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
 import {loadStripe} from "@stripe/stripe-js";
 import {PaymentService} from "../../service/payment.service";
+import {StripeService} from "../stripe.service";
+
+declare var Stripe: any;
 
 @Component({
   selector: 'app-stripe',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
-export class CheckoutComponent {
+export class CheckoutComponent implements OnInit {
   stripePromise = loadStripe(environment.stripe);
+  public stripe: any = null;
+  public card: any = null;
+  public elements: any = null;
+  public cardError: null = null;
+  public chargeError: any = null;
+  public charge: any = null;
 
 
-  constructor(private http: HttpClient, private service: PaymentService) {
+  constructor(private http: HttpClient, private service: PaymentService, private stripeService: StripeService) {
   }
 
-  async pay(): Promise<void> {
-    // here we create a payment object
-    const payment = {
-      name: 'Iphone',
-      currency: 'eur',
-      // amount on cents *10 => to be on dollar
-      amount: 99900,
-      quantity: '1',
-      cancelUrl: 'http://localhost:4200/payment/cancel',
-      successUrl: 'http://localhost:4200/payment/success',
-    };
+  ngOnInit(): void {
+    this.stripeService.initializeStripe().subscribe(() => {
+      this.stripe = Stripe(environment.stripe);
+      this.elements = this.stripe.elements();
+      this.card.mount('#card-element');
+      this.card.addEventListener('change', (event: { error: { message: null; }; }) => event.error ? this.cardError = event.error.message : null)
+    });
+  }
 
-    const stripe = await this.stripePromise;
 
-    this.http
-      .post(`${environment.baseUrl}api/backend/stripe/create-payment-intent`, payment)
-      .subscribe((data: any) => {
-        if (stripe) {
-          stripe.redirectToCheckout({
-            sessionId: data.id,
-          });
-        }
-        return;
-      });
+  public createCharge() {
+  }
+
+  makePayment() {
+
+  }
+
+  getToken() {
+
   }
 }

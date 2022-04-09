@@ -1,6 +1,7 @@
 package at.commodussolutions.plentyentry.user.userdata.dbInit;
 
 import at.commodussolutions.plentyentry.backendConfig.dbInitConfig.dbInit.InitializeDatabase;
+import at.commodussolutions.plentyentry.backendConfig.security.PasswordEncoder;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
@@ -20,6 +21,9 @@ public class UserInitializer implements InitializeDatabase {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public String initializeName() {
@@ -48,7 +52,7 @@ public class UserInitializer implements InitializeDatabase {
         user.setFirstName("John");
         user.setLastName("Doe");
         user.setEmail("john@doe.com");
-        user.setPassword("password");
+        user.setPassword(passwordEncoder.bCryptPasswordEncoder().encode("password"));
         user.setStreet("Johnny Street 11");
         user.setPostCode("63380");
         user.setCity("Kufstein");
@@ -65,7 +69,7 @@ public class UserInitializer implements InitializeDatabase {
         user.setPaymentMethod(null);
         user.setJwtToken(null);
         user.setEnabled(true);
-        userService.registerNewUser(user);
+        userRepository.save(user);
     }
 
 }
