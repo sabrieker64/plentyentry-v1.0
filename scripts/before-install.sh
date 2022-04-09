@@ -1,2 +1,2 @@
-#!/bin/bash
-echo "Before Install Hook finished"
+#!/usr/bin/env bash
+sudo rm -rf /home/ec2-user/server
