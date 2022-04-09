@@ -1,7 +1,6 @@
 package at.commodussolutions.plentyentry.ordermanagement.event.service;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
-import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 
 import java.util.List;
 

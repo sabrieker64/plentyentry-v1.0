@@ -5,7 +5,6 @@ package at.commodussolutions.plentyentry.ordermanagement.event.service.impl;
 
 
 import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
-import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
 import at.commodussolutions.plentyentry.ordermanagement.event.service.EventService;
 import lombok.extern.slf4j.Slf4j;

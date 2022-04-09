@@ -18,6 +18,7 @@ public class PaypalRestServiceImpl {
     @Autowired
     private PaypalService paypalService;
 
+    @Autowired
     private PlentyEntryBackendUtils plentyEntryBackendUtils;
 
     public static final String SUCCESS_URL = "/pay/success";

@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-04-06 22:33:38.
+// Generated using typescript-generator version 2.32.889 on 2022-04-08 18:43:26.
 
 export interface UserDTO {
     id: number;
@@ -38,10 +38,10 @@ export interface EventDTO {
 }
 
 export interface UserRegisterDTO {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
   city: string;
   postCode: string;
   street: string;
