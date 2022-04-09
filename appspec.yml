@@ -3,25 +3,25 @@ os: linux
 files:
     - source:
         - plentyentry-application.jar
-      destination: /home/ec2-user/target
+      destination: /
     - source:
         - before-install.sh
-      destination: /home/ec2-user/scripts
+      destination: /
     - source:
         - after-install.sh
-      destination: /home/ec2-user/scripts
+      destination: /
     - source:
         - start-backend.sh
-      destination: /home/ec2-user/scripts
+      destination: /
     - source:
         - validate-service.sh
-      destination: /home/ec2-user/scripts
+      destination: /
     - source:
         - appspec.yml
-      destination: /home/ec2-user
+      destination: /
 file_exists_behavior: OVERWRITE
 permission:
-  - object: /home/ec2-user/tmp
+  - object: /tmp
     pattern: "**"
     owner: root
     group: root
