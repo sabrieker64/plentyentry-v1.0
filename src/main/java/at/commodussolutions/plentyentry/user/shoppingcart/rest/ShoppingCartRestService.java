@@ -1,6 +1,7 @@
 package at.commodussolutions.plentyentry.user.shoppingcart.rest;
 
 import at.commodussolutions.plentyentry.user.shoppingcart.dto.ShoppingCartDTO;
+import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,6 +18,6 @@ public interface ShoppingCartRestService {
 
     @PostMapping()
     @ResponseBody
-    ShoppingCartDTO createNewShoppingCart(@RequestBody ShoppingCartDTO shoppingCartDTO);
+    ShoppingCartDTO createNewShoppingCart(@RequestBody User user);
 
 }

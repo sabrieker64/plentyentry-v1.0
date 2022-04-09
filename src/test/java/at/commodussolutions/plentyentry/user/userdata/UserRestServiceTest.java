@@ -131,6 +131,9 @@ public class UserRestServiceTest {
         Assertions.assertEquals(result.getCity(), newUserFromRepository.getCity());
         Assertions.assertEquals(result.getId(), newUserFromRepository.getId());
         Assertions.assertEquals(result.getPostCode(), newUserFromRepository.getPostCode());
+        Assertions.assertEquals(result.getShoppingCartDTO().getUser().getShoppingCartDTO(), newUserFromRepository.getShoppingCart().getId());
+
+
     }
 
     @Test

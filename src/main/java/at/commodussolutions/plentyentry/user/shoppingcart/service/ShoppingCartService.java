@@ -1,13 +1,10 @@
 package at.commodussolutions.plentyentry.user.shoppingcart.service;
 
 import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
+import at.commodussolutions.plentyentry.user.userdata.beans.User;
 
-@Service
 public interface ShoppingCartService {
-
-    ShoppingCart createNewShoppingCart(ShoppingCart shoppingCart);
+    ShoppingCart createNewShoppingCart(User user);
 
     ShoppingCart getShoppingCartById(Long id);
 

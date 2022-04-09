@@ -2,6 +2,9 @@ package at.commodussolutions.plentyentry.user.userdata.rest.impl;
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.mapper.TicketMapper;
+import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
+import at.commodussolutions.plentyentry.user.shoppingcart.repository.ShoppingCartRepository;
+import at.commodussolutions.plentyentry.user.shoppingcart.service.ShoppingCartService;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
@@ -28,6 +31,9 @@ public class UserRestServiceImpl implements UserRestService {
     private UserMapper userMapper;
 
     @Autowired
+    private ShoppingCartService shoppingCartService;
+
+    @Autowired
     private TicketMapper ticketMapper;
 
     @Override
@@ -40,6 +46,8 @@ public class UserRestServiceImpl implements UserRestService {
         User user = new User();
         userMapper.mapToEntityForRegister(userRegisterDTO, user);
         user = userService.registerNewUser(user);
+        ShoppingCart newShoppingCart = shoppingCartService.createNewShoppingCart(user);
+        user.setShoppingCart(newShoppingCart);
         return userMapper.mapToDTO(user);
     }
 
