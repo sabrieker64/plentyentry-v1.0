@@ -81,8 +81,8 @@ public class AmazonClient {
             }
 
             for (S3ObjectSummary item : objectSummaries) {
-                if (!item.getKey().endsWith("/") && item.getKey().equals(username) &&item.getKey().equals(eventName))
-                    keys.add(endpointUrl+"/"+item.getKey());
+                if (!item.getKey().endsWith("/") && item.getKey().contains(username) && item.getKey().contains(eventName))
+                    keys.add(endpointUrl + "/" + item.getKey());
             }
 
             objects = s3Client.listNextBatchOfObjects(objects);

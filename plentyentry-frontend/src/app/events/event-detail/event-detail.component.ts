@@ -13,7 +13,7 @@ import {ErrorService} from "../../../library/error-handling/error.service";
 })
 export class EventDetailComponent implements OnInit {
   eventDTO: EventDTO = <EventDTO>{};
-  eventQuantity: number = 0;
+  eventQuantity: number = 1;
 
   constructor(private eventService: EventService, private route: ActivatedRoute, private errorHandling: ErrorService) {
   }
@@ -40,7 +40,7 @@ export class EventDetailComponent implements OnInit {
   }
 
   public decreaseQuantity() {
-    if (this.eventQuantity > 0) {
+    if (this.eventQuantity > 1) {
       this.eventQuantity--;
     }
   }

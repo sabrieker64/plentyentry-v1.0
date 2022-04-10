@@ -13,10 +13,9 @@ export class NavigationComponent implements OnInit {
 
   constructor(private renderer: Renderer2, private router: Router, private navigationService: NavigationService) {
     this.navItems = [
-      {iconName: 'shopping_cart', isActive: false, route: '/user/1/cart'},
-      {iconName: 'favorite', isActive: false, route: '/'},
+      {iconName: 'search', isActive: false, route: '/event/overview'},
       {iconName: 'home', isActive: true, route: '/event/overview'},
-      {iconName: 'manage_accounts', isActive: false, route: '/user/login'}];
+      {iconName: 'login', isActive: false, route: '/user/login'}];
   }
 
   ngOnInit(): void {

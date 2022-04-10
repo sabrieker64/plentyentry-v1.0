@@ -1,102 +1,99 @@
-<div class="container-splide">
-  <splide [options]="
+<div class="container">
+  <div class="grid cols--2">
+    <div class="grid cols--1 event-detail--media">
+      <splide [options]="
     {
       perPage: 1,
       pagination: false
     }
       ">
-    <splide-slide>
-      <figure class="image-thumbnail">
-        <img src="../../../assets/event.jpg">
-      </figure>
-    </splide-slide>
-    <splide-slide>
-      <figure class="image-thumbnail">
-        <img src="../../../assets/event.jpg">
-      </figure>
-    </splide-slide>
-    <splide-slide>
-      <figure class="image-thumbnail">
-        <img src="../../../assets/event.jpg">
-      </figure>
-    </splide-slide>
-  </splide>
-
-  <div class="event-name box--shadow margin-bottom--standard">
-    <h2>{{ eventDTO.name }}</h2>
-    <h4>Die coolen Events GmbH</h4>
-  </div>
-
-  <h3 class="event-headline">Eventinfo:</h3>
-
-  <div class="grid cols--2 container">
-
-    <div class="event-detail--box box--shadow">
-      <div class="event-detail--box-1">
-        <mat-icon style="color: #ffffff;" class="icon" aria-hidden="false" aria-label="outlined icon">home</mat-icon>
-      </div>
-      <div class="event-detail--box-2">
-        <h3>{{ eventDTO.city }}</h3>
-        <h4>{{ eventDTO.address }}</h4>
+        <splide-slide>
+          <figure class="image-thumbnail event-detail--media-big">
+            <img src="../../../assets/event.jpg">
+          </figure>
+        </splide-slide>
+        <splide-slide>
+          <figure class="image-thumbnail event-detail--media-big">
+            <img src="../../../assets/event.jpg">
+          </figure>
+        </splide-slide>
+        <splide-slide>
+          <figure class="image-thumbnail event-detail--media-big">
+            <img src="../../../assets/event.jpg">
+          </figure>
+        </splide-slide>
+      </splide>
+      <div class="grid cols--3">
+        <figure class="image-thumbnail">
+          <img src="../../../assets/event.jpg">
+        </figure>
+        <figure class="image-thumbnail">
+          <img src="../../../assets/event.jpg">
+        </figure>
+        <figure class="image-thumbnail">
+          <img src="../../../assets/event.jpg">
+        </figure>
       </div>
     </div>
-
-    <div class="event-detail--box box--shadow">
-      <div class="event-detail--box-1">
-        <mat-icon style="color: #ffffff;" class="icon" aria-hidden="false" aria-label="outlined icon">event</mat-icon>
-      </div>
-      <div class="event-detail--box-2">
-        <h3>Datum:</h3>
-        <h4>{{ eventDTO.date }}</h4>
-      </div>
-    </div>
-
-    <div class="event-detail--box box--shadow">
-      <div class="event-detail--box-1">
-        <mat-icon style="color: #ffffff;" class="icon" aria-hidden="false" aria-label="outlined icon">paid</mat-icon>
-      </div>
-      <div class="event-detail--box-2">
-        <h3>Preis:</h3>
-        <h4>{{ eventDTO.price }} €</h4>
-      </div>
-    </div>
-
-    <div class="event-detail--box box--shadow">
-      <div class="event-detail--box-1">
-        <mat-icon style="color: #ffffff;" class="icon" aria-hidden="false" aria-label="outlined icon">task_alt
-        </mat-icon>
-      </div>
-      <div class="event-detail--box-2 event-detail--wrapper">
-        <h3>Anzahl</h3>
-        <section>
-          <button mat-raised-button color="primary" type="submit">
-            <mat-icon style="color: #ffffff;" class="icon" class="button" aria-hidden="false" aria-label="outlined icon"
-                      (click)="decreaseQuantity()">remove
-            </mat-icon>
+    <div class="event-detail--information">
+      <div class="grid cols--1">
+        <div class="grid cols--2">
+          <h1>
+            {{ eventDTO.name}}
+            <small style="font-size: 15px; display: block">Coolen Events GmbH</small>
+          </h1>
+          <button class="like-button">
+            <mat-icon class="icon">favorite</mat-icon>
           </button>
-          <h3 style="text-align: center">
-            {{ eventQuantity }}
-          </h3>
-          <button mat-raised-button color="primary" class="button" type="submit">
-            <mat-icon style="color: #ffffff;" class="icon" aria-hidden="false" aria-label="outlined icon"
-                      (click)="increaseQuantity()">add
-            </mat-icon>
-          </button>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="grid cols--2">
 
-          <button mat-raised-button color="primary" class="button" type="submit">
-            <mat-icon style="color: #ffffff;" class="icon" aria-hidden="false" aria-label="outlined icon">
-              shopping_cart
-            </mat-icon>
-          </button>
+          <section class="event-detail--card">
+            <div class="event-detail--card-icon">
+              <mat-icon class="icon">place</mat-icon>
+            </div>
+            <div class="event-detail--card-description">
+              <h2>{{ eventDTO.city }}</h2>
+              <h4>{{ eventDTO.address }}</h4>
+            </div>
+          </section>
 
+          <section class="event-detail--card">
+            <div class="event-detail--card-icon">
+              <mat-icon class="icon">calendar_today</mat-icon>
+            </div>
+            <div class="event-detail--card-description">
+              <h2>Datum</h2>
+              <h4>{{ eventDTO.date }}</h4>
+            </div>
+          </section>
+        </div>
+
+        <section class="event-detail--description">
+          <h2>Eventbeschreibung:</h2>
+          <p>{{ eventDTO.description }}</p>
+        </section>
+
+        <section class="event-detail--shopping">
+          <div class="event-detail--shopping-box">
+            <h1>{{ eventDTO.price }} €</h1>
+            <span class="event-detail--shopping-quantity">
+              <button (click)="increaseQuantity()">
+                <mat-icon class="icon">add</mat-icon>
+              </button>
+              <h1>{{ eventQuantity }}</h1>
+              <button (click)="decreaseQuantity()">
+                <mat-icon class="icon">remove</mat-icon>
+              </button>
+            </span>
+            <button class="cart">
+              <mat-icon class="icon">shopping_cart</mat-icon>
+              In den Warenkorb
+            </button>
+          </div>
         </section>
       </div>
     </div>
-
-    <div class="description-box box--shadow">
-      <h3>Beschreibung:</h3>
-      <p>{{ eventDTO.description }} </p>
-    </div>
   </div>
 </div>
-
