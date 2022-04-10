@@ -1,9 +1,11 @@
 package at.commodussolutions.plentyentry.ordermanagement.ticket.service;
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 public interface TicketService {
 
@@ -14,4 +16,6 @@ public interface TicketService {
     Ticket updateTicketById(Ticket updatedTicket);
 
     Ticket createNewTicket(Ticket ticket);
+
+    List<Ticket> putTicketsToShoppingCart(Set<Ticket> ticketSet);
 }

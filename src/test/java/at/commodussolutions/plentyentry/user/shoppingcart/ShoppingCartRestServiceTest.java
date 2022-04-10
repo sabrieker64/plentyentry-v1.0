@@ -5,8 +5,10 @@ import at.commodussolutions.plentyentry.ordermanagement.event.dbInit.EventInitia
 import at.commodussolutions.plentyentry.ordermanagement.event.mapper.EventMapper;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dbInit.TicketInitializer;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.mapper.TicketMapper;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketService;
 import at.commodussolutions.plentyentry.user.shoppingcart.dbInit.ShoppingCartInitializer;
 import at.commodussolutions.plentyentry.user.shoppingcart.dto.ShoppingCartDTO;
 import at.commodussolutions.plentyentry.user.shoppingcart.mapper.ShoppingCartMapper;
@@ -40,6 +42,7 @@ import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @ExtendWith(SpringExtension.class)
@@ -191,6 +194,18 @@ public class ShoppingCartRestServiceTest {
         Set<Ticket> listTicket = new HashSet<>();
         testTicket.setShoppingCart(testUser.getShoppingCart());
         listTicket.add(testTicket);
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put("/api/backend/ticket")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(listTicket))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        List<TicketDTO> resultTicketList = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
+                new TypeReference<List<TicketDTO>>() {
+                });
+
 
         testUser.getShoppingCart().setTickets(listTicket);
 
