@@ -111,7 +111,6 @@ public class UserServiceImpl implements UserService {
         if (user.getUserType() == null) {
             user.setUserType(UserType.CUSTOMER);
         }
-        //todo trying to create shopping cart
 
         userRepository.save(user);
         ShoppingCart shoppingCart = new ShoppingCart();

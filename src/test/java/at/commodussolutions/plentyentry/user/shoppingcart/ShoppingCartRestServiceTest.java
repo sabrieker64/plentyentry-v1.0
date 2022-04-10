@@ -9,6 +9,7 @@ import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.mapper.TicketMapper;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketService;
+import at.commodussolutions.plentyentry.user.authentication.jwt.JwtTokenUtil;
 import at.commodussolutions.plentyentry.user.shoppingcart.dbInit.ShoppingCartInitializer;
 import at.commodussolutions.plentyentry.user.shoppingcart.dto.ShoppingCartDTO;
 import at.commodussolutions.plentyentry.user.shoppingcart.mapper.ShoppingCartMapper;
@@ -52,6 +53,9 @@ import java.util.Set;
 @ContextConfiguration
 @Transactional
 public class ShoppingCartRestServiceTest {
+
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
 
     @Autowired
     private MockMvc mvc;
@@ -188,30 +192,23 @@ public class ShoppingCartRestServiceTest {
 
         var testUser = userRepository.findByEmail(user.getEmail()).orElseThrow();
 
-        //todo da brauchen wir auch eine Business Logik, wenn der user einen ticket zu seinen shoppingcart hinzufügt
-        //todo müssen wir dann auf das ticket die Shoppingcart ID setzen damit wir dann beim laden der shoppingcart die
-        //todo ganzen tickets für den jweiligen shoppingcart laden können
-        Set<Ticket> listTicket = new HashSet<>();
-        testTicket.setShoppingCart(testUser.getShoppingCart());
-        listTicket.add(testTicket);
+        var jwt = jwtTokenUtil.generateJwtToken(testUser);
 
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put("/api/backend/ticket")
+        testUser.setJwtToken(jwt);
+
+        Set<TicketDTO> listTicket = new HashSet<>();
+        testTicket.setShoppingCart(testUser.getShoppingCart());
+        listTicket.add(ticketMapper.mapToDTO(testTicket));
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put("/api/backend/ticket/addToShoppingCart")
                         .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(listTicket))
+                        .header("authorization", "Bearer " + jwt)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        List<TicketDTO> resultTicketList = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
-                new TypeReference<List<TicketDTO>>() {
-                });
-
-
-        testUser.getShoppingCart().setTickets(listTicket);
-
-        var foundedTickets = ticketRepository.findAllByShoppingCartId(testUser.getShoppingCart().getId());
-
-        Assertions.assertEquals(foundedTickets.get(0), testTicket);
+        var updatedUser = userRepository.getByEmail(user.getEmail());
     }
 
     /*

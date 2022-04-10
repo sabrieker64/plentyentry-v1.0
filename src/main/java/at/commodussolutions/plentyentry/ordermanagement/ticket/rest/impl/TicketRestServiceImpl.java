@@ -8,6 +8,7 @@ import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.mapper.TicketMapper;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.rest.TicketRestService;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketService;
+import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.mapper.UserMapper;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,21 +61,8 @@ public class TicketRestServiceImpl implements TicketRestService {
     }
 
     @Override
-    public List<TicketDTO> putTicketsToShoppingCart(Set<TicketDTO> ticketDTOSet) {
+    public void putTicketsToShoppingCart(Set<TicketDTO> ticketDTOSet) {
         Set<Ticket> ticketSet = new HashSet<>();
-        Ticket ticket = new Ticket();
-
-        while(ticketDTOSet.iterator().hasNext() && !ticketDTOSet.isEmpty() && ticketDTOSet != null) {
-            ticketMapper.mapToEntity(ticketDTOSet.iterator().next(), ticket);
-            ticketSet.add(ticket);
-        }
-
-        List<Ticket> ticketList = ticketService.putTicketsToShoppingCart(ticketSet);
-        List<TicketDTO> returnTicketsList = new ArrayList<>();
-        for(Ticket tempTicket : ticketList) {
-            returnTicketsList.add(ticketMapper.mapToDTO(tempTicket));
-        }
-
-        return returnTicketsList;
+        ticketService.putTicketsToShoppingCart(ticketMapper.mapToListEntity(ticketDTOSet, ticketSet));
     }
 }

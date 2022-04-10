@@ -17,5 +17,5 @@ public interface TicketService {
 
     Ticket createNewTicket(Ticket ticket);
 
-    List<Ticket> putTicketsToShoppingCart(Set<Ticket> ticketSet);
+    void putTicketsToShoppingCart(Set<Ticket> ticketSet);
 }

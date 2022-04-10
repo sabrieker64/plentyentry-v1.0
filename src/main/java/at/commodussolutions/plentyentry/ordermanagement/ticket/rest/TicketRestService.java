@@ -27,9 +27,9 @@ public interface TicketRestService {
     @ResponseBody
     TicketDTO createNewTicket(@RequestBody TicketDTO ticketDTO);
 
-    @PutMapping()
+    @PutMapping("/addToShoppingCart")
     @ResponseBody
-    List<TicketDTO> putTicketsToShoppingCart(@RequestBody Set<TicketDTO> ticketDTOSet);
+    void putTicketsToShoppingCart(@RequestBody Set<TicketDTO> ticketDTOSet);
 
 
 }
