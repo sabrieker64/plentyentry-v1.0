@@ -1,22 +1,23 @@
 package at.commodussolutions.plentyentry.user.shoppingcart;
 
+import at.commodussolutions.plentyentry.backendConfig.security.PasswordEncoder;
 import at.commodussolutions.plentyentry.ordermanagement.event.dbInit.EventInitializer;
 import at.commodussolutions.plentyentry.ordermanagement.event.mapper.EventMapper;
-import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dbInit.TicketInitializer;
-import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
-import at.commodussolutions.plentyentry.ordermanagement.ticket.enums.TicketStatus;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.mapper.TicketMapper;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
-import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
 import at.commodussolutions.plentyentry.user.shoppingcart.dbInit.ShoppingCartInitializer;
 import at.commodussolutions.plentyentry.user.shoppingcart.dto.ShoppingCartDTO;
 import at.commodussolutions.plentyentry.user.shoppingcart.mapper.ShoppingCartMapper;
 import at.commodussolutions.plentyentry.user.shoppingcart.repository.ShoppingCartRepository;
+import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dbInit.UserInitializer;
+import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
+import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import at.commodussolutions.plentyentry.user.userdata.mapper.UserMapper;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
+import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
@@ -37,6 +38,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -54,12 +56,15 @@ public class ShoppingCartRestServiceTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @Autowired
     private TicketRepository ticketRepository;
 
     @Autowired
-    private EventRepository eventRepository;
+    private UserService userService;
 
     @Autowired
     private UserRepository userRepository;
@@ -158,6 +163,40 @@ public class ShoppingCartRestServiceTest {
         Assertions.assertEquals(firstShoppingCart.getUser().getFirstName(), resultShoppingCart.getUser().getFirstName());
         Assertions.assertEquals(firstShoppingCart.getUser().getEmail(), resultShoppingCart.getUser().getEmail());
 
+    }
+
+
+    @Test
+    void processTesting() throws Exception {
+        User user = new User();
+        user.setUserType(UserType.ADMIN);
+        user.setFirstName("Testuser");
+        user.setLastName("lastname");
+        user.setPassword(passwordEncoder.bCryptPasswordEncoder().encode("Test123!"));
+        user.setEnabled(true);
+        user.setUserGender(UserGender.MALE);
+        user.setCity("KITZ");
+        user.setPostCode("6360");
+        user.setStreet("test strret");
+        user.setBirthday(LocalDate.now());
+        userService.registerNewUser(user);
+
+        var testTicket = ticketRepository.findAll().get(0);
+
+        var testUser = userRepository.findByEmail(user.getEmail()).orElseThrow();
+
+        //todo da brauchen wir auch eine Business Logik, wenn der user einen ticket zu seinen shoppingcart hinzufügt
+        //todo müssen wir dann auf das ticket die Shoppingcart ID setzen damit wir dann beim laden der shoppingcart die
+        //todo ganzen tickets für den jweiligen shoppingcart laden können
+        Set<Ticket> listTicket = new HashSet<>();
+        testTicket.setShoppingCart(testUser.getShoppingCart());
+        listTicket.add(testTicket);
+
+        testUser.getShoppingCart().setTickets(listTicket);
+
+        var foundedTickets = ticketRepository.findAllByShoppingCartId(testUser.getShoppingCart().getId());
+
+        Assertions.assertEquals(foundedTickets.get(0), testTicket);
     }
 
     /*

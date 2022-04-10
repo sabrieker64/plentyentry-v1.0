@@ -4,7 +4,7 @@ import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 
 public interface ShoppingCartService {
-    ShoppingCart createNewShoppingCart(ShoppingCart shoppingCart);
+    ShoppingCart createNewShoppingCart(ShoppingCart shoppingCart, User user);
 
     ShoppingCart getShoppingCartById(Long id);
 

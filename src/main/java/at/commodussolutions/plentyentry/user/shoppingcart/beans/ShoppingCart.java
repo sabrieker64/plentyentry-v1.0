@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Set;
  */
 
 @Entity
-@Table(name = "SHOPPINGCART")
+@Table(name = "SHOPPING_CART")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -32,6 +33,6 @@ public class ShoppingCart {
 
     @Column(name = "TICKETS", nullable = true)
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "shoppingCart")
-    private Set<Ticket> tickets;
+    private Set<Ticket> tickets = new HashSet<>();
 
 }

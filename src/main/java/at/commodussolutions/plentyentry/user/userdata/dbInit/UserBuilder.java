@@ -31,7 +31,7 @@ public class UserBuilder {
         user.setFirstName("John");
         user.setLastName("Doe");
         user.setEmail("john@doe.com");
-        user.setPassword(passwordEncoder.bCryptPasswordEncoder().encode("password"));
+        user.setPassword(passwordEncoder.bCryptPasswordEncoder().encode("Test123!"));
         user.setStreet("Johnny Street 11");
         user.setPostCode("63380");
         user.setCity("Kufstein");
@@ -55,7 +55,7 @@ public class UserBuilder {
         user.setFirstName("John");
         user.setLastName("Doe");
         user.setEmail("johnny@doe.com");
-        user.setPassword(passwordEncoder.bCryptPasswordEncoder().encode("password"));
+        user.setPassword(passwordEncoder.bCryptPasswordEncoder().encode("Test123!"));
         user.setStreet("Johnny Street 11");
         user.setPostCode("63380");
         user.setCity("Kufstein");
