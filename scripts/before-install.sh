@@ -1,7 +1,2 @@
-#!/bin/bash
-export FOLDER=/
-if [ -d $FOLDER ]
-then
- rm -rf $FOLDER
-fi
-mkdir -p $FOLDER
+#!/usr/bin/env bash
+sudo rm -rf /home/ec2-user/server
