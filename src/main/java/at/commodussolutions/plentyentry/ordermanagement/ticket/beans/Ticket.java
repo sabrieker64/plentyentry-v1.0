@@ -4,7 +4,10 @@ import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.enums.TicketStatus;
 import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -34,13 +37,9 @@ public class Ticket {
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_USER_TICKET_ID"), referencedColumnName = "ID")
     private User user;
 
-
-    //MINA
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey = @ForeignKey(name = "FK_SHOPPINGCART_ID"),referencedColumnName = "ID")
+    @JoinColumn(name = "SHOPPING_CART_ID", foreignKey = @ForeignKey(name = "FK_SHOPPINGCART_ID"), referencedColumnName = "ID")
     private ShoppingCart shoppingCart;
 
-    //MINA END
 
 }
