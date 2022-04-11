@@ -1,22 +1,13 @@
 <div class="container">
-
-  <div class="event-overview--greeting">
-    <p><span class="text-brand-color">Willkommen</span> User,</p>
-    <p>{{ eventDTO.length }} Events in deiner Nähe</p>
-  </div>
-
-  <div class="event-overview--search">
-    <mat-form-field class="form-element full-width" appearance="outline" style="width: 100%;">
-      <mat-label>Event Suche</mat-label>
-      <input matInput name="event-search">
-    </mat-form-field>
-  </div>
-
+  <mat-form-field appearance="outline" class="form--full-width">
+    <mat-label>Suche</mat-label>
+    <input matInput placeholder="Suche" name="search">
+  </mat-form-field>
 </div>
 
-<mat-tab-group [disablePagination]="true" mat-stretch-tabs class="container example-stretched-tabs mat-elevation-z4">
+<mat-tab-group [disablePagination]="true" mat-stretch-tabs class="container container-events example-stretched-tabs">
   <mat-tab label="Top Events">
-    <div class="splide-container">
+    <div class="container-splide">
       <splide [options]="
     {
       perPage: 4,
@@ -42,7 +33,7 @@
       }
     }
       ">
-        <splide-slide *ngFor="let event of eventDTO">
+        <splide-slide *ngFor="let event of allEvents">
           <section class="event-card">
             <div class="event-card--inner" (click)="getEventDetail(event.id)">
 

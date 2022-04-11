@@ -2,4 +2,18 @@ $brand-color: #7f73d4;
 $white: #ffffff;
 $black: #000000;
 
-$form-gap: 15px;
+$box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.2);
+$border-radius: 5px;
+
+//grid
+$grid-gap: 30px;
+
+//container
+$container-max-width: 1450px;
+$container-padding-left: 60px;
+$container-padding-right: 60px;
+
+//fluid
+$fluid-min-vw: 600px;
+$fluid-max-vw: 1200px;
+

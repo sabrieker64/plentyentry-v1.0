@@ -1,8 +1,9 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {EventService} from "../service/event.service";
 import {EventDTO} from "../../definitions/objects";
-import {EventTileModel} from "./eventTile.model";
 import {Router} from "@angular/router";
+import {HttpErrorResponse} from "@angular/common/http";
+import {ErrorService} from "../../../library/error-handling/error.service";
 
 @Component({
   selector: 'app-event-tile-overview',
@@ -10,56 +11,32 @@ import {Router} from "@angular/router";
   styleUrls: ['./event-tile-overview.component.scss']
 })
 export class EventTileOverviewComponent implements OnInit {
-  eventDTO: EventDTO[] = <EventDTO[]>{};
-  searchPressed = new EventEmitter<boolean>();
-  events: EventTileModel;
-  currentFilter: Element;
-  isTarget: boolean = false;
-  filters: {name: string, isActive: boolean}[];
+  allEvents: EventDTO[];
 
-  constructor(private eventService: EventService, private router: Router) {
+  constructor(private service: EventService, private router: Router, private errorHandling: ErrorService) {
   }
 
   ngOnInit(): void {
-    this.searchPressed.emit(true);
-    this.filters = [
-      {name: 'Top Events', isActive: false},
-      {name: 'In meiner Nähe', isActive: false},
-      {name: 'In Kürze', isActive: false},
-    ]
-
-    this.eventService.getAllEvents().toPromise().then((eventDTO) => {
-      this.eventDTO = eventDTO;
-    });
+    this.loadEvents();
   }
 
-  getEventDetail(eventId: number) {
-    this.router.navigateByUrl('event/' + eventId);
-    console.log(eventId);
+  private loadEvents() {
+    this.service.getAllEvents().toPromise().then((events) => {
+      this.allEvents = events;
+    }).catch((error: HttpErrorResponse) => {
+      this.errorHandling.openErrorBox(error.message);
+    });
   }
 
   getMonth(date: Date): string {
     return new Date(date).toLocaleDateString('de-DE', {month: 'long'});
   }
 
-  getDay(date: Date) {
+  getDay(date: Date): string {
     return new Date(date).toLocaleDateString('de-DE', {day: 'numeric'});
   }
 
-  buyClicked() {
-    console.log('buying clicked');
-  }
-
-  inToCartClicked() {
-    console.log('In to Cart clicked');
-  }
-
-  onClickFilter(selectedFilter: {name: string, isActive:boolean}) {
-
-    for (let filter of this.filters) {
-      filter.isActive = false;
-    }
-
-    selectedFilter.isActive = true;
+  getEventDetail(eventId: number) {
+    this.router.navigateByUrl('/event-detail/' + eventId);
   }
 }

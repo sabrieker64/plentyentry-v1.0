@@ -1,49 +1,99 @@
 <div class="container">
-
-  <mat-card class="example-card">
-    <mat-card-header>
-      <mat-card-title>{{ eventDTO.name }}</mat-card-title>
-    </mat-card-header>
-    <div class="splide-container">
+  <div class="grid cols--2">
+    <div class="grid cols--1 event-detail--media">
       <splide [options]="
     {
       perPage: 1,
-      pagination: false,
-      gap: 30
+      pagination: false
     }
       ">
         <splide-slide>
-          <figure class="event-card--thumbnail">
+          <figure class="image-thumbnail event-detail--media-big">
             <img src="../../../assets/event.jpg">
           </figure>
         </splide-slide>
         <splide-slide>
-          <figure class="event-card--thumbnail">
+          <figure class="image-thumbnail event-detail--media-big">
             <img src="../../../assets/event.jpg">
           </figure>
         </splide-slide>
         <splide-slide>
-          <figure class="event-card--thumbnail">
+          <figure class="image-thumbnail event-detail--media-big">
             <img src="../../../assets/event.jpg">
           </figure>
         </splide-slide>
       </splide>
+      <div class="grid cols--3">
+        <figure class="image-thumbnail">
+          <img src="../../../assets/event.jpg">
+        </figure>
+        <figure class="image-thumbnail">
+          <img src="../../../assets/event.jpg">
+        </figure>
+        <figure class="image-thumbnail">
+          <img src="../../../assets/event.jpg">
+        </figure>
+      </div>
     </div>
-    <mat-card-content>
-      <mat-list>
-        <mat-list-item>{{ eventDTO.city }}</mat-list-item>
+    <div class="event-detail--information">
+      <div class="grid cols--1">
+        <div class="grid cols--2">
+          <h1>
+            {{ eventDTO.name}}
+            <small style="font-size: 15px; display: block">Coolen Events GmbH</small>
+          </h1>
+          <button class="like-button">
+            <mat-icon class="icon">favorite</mat-icon>
+          </button>
+        </div>
         <mat-divider></mat-divider>
-        <mat-list-item>{{ eventDTO.address }}</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>{{ eventDTO.date }}</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>{{ eventDTO.description }}</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item mat-align-tabs="center">
-          <button mat-raised-button color="primary">Ticket kaufen</button>
-          <button mat-raised-button>Veranstalter</button>
-        </mat-list-item>
-      </mat-list>
-    </mat-card-content>
-  </mat-card>
+        <div class="grid cols--2">
+
+          <section class="event-detail--card">
+            <div class="event-detail--card-icon">
+              <mat-icon class="icon">place</mat-icon>
+            </div>
+            <div class="event-detail--card-description">
+              <h2>{{ eventDTO.city }}</h2>
+              <h4>{{ eventDTO.address }}</h4>
+            </div>
+          </section>
+
+          <section class="event-detail--card">
+            <div class="event-detail--card-icon">
+              <mat-icon class="icon">calendar_today</mat-icon>
+            </div>
+            <div class="event-detail--card-description">
+              <h2>Datum</h2>
+              <h4>{{ eventDTO.date }}</h4>
+            </div>
+          </section>
+        </div>
+
+        <section class="event-detail--description">
+          <h2>Eventbeschreibung:</h2>
+          <p>{{ eventDTO.description }}</p>
+        </section>
+
+        <section class="event-detail--shopping">
+          <div class="event-detail--shopping-box">
+            <h1>{{ eventDTO.price }} €</h1>
+            <span class="event-detail--shopping-quantity">
+              <button (click)="increaseQuantity()">
+                <mat-icon class="icon">add</mat-icon>
+              </button>
+              <h1>{{ eventQuantity }}</h1>
+              <button (click)="decreaseQuantity()">
+                <mat-icon class="icon">remove</mat-icon>
+              </button>
+            </span>
+            <button class="cart">
+              <mat-icon class="icon">shopping_cart</mat-icon>
+              In den Warenkorb
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
 </div>

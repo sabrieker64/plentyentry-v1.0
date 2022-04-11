@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {NavigationLayoutComponent} from "./layout/navigation-layout.component";
 import {AngularMaterialModule} from "../anguler-material-module/anguler-material-module.module";
 import {AppRoutingModule} from "../../app/app-routing.module";
+import {ToolBarComponent} from './tool-bar/tool-bar.component';
 
 @NgModule({
   declarations: [
-    NavigationLayoutComponent
+    ToolBarComponent
   ],
   imports: [
     CommonModule,
@@ -15,8 +15,8 @@ import {AppRoutingModule} from "../../app/app-routing.module";
   ],
   providers: [],
   exports: [
-    NavigationLayoutComponent
+    ToolBarComponent
   ]
 })
-export class NavigationLayoutModule {
+export class ToolBarModule {
 }

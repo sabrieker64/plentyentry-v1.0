@@ -1,26 +1,47 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {EventDTO} from "../../definitions/objects";
+import {ActivatedRoute} from "@angular/router";
 import {EventService} from "../service/event.service";
+import {HttpErrorResponse} from "@angular/common/http";
+import {ErrorService} from "../../../library/error-handling/error.service";
 
 @Component({
   selector: 'app-event-detail',
   templateUrl: './event-detail.component.html',
-  styleUrls: ['./event-detail.component.scss']
+  styleUrls: ['./event-detail.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class EventDetailComponent implements OnInit {
-  eventId: number;
   eventDTO: EventDTO = <EventDTO>{};
+  eventQuantity: number = 1;
 
-  constructor(private activeRoute: ActivatedRoute, private eventService: EventService) {
+  constructor(private eventService: EventService, private route: ActivatedRoute, private errorHandling: ErrorService) {
   }
 
   ngOnInit(): void {
-    this.eventId = Number(this.activeRoute.snapshot.paramMap.get('id'));
+    this.getEventDetail();
+  }
 
-    this.eventService.getEventDetails(this.eventId).toPromise().then((eventDTO) => {
-      this.eventDTO = eventDTO;
+  public getEventDetail() {
+    let eventId = Number(this.route.snapshot.paramMap.get('id'));
+
+    if (!+isNaN(eventId)) {
+
+    }
+    this.eventService.getEventById(eventId).toPromise().then((event) => {
+      this.eventDTO = event;
+    }).catch((error: HttpErrorResponse) => {
+      this.errorHandling.openErrorBox(error.message);
     })
   }
 
+  public increaseQuantity() {
+    this.eventQuantity++;
+  }
+
+  public decreaseQuantity() {
+    if (this.eventQuantity > 1) {
+      this.eventQuantity--;
+    }
+  }
 }

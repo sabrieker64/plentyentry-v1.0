@@ -47,6 +47,7 @@ public class TicketRestServiceImpl implements TicketRestService {
     @Override
     public TicketDTO updateTicketById(TicketDTO updatedTicket) {
         Ticket ticket = ticketService.getTicketById(updatedTicket.getId());
+        ticketMapper.mapToEntity(updatedTicket, ticket);
         return ticketMapper.mapToDTO(ticketService.updateTicketById(ticket));
     }
 

@@ -15,6 +15,7 @@ import {NgxSplideModule} from 'ngx-splide';
 import {EventTileModule} from "./events/event-tile.module";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PaymentCheckoutComponent} from './payment/checkout/payment-checkout.component';
+import {ToolBarModule} from "../library/tool-bar/tool-bar.module";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import {PaymentCheckoutComponent} from './payment/checkout/payment-checkout.comp
     EventTileModule,
     FormsModule,
     ReactiveFormsModule,
+    ToolBarModule,
   ],
   providers: [AuthService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent],

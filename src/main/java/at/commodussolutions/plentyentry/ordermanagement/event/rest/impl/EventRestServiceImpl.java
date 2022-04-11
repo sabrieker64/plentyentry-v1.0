@@ -34,6 +34,7 @@ public class EventRestServiceImpl implements EventRestService {
     @Override
     public EventDTO updateEventById(EventDTO updatedEvent) {
         Event event = eventService.getEventById(updatedEvent.getId());
+        eventMapper.mapToEntity(updatedEvent, event);
         return eventMapper.mapToDTO(eventService.updateEventById(event));
     }
 

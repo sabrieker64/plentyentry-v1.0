@@ -31,5 +31,9 @@ export class LoginRegisterService {
     return this.http.post<UserDTO>(`${this.baseUrl}` + '/authenticate', userAuthReqDTO);
   }
 
+  public getUserByJWT(): Observable<UserDTO> {
+    return this.http.get<UserDTO>(`${this.baseUrl}`);
+  }
+
 //TODO: Mukiiii services erstellen
 }
