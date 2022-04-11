@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-04-11 18:58:59.
+// Generated using typescript-generator version 2.32.889 on 2022-04-11 19:21:56.
 
 export interface UserDTO {
     id: number;
@@ -11,17 +11,17 @@ export interface UserDTO {
     password: string;
     postCode: string;
     city: string;
-  age: number;
-  svNumber: number;
-  birthday: Date;
-  userType: UserType;
-  userGender: UserGender;
-  events: EventDTO[];
-  tickets: TicketDTO[];
-  coronaStatus: CoronaStatusDTO;
-  paymentMethod: PaymentMethodDTO[];
-  jwtToken: string;
-  shoppingCartDTO: ShoppingCartDTO;
+    age: number;
+    svNumber: number;
+    birthday: Date;
+    userType: UserType;
+    userGender: UserGender;
+    events: EventDTO[];
+    tickets: TicketDTO[];
+    coronaStatus: CoronaStatusDTO;
+    paymentMethod: PaymentMethodDTO[];
+    jwtToken: string;
+    shoppingCartDTO: ShoppingCartDTO;
 }
 
 export interface EventDTO {
@@ -39,16 +39,16 @@ export interface EventDTO {
 }
 
 export interface UserRegisterDTO {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  city: string;
-  postCode: string;
-  street: string;
-  birthday: Date;
-  userGender: UserGender;
-  shoppingCartDTO: ShoppingCartDTO;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    city: string;
+    postCode: string;
+    street: string;
+    birthday: Date;
+    userGender: UserGender;
+    shoppingCartDTO: ShoppingCartDTO;
 }
 
 export interface UserAuthReqDTO {
