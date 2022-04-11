@@ -175,7 +175,6 @@ public class AwsBucketRestServiceImplTest {
     public void deleteFiles() throws Exception {
 
         AWSEventImagesUploadDTO awsEventImagesUploadDTO = getAWSEventImagesUploadDTO();
-        ArrayList<String> urls = new ArrayList<>();
 
 
         //GETFILES
@@ -190,37 +189,24 @@ public class AwsBucketRestServiceImplTest {
                 new TypeReference<>() {
                 });
 
-        for(String result : resultList) {
-            urls.add(result);
-        }
+        ArrayList<String> urls = new ArrayList<>(resultList);
         awsEventImagesUploadDTO.setUrls(urls);
 
 
-        mvcResult = mvc.perform(MockMvcRequestBuilders.delete(baseUrl+"/deleteFiles")
+        mvc.perform(MockMvcRequestBuilders.delete(baseUrl + "/deleteFiles")
                         .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(awsEventImagesUploadDTO))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
-
-        resultList =  objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
-                new TypeReference<>() {
-                });
 
 
         //LISTFILES TO CHECK IF EVERY FILE GOT DELETED
-        MvcResult listMvcResult = mvc.perform(MockMvcRequestBuilders.post(baseUrl+"/listFiles")
+        mvc.perform(MockMvcRequestBuilders.post(baseUrl + "/listFiles")
                         .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(awsEventImagesUploadDTO))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
-
-        List<String> listResultList =  objectMapper.readValue(listMvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
-                new TypeReference<>() {
-                });
-
-        Assertions.assertEquals(0,listResultList.size());
-
     }
 }
