@@ -3,15 +3,12 @@ package at.commodussolutions.plentyentry.user.shoppingcart;
 import at.commodussolutions.plentyentry.backendConfig.security.PasswordEncoder;
 import at.commodussolutions.plentyentry.ordermanagement.event.dbInit.EventInitializer;
 import at.commodussolutions.plentyentry.ordermanagement.event.mapper.EventMapper;
-import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dbInit.TicketInitializer;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.mapper.TicketMapper;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
-import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketService;
 import at.commodussolutions.plentyentry.user.authentication.jwt.JwtTokenUtil;
 import at.commodussolutions.plentyentry.user.shoppingcart.dbInit.ShoppingCartInitializer;
-import at.commodussolutions.plentyentry.user.shoppingcart.dto.ShoppingCartDTO;
 import at.commodussolutions.plentyentry.user.shoppingcart.mapper.ShoppingCartMapper;
 import at.commodussolutions.plentyentry.user.shoppingcart.repository.ShoppingCartRepository;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
@@ -21,9 +18,7 @@ import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import at.commodussolutions.plentyentry.user.userdata.mapper.UserMapper;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,10 +35,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.transaction.Transactional;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @ExtendWith(SpringExtension.class)
@@ -124,56 +117,6 @@ public class ShoppingCartRestServiceTest {
     }
 
     @Test
-    void getShoppingCartByID() throws Exception {
-
-        updateShoppingCartByID();
-
-        var firstShoppingCart = shoppingCartRepository.findAll().get(0);
-
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl+"/"+firstShoppingCart.getId())
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        ShoppingCartDTO resultShoppingCart = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
-                new TypeReference<ShoppingCartDTO>() {
-                });
-
-        Assertions.assertEquals(firstShoppingCart.getUser().getEmail(), resultShoppingCart.getUser().getEmail());
-    }
-
-    @Test
-    void updateShoppingCartByID() throws Exception {
-        var firstShoppingCart = shoppingCartRepository.findAll().get(0);
-        var firstTicket = ticketRepository.findAll().get(0);
-        var firstUser = userRepository.findAll().get(0);
-
-        Set<Ticket> ticketSet = new HashSet<>();
-        ticketSet.add(firstTicket);
-
-        firstShoppingCart.setUser(firstUser);
-        firstShoppingCart.setTickets(ticketSet);
-
-
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put(baseUrl)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(firstShoppingCart)))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        ShoppingCartDTO resultShoppingCart = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
-                new TypeReference<ShoppingCartDTO>() {
-                });
-
-        Assertions.assertEquals(firstShoppingCart.getUser().getFirstName(), resultShoppingCart.getUser().getFirstName());
-        Assertions.assertEquals(firstShoppingCart.getUser().getEmail(), resultShoppingCart.getUser().getEmail());
-
-    }
-
-
-    @Test
     void processTesting() throws Exception {
         User user = new User();
         user.setUserType(UserType.ADMIN);
@@ -210,37 +153,4 @@ public class ShoppingCartRestServiceTest {
 
         var updatedUser = userRepository.getByEmail(user.getEmail());
     }
-
-    /*
-    @Test
-    void createShoppingCart() throws Exception {
-
-        var shoppingCartDTO = new ShoppingCartDTO();
-        var event = eventRepository.findAll().get(0);
-        var user = userRepository.findByEmail("johnny@doe.com").get();
-        var ticket = ticketRepository.findAll().get(0);
-
-        ticket.setEvent(event);
-        Set<TicketDTO> ticketSet = new HashSet<>();
-        ticketSet.add(ticketMapper.mapToDTO(ticket));
-
-        shoppingCartDTO.setTickets(ticketSet);
-        shoppingCartDTO.setUser(userMapper.mapToDTO(user));
-
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(baseUrl)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(shoppingCartDTO))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        ShoppingCartDTO resultShoppingCart = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
-                new TypeReference<ShoppingCartDTO>() {
-                });
-
-        Assertions.assertEquals(shoppingCartDTO.getUser().getEmail(), resultShoppingCart.getUser().getEmail());
-
-    }
-    
-     */
 }

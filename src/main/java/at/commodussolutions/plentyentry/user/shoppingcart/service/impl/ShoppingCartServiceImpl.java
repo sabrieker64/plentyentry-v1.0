@@ -52,9 +52,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCart updateShoppingCartById(ShoppingCart shoppingCart) {
-
-
-
         return shoppingCartRepository.save(shoppingCart);
     }
 }
