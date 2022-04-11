@@ -1,0 +1,24 @@
+@import 'src/assets/theme';
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.container {
+  max-width: $container-max-width;
+
+  @media screen and (max-width: 600px) {
+    max-width: 100%;
+    padding: 0;
+  }
+}
+
+.toolbar {
+  border-radius: 5px;
+  @include fluid-property('margin-top', $fluid-min-vw, $fluid-max-vw, 0px, 50px);
+  @include fluid-property('margin-bottom', $fluid-min-vw, $fluid-max-vw, 25px, 50px);
+
+  @media screen and (max-width: 600px) {
+    border-radius: 0;
+  }
+}
