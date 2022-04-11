@@ -4,6 +4,7 @@ import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.user.coronastate.dto.CoronaStatusDTO;
 import at.commodussolutions.plentyentry.user.payment.dto.PaymentMethodDTO;
+import at.commodussolutions.plentyentry.user.shoppingcart.dto.ShoppingCartDTO;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -44,4 +45,5 @@ public class UserDTO {
     private CoronaStatusDTO coronaStatus;
     private List<PaymentMethodDTO> paymentMethod;
     private String jwtToken;
+    private ShoppingCartDTO shoppingCartDTO;
 }

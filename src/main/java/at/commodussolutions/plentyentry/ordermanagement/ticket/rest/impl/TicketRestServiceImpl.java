@@ -13,7 +13,9 @@ import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class TicketRestServiceImpl implements TicketRestService {
@@ -55,5 +57,11 @@ public class TicketRestServiceImpl implements TicketRestService {
         ticketMapper.mapToEntity(ticketDTO,ticket);
         ticket = ticketService.createNewTicket(ticket);
         return ticketMapper.mapToDTO(ticket);
+    }
+
+    @Override
+    public void putTicketsToShoppingCart(Set<TicketDTO> ticketDTOSet) {
+        Set<Ticket> ticketSet = new HashSet<>();
+        ticketService.putTicketsToShoppingCart(ticketMapper.mapToListEntity(ticketDTOSet, ticketSet));
     }
 }

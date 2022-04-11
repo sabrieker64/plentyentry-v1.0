@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-04-08 18:43:26.
+// Generated using typescript-generator version 2.32.889 on 2022-04-11 19:21:56.
 
 export interface UserDTO {
     id: number;
@@ -21,6 +21,7 @@ export interface UserDTO {
     coronaStatus: CoronaStatusDTO;
     paymentMethod: PaymentMethodDTO[];
     jwtToken: string;
+    shoppingCartDTO: ShoppingCartDTO;
 }
 
 export interface EventDTO {
@@ -38,36 +39,38 @@ export interface EventDTO {
 }
 
 export interface UserRegisterDTO {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  city: string;
-  postCode: string;
-  street: string;
-  birthday: Date;
-  userGender: UserGender;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    city: string;
+    postCode: string;
+    street: string;
+    birthday: Date;
+    userGender: UserGender;
+    shoppingCartDTO: ShoppingCartDTO;
 }
 
 export interface UserAuthReqDTO {
-  email: string;
-  password: string;
+    email: string;
+    password: string;
 }
 
 export interface CreatePaymentResponse {
-  clientSecret: string;
+    clientSecret: string;
 }
 
 export interface CreatePayment {
-  items: any[];
+    items: any[];
 }
 
 export interface TicketDTO {
-  id: number;
-  quantity: number;
-  ticketStatus: TicketStatus;
-  user: UserDTO;
-  event: EventDTO;
+    id: number;
+    quantity: number;
+    ticketStatus: TicketStatus;
+    user: UserDTO;
+    event: EventDTO;
+    shoppingCart: ShoppingCartDTO;
 }
 
 export interface CoronaStatusDTO {
@@ -89,6 +92,12 @@ export interface PaymentMethodDTO {
     cvSecurityCode: number;
     iban: number;
     user: UserDTO;
+}
+
+export interface ShoppingCartDTO {
+    id: number;
+    user: UserDTO;
+    tickets: TicketDTO[];
 }
 
 export type UserType = "GUEST" | "CUSTOMER" | "ADMIN" | "MAINTAINER" | "SUPERADMIN";

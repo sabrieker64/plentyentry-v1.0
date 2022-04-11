@@ -1,5 +1,6 @@
 package at.commodussolutions.plentyentry.user.userdata.dto;
 
+import at.commodussolutions.plentyentry.user.shoppingcart.dto.ShoppingCartDTO;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
 import lombok.Data;
 
@@ -17,6 +18,6 @@ public class UserRegisterDTO {
     private String street;
     private LocalDate birthday;
     private UserGender userGender;
-
+    private ShoppingCartDTO shoppingCartDTO;
 
 }

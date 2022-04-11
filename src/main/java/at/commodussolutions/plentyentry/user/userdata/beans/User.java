@@ -3,11 +3,13 @@ package at.commodussolutions.plentyentry.user.userdata.beans;
 import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.user.payment.beans.PaymentMethod;
+import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +27,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "USER")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
@@ -99,6 +102,11 @@ public class User implements UserDetails {
     @Column(name = "JWT_TOKEN")
     private String jwtToken;
 
+    //MINA
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "SHOPPINGCART_ID", referencedColumnName = "ID")
+    private ShoppingCart shoppingCart;
+    //MINA END
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

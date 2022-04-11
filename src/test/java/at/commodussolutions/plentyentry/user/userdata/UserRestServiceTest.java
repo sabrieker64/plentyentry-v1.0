@@ -131,6 +131,9 @@ public class UserRestServiceTest {
         Assertions.assertEquals(result.getCity(), newUserFromRepository.getCity());
         Assertions.assertEquals(result.getId(), newUserFromRepository.getId());
         Assertions.assertEquals(result.getPostCode(), newUserFromRepository.getPostCode());
+        //Assertions.assertEquals(result.getShoppingCartDTO().getUser().getShoppingCartDTO(), newUserFromRepository.getShoppingCart().getId());
+
+
     }
 
     @Test
@@ -190,6 +193,7 @@ public class UserRestServiceTest {
     @Test
     void userLoginTest() throws Exception {
         User defaultUser = userRepository.findAll().get(0);
+        defaultUser.setJwtToken(null);
         var token = userService.createToken(defaultUser);
 
         mvc.perform(MockMvcRequestBuilders.get(baseUrl +
@@ -201,7 +205,7 @@ public class UserRestServiceTest {
 
         UserAuthReqDTO userAuthReqDTO = new UserAuthReqDTO();
         userAuthReqDTO.setEmail(defaultUser.getEmail());
-        userAuthReqDTO.setPassword("password");
+        userAuthReqDTO.setPassword("Test123!");
 
         MvcResult mvcResultFinal = mvc.perform(MockMvcRequestBuilders.post(baseUrl + "/authenticate")
                         .accept(MediaType.APPLICATION_JSON)

@@ -61,8 +61,6 @@ public class EventRestServiceTest {
         var getAllEvents = eventRepository.findAll();
         var firstResult = getAllEvents.get(0);
 
-
-
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(baseUrl + "/list")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -72,7 +70,6 @@ public class EventRestServiceTest {
         List<EventDTO> resultList = objectMapper.readValue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8),
                 new TypeReference<List<EventDTO>>() {
                 });
-
 
         Assertions.assertEquals(firstResult.getCity(), resultList.get(0).getCity());
     }

@@ -8,6 +8,8 @@ import at.commodussolutions.plentyentry.user.authentication.jwt.JwtTokenUtil;
 import at.commodussolutions.plentyentry.user.confirmation.email.EmailSender;
 import at.commodussolutions.plentyentry.user.confirmation.token.beans.ConfirmationToken;
 import at.commodussolutions.plentyentry.user.confirmation.token.service.impl.ConfirmationTokenServiceImpl;
+import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
+import at.commodussolutions.plentyentry.user.shoppingcart.service.ShoppingCartService;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserLoginDTO;
@@ -25,7 +27,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -50,6 +51,9 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private ShoppingCartService shoppingCartService;
+
+    @Autowired
     private TicketRepository ticketRepository;
 
     @Autowired
@@ -72,12 +76,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private Environment environment;
 
-    private WebRequest webRequest;
-
     @Autowired
     private HttpServletRequest servletRequest;
 
-    private final PlentyEntryBackendUtils backendUtils;
+    @Autowired
+    private PlentyEntryBackendUtils backendUtils;
 
     public UserServiceImpl(PlentyEntryBackendUtils backendUtils) {
         this.backendUtils = backendUtils;
@@ -98,7 +101,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    private String signUpUser(User user) {
+    private void signUpUser(User user) {
         boolean userExists = this.userRepository.findByEmail(user.getEmail()).isPresent();
         if (userExists) {
             throw new IllegalStateException("Email wird schon verwendet");
@@ -108,8 +111,12 @@ public class UserServiceImpl implements UserService {
         if (user.getUserType() == null) {
             user.setUserType(UserType.CUSTOMER);
         }
-        this.userRepository.save(user);
 
+        userRepository.save(user);
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCartService.createNewShoppingCart(shoppingCart, user);
+        user.setShoppingCart(shoppingCart);
+        userRepository.save(user);
         var token = createToken(user);
         //IF you are testing, you dont need the maildev server just open the confirmation link to enable the user !!Please do not change
         if (Objects.equals(Arrays.stream(this.environment.getActiveProfiles()).collect(Collectors.toList()).get(0), "test")) {
@@ -118,7 +125,6 @@ public class UserServiceImpl implements UserService {
             String link = this.backendUtils.getHost() + "api/backend/user/confirm?token=" + token.getToken();
             emailSender.send(user.getEmail(), buildEmail(user.getLastName(), link));
         }
-        return token.getToken();
     }
 
 

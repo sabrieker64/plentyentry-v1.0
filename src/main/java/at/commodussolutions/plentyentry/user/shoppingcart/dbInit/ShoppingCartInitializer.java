@@ -1,37 +1,34 @@
-package at.commodussolutions.plentyentry.ordermanagement.event.dbInit;
+package at.commodussolutions.plentyentry.user.shoppingcart.dbInit;
 
 import at.commodussolutions.plentyentry.backendConfig.dbInitConfig.dbInit.InitializeDatabase;
-import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
-import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
+import at.commodussolutions.plentyentry.user.shoppingcart.repository.ShoppingCartRepository;
+import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-
 @Component
 @RequiredArgsConstructor
-public class EventInitializer implements InitializeDatabase {
+public class ShoppingCartInitializer implements InitializeDatabase {
     @Autowired
-    private EventRepository eventRepository;
+    private ShoppingCartRepository shoppingCartRepository;
 
     @Autowired
-    private EventBuilder eventBuilder;
+    private ShoppingCartBuilder shoppingCartBuilder;
 
     @Override
     public String initializeName() {
-        return "Event Group";
+        return "ShoppingCart Group";
     }
 
     @Override
     public String initializerName() {
-        return "Event Initializer";
+        return "ShoppingCart Initializer";
     }
 
     @Override
     public boolean shouldDataBeInitialized() {
-        return eventRepository.count() == 0;
+        return shoppingCartRepository.count() ==0;
     }
 
     @Override
@@ -41,6 +38,7 @@ public class EventInitializer implements InitializeDatabase {
 
     @Override
     public void initData() {
-        eventBuilder.buildEvent();
+        shoppingCartBuilder.buildShoppingCart();
     }
+
 }
