@@ -21,15 +21,15 @@ public class PaypalRestServiceImpl {
     @Autowired
     private PlentyEntryBackendUtils plentyEntryBackendUtils;
 
-    public static final String SUCCESS_URL = "/pay/success";
-    public static final String CANCEL_URL = "/pay/cancel";
+    public static final String SUCCESS_URL = "pay/success";
+    public static final String CANCEL_URL = "pay/cancel";
 
     @PostMapping("/pay")
     @ResponseBody
     public String payment(@ModelAttribute("order") Order order) throws PayPalRESTException {
         try {
             Payment payment = paypalService.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(),
-                    order.getIntent(), order.getDescirption(),
+                    order.getIntent(), order.getDescription(),
                     plentyEntryBackendUtils.getHost() + CANCEL_URL, plentyEntryBackendUtils.getHost() + SUCCESS_URL);
             for (Links link : payment.getLinks()) {
                 if (link.getRel().equals("approval_url")) {

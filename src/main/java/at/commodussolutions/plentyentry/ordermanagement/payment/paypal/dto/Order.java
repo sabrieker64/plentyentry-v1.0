@@ -15,5 +15,5 @@ public class Order {
     private String currency;
     private String method;
     private String intent;
-    private String descirption;
+    private String description;
 }

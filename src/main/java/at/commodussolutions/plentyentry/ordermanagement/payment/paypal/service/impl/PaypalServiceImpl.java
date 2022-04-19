@@ -29,7 +29,7 @@ public class PaypalServiceImpl implements PaypalService {
         Amount amount = new Amount();
         amount.setCurrency(currency);
         total = new BigDecimal(total).setScale(2, RoundingMode.CEILING).doubleValue();
-        amount.setTotal(String.format("%.2f", total));
+        amount.setTotal(String.format("%.3f", total));
 
         Transaction transaction = new Transaction();
         transaction.setDescription(description);
@@ -40,7 +40,6 @@ public class PaypalServiceImpl implements PaypalService {
 
         Payer payer = new Payer();
         payer.setPaymentMethod(method);
-
 
         Payment payment = new Payment();
         payment.setIntent(intent);
