@@ -29,7 +29,7 @@ public interface UserRepository extends JpaRepository<User, Long>, QuerydslPredi
             QuerydslBindings bindings, QUser root) {
         bindings.bind(String.class)
                 .first((SingleValueBinding<StringPath, String>) StringExpression::containsIgnoreCase);
-        bindings.excluding((Path<User>) root.email);
+        bindings.excluding((Path<?>) root.email);
     }
 
 }
