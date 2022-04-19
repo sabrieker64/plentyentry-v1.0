@@ -37,7 +37,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements UserDetails, EntityPath<User> { //EntityPath needed for Querydsl
+public class User implements UserDetails{
 
     @Id
     @Column(name = "ID")
@@ -151,37 +151,5 @@ public class User implements UserDetails, EntityPath<User> { //EntityPath needed
     }
 
 
-    //QUERYDSL
-
-    @Override
-    public Object getMetadata(Path<?> property) {
-        return null;
-    }
-
-    @Override
-    public PathMetadata getMetadata() {
-        return null;
-    }
-
-    @Override
-    public Path<?> getRoot() {
-        return null;
-    }
-
-    @Override
-    public AnnotatedElement getAnnotatedElement() {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public <R, C> R accept(Visitor<R, C> v, @Nullable C context) {
-        return null;
-    }
-
-    @Override
-    public Class<? extends User> getType() {
-        return null;
-    }
 
 }
