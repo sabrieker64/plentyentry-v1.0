@@ -10,5 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 public interface QrCodeGeneratorRestService {
 
     @GetMapping
-    public String getQRCode();
+    public String getQRCode(Long ticketID);
+
+    @GetMapping("/scan")
+    public String useQRCode(Long ticketID);
+
 }
