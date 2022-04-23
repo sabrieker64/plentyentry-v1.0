@@ -5,7 +5,6 @@ import at.commodussolutions.plentyentry.ordermanagement.qrCode.service.QrCodeGen
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.enums.TicketStatus;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
-import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketService;
 import com.google.zxing.WriterException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +45,8 @@ public class QrCodeGeneratorServiceImpl implements QrCodeGeneratorService {
         }
 
         // Convert Byte Array into Base64 Encode String
-        String qrcode = Base64.getEncoder().encodeToString(image);
 
-        return qrcode;
+        return Base64.getEncoder().encodeToString(image);
     }
 
     @Override
