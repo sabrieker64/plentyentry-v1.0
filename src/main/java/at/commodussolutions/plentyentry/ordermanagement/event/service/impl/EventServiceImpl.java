@@ -9,6 +9,7 @@ import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRe
 import at.commodussolutions.plentyentry.ordermanagement.event.service.EventService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -39,5 +40,10 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event updateEventById(Event event) {
         return eventRepository.save(event);
+    }
+
+    @Override
+    public Page<Event> getEventsByCriteria(String criteria) {
+        return null;
     }
 }

@@ -18,15 +18,6 @@ public class TicketInitializer implements InitializeDatabase {
     private TicketRepository ticketRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private EventRepository eventRepository;
-
-    @Autowired
     private TicketBuilder ticketBuilder;
 
     @Override

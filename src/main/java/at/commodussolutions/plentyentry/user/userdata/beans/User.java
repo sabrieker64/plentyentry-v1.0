@@ -6,15 +6,21 @@ import at.commodussolutions.plentyentry.user.payment.beans.PaymentMethod;
 import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
+import com.querydsl.core.types.EntityPath;
+import com.querydsl.core.types.Path;
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.Visitor;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.lang.reflect.AnnotatedElement;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
@@ -31,7 +37,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements UserDetails {
+public class User implements UserDetails{
 
     @Id
     @Column(name = "ID")
@@ -143,4 +149,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
+
+
+
 }
