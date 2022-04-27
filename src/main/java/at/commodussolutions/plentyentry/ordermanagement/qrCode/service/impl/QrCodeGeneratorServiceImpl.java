@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -42,11 +43,14 @@ public class QrCodeGeneratorServiceImpl implements QrCodeGeneratorService {
     @Override
     public String getQRCode(Long ticketID) {
 
-        Ticket ticket = ticketRepository.getById(ticketID);
+        Optional<Ticket> ticketOptional = ticketRepository.findById(ticketID);
 
-        if(ticket.getId() == null){
+
+        if(!ticketOptional.isPresent()){
             return "Ticket mit dieser ID existiert nicht";
         }
+
+        Ticket ticket = ticketOptional.get();
 
         boolean userBoughtTicket = false;
 
