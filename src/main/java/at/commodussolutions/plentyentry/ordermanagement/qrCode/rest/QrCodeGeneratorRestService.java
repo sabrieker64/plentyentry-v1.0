@@ -10,8 +10,8 @@ public interface QrCodeGeneratorRestService {
     @ResponseBody
     String getQRCode(@PathVariable Long ticketID);
 
-    @GetMapping("/scan")
+    @GetMapping("/scan/{ticketID}")
     @ResponseBody
-    String useQRCode(Long ticketID);
+    String useQRCode(@PathVariable Long ticketID);
 
 }

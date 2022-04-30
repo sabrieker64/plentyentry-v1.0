@@ -6,7 +6,6 @@ import at.commodussolutions.plentyentry.ordermanagement.qrCode.service.QrCodeGen
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.enums.TicketStatus;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
-import at.commodussolutions.plentyentry.ordermanagement.ticket.rest.TicketRestService;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketService;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
@@ -46,16 +45,15 @@ public class QrCodeGeneratorServiceImpl implements QrCodeGeneratorService {
         Optional<Ticket> ticketOptional = ticketRepository.findById(ticketID);
 
 
-        if(!ticketOptional.isPresent()){
+        if (ticketOptional.isEmpty()) {
             return "Ticket mit dieser ID existiert nicht";
         }
 
         Ticket ticket = ticketOptional.get();
-
         boolean userBoughtTicket = false;
 
-        for (Ticket currentTicket : userService.getUserByJWTToken().getTickets()){
-            if(currentTicket.getId().equals(ticket.getId())){
+        for (Ticket currentTicket : userService.getUserByJWTToken().getShoppingCart().getTickets()) {
+            if (currentTicket.getId().equals(ticket.getId())) {
                 userBoughtTicket = true;
                 break;
             }
@@ -83,10 +81,7 @@ public class QrCodeGeneratorServiceImpl implements QrCodeGeneratorService {
 
             return Base64.getEncoder().encodeToString(image);
         }
-
         return "Das Ticket wurde nicht von dir gekauft!";
-
-
     }
 
     @Override
