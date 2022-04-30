@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,10 +32,7 @@ public class StripeAcceptPaymentService {
         params.put("amount", paymentIntentDTO.getAmount());
         params.put("description", paymentIntentDTO.getDescription());
         params.put("currency", paymentIntentDTO.getCurrency());
-
-        ArrayList<Object> paymentMethodTypes = new ArrayList<>();
-        paymentMethodTypes.add("card");
-        params.put("payment_method_types", paymentMethodTypes);
+        params.put("payment_method_types", paymentIntentDTO.getPaymentType());
         return PaymentIntent.create(params);
     }
 

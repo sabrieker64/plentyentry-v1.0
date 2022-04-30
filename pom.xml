@@ -219,12 +219,6 @@
                         <class>at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO</class>
                         <class>at.commodussolutions.plentyentry.user.userdata.dto.UserRegisterDTO</class>
                         <class>at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO</class>
-                        <class>
-                            at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.CreatePaymentResponse
-                        </class>
-                        <class>
-                            at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.CreatePayment
-                        </class>
                     </classes>
                     <outputKind>module</outputKind>
                     <outputFile>plentyentry-frontend/src/app/definitions/objects.ts</outputFile>
