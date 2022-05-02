@@ -2,6 +2,7 @@ package at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpa
 
 import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.PaymentIntentDTO;
+import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.enums.StripePaymentTypes;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
@@ -11,8 +12,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -28,11 +32,12 @@ public class StripeAcceptPaymentService {
 
     public PaymentIntent paymentIntent(PaymentIntentDTO paymentIntentDTO) throws StripeException {
         Stripe.apiKey = secretKey;
+        List<Object> paymentMethodThatCanBeAccepted = Arrays.stream(StripePaymentTypes.values()).collect(Collectors.toList());
         Map<String, Object> params = new HashMap<>();
         params.put("amount", paymentIntentDTO.getAmount());
         params.put("description", paymentIntentDTO.getDescription());
-        params.put("currency", paymentIntentDTO.getCurrency());
-        params.put("payment_method_types", paymentIntentDTO.getPaymentType());
+        params.put("currency", paymentIntentDTO.getCurrency().getValue());
+        params.put("payment_method_types", paymentMethodThatCanBeAccepted);
         return PaymentIntent.create(params);
     }
 
