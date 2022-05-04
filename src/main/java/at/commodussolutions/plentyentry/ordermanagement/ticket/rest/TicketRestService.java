@@ -18,6 +18,10 @@ public interface TicketRestService {
     @ResponseBody
     TicketDTO getTicketById(@PathVariable Long id);
 
+    @GetMapping("/boughtTickets")
+    @ResponseBody
+    List<TicketDTO>  getBoughtTickets();
+
     //DO WE NEED THIS?
     @PutMapping()
     @ResponseBody

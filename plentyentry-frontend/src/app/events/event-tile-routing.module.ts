@@ -4,6 +4,7 @@ import {EventTileOverviewComponent} from "./event-tile-overview/event-tile-overv
 import {EventDetailComponent} from "./event-detail/event-detail.component";
 import {EventCreateComponent} from "./event-create/event-create.component";
 import {EventUpdateComponent} from "./event-update/event-update.component";
+import {EventListComponent} from "./event-list/event-list.component";
 
 const routes: Routes = [
 
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'event-create',
     component: EventCreateComponent
+  },
+  {
+    path: 'event-list',
+    component: EventListComponent
   },
 
 ];

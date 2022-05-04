@@ -10,6 +10,7 @@ import {NgxSplideModule} from "ngx-splide";
 import {EventDetailComponent} from './event-detail/event-detail.component';
 import {EventCreateComponent} from './event-create/event-create.component';
 import {EventUpdateComponent} from "./event-update/event-update.component";
+import { EventListComponent } from './event-list/event-list.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import {EventUpdateComponent} from "./event-update/event-update.component";
     EventDetailComponent,
     EventUpdateComponent,
     EventCreateComponent,
+    EventListComponent,
   ],
   exports: [
     EventTileOverviewComponent

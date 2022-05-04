@@ -5,6 +5,7 @@ package at.commodussolutions.plentyentry.ordermanagement.ticket.service.impl;
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.enums.TicketStatus;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketService;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
@@ -36,6 +37,37 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public List<Ticket> getAllTickets() {
         return ticketRepository.findAll();
+    }
+
+    @Override
+    public List<Ticket> getBoughtTickets() {
+        User user = userService.getUserByJWTToken();
+
+
+        Set<Ticket> tempList = user.getTickets();
+
+        //List<Ticket> tempList = ticketRepository.findAllByUser(user);
+
+        List<Ticket> boughtTickets = new ArrayList<>();
+
+        while(tempList.iterator().hasNext()){
+            if(tempList.iterator().next().equals(TicketStatus.SELLED)){
+                boughtTickets.add(tempList.iterator().next());
+            }
+        }
+
+
+        /*
+        for(Ticket ticket : tempList) {
+            if(!ticket.equals(TicketStatus.USED)){
+                boughtTickets.add(tempList.iterator().next());
+            }
+        }
+
+         */
+
+        return boughtTickets;
+
     }
 
     @Override
