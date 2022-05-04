@@ -33,10 +33,11 @@ public class Ticket {
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_TICKET_EVENT_ID"), referencedColumnName = "ID")
     private Event event;
 
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_USER_TICKET_ID"), referencedColumnName = "ID")
     private User user;
-
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SHOPPING_CART_ID", foreignKey = @ForeignKey(name = "FK_SHOPPINGCART_ID"), referencedColumnName = "ID")
     private ShoppingCart shoppingCart;

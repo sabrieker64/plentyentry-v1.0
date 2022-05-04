@@ -15,7 +15,6 @@ public class TicketDTO {
     private Long id;
     private Integer quantity;
     private TicketStatus ticketStatus;
-    private UserDTO user;
     private EventDTO event;
     private ShoppingCartDTO shoppingCart;
 }

@@ -108,7 +108,6 @@ public class UserRestServiceTest {
         user.setIsVerifiedAsEntertainer(true);
         user.setLocked(false);
         user.setEntertainedEvents(null);
-        user.setTickets(null);
         user.setPaymentMethod(null);
         user.setJwtToken(null);
         user.setEnabled(true);

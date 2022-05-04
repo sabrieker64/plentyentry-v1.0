@@ -99,8 +99,10 @@ public class User implements UserDetails{
             inverseJoinColumns = @JoinColumn(name = "EVENT_ID"))
     private Set<Event> entertainedEvents;
 
+    /*
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Ticket> tickets = new HashSet<>();
+     */
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private Set<PaymentMethod> paymentMethod = new HashSet<>();

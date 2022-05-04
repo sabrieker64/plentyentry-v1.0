@@ -44,18 +44,20 @@ public class TicketServiceImpl implements TicketService {
         User user = userService.getUserByJWTToken();
 
 
-        Set<Ticket> tempList = user.getTickets();
+        Set<Ticket> tempSet = user.getShoppingCart().getTickets();
+
+        List<Ticket> tempList = new ArrayList<>(tempSet);
+
 
         //List<Ticket> tempList = ticketRepository.findAllByUser(user);
 
         List<Ticket> boughtTickets = new ArrayList<>();
 
-        while(tempList.iterator().hasNext()){
-            if(tempList.iterator().next().equals(TicketStatus.SELLED)){
+        for(Ticket ticket : tempList) {
+            if(ticket.getTicketStatus().equals(TicketStatus.SELLED) || ticket.getTicketStatus().equals("4")){
                 boughtTickets.add(tempList.iterator().next());
             }
         }
-
 
         /*
         for(Ticket ticket : tempList) {
