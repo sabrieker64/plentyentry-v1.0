@@ -20,18 +20,15 @@ export class CheckoutComponent implements OnInit {
   public cardError: null = null;
   public chargeError: any = null;
   public charge: any = null;
+  elementsOptions: any;
+  cardOptions: any;
 
 
   constructor(private http: HttpClient, private service: PaymentService, private stripeService: StripeService) {
   }
 
   ngOnInit(): void {
-    this.stripeService.initializeStripe().subscribe(() => {
-      this.stripe = Stripe(environment.stripe);
-      this.elements = this.stripe.elements();
-      this.card.mount('#card-element');
-      this.card.addEventListener('change', (event: { error: { message: null; }; }) => event.error ? this.cardError = event.error.message : null)
-    });
+
   }
 
 
@@ -43,6 +40,10 @@ export class CheckoutComponent implements OnInit {
   }
 
   getToken() {
+
+  }
+
+  createToken() {
 
   }
 }

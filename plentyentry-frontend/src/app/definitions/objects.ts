@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-05-01 15:56:25.
+// Generated using typescript-generator version 2.32.889 on 2022-05-04 21:33:36.
 
 export interface UserDTO {
     id: number;
@@ -56,6 +56,22 @@ export interface UserAuthReqDTO {
     password: string;
 }
 
+export interface PaymentIntentDTO extends Serializable {
+    currency: Currency;
+    amount: number;
+    eventId: number;
+    description: string;
+    paymentType: StripePaymentTypes;
+}
+
+export interface Order {
+    price: number;
+    currency: string;
+    method: string;
+    intent: string;
+    description: string;
+}
+
 export interface TicketDTO {
     id: number;
     quantity: number;
@@ -92,9 +108,16 @@ export interface ShoppingCartDTO {
     tickets: TicketDTO[];
 }
 
+export interface Serializable {
+}
+
+export type StripePaymentTypes = "card" | "giropay" | "sepa_debit";
+
 export type UserType = "GUEST" | "CUSTOMER" | "ADMIN" | "MAINTAINER" | "SUPERADMIN";
 
 export type UserGender = "MALE" | "FEMALE" | "DIVERSE";
+
+export type Currency = "EUR";
 
 export type TicketStatus = "NOTUSED" | "USED" | "INUSE" | "EXPIRED" | "SELLED" | "NOTSELLED";
 

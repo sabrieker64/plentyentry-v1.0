@@ -6,6 +6,7 @@ import {CheckoutComponent} from './stripe/checkout/checkout.component';
 import {SuccessComponent} from './stripe/success/success.component';
 import {CancelComponent} from './stripe/cancel/cancel.component';
 import {AngularMaterialModule} from "../../library/anguler-material-module/anguler-material-module.module";
+import {NgxStripeModule} from "ngx-stripe";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {AngularMaterialModule} from "../../library/anguler-material-module/angul
   imports: [
     CommonModule,
     AngularMaterialModule,
-    PaymentCheckoutRoutingModule
+    PaymentCheckoutRoutingModule,
+    NgxStripeModule
   ]
 })
 export class PaymentCheckoutModule {
