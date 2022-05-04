@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from "./app-routing.module";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NavigationLayoutModule} from "../library/navigation-layout/navigation-layout.module";
 import {FooterLayoutModule} from "../library/footer-layout/footer-layout.module";
 import {AngularMaterialModule} from "../library/anguler-material-module/anguler-material-module.module";
@@ -15,7 +16,6 @@ import {EventTileModule} from "./events/event-tile.module";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PaymentCheckoutComponent} from './payment/checkout/payment-checkout.component';
 import {ToolBarModule} from "../library/tool-bar/tool-bar.module";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
