@@ -1,0 +1,27 @@
+<div fxLayout="column" fxLayoutAlign="space-evenly center" class="container" >
+  <div *ngFor="let event of allEvents">
+    <div class="" (click)="getEventQRCode(event.id)">
+
+      <div class="">
+        <h3>{{ getDay(event.date) }} </h3>
+        <h3>{{ getMonth(event.date) }}</h3>
+      </div>
+
+      <figure class="">
+        <img
+          src="https://eventimagesbucket.s3.us-east-2.amazonaws.com/st.-johann-in-tirol-murdock-veranstaltungstechnik-events-murdock-1.jpg">
+      </figure>
+
+      <div class="">
+              <span>
+                <h1>{{ event.name }}</h1>
+                <small>{{ event.city }}</small>
+              </span>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</div>
