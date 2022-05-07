@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/plentyentry-commodus-solutions.iml" filepath="$PROJECT_DIR$/.idea/plentyentry-commodus-solutions.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plentyentry-frontend/plentyentry-frontend.iml" filepath="$PROJECT_DIR$/plentyentry-frontend/plentyentry-frontend.iml" />
+    </modules>
+  </component>
+</project>
