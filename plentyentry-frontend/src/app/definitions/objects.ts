@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-05-04 20:41:03.
+// Generated using typescript-generator version 2.32.889 on 2022-05-07 14:15:01.
 
 export interface UserDTO {
     id: number;
@@ -86,7 +86,6 @@ export interface PaymentMethodDTO {
 
 export interface ShoppingCartDTO {
     id: number;
-    user: UserDTO;
     tickets: TicketDTO[];
 }
 
@@ -95,7 +94,6 @@ export interface TicketDTO {
     quantity: number;
     ticketStatus: TicketStatus;
     event: EventDTO;
-    shoppingCart: ShoppingCartDTO;
 }
 
 export type UserType = "GUEST" | "CUSTOMER" | "ADMIN" | "MAINTAINER" | "SUPERADMIN";

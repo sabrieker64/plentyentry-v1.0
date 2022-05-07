@@ -4,7 +4,6 @@ package at.commodussolutions.plentyentry.ordermanagement.ticket.service.impl;
  */
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
-import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.enums.TicketStatus;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketService;
@@ -15,14 +14,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-@Transactional
 public class TicketServiceImpl implements TicketService {
 
     @Autowired
@@ -41,35 +38,18 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public List<Ticket> getBoughtTickets() {
-        User user = userService.getUserByJWTToken();
-
-
-        Set<Ticket> tempSet = user.getShoppingCart().getTickets();
-
+        /* Set<Ticket> tempSet = user.getShoppingCart().getTickets();
         List<Ticket> tempList = new ArrayList<>(tempSet);
-
-
-        //List<Ticket> tempList = ticketRepository.findAllByUser(user);
-
         List<Ticket> boughtTickets = new ArrayList<>();
-
         for(Ticket ticket : tempList) {
-            if(ticket.getTicketStatus().equals(TicketStatus.SELLED) || ticket.getTicketStatus().equals("4")){
+            if(ticket.getTicketStatus().equals(TicketStatus.SELLED)){
                 boughtTickets.add(tempList.iterator().next());
             }
-        }
-
-        /*
-        for(Ticket ticket : tempList) {
-            if(!ticket.equals(TicketStatus.USED)){
-                boughtTickets.add(tempList.iterator().next());
-            }
-        }
-
-         */
-
-        return boughtTickets;
-
+        }*/
+        return userService.getUserByJWTToken().getShoppingCart().getTickets().stream()
+                .filter(status -> status.getTicketStatus().equals(TicketStatus.SELLED)
+                        || !status.getTicketStatus().equals(TicketStatus.EXPIRED))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -93,18 +73,9 @@ public class TicketServiceImpl implements TicketService {
         boolean addedAllTicketsToShoppingCart = user.getShoppingCart().getTickets().addAll(ticketSet);
         if (addedAllTicketsToShoppingCart) {
             log.info("Added to shoppingcart");
-
-            ticketSet.forEach(ticket -> {
-                ticket.setShoppingCart(user.getShoppingCart());
-                ticketRepository.save(ticket);
-                log.info("Added in Shoppingcart " + user.getShoppingCart().getId());
-            });
-
             userRepository.save(user);
         } else {
             log.error("Cant add tickets to shoppingcart");
         }
-
-
     }
 }

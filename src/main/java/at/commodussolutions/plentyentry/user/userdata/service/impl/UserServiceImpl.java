@@ -8,7 +8,6 @@ import at.commodussolutions.plentyentry.user.authentication.jwt.JwtTokenUtil;
 import at.commodussolutions.plentyentry.user.confirmation.email.EmailSender;
 import at.commodussolutions.plentyentry.user.confirmation.token.beans.ConfirmationToken;
 import at.commodussolutions.plentyentry.user.confirmation.token.service.impl.ConfirmationTokenServiceImpl;
-import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
 import at.commodussolutions.plentyentry.user.shoppingcart.service.ShoppingCartService;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
@@ -113,8 +112,7 @@ public class UserServiceImpl implements UserService {
         }
 
         userRepository.save(user);
-        ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCartService.createNewShoppingCart(shoppingCart, user);
+        var shoppingCart = shoppingCartService.createNewShoppingCart();
         user.setShoppingCart(shoppingCart);
         userRepository.save(user);
         var token = createToken(user);

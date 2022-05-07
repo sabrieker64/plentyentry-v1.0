@@ -45,8 +45,7 @@ public class TicketRestServiceImpl implements TicketRestService {
 
     @Override
     public TicketDTO getTicketById(Long id) {
-        TicketDTO ticketDTO = ticketMapper.mapToDTO(ticketService.getTicketById(id));
-        return ticketDTO;
+        return ticketMapper.mapToDTO(ticketService.getTicketById(id));
     }
 
     @Override
