@@ -221,7 +221,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Ticket> getUserTickets(Long id) {
         var loggedInUser = userRepository.getById(id).getShoppingCart();
-        return ticketRepository.findAllByShoppingCartId(loggedInUser);
+        return null; //ticketRepository.findAllByShoppingCartId(loggedInUser);
     }
 
     @Override

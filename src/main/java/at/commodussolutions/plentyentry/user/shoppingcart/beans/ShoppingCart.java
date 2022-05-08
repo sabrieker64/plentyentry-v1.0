@@ -29,7 +29,7 @@ public class ShoppingCart {
 
     @Column(name = "TICKETS")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "TICKET_ID")
+    @JoinColumn(name = "SHOPPING_CART_ID")
     private Set<Ticket> tickets = new HashSet<>();
 
 }
