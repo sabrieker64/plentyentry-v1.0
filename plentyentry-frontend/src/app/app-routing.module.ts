@@ -17,6 +17,10 @@ const routes: Routes = [
   {
     path: 'payment',
     loadChildren: () => import('./payment/payment-checkout.module').then(m => m.PaymentCheckoutModule)
+  },
+  {
+    path: 'ticket',
+    loadChildren: () => import('./ticket/ticket.module').then(m => m.TicketModule)
   }
 
 ];

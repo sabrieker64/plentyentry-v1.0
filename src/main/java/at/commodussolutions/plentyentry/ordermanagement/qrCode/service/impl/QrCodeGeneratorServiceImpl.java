@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.ws.rs.BadRequestException;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.Optional;
@@ -40,13 +41,13 @@ public class QrCodeGeneratorServiceImpl implements QrCodeGeneratorService {
 
 
     @Override
-    public String getQRCode(Long ticketID) {
+    public byte[] getQRCode(Long ticketID) {
 
         Optional<Ticket> ticketOptional = ticketRepository.findById(ticketID);
 
 
         if (ticketOptional.isEmpty()) {
-            return "Ticket mit dieser ID existiert nicht";
+            throw new BadRequestException("Ticket existiert nicht");
         }
 
         Ticket ticket = ticketOptional.get();
@@ -78,10 +79,10 @@ public class QrCodeGeneratorServiceImpl implements QrCodeGeneratorService {
             }
 
             // Convert Byte Array into Base64 Encode String
-
-            return Base64.getEncoder().encodeToString(image);
+            return Base64.getEncoder().encode(image);
+            //return Base64.getEncoder().encodeToString(image);
         }
-        return "Das Ticket wurde nicht von dir gekauft!";
+        throw new IllegalArgumentException("Das Ticket wurde nicht von dir gekauft!");
     }
 
     @Override

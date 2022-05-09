@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {EventDTO} from "../../definitions/objects";
+import {EventDTO, TicketDTO} from "../../definitions/objects";
 import {environment} from "../../../environments/environment";
 
 @Injectable({
@@ -11,7 +11,6 @@ import {environment} from "../../../environments/environment";
 export class EventService {
 
   private BASE_URL: string = environment.baseUrl + 'api/backend/event';
-  private BASE_URL_TICKET: string = environment.baseUrl + 'api/backend/ticket';
 
   constructor(private http: HttpClient) {
   }
@@ -20,9 +19,6 @@ export class EventService {
     return this.http.get<EventDTO[]>(`${this.BASE_URL}` + '/list');
   }
 
-  public getBoughtTickets(): Observable<EventDTO[]> {
-    return this.http.get<EventDTO[]>(`${this.BASE_URL_TICKET}` + '/boughtTickets');
-  }
 
   public getEventById(eventId: number): Observable<EventDTO> {
     return this.http.get<EventDTO>(`${this.BASE_URL}/` + eventId);
