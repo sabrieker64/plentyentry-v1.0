@@ -23,6 +23,8 @@ export class CheckoutComponent implements OnInit {
   elementsOptions: any;
   cardOptions: any;
 
+  //todo hier muss ich das objekt im unserm fall das event das sich der kunde angeschaut und auf bezahlen geklickt hat
+  //todo achtung ganz wichtig es kann auch aus dem warenkorb kommen mit einer listen von events oder
 
   constructor(private http: HttpClient, private service: PaymentService, private stripeService: StripeService) {
   }
@@ -36,6 +38,9 @@ export class CheckoutComponent implements OnInit {
   }
 
   makePayment() {
+    console.log('test payment');
+    //todo make rest call to stripe api endpoint
+    //todo after creating the payment object, confirm or cancel the paymnet
 
   }
 

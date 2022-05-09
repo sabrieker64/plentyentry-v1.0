@@ -1,8 +1,12 @@
-<h2>Create Token Example</h2>
-<ngx-stripe-card
-  [options]="cardOptions"
-  [elementsOptions]="elementsOptions"
-></ngx-stripe-card>
-<button type="submit" (click)="createToken()">
-  CREATE TOKEN
-</button>
+<section>
+  <div class="product">
+    <div class="description">
+      <h3>Stubborn Attachments</h3>
+      <h5>$20.00</h5>
+    </div>
+  </div>
+  <form>
+    <button type="submit" id="checkout-button" (click)="makePayment()">Checkout</button>
+  </form>
+</section>
+
