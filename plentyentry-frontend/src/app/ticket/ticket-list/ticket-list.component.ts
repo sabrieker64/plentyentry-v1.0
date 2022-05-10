@@ -12,8 +12,7 @@ export class TicketListComponent implements OnInit {
 
   loaded: boolean = false;
   allTickets: TicketDTO[];
-  qrCode: string = "";
-  loadedQrCode: boolean = false;
+  qrCode: any = "";
 
   constructor(private ticketService: TicketService, private sanitizer: DomSanitizer) { }
 
@@ -33,30 +32,36 @@ export class TicketListComponent implements OnInit {
   initializeQRCode(){
 
   }
-  getEventQRCode(id: number) {
+  getEventQRCode(id: number, index: number) {
 
-
-    return this.ticketService.getQRCode(id).subscribe((base64: ArrayBuffer) => {
+    this.ticketService.getQRCode(id).subscribe((base64: ArrayBuffer) => {
 
       var blob = new Blob([base64])
       var reader = new FileReader();
       reader.readAsText(blob);
 
-      var finishedBase64Data;
-      var base64data: any = "";
-      reader.onloadend = (e: any) => {
-        base64data = reader.result;
-        finishedBase64Data = "data:image/jpeg;base64,"+ base64data;
-        this.qrCode = 'data:image/jpg;base64,' + (this.sanitizer.bypassSecurityTrustResourceUrl(base64data.toString()));
-        this.loadedQrCode = true;
-      }
+      var base64data: string = "";
 
-      console.log("erfolgreich");
+      reader.onloadend = (e: any) => {
+        base64data = reader.result as string;
+        this.setQrCode(base64data,index);
+        console.log("erfolgreich");
+
+      }
     }, error => {
       this.qrCode =  'data:image/jpg;base64,' + (this.sanitizer.bypassSecurityTrustResourceUrl(error.error.text));
       console.log(error);
       console.log("bin im Error");
     });
+
+  }
+
+  setQrCode(base64data: string, index:number){
+    this.qrCode = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,' +base64data.toString()) as string ;
+    this.qrCode = (this.qrCode.changingThisBreaksApplicationSecurity) as string;
+    //CREATE IN MODEL QRCODE FIELD FOR ITERATING
+
+    this.allTickets[index].qrCode =  this.qrCode as string;
   }
 
 }

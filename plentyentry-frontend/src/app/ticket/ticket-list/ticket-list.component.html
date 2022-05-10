@@ -1,7 +1,7 @@
 
 <mat-accordion>
-  <mat-expansion-panel *ngFor="let ticket of allTickets; let qrCode">
-    <mat-expansion-panel-header (click)="getEventQRCode(ticket.id)">
+  <mat-expansion-panel *ngFor="let ticket of allTickets; let i = index">
+    <mat-expansion-panel-header (click)="getEventQRCode(ticket.id,i)">
       <mat-panel-title>
         {{ticket.event.name}}
       </mat-panel-title>
@@ -13,8 +13,8 @@
     {{ticket.event.address}}
     {{ticket.event.description}}
 
-    <div *ngIf="loadedQrCode">
-      <img [src]="qrCode" alt="Red dot" />
+    <div>
+      <img [src]="ticket.qrCode" alt="Red dot"/>
     </div>
 
 

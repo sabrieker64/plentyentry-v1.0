@@ -90,6 +90,7 @@ export interface ShoppingCartDTO {
 }
 
 export interface TicketDTO {
+  qrCode: string;
     id: number;
     quantity: number;
     ticketStatus: TicketStatus;
