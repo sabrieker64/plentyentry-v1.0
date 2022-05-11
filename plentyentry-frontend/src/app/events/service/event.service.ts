@@ -10,7 +10,8 @@ import {environment} from "../../../environments/environment";
 
 export class EventService {
 
-  private BASE_URL: string = environment.baseUrl + 'api/backend/event';
+  //private BASE_URL: string = environment.baseUrl + 'api/backend/event';
+  private BASE_URL: string = "http://172.16.254.133/" + 'api/backend/event';
 
   constructor(private http: HttpClient) {
   }

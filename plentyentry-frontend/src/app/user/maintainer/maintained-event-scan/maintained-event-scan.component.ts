@@ -11,17 +11,84 @@ export class MaintainedEventScanComponent implements OnInit {
   @ViewChild('videoElement') videoElement: any;
   video: any;
 
-  constructor() { }
+  backDeviceId: any;
+  frontDeviceId: any;
+
+  constructor() {
+  }
 
   ngOnInit() {
 
   }
 
-  ngAfterViewInit(){
-    console.log("OI")
+  ngAfterViewInit() {
     this.video = this.videoElement.nativeElement;
+
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+
+
+      navigator.mediaDevices.enumerateDevices().then(res => {
+          // @ts-ignore
+          if (res.length > 0) {
+            /* defaults so all this will work on a desktop */
+            // @ts-ignore
+            this.frontDeviceId = res[0].deviceId;
+            // @ts-ignore
+            this.backDeviceId = res[0].deviceId;
+          }
+
+
+          /* look for front and back devices */
+          // @ts-ignore
+          res.forEach(res => {
+            if (res.kind === 'videoinput') {
+              if (res.label && res.label.length > 0) {
+                if (res.label.toLowerCase().indexOf('back') >= 0)
+                  this.backDeviceId = res.deviceId
+                else if (res.label.toLowerCase().indexOf('front') >= 0)
+                  this.frontDeviceId = res.deviceId
+              }
+            }
+
+            console.log(this.backDeviceId)
+
+            navigator.mediaDevices.getUserMedia({
+              audio: false,
+              video: {
+
+                facingMode: this.backDeviceId
+              }
+            })
+
+            // @ts-ignore
+            document.getElementById('streamVideo').addEventListener('click', async (e) => {
+              const stream = await navigator.mediaDevices.getUserMedia({
+                video: true
+              })
+
+              // @ts-ignore
+              document.getElementById('video').srcObject = stream
+            })
+          })
+
+
+
+        }
+      )
+
+
+    }
+
+
   }
 
+  start() {
+
+
+  }
+
+  /*
   start() {
     this.initCamera({ video: true, audio: false });
   }
@@ -55,5 +122,7 @@ export class MaintainedEventScanComponent implements OnInit {
   resume() {
     this.video.play();
   }
+
+   */
 
 }

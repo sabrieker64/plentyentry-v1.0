@@ -13,7 +13,8 @@ export class LoginRegisterService {
     email: '^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$'
   }
 
-  private baseUrl: string = environment.baseUrl + 'api/backend/user';
+  //private baseUrl: string = environment.baseUrl + 'api/backend/user';
+  private baseUrl: string = "http://172.16.254.133/" + 'api/backend/user';
 
   constructor(private http: HttpClient) {
   }
