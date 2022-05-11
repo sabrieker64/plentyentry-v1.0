@@ -6,7 +6,7 @@
   <button (click)="pause()" class="btn btn-warning">Pause</button>
   <button (click)="resume()" class="btn btn-info">Resume</button>
   <button (click)="sound()" class="btn btn-danger">Play with Sound</button>
-  !-->
+
   <video #videoElement></video>
 
   <input type="file" name="image" accept="image/*" capture="user">
@@ -14,4 +14,14 @@
   <button id="streamVideo" (click)="start()">Start streaming</button>
 
   <video autoplay id="video" playsinline>Start streaming</video>
+!-->
+  <zxing-scanner  (scanSuccess)="onCodeResult($event)"></zxing-scanner>
+
+  <section class="results" *ngIf="qrResultString">
+    <div>
+      <small>Result</small>
+      <strong>{{ qrResultString }}</strong>
+    </div>
+    <button mat-icon-button (click)="clearResult()">&times;</button>
+  </section>
 </div>

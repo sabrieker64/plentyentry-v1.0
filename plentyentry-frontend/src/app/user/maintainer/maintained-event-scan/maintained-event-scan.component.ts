@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 
+
 @Component({
   selector: 'app-maintained-event-scan',
   templateUrl: './maintained-event-scan.component.html',
@@ -17,11 +18,33 @@ export class MaintainedEventScanComponent implements OnInit {
   constructor() {
   }
 
+  qrResultString: string="";
+
+  clearResult() {
+    this.qrResultString = "";
+  }
+
+  onCodeResult(resultString: string) {
+    this.qrResultString = resultString;
+
+
+
+  }
+
   ngOnInit() {
 
   }
 
   ngAfterViewInit() {
+
+
+
+
+
+
+  }
+
+  start() {
     this.video = this.videoElement.nativeElement;
 
 
@@ -39,7 +62,6 @@ export class MaintainedEventScanComponent implements OnInit {
           }
 
 
-          /* look for front and back devices */
           // @ts-ignore
           res.forEach(res => {
             if (res.kind === 'videoinput') {
@@ -79,12 +101,6 @@ export class MaintainedEventScanComponent implements OnInit {
 
 
     }
-
-
-  }
-
-  start() {
-
 
   }
 
