@@ -6,6 +6,10 @@
       <mat-icon>manage_accounts</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
+      <a mat-menu-item routerLink="maintainedevents/maintained/events/list">
+        <mat-icon color="primary">list_alt</mat-icon>
+        <span>Meine Veranstaltungen anzeigen</span>
+      </a>
       <a mat-menu-item (click)="redirectUserDetail()">
         <mat-icon color="primary">settings</mat-icon>
         <span>Benutzer Details</span>

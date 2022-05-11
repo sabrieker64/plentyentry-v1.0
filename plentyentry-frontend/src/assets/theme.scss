@@ -15,6 +15,15 @@
   }
 }
 
+.maintained-events-container {
+  width: 100%;
+
+  @media screen and (max-width: 600px) {
+    padding-left: $container-padding-left / 2;
+    padding-right: $container-padding-right / 2;
+  }
+}
+
 .box {
   @include fluid-property('padding', $fluid-min-vw, $fluid-max-vw, 30px, 60px);
   max-width: 800px;
