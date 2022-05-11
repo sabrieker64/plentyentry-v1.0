@@ -1,7 +1,7 @@
 package at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto;
 
 import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.enums.Currency;
-import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.enums.StripePaymentTypes;
+import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.types.StripePaymentTypes;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
