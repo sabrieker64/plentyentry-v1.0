@@ -39,7 +39,6 @@ public class StripeRestServiceImpl {
         return new ResponseEntity<String>(paymentStr, HttpStatus.OK);
     }
 
-
     @PostMapping("/confirm/{id}")
     @ResponseBody
     public ResponseEntity<String> confirmPayment(@PathVariable("id") String id) throws StripeException {
@@ -47,7 +46,6 @@ public class StripeRestServiceImpl {
         String paymentStr = paymentIntent.toJson();
         return new ResponseEntity<String>(paymentStr, HttpStatus.OK);
     }
-
 
     @PostMapping("/cancel/{id}")
     @ResponseBody

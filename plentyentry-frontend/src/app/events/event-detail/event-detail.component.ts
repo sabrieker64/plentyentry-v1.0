@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {EventDTO} from "../../definitions/objects";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {EventService} from "../service/event.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ErrorService} from "../../../library/error-handling/error.service";
@@ -15,7 +15,7 @@ export class EventDetailComponent implements OnInit {
   eventDTO: EventDTO = <EventDTO>{};
   eventQuantity: number = 1;
 
-  constructor(private eventService: EventService, private route: ActivatedRoute, private errorHandling: ErrorService) {
+  constructor(private eventService: EventService, private route: ActivatedRoute, private errorHandling: ErrorService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -43,5 +43,11 @@ export class EventDetailComponent implements OnInit {
     if (this.eventQuantity > 1) {
       this.eventQuantity--;
     }
+  }
+
+  paymentTest(event: EventDTO) {
+    //todo make a dropdown to choose payment type before checkout for example paying with paypal or stripe
+    // cechkout(card, iban, klarna, etc...)
+    this.router.navigateByUrl('/payment/stripe-checkout?' + event.id);
   }
 }

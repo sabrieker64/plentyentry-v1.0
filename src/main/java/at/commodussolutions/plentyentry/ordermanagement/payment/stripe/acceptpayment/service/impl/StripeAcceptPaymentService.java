@@ -2,7 +2,7 @@ package at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpa
 
 import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.PaymentIntentDTO;
-import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.enums.StripePaymentTypes;
+import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.types.StripePaymentTypes;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
