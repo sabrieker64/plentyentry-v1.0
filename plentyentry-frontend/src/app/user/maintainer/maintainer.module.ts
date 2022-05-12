@@ -5,17 +5,24 @@ import { MaintainerRoutingModule } from './maintainer-routing.module';
 import { MaintainedEventsListComponent } from './maintained-events-list/maintained-events-list.component';
 import {AngularMaterialModule} from "../../../library/anguler-material-module/anguler-material-module.module";
 import { MaintainedEventScanComponent } from './maintained-event-scan/maintained-event-scan.component';
+import { MaintainedEventEditComponent } from './maintained-event-edit/maintained-event-edit.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { MaintainedEventCreateComponent } from './maintained-event-create/maintained-event-create.component';
 
 
 @NgModule({
   declarations: [
     MaintainedEventsListComponent,
-    MaintainedEventScanComponent
+    MaintainedEventScanComponent,
+    MaintainedEventEditComponent,
+    MaintainedEventCreateComponent
   ],
   imports: [
     CommonModule,
     MaintainerRoutingModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class MaintainerModule { }
