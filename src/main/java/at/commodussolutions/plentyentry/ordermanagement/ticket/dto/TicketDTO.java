@@ -13,5 +13,6 @@ public class TicketDTO {
     private Long id;
     private Integer quantity;
     private TicketStatus ticketStatus;
+    private String qrCode;
     private EventDTO event;
 }
