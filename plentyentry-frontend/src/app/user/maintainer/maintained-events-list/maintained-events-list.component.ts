@@ -26,7 +26,7 @@ export class MaintainedEventsListComponent implements OnInit {
   }
 
   staticPositions: number = 1;
-  displayedColumns: string[] = ['position', 'name', 'date', 'description','price','ticketCounter','fullAddress', 'editMaintainedEvent'];
+  displayedColumns: string[] = ['position', 'name', 'date', 'description', 'price', 'ticketCounter', 'fullAddress', 'editMaintainedEvent', 'deleteMaintainedEvent'];
   allMaintainedEvents: MatTableDataSource<EventDTO>;
 
   applyFilter(event: Event) {
@@ -46,7 +46,7 @@ export class MaintainedEventsListComponent implements OnInit {
   }
 
   editMaintainedEvent(id: number){
-    this.router.navigateByUrl('/maintained/events/edit/' + id);
+    this.router.navigateByUrl('/maintainedevents/maintained/events/edit/' + id);
   }
 
   deleteMaintainedEvent(id: number){
