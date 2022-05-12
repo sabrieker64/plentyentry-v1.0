@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-04-22 01:32:38.
+// Generated using typescript-generator version 2.32.889 on 2022-05-09 19:16:30.
 
 export interface UserDTO {
     id: number;
@@ -17,7 +17,6 @@ export interface UserDTO {
     userType: UserType;
     userGender: UserGender;
     events: EventDTO[];
-    tickets: TicketDTO[];
     coronaStatus: CoronaStatusDTO;
     paymentMethod: PaymentMethodDTO[];
     jwtToken: string;
@@ -64,15 +63,6 @@ export interface CreatePayment {
     items: any[];
 }
 
-export interface TicketDTO {
-    id: number;
-    quantity: number;
-    ticketStatus: TicketStatus;
-    user: UserDTO;
-    event: EventDTO;
-    shoppingCart: ShoppingCartDTO;
-}
-
 export interface CoronaStatusDTO {
     id: number;
     pcrTest: boolean;
@@ -96,14 +86,21 @@ export interface PaymentMethodDTO {
 
 export interface ShoppingCartDTO {
     id: number;
-    user: UserDTO;
     tickets: TicketDTO[];
+}
+
+export interface TicketDTO {
+  qrCode: string;
+    id: number;
+    quantity: number;
+    ticketStatus: TicketStatus;
+    event: EventDTO;
 }
 
 export type UserType = "GUEST" | "CUSTOMER" | "ADMIN" | "MAINTAINER" | "SUPERADMIN";
 
 export type UserGender = "MALE" | "FEMALE" | "DIVERSE";
 
-export type TicketStatus = "NOTUSED" | "USED" | "INUSE" | "EXPIRED" | "SELLED" | "NOTSELLED";
-
 export type PaymentType = "CREDIT_CARD" | "PAYPAL" | "BANK_TRANSFER";
+
+export type TicketStatus = "NOTUSED" | "USED" | "INUSE" | "EXPIRED" | "SELLED" | "NOTSELLED";
