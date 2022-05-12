@@ -41,7 +41,6 @@ public class UserDTO {
     private UserType userType;
     private UserGender userGender;
     private Set<EventDTO> events;
-    private List<TicketDTO> tickets;
     private CoronaStatusDTO coronaStatus;
     private List<PaymentMethodDTO> paymentMethod;
     private String jwtToken;

@@ -19,7 +19,6 @@ public class TicketBuilder {
         ticket1.setQuantity(2);
         ticket1.setTicketStatus(TicketStatus.NOTSELLED);
         ticket1.setEvent(null);
-        ticket1.setUser(null);
         ticketRepository.save(ticket1);
     }
 

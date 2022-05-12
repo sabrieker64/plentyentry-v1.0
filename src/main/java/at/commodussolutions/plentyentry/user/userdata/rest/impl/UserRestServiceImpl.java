@@ -2,10 +2,7 @@ package at.commodussolutions.plentyentry.user.userdata.rest.impl;
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.mapper.TicketMapper;
-import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
-import at.commodussolutions.plentyentry.user.shoppingcart.repository.ShoppingCartRepository;
 import at.commodussolutions.plentyentry.user.shoppingcart.rest.ShoppingCartRestService;
-import at.commodussolutions.plentyentry.user.shoppingcart.service.ShoppingCartService;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
@@ -86,7 +83,8 @@ public class UserRestServiceImpl implements UserRestService {
 
     @Override
     public List<TicketDTO> getUserTickets(Long id) {
-        return ticketMapper.mapToListDTO(userService.getUserTickets(id));
+        return null;
+        //return ticketMapper.mapToListDTO(userService.getUserTickets(id));
     }
 
     @Override

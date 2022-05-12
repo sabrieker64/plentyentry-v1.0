@@ -15,7 +15,6 @@ public class ShoppingCartBuilder {
 
     public void buildShoppingCart() {
         ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart.setUser(null);
         shoppingCart.setTickets(null);
         shoppingCartRepository.save(shoppingCart);
     }

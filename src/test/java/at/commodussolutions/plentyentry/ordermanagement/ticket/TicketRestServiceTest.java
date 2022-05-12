@@ -154,7 +154,7 @@ public class TicketRestServiceTest {
         ticket.setTicketStatus(TicketStatus.NOTSELLED);
         ticket.setEvent(eventMapper.mapToDTO(event));
         ticket.setQuantity(100);
-        ticket.setUser(userMapper.mapToDTO(user));
+        //ticket.setUser(userMapper.mapToDTO(user));
 
         //STACKOVERFLOW????
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(baseUrl)
