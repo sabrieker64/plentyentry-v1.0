@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-05-04 21:33:36.
+// Generated using typescript-generator version 2.32.889 on 2022-05-12 22:31:10.
 
 export interface UserDTO {
     id: number;
@@ -111,13 +111,13 @@ export interface ShoppingCartDTO {
 export interface Serializable {
 }
 
-export type StripePaymentTypes = "card" | "giropay" | "sepa_debit";
-
 export type UserType = "GUEST" | "CUSTOMER" | "ADMIN" | "MAINTAINER" | "SUPERADMIN";
 
 export type UserGender = "MALE" | "FEMALE" | "DIVERSE";
 
 export type Currency = "EUR";
+
+export type StripePaymentTypes = "card" | "giropay" | "sepa_debit";
 
 export type TicketStatus = "NOTUSED" | "USED" | "INUSE" | "EXPIRED" | "SELLED" | "NOTSELLED";
 
