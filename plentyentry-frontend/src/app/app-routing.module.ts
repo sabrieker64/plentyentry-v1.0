@@ -25,6 +25,14 @@ const routes: Routes = [
   {
     path: 'maintainedevents',
     loadChildren: () => import('./user/maintainer/maintainer.module').then(m => m.MaintainerModule)
+  },
+  {
+    path: 'shoppingcart',
+    loadChildren: () => import('./user/shoppingcart/shoppingcart.module').then(m => m.ShoppingcartModule)
+  },
+  {
+    path: 'toolbar',
+    loadChildren: () => import('../library/tool-bar/tool-bar.module').then(m => m.ToolBarModule)
   }
 
 ];

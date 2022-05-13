@@ -4,6 +4,7 @@ import {LoginRegisterService} from "../../../app/user/service/login-register.ser
 import {UserDTO} from "../../../app/definitions/objects";
 import {ErrorService} from "../../error-handling/error.service";
 import {Router} from "@angular/router";
+import {LogoutComponent} from "../../../app/user/logout/logout.component";
 
 @Component({
   selector: 'app-tool-bar',
@@ -12,10 +13,19 @@ import {Router} from "@angular/router";
 })
 export class ToolBarComponent implements OnInit {
 
+  loggedIn=false;
+
   constructor(private loginRegisterService: LoginRegisterService, private http: HttpClient, private errorHandling: ErrorService, private router: Router) {
   }
 
   ngOnInit(): void {
+
+    this.loggedIn=this.checkIfLoggedIn();
+
+  }
+
+  ngOnChanges(): void {
+    console.log("sdad");
   }
 
   redirectUserDetail() {
@@ -24,6 +34,26 @@ export class ToolBarComponent implements OnInit {
     }).catch((error: HttpErrorResponse) => {
       this.errorHandling.openErrorBox(error.message);
     })
+  }
+
+  logout(){
+    var token = localStorage.getItem('token');
+
+    if(token!=null){
+      localStorage.clear();
+      this.router.navigateByUrl('/user/login');
+      this.loggedIn=false;
+    }
+  }
+
+  checkIfLoggedIn(){
+
+    if(localStorage.getItem('token')){
+      return true;
+    }
+
+    return false;
+
   }
 
 }

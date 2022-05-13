@@ -37,7 +37,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCart getShoppingCartById(Long id) {
+    public ShoppingCart getShoppingCartById() {
         var user = userService.getUserByJWTToken();
         return user.getShoppingCart();
     }

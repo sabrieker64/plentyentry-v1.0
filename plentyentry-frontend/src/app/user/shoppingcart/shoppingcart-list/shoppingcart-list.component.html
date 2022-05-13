@@ -1,0 +1,90 @@
+<!--
+<div class="container">
+  <mat-form-field appearance="standard">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Eventname" #input>
+  </mat-form-field>
+</div>
+!-->
+<table mat-table [dataSource]="tickets" class="container maintained-events-container">
+
+  <ng-container matColumnDef="position">
+    {{staticPositions+1}}
+    <th mat-header-cell *matHeaderCellDef> No. </th>
+    <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.event.name}} </td>
+  </ng-container>
+
+  <!-- Date Column -->
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef> Datum </th>
+    <td mat-cell *matCellDef="let element"> {{element.event.date}} </td>
+  </ng-container>
+
+  <!-- Description Column -->
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef> Beschreibung </th>
+    <td mat-cell *matCellDef="let element"> {{element.event.description}} </td>
+  </ng-container>
+
+  <!-- TicketCounter Column -->
+  <ng-container matColumnDef="quantity">
+    <th mat-header-cell *matHeaderCellDef> Anzahl Tickets </th>
+    <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+  </ng-container>
+
+  <!-- Price Column -->
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef> Preis </th>
+    <td mat-cell *matCellDef="let element"> {{element.event.price|currency:"EUR":"symbol"}}</td>
+  </ng-container>
+
+  <!-- Price Column -->
+  <ng-container matColumnDef="quantitiyPrice">
+    <th mat-header-cell *matHeaderCellDef> Preis </th>
+    <td mat-cell *matCellDef="let element"> {{element.event.price * element.quantity|currency:"EUR":"symbol"}} </td>
+  </ng-container>
+
+  <!-- Delete Ticket -->
+  <ng-container matColumnDef="deleteTicket">
+    <th mat-header-cell *matHeaderCellDef> Löschen</th>
+    <td mat-cell *matCellDef="let element" (click)="deleteItem(element.id)">
+      <mat-icon>delete</mat-icon>
+      <!--
+      <div *ngIf="editEvent[element.id]" class="edit-maintained-event">
+        lksd
+      </div>
+      !-->
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  <!-- Row shown when there is no matching data. -->
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" colspan="4">Sie haben nichts im Einkaufswagen.</td>
+  </tr>
+
+</table>
+
+<div class="container">
+
+  <!--
+  <div *ngFor="let ticket of ticketArrayCalculating let last = last;">
+    {{ticket.quantity}}
+    <div *ngIf="last">
+      dsfa
+    </div>
+  </div>
+  !-->
+  <div>
+    GESAMTPREIS: {{fullPrice|currency:"EUR":"symbol"}}
+  </div>
+
+</div>

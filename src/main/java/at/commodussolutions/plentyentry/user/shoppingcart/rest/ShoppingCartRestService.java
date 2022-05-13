@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/backend/shoppingcart")
 public interface ShoppingCartRestService {
 
-    @PostMapping()
+    @GetMapping()
     @ResponseBody
-    ShoppingCartDTO getShoppingCartById(@PathVariable Long id);
+    ShoppingCartDTO getShoppingCartById();
 
     @PutMapping()
     @ResponseBody

@@ -5,7 +5,7 @@ import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
 public interface ShoppingCartService {
     ShoppingCart createNewShoppingCart();
 
-    ShoppingCart getShoppingCartById(Long id);
+    ShoppingCart getShoppingCartById();
 
     ShoppingCart updateShoppingCartById(ShoppingCart shoppingCart);
 }
