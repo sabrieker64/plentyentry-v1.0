@@ -6,6 +6,10 @@
       <mat-icon>manage_accounts</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
+      <a mat-menu-item routerLink="shoppingcart/list">
+        <mat-icon color="primary">shopping_cart</mat-icon>
+        <span>Shoppingcart anzeigen</span>
+      </a>
       <a mat-menu-item routerLink="maintainedevents/maintained/events/create">
         <mat-icon color="primary">fiber_new</mat-icon>
         <span>Neues Event erstellen</span>
