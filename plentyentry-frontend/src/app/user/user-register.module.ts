@@ -9,6 +9,7 @@ import {AngularMaterialModule} from "../../library/anguler-material-module/angul
 import {AppRoutingModule} from "../app-routing.module";
 import {FlexModule} from "@angular/flex-layout";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { LogoutComponent } from './logout/logout.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     RegisterComponent,
     LoginComponent,
     CartComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    LogoutComponent
   ],
   exports: [
     LoginComponent,

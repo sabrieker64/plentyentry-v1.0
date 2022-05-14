@@ -4,10 +4,8 @@ import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.Ticket
 import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
 import at.commodussolutions.plentyentry.user.shoppingcart.repository.ShoppingCartRepository;
 import at.commodussolutions.plentyentry.user.shoppingcart.service.ShoppingCartService;
-import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
-import com.amazonaws.services.fms.model.InvalidOperationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,21 +31,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 
     @Override
-    public ShoppingCart createNewShoppingCart(ShoppingCart shoppingCart, User user) {
-        shoppingCart.setUser(user);
-        return shoppingCartRepository.save(shoppingCart);
+    public ShoppingCart createNewShoppingCart() {
+        ShoppingCart shoppingCart1 = new ShoppingCart();
+        return shoppingCartRepository.save(shoppingCart1);
     }
 
     @Override
-    public ShoppingCart getShoppingCartById(Long id) {
-        var foundedShoppingCart = shoppingCartRepository.getById(id);
-        var userForShoppingCartOnDb = foundedShoppingCart.getUser();
-        var userBehindTheReq = userService.getUserByJWTToken();
-        if (userForShoppingCartOnDb.equals(userBehindTheReq)) {
-            return foundedShoppingCart;
-        } else {
-            throw new InvalidOperationException("Das angeforderte Warenkorb gehört nicht ihnen");
-        }
+    public ShoppingCart getShoppingCartById() {
+        var user = userService.getUserByJWTToken();
+        return user.getShoppingCart();
     }
 
     @Override

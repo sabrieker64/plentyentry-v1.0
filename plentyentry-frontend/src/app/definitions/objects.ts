@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-05-12 22:31:10.
+// Generated using typescript-generator version 2.32.889 on 2022-05-12 22:29:06.
 
 export interface UserDTO {
     id: number;
@@ -17,7 +17,6 @@ export interface UserDTO {
     userType: UserType;
     userGender: UserGender;
     events: EventDTO[];
-    tickets: TicketDTO[];
     coronaStatus: CoronaStatusDTO;
     paymentMethod: PaymentMethodDTO[];
     jwtToken: string;
@@ -56,29 +55,12 @@ export interface UserAuthReqDTO {
     password: string;
 }
 
-export interface PaymentIntentDTO extends Serializable {
-    currency: Currency;
-    amount: number;
-    eventId: number;
-    description: string;
-    paymentType: StripePaymentTypes;
+export interface CreatePaymentResponse {
+    clientSecret: string;
 }
 
-export interface Order {
-    price: number;
-    currency: string;
-    method: string;
-    intent: string;
-    description: string;
-}
-
-export interface TicketDTO {
-    id: number;
-    quantity: number;
-    ticketStatus: TicketStatus;
-    user: UserDTO;
-    event: EventDTO;
-    shoppingCart: ShoppingCartDTO;
+export interface CreatePayment {
+    items: any[];
 }
 
 export interface CoronaStatusDTO {
@@ -104,21 +86,21 @@ export interface PaymentMethodDTO {
 
 export interface ShoppingCartDTO {
     id: number;
-    user: UserDTO;
     tickets: TicketDTO[];
 }
 
-export interface Serializable {
+export interface TicketDTO {
+  id: number;
+  quantity: number;
+  ticketStatus: TicketStatus;
+  qrCode: string;
+  event: EventDTO;
 }
 
 export type UserType = "GUEST" | "CUSTOMER" | "ADMIN" | "MAINTAINER" | "SUPERADMIN";
 
 export type UserGender = "MALE" | "FEMALE" | "DIVERSE";
 
-export type Currency = "EUR";
-
-export type StripePaymentTypes = "card" | "giropay" | "sepa_debit";
+export type PaymentType = "CREDIT_CARD" | "PAYPAL" | "BANK_TRANSFER";
 
 export type TicketStatus = "NOTUSED" | "USED" | "INUSE" | "EXPIRED" | "SELLED" | "NOTSELLED";
-
-export type PaymentType = "CREDIT_CARD" | "PAYPAL" | "BANK_TRANSFER";

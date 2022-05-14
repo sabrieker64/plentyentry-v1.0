@@ -19,13 +19,13 @@ public class ShoppingCartRestServiceImpl implements ShoppingCartRestService {
     ShoppingCartMapper shoppingCartMapper;
 
     @Override
-    public ShoppingCartDTO getShoppingCartById(Long id) {
-        return shoppingCartMapper.mapToDTO(shoppingCartService.getShoppingCartById(id));
+    public ShoppingCartDTO getShoppingCartById() {
+        return shoppingCartMapper.mapToDTO(shoppingCartService.getShoppingCartById());
     }
 
     @Override
     public ShoppingCartDTO updateShoppingCartById(ShoppingCartDTO updatedShoppingCart) {
-        ShoppingCart shoppingCart = shoppingCartService.getShoppingCartById(updatedShoppingCart.getId());
+        ShoppingCart shoppingCart = shoppingCartService.getShoppingCartById();
         return shoppingCartMapper.mapToDTO(shoppingCartService.updateShoppingCartById(shoppingCart));
     }
 

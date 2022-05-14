@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import {CdkTreeModule} from "@angular/cdk/tree";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatDatepickerModule} from "@angular/material/datepicker";
@@ -71,6 +72,7 @@ const materialModules = [
   MatTooltipModule,
   FlexLayoutModule,
   MatNativeDateModule,
+  ZXingScannerModule,
 ];
 
 @NgModule({

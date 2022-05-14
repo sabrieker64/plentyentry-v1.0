@@ -27,6 +27,11 @@ public class EventRestServiceImpl implements EventRestService {
     }
 
     @Override
+    public List<EventDTO> getAllMaintainedEvents() {
+        return eventMapper.mapToListDTO(eventService.getAllMaintainedEvents());
+    }
+
+    @Override
     public EventDTO getEventById(Long id) {
         return eventMapper.mapToDTO(eventService.getEventById(id));
     }

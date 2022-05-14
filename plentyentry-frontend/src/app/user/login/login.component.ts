@@ -5,6 +5,9 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserAuthReqDTO} from "../../definitions/objects";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ErrorService} from "../../../library/error-handling/error.service";
+import {ToolBarComponent} from "../../../library/tool-bar/tool-bar/tool-bar.component";
+import {ToolBarModule} from "../../../library/tool-bar/tool-bar.module";
+import {EventTileOverviewComponent} from "../../events/event-tile-overview/event-tile-overview.component";
 
 @Component({
   selector: 'app-login-register',
@@ -28,9 +31,22 @@ export class LoginComponent implements OnInit {
   }
 
   authenticate() {
+
+    console.log("dsa");
+
     this.loginRegisterService.authenticateUser(this.userAuthReqDTO).toPromise().then((userDTO) => {
       localStorage.setItem('token', userDTO.jwtToken);
-      this.router.navigateByUrl('/event/overview');
+
+
+
+      this.router.navigateByUrl('/event/overview').then((res) => {
+          window.location.reload();
+        }
+      );
+
+
+
+
     }).catch((error: HttpErrorResponse) => {
       this.errorHandling.openErrorBox(error.message);
     })

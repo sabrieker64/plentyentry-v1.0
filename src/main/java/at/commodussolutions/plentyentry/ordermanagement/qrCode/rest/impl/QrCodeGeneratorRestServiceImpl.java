@@ -5,6 +5,8 @@ import at.commodussolutions.plentyentry.ordermanagement.qrCode.service.QrCodeGen
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 public class QrCodeGeneratorRestServiceImpl implements QrCodeGeneratorRestService {
 
@@ -13,7 +15,9 @@ public class QrCodeGeneratorRestServiceImpl implements QrCodeGeneratorRestServic
     QrCodeGeneratorService qrCodeGeneratorService;
 
     @Override
-    public String getQRCode(Long ticketID){
+    public byte[] getQRCode(Long ticketID, HttpServletResponse response){
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
         return qrCodeGeneratorService.getQRCode(ticketID);
     }
 

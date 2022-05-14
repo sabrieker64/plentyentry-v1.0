@@ -1,4 +1,5 @@
 import {NgModule} from '@angular/core';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from "./app-routing.module";

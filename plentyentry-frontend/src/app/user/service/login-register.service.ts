@@ -14,6 +14,7 @@ export class LoginRegisterService {
   }
 
   private baseUrl: string = environment.baseUrl + 'api/backend/user';
+  //private baseUrl: string = "http://172.16.254.133/" + 'api/backend/user';
 
   constructor(private http: HttpClient) {
   }

@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="box box--shadow">
+
+    <h1 class="form-headline">Event Bearbeiten</h1>
+
+    <form #updateForm="ngForm" [formGroup]="updateEventFormGroup" (ngSubmit)="updateForm.form.valid && updateEvent() ">
+      <div class="grid cols--2">
+        <mat-form-field appearance="outline">
+          <mat-label>Adresse</mat-label>
+          <input matInput placeholder="Maxmustermann Straße 10" name="address"
+                 formControlName="address"
+                 [(ngModel)]="eventDTO.address">
+          <mat-error *ngIf="updateEventFormGroup.get('address')?.errors">
+            <p *ngIf="updateEventFormGroup.get('address')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-element full-width" appearance="outline">
+          <mat-label>Stadt</mat-label>
+          <input matInput placeholder="St. Johann in Tirol" name="city"
+                 formControlName="city"
+                 [(ngModel)]="eventDTO.city">
+          <mat-error *ngIf="updateEventFormGroup.get('city')?.errors">
+            <p *ngIf="updateEventFormGroup.get('city')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+            <p *ngIf="updateEventFormGroup.get('city')?.hasError('minlength')">Bitte Mindestlänge beachten</p>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Datum</mat-label>
+          <input matInput [matDatepicker]="picker1" name="date"
+                 formControlName="date"
+                 [(ngModel)]="eventDTO.date">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="form-element full-width" appearance="outline">
+          <mat-label>Beschreibung</mat-label>
+          <input matInput placeholder="Max macht eine Schaumparty!" name="description"
+                 formControlName="description"
+                 [(ngModel)]="eventDTO.description">
+          <mat-error *ngIf="updateEventFormGroup.get('description')?.errors">
+            <p *ngIf="updateEventFormGroup.get('description')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+            <p *ngIf="updateEventFormGroup.get('description')?.hasError('minlength')">Bitte Mindestlänge beachten</p>
+          </mat-error>
+        </mat-form-field>
+
+
+
+        <mat-form-field class="form-element full-width" appearance="outline">
+          <mat-label>Event Name</mat-label>
+          <input matInput placeholder="Jogassn" name="name"
+                 formControlName="name"
+                 [(ngModel)]="eventDTO.name">
+          <mat-error *ngIf="updateEventFormGroup.get('name')?.errors">
+            <p *ngIf="updateEventFormGroup.get('name')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-element full-width" appearance="outline">
+          <mat-label>Preis</mat-label>
+          <input matInput placeholder="10,99" type="number" name="price" formControlName="price"
+                 [(ngModel)]="eventDTO.price">
+          <mat-error *ngIf="updateEventFormGroup.get('price')?.errors">
+            <p *ngIf="updateEventFormGroup.get('price')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-element" appearance="outline">
+          <mat-label>Anzahl der verfügbaren Tickets</mat-label>
+          <input matInput placeholder="7000" name="ticketCounter" formControlName="ticketCounter"
+                 [(ngModel)]="eventDTO.ticketCounter">
+          <mat-error *ngIf="updateEventFormGroup.get('ticketCounter')?.errors">
+            <p *ngIf="updateEventFormGroup.get('ticketCounter')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+          </mat-error>
+        </mat-form-field>
+
+
+        <button class="cols--full-width" mat-raised-button color="primary" type="submit"
+                [disabled]="!updateForm.form.valid">Update
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>

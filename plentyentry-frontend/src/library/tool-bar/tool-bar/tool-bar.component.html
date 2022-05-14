@@ -6,17 +6,49 @@
       <mat-icon>manage_accounts</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <a mat-menu-item (click)="redirectUserDetail()">
+      <a mat-menu-item routerLink="shoppingcart/list" *ngIf="loggedIn">
+        <mat-icon color="primary">shopping_cart</mat-icon>
+        <span>Shoppingcart anzeigen</span>
+      </a>
+      <a mat-menu-item routerLink="maintainedevents/maintained/events/create" *ngIf="loggedIn">
+        <mat-icon color="primary">fiber_new</mat-icon>
+        <span>Neues Event erstellen</span>
+      </a>
+      <a mat-menu-item routerLink="maintainedevents/maintained/events/scan" *ngIf="loggedIn">
+        <mat-icon color="primary">scanner</mat-icon>
+        <span>Scan Event</span>
+      </a>
+      <a mat-menu-item routerLink="maintainedevents/maintained/events/list" *ngIf="loggedIn">
+        <mat-icon color="primary">list_alt</mat-icon>
+        <span>Meine Veranstaltungen anzeigen</span>
+      </a>
+      <a mat-menu-item (click)="redirectUserDetail()" *ngIf="loggedIn">
         <mat-icon color="primary">settings</mat-icon>
         <span>Benutzer Details</span>
       </a>
-      <a mat-menu-item routerLink="event/event-create">
+      <a mat-menu-item routerLink="event/event-create" *ngIf="loggedIn">
         <mat-icon color="primary">edit_calendar</mat-icon>
         <span>Events anlegen</span>
       </a>
-      <a mat-menu-item>
+      <a mat-menu-item routerLink="ticket/bought-tickets" *ngIf="loggedIn">
+        <mat-icon color="primary">event_note</mat-icon>
+        <span>Gekaufte Tickets anzeigen</span>
+      </a>
+      <a mat-menu-item *ngIf="loggedIn">
         <mat-icon color="primary">trending_up</mat-icon>
         <span>Daten Analyse</span>
+      </a>
+      <a mat-menu-item (click)="logout()" *ngIf="loggedIn">
+        <mat-icon color="primary">logout</mat-icon>
+        <span>Ausloggen</span>
+      </a>
+      <a mat-menu-item routerLink="user/login" *ngIf="!loggedIn">
+        <mat-icon color="primary">login</mat-icon>
+        <span>Einloggen</span>
+      </a>
+      <a mat-menu-item routerLink="user/register" *ngIf="!loggedIn">
+        <mat-icon color="primary">fiber_new</mat-icon>
+        <span>Registrieren</span>
       </a>
     </mat-menu>
     <a mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">

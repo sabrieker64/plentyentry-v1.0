@@ -17,6 +17,22 @@ const routes: Routes = [
   {
     path: 'payment',
     loadChildren: () => import('./payment/payment-checkout.module').then(m => m.PaymentCheckoutModule)
+  },
+  {
+    path: 'ticket',
+    loadChildren: () => import('./ticket/ticket.module').then(m => m.TicketModule)
+  },
+  {
+    path: 'maintainedevents',
+    loadChildren: () => import('./user/maintainer/maintainer.module').then(m => m.MaintainerModule)
+  },
+  {
+    path: 'shoppingcart',
+    loadChildren: () => import('./user/shoppingcart/shoppingcart.module').then(m => m.ShoppingcartModule)
+  },
+  {
+    path: 'toolbar',
+    loadChildren: () => import('../library/tool-bar/tool-bar.module').then(m => m.ToolBarModule)
   }
 
 ];

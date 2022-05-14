@@ -15,6 +15,10 @@ public interface EventRestService {
     @ResponseBody
     List<EventDTO> getAllEvents();
 
+    @GetMapping("/list/maintainedEvents")
+    @ResponseBody
+    List<EventDTO> getAllMaintainedEvents();
+
     @GetMapping("/{id}")
     @ResponseBody
     EventDTO getEventById(@PathVariable Long id);

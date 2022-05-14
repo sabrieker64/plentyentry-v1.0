@@ -140,7 +140,6 @@ public class ShoppingCartRestServiceTest {
         testUser.setJwtToken(jwt);
 
         Set<TicketDTO> listTicket = new HashSet<>();
-        testTicket.setShoppingCart(testUser.getShoppingCart());
         listTicket.add(ticketMapper.mapToDTO(testTicket));
 
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put("/api/backend/ticket/addToShoppingCart")
