@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-05-12 22:29:06.
+// Generated using typescript-generator version 2.32.889 on 2022-05-14 10:24:40.
 
 export interface UserDTO {
     id: number;
@@ -55,12 +55,20 @@ export interface UserAuthReqDTO {
     password: string;
 }
 
-export interface CreatePaymentResponse {
-    clientSecret: string;
+export interface PaymentIntentDTO extends Serializable {
+  currency: Currency;
+  amount: number;
+  eventId: number;
+  description: string;
+  paymentType: StripePaymentTypes;
 }
 
-export interface CreatePayment {
-    items: any[];
+export interface Order {
+  price: number;
+  currency: string;
+  method: string;
+  intent: string;
+  description: string;
 }
 
 export interface CoronaStatusDTO {
@@ -79,14 +87,17 @@ export interface PaymentMethodDTO {
     paymentType: PaymentType;
     creditCardNumber: number;
     nameOnCard: string;
-    cvSecurityCode: number;
-    iban: number;
-    user: UserDTO;
+  cvSecurityCode: number;
+  iban: number;
+  user: UserDTO;
 }
 
 export interface ShoppingCartDTO {
-    id: number;
-    tickets: TicketDTO[];
+  id: number;
+  tickets: TicketDTO[];
+}
+
+export interface Serializable {
 }
 
 export interface TicketDTO {
@@ -100,6 +111,10 @@ export interface TicketDTO {
 export type UserType = "GUEST" | "CUSTOMER" | "ADMIN" | "MAINTAINER" | "SUPERADMIN";
 
 export type UserGender = "MALE" | "FEMALE" | "DIVERSE";
+
+export type Currency = "EUR";
+
+export type StripePaymentTypes = "card" | "giropay" | "sepa_debit";
 
 export type PaymentType = "CREDIT_CARD" | "PAYPAL" | "BANK_TRANSFER";
 
