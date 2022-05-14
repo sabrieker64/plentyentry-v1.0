@@ -1,12 +1,14 @@
-<section>
-  <div class="product">
-    <div class="description">
-      <h3>Stubborn Attachments</h3>
-      <h5>$20.00</h5>
-    </div>
-  </div>
-  <form>
-    <button type="submit" id="checkout-button" (click)="makePayment()">Checkout</button>
-  </form>
-</section>
-
+<h2>Collection Payment Intent</h2>
+<div [formGroup]="stripeForm">
+  <mat-form-field class="example-full-width" appearance="outline">
+    <input matInput [readonly]="true" placeholder="Event Name" value="Jogassn">
+  </mat-form-field>
+  <input formControlName="amount"/>
+  <ngx-stripe-card
+    [options]="cardOptions"
+    [elementsOptions]="elementsOptions"
+  ></ngx-stripe-card>
+  <button type="submit" (click)="makePayment()">
+    PAY
+  </button>
+</div>

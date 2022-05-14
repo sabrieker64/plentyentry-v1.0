@@ -7,6 +7,8 @@ import {SuccessComponent} from './stripe/success/success.component';
 import {CancelComponent} from './stripe/cancel/cancel.component';
 import {AngularMaterialModule} from "../../library/anguler-material-module/anguler-material-module.module";
 import {NgxStripeModule} from "ngx-stripe";
+import {environment} from "../../environments/environment";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -19,7 +21,8 @@ import {NgxStripeModule} from "ngx-stripe";
     CommonModule,
     AngularMaterialModule,
     PaymentCheckoutRoutingModule,
-    NgxStripeModule
+    NgxStripeModule.forRoot(environment.stripe),
+    ReactiveFormsModule
   ]
 })
 export class PaymentCheckoutModule {

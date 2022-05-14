@@ -6,6 +6,7 @@ import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.types.Str
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
+import com.stripe.model.Token;
 import com.stripe.param.PaymentIntentCreateParams;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -75,4 +76,15 @@ public class StripeAcceptPaymentService {
         return 1400;
     }
 
+    public Token createToken(Map<String, Object> params) throws StripeException {
+        Token token = new Token();
+        try {
+            token = Token.create(params);
+        } catch (StripeException e) {
+            log.error(e.getMessage());
+            {
+            }
+        }
+        return token;
+    }
 }
