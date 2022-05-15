@@ -53,7 +53,7 @@ export class EventDetailComponent implements OnInit {
     // cechkout(card, iban, klarna, etc...)
     //todo nach der logik sollte hier der status auf reserviert gehen vom ticket und von dem jeweiligen user in die
     // shoppingcart hinzugefügt werden
-    this.ticketService.this.eventService.addTicketsToShoppingCart(ticket)
+    //this.ticketService.this.eventService.addTicketsToShoppingCart(ticket)
     this.router.navigateByUrl('/payment/stripe-checkout?eventId=' + event.id);
   }
 }
