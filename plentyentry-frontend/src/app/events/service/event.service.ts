@@ -11,7 +11,7 @@ import {environment} from "../../../environments/environment";
 export class EventService {
 
   private BASE_URL: string = environment.baseUrl + 'api/backend/event';
-  //private BASE_URL: string = "http://172.16.254.133/" + 'api/backend/event';
+  private SHOPPING_CART_BASE_URL: string = environment.baseUrl + 'api/backend/ticket';
 
   constructor(private http: HttpClient) {
   }
@@ -31,5 +31,9 @@ export class EventService {
 
   public createEvent(eventDTO: EventDTO): Observable<EventDTO> {
     return this.http.post<EventDTO>(`${this.BASE_URL}`, eventDTO);
+  }
+
+  public addTicketsToShoppingCart(ticketsDTO: TicketDTO[]): Observable<any> {
+    return this.http.put<any>(`${this.SHOPPING_CART_BASE_URL}/addToShoppingCart`, ticketsDTO);
   }
 }

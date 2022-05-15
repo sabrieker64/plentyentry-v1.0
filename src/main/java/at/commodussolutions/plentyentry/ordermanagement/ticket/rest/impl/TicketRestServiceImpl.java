@@ -58,7 +58,7 @@ public class TicketRestServiceImpl implements TicketRestService {
     @Override
     public TicketDTO createNewTicket(TicketDTO ticketDTO) {
         Ticket ticket = new Ticket();
-        ticketMapper.mapToEntity(ticketDTO,ticket);
+        ticketMapper.mapToEntity(ticketDTO, ticket);
         ticket = ticketService.createNewTicket(ticket);
         return ticketMapper.mapToDTO(ticket);
     }
@@ -67,5 +67,10 @@ public class TicketRestServiceImpl implements TicketRestService {
     public void putTicketsToShoppingCart(Set<TicketDTO> ticketDTOSet) {
         Set<Ticket> ticketSet = new HashSet<>();
         ticketService.putTicketsToShoppingCart(ticketMapper.mapToListEntity(ticketDTOSet, ticketSet));
+    }
+
+    @Override
+    public TicketDTO findTicketByEvent(Long eventId) {
+        return ticketService.getTicketByEventId(eventId);
     }
 }

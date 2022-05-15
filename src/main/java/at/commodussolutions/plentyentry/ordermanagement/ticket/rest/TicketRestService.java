@@ -35,5 +35,9 @@ public interface TicketRestService {
     @ResponseBody
     void putTicketsToShoppingCart(@RequestBody Set<TicketDTO> ticketDTOSet);
 
+    @GetMapping("/getTicketByEvent/{eventId}")
+    @ResponseBody
+    TicketDTO findTicketByEvent(@PathVariable Long eventId);
+
 
 }

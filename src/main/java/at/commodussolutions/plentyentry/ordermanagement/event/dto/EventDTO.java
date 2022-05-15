@@ -18,7 +18,7 @@ public class EventDTO {
     private LocalDate date;
     private String description;
     private Double price;
-    private Integer ticketCounter;
+    private Long ticketCounter;
     private Long ticketId;
     private String city;
     private String address;

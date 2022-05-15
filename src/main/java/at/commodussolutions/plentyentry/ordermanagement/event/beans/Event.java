@@ -36,8 +36,10 @@ public class Event {
     @Column(name = "PRICE")
     private Double price;
 
+    //todo die anzahl von gewünscten freistellung von tickets wird hier eingetragen dann nach jeder kaufbestäting
+    // wird heruntergezählt somit können wir die verfügbaren tickets aktuell halten
     @Column(name = "TICKET_COUNTER")
-    private Integer ticketCounter;
+    private Long ticketCounter;
 
     @Column(name = "TICKET_ID")
     private Long ticketId;
@@ -47,8 +49,6 @@ public class Event {
 
     @Column(name = "CITY")
     private String city;
-
-//TODO: Saving images on s3 bucket and checking the url if it exists
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "EVENT_IMAGE_URLS", joinColumns = @JoinColumn(name = "EVENT_ID"))
