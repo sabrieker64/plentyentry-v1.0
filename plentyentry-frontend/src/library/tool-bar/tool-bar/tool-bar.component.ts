@@ -5,6 +5,8 @@ import {UserDTO} from "../../../app/definitions/objects";
 import {ErrorService} from "../../error-handling/error.service";
 import {Router} from "@angular/router";
 import {LogoutComponent} from "../../../app/user/logout/logout.component";
+import {ShoppingcartService} from "../../../app/user/shoppingcart/service/shoppingcart.service";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'app-tool-bar',
@@ -14,18 +16,30 @@ import {LogoutComponent} from "../../../app/user/logout/logout.component";
 export class ToolBarComponent implements OnInit {
 
   loggedIn=false;
+  shoppingCartValue: number=0;
 
-  constructor(private loginRegisterService: LoginRegisterService, private http: HttpClient, private errorHandling: ErrorService, private router: Router) {
+  constructor(private loginRegisterService: LoginRegisterService, private http: HttpClient, private errorHandling: ErrorService, private router: Router, private shoppincartService: ShoppingcartService) {
   }
 
   ngOnInit(): void {
 
     this.loggedIn=this.checkIfLoggedIn();
-
+    this.loadShoppingCart();
   }
 
   ngOnChanges(): void {
-    console.log("sdad");
+
+  }
+
+  loadShoppingCart() {
+    return this.shoppincartService.getShoppingcart().subscribe(shoppingcart => {
+      if(shoppingcart!=null){
+        this.shoppingCartValue = shoppingcart.tickets.length;
+      }
+    }, error => {
+      console.log(error);
+    });
+
   }
 
   redirectUserDetail() {
