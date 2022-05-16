@@ -141,7 +141,7 @@ public class EventRestServiceTest {
         newEvent.setDate(LocalDate.now());
         newEvent.setDescription("Für jeden Schicker eine Eskalation!");
         newEvent.setPrice(10.00);
-        newEvent.setTicketCounter(4);
+        newEvent.setTicketCounter(Long.parseLong("4"));
         newEvent.setTicketId(5L);
         newEvent.setAddress("Schicker Blowis");
         newEvent.setCity("Fieberbrooklyn");

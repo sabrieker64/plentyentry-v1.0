@@ -70,7 +70,7 @@ public class TicketRestServiceImpl implements TicketRestService {
     }
 
     @Override
-    public TicketDTO findTicketByEvent(Long eventId) {
-        return ticketService.getTicketByEventId(eventId);
+    public List<TicketDTO> findTicketByEvent(Long eventId, Integer quantity) {
+        return ticketMapper.mapToListDTO(ticketService.getTicketByEventId(eventId, quantity));
     }
 }

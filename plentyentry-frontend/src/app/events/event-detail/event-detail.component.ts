@@ -49,9 +49,9 @@ export class EventDetailComponent implements OnInit {
   }
 
   paymentTest(event: EventDTO) {
-    //todo make a dropdown to choose payment type before checkout for example paying with paypal or stripe
+    // todo make a dropdown to choose payment type before checkout for example paying with paypal or stripe
     // cechkout(card, iban, klarna, etc...)
-    //todo nach der logik sollte hier der status auf reserviert gehen vom ticket und von dem jeweiligen user in die
+    // todo nach der logik sollte hier der status auf reserviert gehen vom ticket und von dem jeweiligen user in die
     // shoppingcart hinzugefügt werden
     //this.ticketService.this.eventService.addTicketsToShoppingCart(ticket)
     this.router.navigateByUrl('/payment/stripe-checkout?eventId=' + event.id);

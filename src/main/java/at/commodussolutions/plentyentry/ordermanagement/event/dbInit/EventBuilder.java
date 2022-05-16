@@ -31,7 +31,7 @@ public class EventBuilder {
         event.setDate(LocalDate.now());
         event.setDescription("Für jeden Tiroler eine Saufparty!");
         event.setPrice(8.99);
-        event.setTicketCounter(1);
+        event.setTicketCounter(Long.parseLong("1"));
         event.setTicketId(1L);
         event.setAddress("Miau miau Cat Cat");
         event.setCity("Seini Hons");
@@ -45,7 +45,7 @@ public class EventBuilder {
         event2.setDate(LocalDate.now());
         event2.setDescription("Für jeden Schicker eine Saufparty!");
         event2.setPrice(10.00);
-        event2.setTicketCounter(4);
+        event2.setTicketCounter(Long.parseLong("4"));
         event2.setTicketId(5L);
         event2.setAddress("Schicker Blowis");
         event2.setCity("Fieberbrooklyn");

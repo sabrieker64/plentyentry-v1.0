@@ -37,7 +37,7 @@ public interface TicketRestService {
 
     @GetMapping("/getTicketByEvent/{eventId}")
     @ResponseBody
-    TicketDTO findTicketByEvent(@PathVariable Long eventId);
+    List<TicketDTO> findTicketByEvent(@PathVariable Long eventId, @PathVariable Integer quantity);
 
 
 }
