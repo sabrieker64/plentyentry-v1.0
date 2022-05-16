@@ -1,8 +1,11 @@
 <div class="container">
   <mat-form-field appearance="outline" class="form--full-width">
     <mat-label>Suche</mat-label>
-    <input matInput placeholder="Suche" name="search">
+    <input matInput placeholder="Suche" (keyup)="filterEventsWithSearch($event)" name="search" id="searchEventInputFilter">
   </mat-form-field>
+  <div *ngIf="emptyList">
+    Keine Events gefunden
+  </div>
 </div>
 
 <mat-tab-group [disablePagination]="true" mat-stretch-tabs class="container container-events example-stretched-tabs">
@@ -33,7 +36,8 @@
       }
     }
       ">
-        <splide-slide *ngFor="let event of allEvents">
+
+        <splide-slide *ngFor="let event of filteredEvents">
           <section class="event-card">
             <div class="event-card--inner" (click)="getEventDetail(event.id)">
 
@@ -44,7 +48,7 @@
 
               <figure class="event-card--thumbnail">
                 <img
-                  src="https://eventimagesbucket.s3.us-east-2.amazonaws.com/st.-johann-in-tirol-murdock-veranstaltungstechnik-events-murdock-1.jpg">
+                  src="{{event.eventImageUrls[0]}}">
               </figure>
 
               <div class="event-card--information">

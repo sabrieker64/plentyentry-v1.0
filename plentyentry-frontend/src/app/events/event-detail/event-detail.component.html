@@ -7,25 +7,14 @@
       pagination: false
     }
       ">
-        <splide-slide>
+        <splide-slide *ngFor="let image of eventDTO.eventImageUrls; let i=index ">
           <figure class="image-thumbnail event-detail--media-big">
             <img
-              src="https://eventimagesbucket.s3.us-east-2.amazonaws.com/st.-johann-in-tirol-murdock-veranstaltungstechnik-events-murdock-1.jpg">
-          </figure>
-        </splide-slide>
-        <splide-slide>
-          <figure class="image-thumbnail event-detail--media-big">
-            <img
-              src="https://eventimagesbucket.s3.us-east-2.amazonaws.com/st.-johann-in-tirol-murdock-veranstaltungstechnik-events-murdock-1.jpg">
-          </figure>
-        </splide-slide>
-        <splide-slide>
-          <figure class="image-thumbnail event-detail--media-big">
-            <img
-              src="https://eventimagesbucket.s3.us-east-2.amazonaws.com/st.-johann-in-tirol-murdock-veranstaltungstechnik-events-murdock-1.jpg">
+              src="{{image}}">
           </figure>
         </splide-slide>
       </splide>
+      <!--
       <div class="grid cols--3">
         <figure class="image-thumbnail">
           <img
@@ -40,6 +29,7 @@
             src="https://eventimagesbucket.s3.us-east-2.amazonaws.com/st.-johann-in-tirol-murdock-veranstaltungstechnik-events-murdock-1.jpg">
         </figure>
       </div>
+      !-->
     </div>
     <div class="event-detail--information">
       <div class="grid cols--1">
@@ -48,9 +38,11 @@
             {{ eventDTO.name}}
             <small style="font-size: 15px; display: block">Coolen Events GmbH</small>
           </h1>
+          <!--
           <button class="like-button">
             <mat-icon class="icon">favorite</mat-icon>
           </button>
+          !-->
         </div>
         <mat-divider></mat-divider>
         <div class="grid cols--2">
@@ -83,7 +75,7 @@
 
         <section class="event-detail--shopping">
           <div class="event-detail--shopping-box">
-            <h1>{{ eventDTO.price }} €</h1>
+            <h1>{{ eventDTO.price * eventQuantity | currency: 'EUR' }}</h1>
             <span class="event-detail--shopping-quantity">
               <button (click)="increaseQuantity()">
                 <mat-icon class="icon">add</mat-icon>

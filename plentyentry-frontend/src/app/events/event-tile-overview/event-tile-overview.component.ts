@@ -11,8 +11,9 @@ import {ErrorService} from "../../../library/error-handling/error.service";
   styleUrls: ['./event-tile-overview.component.scss']
 })
 export class EventTileOverviewComponent implements OnInit {
+  filteredEvents: EventDTO[];
   allEvents: EventDTO[];
-
+  emptyList: boolean = false;
   constructor(private service: EventService, private router: Router, private errorHandling: ErrorService) {
   }
 
@@ -20,9 +21,31 @@ export class EventTileOverviewComponent implements OnInit {
     this.loadEvents();
   }
 
+  filterEventsWithSearch($event: any){
+    var searchedValue = $event.target.value;
+
+    if(searchedValue == ""){
+      this.filteredEvents = this.allEvents;
+    } else {
+      this.filteredEvents = this.allEvents.filter(event => {
+        return event.name.toLowerCase().includes(searchedValue.toLowerCase());
+      });
+    }
+    if(this.filteredEvents.length==0){
+      this.emptyList=true;
+    } else {
+      this.emptyList=false;
+    }
+  }
+
   private loadEvents() {
     this.service.getAllEvents().toPromise().then((events) => {
       this.allEvents = events;
+      this.filteredEvents = events;
+      if(this.allEvents.length==0){
+        this.emptyList=true;
+      }
+
     }).catch((error: HttpErrorResponse) => {
       this.errorHandling.openErrorBox(error.message);
     });

@@ -6,10 +6,6 @@
       <mat-icon>manage_accounts</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <a mat-menu-item routerLink="shoppingcart/list" *ngIf="loggedIn">
-        <mat-icon color="primary">shopping_cart</mat-icon>
-        <span>Shoppingcart anzeigen</span>
-      </a>
       <a mat-menu-item routerLink="maintainedevents/maintained/events/create" *ngIf="loggedIn">
         <mat-icon color="primary">fiber_new</mat-icon>
         <span>Neues Event erstellen</span>
@@ -54,11 +50,15 @@
     <a mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
       <mat-icon>map</mat-icon>
     </a>
+    <!--
     <a mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
       <mat-icon>favorite</mat-icon>
     </a>
-    <a mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon matBadge="2" matBadgeColor="warn">shopping_cart</mat-icon>
+    !-->
+    <a mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" routerLink="shoppingcart/list" *ngIf="loggedIn">
+      <mat-icon *ngIf="shoppingCartValue>0" matBadge="{{shoppingCartValue}}" matBadgeColor="warn">shopping_cart</mat-icon>
+      <mat-icon *ngIf="shoppingCartValue==0" >shopping_cart</mat-icon>
+
     </a>
   </mat-toolbar>
 </div>

@@ -37,8 +37,8 @@ export class ShoppingcartListComponent implements OnInit {
   loadShoppingCart() {
     return this.shoppincartService.getShoppingcart().subscribe(shoppingcart => {
       this.shoppingcart = shoppingcart;
-      this.tickets = new MatTableDataSource(this.shoppingcart.tickets.filter(ticket => ticket.ticketStatus === "NOTUSED"));
-      this.ticketArrayCalculating = this.shoppingcart.tickets.filter(ticket => ticket.ticketStatus === "NOTUSED");
+      this.tickets = new MatTableDataSource(this.shoppingcart.tickets.filter(ticket => ticket.ticketStatus === "NOTSELLED"));
+      this.ticketArrayCalculating = this.shoppingcart.tickets.filter(ticket => ticket.ticketStatus === "NOTSELLED");
 
       this.ticketArrayCalculating.forEach(ticket=>{
         this.fullPrice = this.fullPrice + (ticket.quantity * ticket.event.price);
@@ -47,6 +47,8 @@ export class ShoppingcartListComponent implements OnInit {
       if(this.tickets) {
         this.loaded = true;
       }
+
+      console.log(this.shoppingcart.tickets)
 
 
     }, error => {

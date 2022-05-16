@@ -15,9 +15,15 @@ public class EventBuilder {
     private EventRepository eventRepository;
 
     public void buildEvent(){
-        ArrayList<String> eventImageUrls = new ArrayList<>();
+        ArrayList<String> eventImageUrls1 = new ArrayList<>();
+        ArrayList<String> eventImageUrls2 = new ArrayList<>();
 
-        eventImageUrls.add("abc");
+        eventImageUrls1.add("https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg");
+        eventImageUrls1.add("https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party2.jpg");
+
+        eventImageUrls2.add("https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party2.jpg");
+        eventImageUrls2.add("https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg");
+
 
         //EVENT NUMBER 1 -> Jogassen
         Event event = new Event();
@@ -29,7 +35,7 @@ public class EventBuilder {
         event.setTicketId(1L);
         event.setAddress("Miau miau Cat Cat");
         event.setCity("Seini Hons");
-        event.setEventImageUrls(eventImageUrls);
+        event.setEventImageUrls(eventImageUrls1);
         //Build Data
         eventRepository.save(event);
 
@@ -43,7 +49,7 @@ public class EventBuilder {
         event2.setTicketId(5L);
         event2.setAddress("Schicker Blowis");
         event2.setCity("Fieberbrooklyn");
-        event2.setEventImageUrls(eventImageUrls);
+        event2.setEventImageUrls(eventImageUrls2);
         //Build Data
         eventRepository.save(event2);
     }
