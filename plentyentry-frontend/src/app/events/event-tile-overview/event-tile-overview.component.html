@@ -1,6 +1,6 @@
 <div class="container">
   <mat-form-field appearance="outline" class="form--full-width">
-    <mat-label>Suche</mat-label>
+    <mat-label>Eventnamen oder Stadtnamen eingeben</mat-label>
     <input matInput placeholder="Suche" (keyup)="filterEventsWithSearch($event)" name="search" id="searchEventInputFilter">
   </mat-form-field>
   <div *ngIf="emptyList">

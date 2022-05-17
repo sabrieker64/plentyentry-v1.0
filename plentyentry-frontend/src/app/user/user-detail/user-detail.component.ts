@@ -17,12 +17,13 @@ export class UserDetailComponent implements OnInit {
   registerFormGroup: FormGroup;
   userDTO: UserDTO = <UserDTO>{};
   paramUserId: number;
+  allowed: boolean = false;
 
   constructor(private userDetailService: UserDetailService, private fb: FormBuilder,
               private loginRegisterService: LoginRegisterService, private route: ActivatedRoute, private errorHandling: ErrorService) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<any> {
 
     this.registerFormGroup = this.fb.group({
       "gender": new FormControl('', [Validators.required]),
@@ -37,12 +38,28 @@ export class UserDetailComponent implements OnInit {
       "postcode": new FormControl(),
     });
 
-    this.userDetailService.getUserById(Number(this.route.snapshot.paramMap.get('id'))).toPromise().then((UserDTO) => {
-      this.userDTO = UserDTO;
-    }).catch((error: HttpErrorResponse) => {
-      this.errorHandling.openErrorBox(error.message);
-    })
 
+    await this.loadUserDetails().then((res) => {
+
+    }, (err) => {
+      this.errorHandling.openInformation("Melden Sie sich bitte an!");
+    });
+
+
+  }
+
+
+  async loadUserDetails() {
+    let token = localStorage.getItem('token');
+
+    if (token != null) {
+      this.userDetailService.getUserByJWT().toPromise().then((UserDTO) => {
+        this.userDTO = UserDTO;
+        this.allowed = true;
+      }).catch((error: HttpErrorResponse) => {
+        this.errorHandling.openErrorBox(error.message);
+      })
+    }
   }
 
   updateUser(): void {

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import {ZXingScannerModule} from '@zxing/ngx-scanner';
 import {CdkTreeModule} from "@angular/cdk/tree";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatDatepickerModule} from "@angular/material/datepicker";
@@ -35,6 +35,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatSliderModule} from "@angular/material/slider";
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {NgxMatFileInputModule} from "@angular-material-components/file-input";
 
 const materialModules = [
   MatSliderModule,
@@ -73,6 +74,7 @@ const materialModules = [
   FlexLayoutModule,
   MatNativeDateModule,
   ZXingScannerModule,
+  NgxMatFileInputModule,
 ];
 
 @NgModule({
