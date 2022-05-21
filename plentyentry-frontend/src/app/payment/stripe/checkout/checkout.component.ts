@@ -5,6 +5,10 @@ import {loadStripe, StripeCardElementOptions, StripeElementsOptions} from "@stri
 import {PaymentService} from "../../service/payment.service";
 import {StripeCardNumberComponent, StripeElementsService} from "ngx-stripe";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute} from "@angular/router";
+import {Observable} from "rxjs";
+import {ShoppingCartDTO} from "../../../definitions/objects";
+import {UserDetailService} from "../../../user/service/user-detail.service";
 
 declare var Stripe: any;
 
@@ -34,20 +38,32 @@ export class CheckoutComponent implements OnInit {
       }
     }
   };
-
   public stripeForm: FormGroup;
+  eventId: string;
+  quantity: string;
+  shoppingCartObserver: Observable<ShoppingCartDTO>;
+  shoppingCart: ShoppingCartDTO;
+
 
   //todo hier muss ich das objekt im unserm fall das event das sich der kunde angeschaut und auf bezahlen geklickt hat
   //todo achtung ganz wichtig es kann auch aus dem warenkorb kommen mit einer listen von events oder
 
-  constructor(private http: HttpClient, private service: PaymentService, private stripeService: StripeElementsService, private fb: FormBuilder) {
+  constructor(private http: HttpClient, private service: PaymentService,
+              private stripeService: StripeElementsService, private fb: FormBuilder,
+              private route: ActivatedRoute, private userService: UserDetailService) {
   }
 
   ngOnInit(): void {
     this.stripeForm = this.fb.group({
       name: ['', [Validators.required]]
-    })
-
+    });
+    this.loadShoppingCart();
+    /* const routeParamEvent = this.route.paramMap.pipe(map(value => this.handleParams(value)));*/
+    /* const loadPaymentObject = routeParamEvent.pipe(switchMap(() => this.loadEvent()));
+     this.shoppingCartObserver = loadPaymentObject.pipe(
+       map(value => this.complete(value)),
+       catchError(() => this.handleError()),
+       shareReplay(1));*/
   }
 
 
@@ -67,5 +83,30 @@ export class CheckoutComponent implements OnInit {
 
   createToken() {
 
+  }
+
+  /*  private handleParams(params: ParamMap) {
+      const ticketId = params.get('');
+      return params;
+
+    }
+
+    private loadEvent(): Observable<ShoppingCartDTO> {
+
+      return of();
+    }
+
+    private complete(value: ShoppingCartDTO) {
+      this.shoppingCart = value;
+      return value;
+    }
+
+    private handleError() {
+      return of(<ShoppingCartDTO>{});
+    }*/
+  private loadShoppingCart() {
+    this.userService.getCurrentUser().toPromise().then(data => {
+      this.shoppingCart = data.shoppingCartDTO;
+    });
   }
 }

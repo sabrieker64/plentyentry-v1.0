@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-05-14 10:24:40.
+// Generated using typescript-generator version 2.32.889 on 2022-05-21 21:16:53.
 
 export interface UserDTO {
     id: number;
@@ -71,22 +71,29 @@ export interface Order {
   description: string;
 }
 
+export interface CreateTokenDTO {
+  cardNumber: number;
+  expMonth: number;
+  expYear: number;
+  cvc: number;
+}
+
 export interface CoronaStatusDTO {
-    id: number;
-    pcrTest: boolean;
-    antigenTest: boolean;
-    firstVaccine: boolean;
-    secondVaccine: boolean;
-    thirdVaccine: boolean;
-    quarantine: boolean;
-    user: UserDTO;
+  id: number;
+  pcrTest: boolean;
+  antigenTest: boolean;
+  firstVaccine: boolean;
+  secondVaccine: boolean;
+  thirdVaccine: boolean;
+  quarantine: boolean;
+  user: UserDTO;
 }
 
 export interface PaymentMethodDTO {
-    id: number;
-    paymentType: PaymentType;
-    creditCardNumber: number;
-    nameOnCard: string;
+  id: number;
+  paymentType: PaymentType;
+  creditCardNumber: number;
+  nameOnCard: string;
   cvSecurityCode: number;
   iban: number;
   user: UserDTO;
@@ -118,4 +125,4 @@ export type StripePaymentTypes = "card" | "giropay" | "sepa_debit";
 
 export type PaymentType = "CREDIT_CARD" | "PAYPAL" | "BANK_TRANSFER";
 
-export type TicketStatus = "NOTUSED" | "USED" | "INUSE" | "EXPIRED" | "SELLED" | "NOTSELLED";
+export type TicketStatus = "NOTUSED" | "RESERVED" | "USED" | "INUSE" | "EXPIRED" | "SELLED" | "NOTSELLED";

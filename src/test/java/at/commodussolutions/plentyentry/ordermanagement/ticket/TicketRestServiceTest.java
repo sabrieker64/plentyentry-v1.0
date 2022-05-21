@@ -1,7 +1,6 @@
 package at.commodussolutions.plentyentry.ordermanagement.ticket;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.dbInit.EventInitializer;
-import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import at.commodussolutions.plentyentry.ordermanagement.event.mapper.EventMapper;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dbInit.TicketInitializer;
@@ -30,7 +29,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.transaction.Transactional;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -153,7 +151,7 @@ public class TicketRestServiceTest {
 
         ticket.setTicketStatus(TicketStatus.NOTSELLED);
         ticket.setEvent(eventMapper.mapToDTO(event));
-        ticket.setQuantity(100);
+        //ticket.setQuantity(100);
         //ticket.setUser(userMapper.mapToDTO(user));
 
         //STACKOVERFLOW????

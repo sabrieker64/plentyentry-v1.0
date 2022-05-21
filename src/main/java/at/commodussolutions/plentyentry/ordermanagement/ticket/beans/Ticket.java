@@ -22,11 +22,11 @@ public class Ticket {
     private Long id;
 
     //todo das nicht mehr befüllen
-    //tickets werden jetzt autmotatisch generiert mit der angegebenen anazahl beim event erstellen jedes Ticket ist
+    // tickets werden jetzt autmotatisch generiert mit der angegebenen anazahl beim event erstellen jedes Ticket ist
     // ein Eintrag so ist es besser das ganze zu verfolgen die Referenz ist die Event ID
-    //und wir können so mehrere Ticet Arten für ein Event machen
-    @Column(name = "QUANTITY")
-    private Integer quantity;
+    // und wir können so mehrere Ticet Arten für ein Event machen
+    //@Column(name = "QUANTITY")
+    //private Integer quantity;
 
     @Column(name = "STATUS")
     private TicketStatus ticketStatus;

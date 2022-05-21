@@ -74,17 +74,8 @@
 </table>
 
 <div class="container">
-
-  <!--
-  <div *ngFor="let ticket of ticketArrayCalculating let last = last;">
-    {{ticket.quantity}}
-    <div *ngIf="last">
-      dsfa
-    </div>
-  </div>
-  !-->
   <div>
     GESAMTPREIS: {{fullPrice|currency:"EUR":"symbol"}}
   </div>
-
+  <button mat-raised-button (click)="goToCheckout()">Bestellung abschließen</button>
 </div>

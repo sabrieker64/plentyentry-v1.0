@@ -2,7 +2,9 @@ package at.commodussolutions.plentyentry.ordermanagement.event.dbInit;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
+import at.commodussolutions.plentyentry.ordermanagement.event.service.EventService;
 import lombok.Builder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -12,9 +14,13 @@ import java.util.ArrayList;
 @Component
 public class EventBuilder {
 
+    @Autowired
     private EventRepository eventRepository;
 
-    public void buildEvent(){
+    @Autowired
+    private EventService eventService;
+
+    public void buildEvent() {
         ArrayList<String> eventImageUrls1 = new ArrayList<>();
         ArrayList<String> eventImageUrls2 = new ArrayList<>();
 
@@ -31,13 +37,14 @@ public class EventBuilder {
         event.setDate(LocalDate.now());
         event.setDescription("Für jeden Tiroler eine Saufparty!");
         event.setPrice(8.99);
-        event.setTicketCounter(Long.parseLong("1"));
+        event.setTicketCounter(Long.parseLong("10"));
         event.setTicketId(1L);
         event.setAddress("Miau miau Cat Cat");
         event.setCity("Seini Hons");
         event.setEventImageUrls(eventImageUrls1);
         //Build Data
-        eventRepository.save(event);
+        eventService.createNewEvent(event);
+        //eventRepository.save(event);
 
         //EVENT NUMBER 2 -> Bourbon Street
         Event event2 = new Event();
@@ -51,6 +58,7 @@ public class EventBuilder {
         event2.setCity("Fieberbrooklyn");
         event2.setEventImageUrls(eventImageUrls2);
         //Build Data
-        eventRepository.save(event2);
+        //eventRepository.save(event2);
+        eventService.createNewEvent(event2);
     }
 }

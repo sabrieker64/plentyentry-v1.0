@@ -236,6 +236,9 @@
                         <class>
                             at.commodussolutions.plentyentry.ordermanagement.payment.stripe.enums.StripePaymentTypes
                         </class>
+                        <class>
+                            at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.CreateTokenDTO
+                        </class>
                     </classes>
                     <outputKind>module</outputKind>
                     <outputFile>plentyentry-frontend/src/app/definitions/objects.ts</outputFile>

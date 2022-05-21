@@ -4,9 +4,11 @@ package at.commodussolutions.plentyentry.ordermanagement.event.service.impl;
  */
 
 
+import at.commodussolutions.plentyentry.ordermanagement.event.aws.service.AmazonClient;
 import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
 import at.commodussolutions.plentyentry.ordermanagement.event.service.EventService;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketService;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
@@ -27,9 +29,12 @@ import java.util.Set;
 public class EventServiceImpl implements EventService {
     @Autowired
     private EventRepository eventRepository;
-
     @Autowired
     private UserService userService;
+    @Autowired
+    private TicketService ticketService;
+    @Autowired
+    private AmazonClient amazonClient;
 
     @Override
     public List<Event> getAllEvents() {
@@ -41,12 +46,9 @@ public class EventServiceImpl implements EventService {
 
         User user = userService.getUserByJWTToken();
 
-        if(user.getUserType().equals(UserType.MAINTAINER) || user.getUserType().equals(3) || user.getUserType().equals(UserType.SUPERADMIN) || user.getUserType().equals(4) || user.getUserType().equals(UserType.ADMIN) || user.getUserType().equals(2) ) {
-
+        if (user.getUserType().equals(UserType.MAINTAINER) || user.getUserType().equals(UserType.SUPERADMIN) || user.getUserType().equals(UserType.ADMIN)) {
             Set<Event> maintainedEvents = user.getEntertainedEvents();
-            List<Event> maintainedEventsList = new ArrayList<>(maintainedEvents);
-
-            return maintainedEventsList;
+            return new ArrayList<>(maintainedEvents);
         }
 
         throw new NotFoundException("Sie haben keine Veranstaltungen");
@@ -55,7 +57,10 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event createNewEvent(Event event) {
-        return eventRepository.save(event);
+        var savedEvent = eventRepository.save(event);
+        ticketService.createAutomaticTicketsForNewEvent(savedEvent.getId(), savedEvent.getTicketCounter());
+        //amazonClient.uploadFiles()
+        return savedEvent;
     }
 
     @Override
