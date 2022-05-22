@@ -71,4 +71,8 @@ export class EventDetailComponent implements OnInit {
     data = this.selectedTickets;
     return data;
   }
+
+  goToCheckout() {
+
+  }
 }

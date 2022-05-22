@@ -25,4 +25,6 @@ public interface TicketService {
     List<Ticket> getTicketForEventAndAddToCartByQuantity(Long eventId, Long quantity);
 
     void excludeTicketsFromShoppingcart(Long eventId);
+
+    List<Ticket> findAllTicketsThatAreNotAvailableAnymore(Long eventId);
 }

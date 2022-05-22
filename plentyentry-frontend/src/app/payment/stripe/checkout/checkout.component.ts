@@ -39,8 +39,10 @@ export class CheckoutComponent implements OnInit {
     }
   };
   public stripeForm: FormGroup;
-  eventId: string;
+  eventId: string = "Keine Ahnung";
+  ownerOfShoppingCart: string = " Noch Keiner ";
   quantity: string;
+  calculatedAmount: number;
   shoppingCartObserver: Observable<ShoppingCartDTO>;
   shoppingCart: ShoppingCartDTO;
 
@@ -58,6 +60,7 @@ export class CheckoutComponent implements OnInit {
       name: ['', [Validators.required]]
     });
     this.loadShoppingCart();
+    console.log(this.shoppingCart);
     /* const routeParamEvent = this.route.paramMap.pipe(map(value => this.handleParams(value)));*/
     /* const loadPaymentObject = routeParamEvent.pipe(switchMap(() => this.loadEvent()));
      this.shoppingCartObserver = loadPaymentObject.pipe(
@@ -74,6 +77,8 @@ export class CheckoutComponent implements OnInit {
     console.log('test payment');
     //todo make rest call to stripe api endpoint
     //todo after creating the payment object, confirm or cancel the paymnet
+    // todo 1.Schritt wir holen uns die shoppingcart von dem user und rechnen alle kaufmännisch gerundet zusammen
+    //  danach gibt er uns seine daten in unserem fall entweder paypal oder debit/credit karte
 
   }
 
@@ -106,7 +111,10 @@ export class CheckoutComponent implements OnInit {
     }*/
   private loadShoppingCart() {
     this.userService.getCurrentUser().toPromise().then(data => {
+      console.log(data);
+      this.ownerOfShoppingCart = data.firstName;
       this.shoppingCart = data.shoppingCartDTO;
+      console.log(this.shoppingCart);
     });
   }
 }

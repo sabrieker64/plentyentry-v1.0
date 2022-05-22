@@ -18,4 +18,6 @@ public interface EventService {
 
     Page<Event> getEventsByCriteria(String criteria);
 
+    Long countHowMuchTicketisLeft(Long eventId);
+
 }

@@ -130,4 +130,9 @@ public class TicketServiceImpl implements TicketService {
                     //todo hier nochj bitte die tickets aus der sjoppingcart entfernen
                 });
     }
+
+    @Override
+    public List<Ticket> findAllTicketsThatAreNotAvailableAnymore(Long eventId) {
+        return ticketRepository.getAllByEventId(eventId);
+    }
 }

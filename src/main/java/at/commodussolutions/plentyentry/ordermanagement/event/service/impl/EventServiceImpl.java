@@ -77,4 +77,18 @@ public class EventServiceImpl implements EventService {
     public Page<Event> getEventsByCriteria(String criteria) {
         return null;
     }
+
+    @Override
+    public Long countHowMuchTicketisLeft(Long eventId) {
+        var event = eventRepository.getById(eventId);
+        var allTickets = event.getTicketCounter();
+        var alreadySolOrNotAvaillableAnymore =
+                ticketService.findAllTicketsThatAreNotAvailableAnymore(eventId).stream().count();
+        Long.parseLong(String.valueOf(alreadySolOrNotAvaillableAnymore));
+
+
+        // todo ein eigenes object DTO für die ShoppingCart die von einer listen von tickets beschmückt ist und die
+        //  quiantity hat und den preis
+        return null;
+    }
 }
