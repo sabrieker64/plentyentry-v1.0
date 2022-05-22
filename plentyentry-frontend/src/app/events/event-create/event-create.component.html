@@ -1,30 +1,37 @@
 <div class="container-splide">
-  <splide [options]="
+  <div *ngIf="showEventImagesLoaded">
+    <splide [options]="
     {
       perPage: 1,
       pagination: false
     }
       ">
-    <splide-slide>
-      <figure class="image-thumbnail">
-        <img src="../../../assets/event.jpg">
-      </figure>
-    </splide-slide>
-    <splide-slide>
-      <figure class="image-thumbnail">
-        <img src="../../../assets/event.jpg">
-      </figure>
-    </splide-slide>
-    <splide-slide>
-      <figure class="image-thumbnail">
-        <img src="../../../assets/event.jpg">
-      </figure>
-    </splide-slide>
-  </splide>
 
+      <splide-slide *ngFor="let image of showEventImages">
+        <figure class="image-thumbnail">
+          <img [src]="image">
+        </figure>
+      </splide-slide>
+
+    </splide>
+  </div>
+
+
+  <!--
+    <splide-slide>
+      <figure class="image-thumbnail">
+        <img src="../../../assets/event.jpg">
+      </figure>
+    </splide-slide>
+    <splide-slide>
+      <figure class="image-thumbnail">
+        <img src="../../../assets/event.jpg">
+      </figure>
+    </splide-slide>
+  !-->
   <div class="event-name box--shadow margin-bottom--standard">
     <h2>{{ eventDTO.name }}</h2>
-    <h4>Die coolen Events GmbH</h4>
+    <h4>{{ eventDTO.description }}</h4>
   </div>
 
   <h3 class="event-headline">Eventinfo:</h3>
@@ -41,12 +48,14 @@
           <mat-form-field class="form-element full-width" appearance="outline">
             <mat-label>Fotos</mat-label>
 
-            <ngx-mat-file-input [multiple]="true" formControlName="files"
+            <ngx-mat-file-input [multiple]="true"
+                                [(ngModel)]="eventDTO.eventImageUrls"
+                                formControlName="files"
                                 id="file"
                                 class="form-control"
                                 matInput
                                 (change)="onFileChange($event)"
-                                accept="{{accept}}"
+                                accept="{{accept}} "
             >
               <mat-icon ngxMatFileInputIcon>folder</mat-icon>
             </ngx-mat-file-input>

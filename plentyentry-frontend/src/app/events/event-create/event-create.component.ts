@@ -5,6 +5,8 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {ErrorService} from "../../../library/error-handling/error.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {delay} from "rxjs/operators";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-event-create',
@@ -17,9 +19,13 @@ export class EventCreateComponent implements OnInit {
   eventDTO: EventDTO = <EventDTO>{};
   createFormGroup: FormGroup;
 
+
+  showEventImages: string[] = [];
+  showEventImagesLoaded: boolean = false;
+
   accept: string = ".png, .jpg, .jpeg";
 
-  constructor(private eventService: EventService, private errorHandling: ErrorService, private fb: FormBuilder, private router: Router) {
+  constructor(private eventService: EventService, private errorHandling: ErrorService, private fb: FormBuilder, private router: Router, private sanitizer: DomSanitizer) {
   }
 
   ngOnInit(): void {
@@ -45,19 +51,37 @@ export class EventCreateComponent implements OnInit {
   }
 
 
+
   onFileChange(event: any) {
 
 
-    const reader = new FileReader();
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.eventDTO.eventImageUrls[this.eventImageCounter] = reader.result as string;
+    delay(1000);
 
-        this.eventImageCounter++;
-      };
+
+    const files = <any>this.eventDTO.eventImageUrls;
+    this.showEventImagesLoaded = false;
+    this.showEventImages = [];
+
+    if (files.length === 0)
+      return;
+    const mimeType = files[0].type;
+
+    const reader = new FileReader();
+
+
+    for (var i = 0; i < files.length; i++) {
+      reader.readAsDataURL(files[i]);
+      reader.onload = (_event) => {
+        var withoutBase = reader.result as string;
+        withoutBase = withoutBase.split(',')[1];
+        this.showEventImages.push(this.sanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + withoutBase.toString()) as string)
+      }
     }
+
+
+    this.showEventImagesLoaded = true;
+
+
   }
 
 
