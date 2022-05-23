@@ -29,9 +29,17 @@
       </figure>
     </splide-slide>
   !-->
-  <div class="event-name box--shadow margin-bottom--standard">
-    <h2>{{ eventDTO.name }}</h2>
-    <h4>{{ eventDTO.description }}</h4>
+  <div class="event-name box--shadow margin-bottom--standard"
+       *ngIf="eventDTO.name || eventDTO.city || eventDTO.address || eventDTO.startDateTime || eventDTO.endDateTime || eventDTO.price || eventDTO.ticketCounter || eventDTO.description
+    ">
+    <h2 *ngIf="eventDTO.name">Name: {{ eventDTO.name }}</h2>
+    <h4 *ngIf="eventDTO.city">Stadt: {{ eventDTO.city }}</h4>
+    <h4 *ngIf="eventDTO.address">Adresse: {{ eventDTO.address }}</h4>
+    <h4 *ngIf="eventDTO.startDateTime">Startdatum: {{ eventDTO.startDateTime | date: 'dd.MM.yyyy HH:mm'}} Uhr</h4>
+    <h4 *ngIf="eventDTO.endDateTime">Enddatum: {{ eventDTO.endDateTime | date: 'dd.MM.yyyy HH:mm'}} Uhr</h4>
+    <h4 *ngIf="eventDTO.price">Preis: {{ eventDTO.price | currency: 'EUR'}}</h4>
+    <h4 *ngIf="eventDTO.ticketCounter">Anzahl der verfügbaren Tickets: {{ eventDTO.ticketCounter }}</h4>
+    <h4 *ngIf="eventDTO.description">Beschreibung: {{ eventDTO.description }}</h4>
   </div>
 
   <h3 class="event-headline">Eventinfo:</h3>
@@ -127,17 +135,62 @@
         </div>
         <div class="event-detail--box-2">
           <mat-form-field appearance="outline" class="event-date--formfield">
-            <mat-label>Datum</mat-label>
-            <input name="eventDate" formControlName="eventDate" matInput [matDatepicker]="picker1"
-                   [(ngModel)]="eventDTO.date">
-            <!--
-            <mat-error *ngIf="createFormGroup.get('eventDate')?.errors">
-              <p *ngIf="createFormGroup.get('eventDate')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+
+            <mat-placeholder>Start DateTime</mat-placeholder>
+            <mat-datetimepicker-toggle
+              [for]="startDateTimePicker"
+              matSuffix
+            ></mat-datetimepicker-toggle>
+            <mat-datetimepicker
+              #startDateTimePicker
+              type="datetime"
+            >
+            </mat-datetimepicker>
+            <input
+              name="eventStartDateTime" formControlName="eventStartDateTime" matInput
+              [(ngModel)]="eventDTO.startDateTime" [formControl]="startDateTimeDefault"
+              [matDatetimepicker]="startDateTimePicker"
+              required
+              autocomplete="false"
+            />
+
+
+            <mat-error *ngIf="createFormGroup.get('startDateTime')?.errors">
+              <p *ngIf="createFormGroup.get('startDateTime')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
             </mat-error>
-            !-->
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-            <mat-hint>Event Datum eingeben</mat-hint>
+
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="event-detail--box box--shadow">
+        <div class="event-detail--box-1">
+          <mat-icon style="color: #ffffff;" class="icon" aria-hidden="false" aria-label="outlined icon">today</mat-icon>
+        </div>
+        <div class="event-detail--box-2">
+          <mat-form-field appearance="outline" class="event-date--formfield">
+            <mat-placeholder>Ende DateTime</mat-placeholder>
+            <mat-datetimepicker-toggle
+              [for]="endDateTimePicker"
+              matSuffix
+            ></mat-datetimepicker-toggle>
+            <mat-datetimepicker
+              #endDateTimePicker
+              type="datetime"
+            >
+            </mat-datetimepicker>
+            <input
+              name="eventEndDateTime" formControlName="eventEndDateTime" matInput
+              [(ngModel)]="eventDTO.endDateTime" [formControl]="endDateTimeDefault"
+              [matDatetimepicker]="endDateTimePicker"
+              required
+              autocomplete="false"
+            />
+
+
+            <mat-error *ngIf="createFormGroup.get('endDateTime')?.errors">
+              <p *ngIf="createFormGroup.get('endDateTime')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -148,9 +201,9 @@
         </div>
         <div class="event-detail--box-2">
           <mat-form-field class="form-element full-width" appearance="outline">
-            <mat-label>Preis pro Ticket</mat-label>
+            <mat-label>Preis pro Ticket (in Euro und ohne Eurozeichen (€))</mat-label>
             <input name="eventPrice" formControlName="eventPrice" matInput placeholder="9,99"
-                   [(ngModel)]="eventDTO.price" type="text">
+                   [(ngModel)]="eventDTO.price" type="number">
             <mat-error *ngIf="createFormGroup.get('eventPrice')?.errors">
               <p *ngIf="createFormGroup.get('eventPrice')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
             </mat-error>

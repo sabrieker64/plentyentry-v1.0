@@ -8,6 +8,7 @@ import {MaintainedEventEditComponent} from './maintained-event-edit/maintained-e
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MaintainedEventCreateComponent} from './maintained-event-create/maintained-event-create.component';
 import {MaintainedEventScanComponent} from "./maintained-event-scan/maintained-event-scan.component";
+import {BecomeAMaintainerComponent} from './become-amaintainer/become-amaintainer.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {MaintainedEventScanComponent} from "./maintained-event-scan/maintained-e
     MaintainedEventsListComponent,
     MaintainedEventScanComponent,
     MaintainedEventEditComponent,
-    MaintainedEventCreateComponent
+    MaintainedEventCreateComponent,
+    BecomeAMaintainerComponent
   ],
   imports: [
     CommonModule,

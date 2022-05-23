@@ -30,7 +30,16 @@
           <mat-label>Datum</mat-label>
           <input matInput [matDatepicker]="picker1" name="date"
                  formControlName="date"
-                 [(ngModel)]="eventDTO.date">
+                 [(ngModel)]="eventDTO.startDateTime">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Datum</mat-label>
+          <input matInput [matDatepicker]="picker1" name="date"
+                 formControlName="date"
+                 [(ngModel)]="eventDTO.endDateTime">
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>

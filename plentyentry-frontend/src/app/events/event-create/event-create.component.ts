@@ -5,16 +5,37 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {ErrorService} from "../../../library/error-handling/error.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {delay} from "rxjs/operators";
 import {DomSanitizer} from "@angular/platform-browser";
+import {MAT_DATE_FORMATS} from "@angular/material/core";
+
+export const MY_DATE_FORMATS = {
+
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  },
+
+};
+
 
 @Component({
   selector: 'app-event-create',
   templateUrl: './event-create.component.html',
-  styleUrls: ['./event-create.component.scss']
+  styleUrls: ['./event-create.component.scss'],
+  providers: [
+    {provide: MAT_DATE_FORMATS, useValue: 'MY_DATE_FORMATS'}
+  ]
 })
 export class EventCreateComponent implements OnInit {
 
+  startDateTimeDefault = new FormControl(new Date().getDate())
+  endDateTimeDefault = new FormControl(new Date().getDate())
   eventImageCounter: number = 0;
   eventDTO: EventDTO = <EventDTO>{};
   createFormGroup: FormGroup;
@@ -33,12 +54,19 @@ export class EventCreateComponent implements OnInit {
       "files": new FormControl([], [Validators.required]),
       "eventName": new FormControl('', [Validators.required, Validators.minLength(2)]),
       "eventCity": new FormControl('', [Validators.required, Validators.minLength(2)]),
-      "eventDate": new FormControl(new Date()),
+      "eventStartDateTime": new FormControl(new Date().getDate()),
+      "eventEndDateTime": new FormControl(new Date().getDate()),
       "eventAddress": new FormControl('', [Validators.required, Validators.minLength(2)]),
       "eventPrice": new FormControl('', [Validators.required]),
       "eventTicketCounter": new FormControl('', [Validators.required]),
       "eventDescription": new FormControl('', [Validators.required]),
     });
+
+
+    this.eventDTO.startDateTime = new Date();
+    this.eventDTO.endDateTime = new Date();
+
+
   }
 
   createEvent() {
@@ -51,14 +79,14 @@ export class EventCreateComponent implements OnInit {
   }
 
 
-
   onFileChange(event: any) {
 
 
-    delay(1000);
-
-
     const files = <any>this.eventDTO.eventImageUrls;
+
+    console.log(this.eventDTO.eventImageUrls)
+    console.log("OIIIIIIIII")
+
     this.showEventImagesLoaded = false;
     this.showEventImages = [];
 
@@ -66,18 +94,24 @@ export class EventCreateComponent implements OnInit {
       return;
     const mimeType = files[0].type;
 
-    const reader = new FileReader();
-
 
     for (var i = 0; i < files.length; i++) {
-      reader.readAsDataURL(files[i]);
+      var currentFile = files[i];
+
+      const reader = new FileReader();
+      console.log("oi");
+      reader.readAsDataURL(currentFile);
       reader.onload = (_event) => {
         var withoutBase = reader.result as string;
         withoutBase = withoutBase.split(',')[1];
-        this.showEventImages.push(this.sanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + withoutBase.toString()) as string)
+        this.showEventImages.push(this.sanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + withoutBase.toString()) as string);
       }
+
     }
 
+    console.log("--------------")
+    console.log(this.showEventImages);
+    console.log("-------------")
 
     this.showEventImagesLoaded = true;
 

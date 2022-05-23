@@ -34,11 +34,17 @@ export class ToolBarComponent implements OnInit {
 
   loadShoppingCart() {
     return this.shoppincartService.getShoppingcart().subscribe(shoppingcart => {
-      console.log(shoppingcart);
+
       if (shoppingcart != null) {
+        console.log("Shoppingcart vorhanden");
         this.shoppingCartValue = shoppingcart.tickets.length;
       } else {
-        this.errorHandling.openErrorBoxAndGoToLogin("Bitte melden Sie sich an, um alle Features verwenden zu können");
+        console.log("Benutzer besitzt keine Shoppingcart");
+        if (this.loggedIn == false) {
+
+          this.errorHandling.openErrorBoxAndGoToLogin("Bitte melden Sie sich an, um alle Features verwenden zu können");
+
+        }
       }
     }, error => {
       //console.log(error);

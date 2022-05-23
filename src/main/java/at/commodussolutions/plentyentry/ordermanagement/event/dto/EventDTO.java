@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +15,8 @@ import java.util.Set;
 public class EventDTO {
     private Long id;
     private String name;
-    private LocalDate date;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
     private String description;
     private Double price;
     private Integer ticketCounter;

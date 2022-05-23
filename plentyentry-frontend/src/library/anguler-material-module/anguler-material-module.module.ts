@@ -36,6 +36,7 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatSliderModule} from "@angular/material/slider";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {NgxMatFileInputModule} from "@angular-material-components/file-input";
+import {MatDatetimepickerModule, MatNativeDatetimeModule} from "@mat-datetimepicker/core";
 
 const materialModules = [
   MatSliderModule,
@@ -75,6 +76,8 @@ const materialModules = [
   MatNativeDateModule,
   ZXingScannerModule,
   NgxMatFileInputModule,
+  MatDatetimepickerModule,
+  MatNativeDatetimeModule,
 ];
 
 @NgModule({

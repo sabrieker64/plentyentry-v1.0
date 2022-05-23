@@ -5,7 +5,7 @@ import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRe
 import lombok.Builder;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Builder
@@ -28,7 +28,8 @@ public class EventBuilder {
         //EVENT NUMBER 1 -> Jogassen
         Event event = new Event();
         event.setName("Jogassn");
-        event.setDate(LocalDate.now());
+        event.setStartDateTime(LocalDateTime.now());
+        event.setEndDateTime(LocalDateTime.now());
         event.setDescription("Für jeden Tiroler eine Saufparty!");
         event.setPrice(8.99);
         event.setTicketCounter(1);
@@ -42,7 +43,8 @@ public class EventBuilder {
         //EVENT NUMBER 2 -> Bourbon Street
         Event event2 = new Event();
         event2.setName("Bourbon Street");
-        event2.setDate(LocalDate.now());
+        event2.setStartDateTime(LocalDateTime.now());
+        event2.setEndDateTime(LocalDateTime.now());
         event2.setDescription("Für jeden Schicker eine Saufparty!");
         event2.setPrice(10.00);
         event2.setTicketCounter(4);
