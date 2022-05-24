@@ -18,6 +18,7 @@ export class ToolBarComponent implements OnInit {
   shoppingCartValue: number = 0;
   userType: UserType;
   hasSuperPriviliges: boolean = false;
+  hasStdPriviliges: boolean = false;
 
   constructor(private loginRegisterService: LoginRegisterService, private http: HttpClient, private errorHandling: ErrorService, private router: Router, private shoppincartService: ShoppingcartService, private userService: UserDetailService) {
   }
@@ -83,7 +84,10 @@ export class ToolBarComponent implements OnInit {
         this.loggedIn = false;
       }
 
-      if (loggedInUser.userType == "ADMIN" || loggedInUser.userType == "SUPERADMIN" || loggedInUser.userType == "MAINTAINER") {
+      if (loggedInUser.userType == "ADMIN" || loggedInUser.userType == "SUPERADMIN") {
+        this.hasSuperPriviliges = true;
+        this.hasStdPriviliges = true;
+      } else if (loggedInUser.userType == "MAINTAINER") {
         this.hasSuperPriviliges = true;
       }
 

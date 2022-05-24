@@ -218,8 +218,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
-    public User enableUser (String email) {
+    public User enableUser(String email) {
         var enabledUser = userRepository.getByEmail(email);
         enabledUser.setEnabled(true);
         return userRepository.save(enabledUser);
@@ -227,6 +226,11 @@ public class UserServiceImpl implements UserService {
 
 
     //user Service
+
+    @Override
+    public List<User> getAllUser() {
+        return userRepository.findAll(); //ticketRepository.findAllByShoppingCartId(loggedInUser);
+    }
 
     @Override
     public List<Ticket> getUserTickets(Long id) {

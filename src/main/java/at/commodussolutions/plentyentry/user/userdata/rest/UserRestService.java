@@ -61,8 +61,10 @@ public interface UserRestService {
     @ResponseBody
     List<TicketDTO> getUserTickets(@PathVariable Long id);
 
-
     @PutMapping
     @ResponseBody
     UserDTO updateUser(@RequestBody UserDTO updatedUser);
+
+    @GetMapping("/special-privileges/list")
+    List<UserDTO> getAllUser();
 }
