@@ -7,6 +7,7 @@ import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -36,7 +37,7 @@ public class EventBuilder {
         event.setName("Jogassn");
         event.setDate(LocalDate.now());
         event.setDescription("Für jeden Tiroler eine Saufparty!");
-        event.setPrice(8.99);
+        event.setPrice(BigDecimal.valueOf(8.99));
         event.setTicketCounter(Long.parseLong("10"));
         event.setTicketId(1L);
         event.setAddress("Miau miau Cat Cat");
@@ -51,7 +52,7 @@ public class EventBuilder {
         event2.setName("Bourbon Street");
         event2.setDate(LocalDate.now());
         event2.setDescription("Für jeden Schicker eine Saufparty!");
-        event2.setPrice(10.00);
+        event2.setPrice(BigDecimal.valueOf(10.00));
         event2.setTicketCounter(Long.parseLong("4"));
         event2.setTicketId(5L);
         event2.setAddress("Schicker Blowis");

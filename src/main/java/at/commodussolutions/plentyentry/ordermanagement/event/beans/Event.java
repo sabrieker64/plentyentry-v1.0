@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class Event {
     private String description;
 
     @Column(name = "PRICE")
-    private Double price;
+    private BigDecimal price;
 
     //todo die anzahl von gewünscten freistellung von tickets wird hier eingetragen dann nach jeder kaufbestäting
     // wird heruntergezählt somit können wir die verfügbaren tickets aktuell halten

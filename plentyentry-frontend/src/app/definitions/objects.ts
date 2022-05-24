@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-05-21 21:16:53.
+// Generated using typescript-generator version 2.32.889 on 2022-05-23 19:38:05.
 
 export interface UserDTO {
     id: number;
@@ -101,10 +101,20 @@ export interface PaymentMethodDTO {
 
 export interface ShoppingCartDTO {
   id: number;
-  tickets: TicketDTO[];
+  tickets: ShoppingCartTicketDTOPerEvent[];
 }
 
 export interface Serializable {
+}
+
+export interface ShoppingCartTicketDTOPerEvent {
+  ticketDTOS: TicketDTO[];
+  quantity: number;
+  amount: number;
+  eventName: string;
+  eventDescription: string;
+  eventDate: Date;
+  pricePerTicket: number;
 }
 
 export interface TicketDTO {

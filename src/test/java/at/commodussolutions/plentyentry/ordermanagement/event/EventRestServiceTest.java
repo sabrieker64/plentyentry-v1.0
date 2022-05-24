@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -140,7 +141,7 @@ public class EventRestServiceTest {
         newEvent.setName("SWINGER PARTY");
         newEvent.setDate(LocalDate.now());
         newEvent.setDescription("Für jeden Schicker eine Eskalation!");
-        newEvent.setPrice(10.00);
+        newEvent.setPrice(BigDecimal.valueOf(10.00));
         newEvent.setTicketCounter(Long.parseLong("4"));
         newEvent.setTicketId(5L);
         newEvent.setAddress("Schicker Blowis");
