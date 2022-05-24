@@ -51,7 +51,6 @@ public class Event {
     @Column(name = "CITY")
     private String city;
 
-//TODO: Saving images on s3 bucket and checking the url if it exists
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "EVENT_IMAGE_URLS", joinColumns = @JoinColumn(name = "EVENT_ID"))
