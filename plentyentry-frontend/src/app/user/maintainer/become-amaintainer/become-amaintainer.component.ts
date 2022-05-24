@@ -19,10 +19,11 @@ export class BecomeAMaintainerComponent implements OnInit {
   companyName: string = "";
   uid: string = "";
   email: string = "";
+  phoneNumber: string = "";
   description: string = "";
 
 
-  //TODO: companyName AND uid
+  //TODO: companyName AND uid AND PHONE NUMBER
 
   constructor(private eventService: EventService, private errorHandling: ErrorService, private fb: FormBuilder, private router: Router, private sanitizer: DomSanitizer) {
   }
@@ -34,6 +35,7 @@ export class BecomeAMaintainerComponent implements OnInit {
       "companyName": new FormControl('',),
       "uid": new FormControl('',),
       "email": new FormControl('', [Validators.required]),
+      "phoneNumber": new FormControl('', [Validators.required]),
       "description": new FormControl('', [Validators.required]),
     });
   }

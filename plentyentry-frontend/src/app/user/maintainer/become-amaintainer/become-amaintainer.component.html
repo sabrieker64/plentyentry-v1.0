@@ -97,6 +97,24 @@
         </div>
       </div>
 
+      <div class="event-detail--box box--shadow">
+        <div class="event-detail--box-1">
+          <mat-icon style="color: #ffffff;" class="icon" aria-hidden="false" aria-label="outlined icon">badge</mat-icon>
+        </div>
+        <div class="event-detail--box-2">
+          <mat-form-field class="form-element full-width" appearance="outline">
+            <mat-label>Telefonnumer</mat-label>
+            <input name="email" formControlName="email" matInput placeholder="Telefonnummer"
+                   [(ngModel)]="phoneNumber" type="text">
+            <mat-error *ngIf="becomeAEntertainerFormGroup.get('phoneNumber')?.errors">
+              <p *ngIf="becomeAEntertainerFormGroup.get('phoneNumber')?.hasError('required')">Dieses Feld ist ein
+                Pflichtfeld</p>
+            </mat-error>
+            <mat-hint>Telefonnumer</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+
       <div class="description-box box--shadow">
         <mat-form-field class="form-element full-width" appearance="outline" style="width: 100%">
           <mat-label>Beschreibung</mat-label>
