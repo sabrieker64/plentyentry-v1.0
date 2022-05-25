@@ -6,15 +6,24 @@
       <mat-icon>manage_accounts</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <a mat-menu-item routerLink="maintainedevents/maintained/events/create" *ngIf="loggedIn">
+      <a mat-menu-item routerLink="special-privileges/user/list" *ngIf="loggedIn && hasSuperPriviliges">
+        <mat-icon color="primary">fiber_new</mat-icon>
+        <span>User anzeigen</span>
+      </a>
+      <a mat-menu-item routerLink="maintainedevents/maintained/become-a-maintainer"
+         *ngIf="loggedIn && hasStdPriviliges == false">
+        <mat-icon color="primary">stars</mat-icon>
+        <span>Werde ein Veranstalter</span>
+      </a>
+      <a mat-menu-item routerLink="maintainedevents/maintained/events/create" *ngIf="loggedIn && hasStdPriviliges">
         <mat-icon color="primary">fiber_new</mat-icon>
         <span>Neues Event erstellen</span>
       </a>
-      <a mat-menu-item routerLink="maintainedevents/maintained/events/scan" *ngIf="loggedIn">
+      <a mat-menu-item routerLink="maintainedevents/maintained/events/scan" *ngIf="loggedIn && hasStdPriviliges">
         <mat-icon color="primary">scanner</mat-icon>
         <span>Scan Event</span>
       </a>
-      <a mat-menu-item routerLink="maintainedevents/maintained/events/list" *ngIf="loggedIn">
+      <a mat-menu-item routerLink="maintainedevents/maintained/events/list" *ngIf="loggedIn && hasStdPriviliges">
         <mat-icon color="primary">list_alt</mat-icon>
         <span>Meine Veranstaltungen anzeigen</span>
       </a>
@@ -22,7 +31,7 @@
         <mat-icon color="primary">settings</mat-icon>
         <span>Benutzer Details</span>
       </a>
-      <a mat-menu-item routerLink="event/event-create" *ngIf="loggedIn">
+      <a mat-menu-item routerLink="event/event-create" *ngIf="loggedIn && hasStdPriviliges">
         <mat-icon color="primary">edit_calendar</mat-icon>
         <span>Events anlegen</span>
       </a>
@@ -30,7 +39,7 @@
         <mat-icon color="primary">event_note</mat-icon>
         <span>Gekaufte Tickets anzeigen</span>
       </a>
-      <a mat-menu-item *ngIf="loggedIn">
+      <a mat-menu-item *ngIf="loggedIn && hasStdPriviliges">
         <mat-icon color="primary">trending_up</mat-icon>
         <span>Daten Analyse</span>
       </a>

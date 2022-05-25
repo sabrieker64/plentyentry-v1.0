@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -27,8 +27,11 @@ public class Event {
     @Column(name = "NAME")
     private String name;
 
-    @Column(name = "DATE")
-    private LocalDate date;
+    @Column(name = "STARTDATETIME")
+    private LocalDateTime startDateTime;
+
+    @Column(name = "ENDDATETIME")
+    private LocalDateTime endDateTime;
 
     @Column(name = "DESCRIPTION")
     private String description;
@@ -48,7 +51,6 @@ public class Event {
     @Column(name = "CITY")
     private String city;
 
-//TODO: Saving images on s3 bucket and checking the url if it exists
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "EVENT_IMAGE_URLS", joinColumns = @JoinColumn(name = "EVENT_ID"))

@@ -4,6 +4,7 @@ import {MaintainerService} from "../service/maintainer.service";
 import {EventDTO} from "../../../definitions/objects";
 import {Router} from "@angular/router";
 import {EventService} from "../../../events/service/event.service";
+import {ErrorService} from "../../../../library/error-handling/error.service";
 
 @Component({
   selector: 'app-maintained-events-list',
@@ -18,7 +19,7 @@ export class MaintainedEventsListComponent implements OnInit {
 
   editEvent: {[key: number]: boolean} = {};
 
-  constructor(private maintainerService: MaintainerService, private router: Router, private eventService: EventService) {
+  constructor(private maintainerService: MaintainerService, private router: Router, private eventService: EventService, private errorHandling: ErrorService) {
   }
 
   ngOnInit(): void {
@@ -37,6 +38,11 @@ export class MaintainedEventsListComponent implements OnInit {
   loadAllMaintainedEvents() {
     return this.maintainerService.getMaintainedEvents().subscribe(maintainedEvents => {
       this.allMaintainedEvents = new MatTableDataSource(maintainedEvents);
+
+      if (maintainedEvents.length == 0) {
+        this.errorHandling.openInformation("Sie haben keine Events erstellt");
+      }
+
       this.loaded = true;
       console.log(this.allMaintainedEvents);
     }, error => {

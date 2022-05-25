@@ -1,6 +1,6 @@
 <div class="container">
   <mat-form-field appearance="outline" class="form--full-width">
-    <mat-label>Suche</mat-label>
+    <mat-label>Eventnamen oder Stadtnamen eingeben</mat-label>
     <input matInput placeholder="Suche" (keyup)="filterEventsWithSearch($event)" name="search" id="searchEventInputFilter">
   </mat-form-field>
   <div *ngIf="emptyList">
@@ -42,8 +42,8 @@
             <div class="event-card--inner" (click)="getEventDetail(event.id)">
 
               <div class="event-card--date">
-                <h3>{{ getDay(event.date) }} </h3>
-                <h3>{{ getMonth(event.date) }}</h3>
+                <h3>{{ getDay(event.startDateTime) }} </h3>
+                <h3>{{ getMonth(event.startDateTime) }}</h3>
               </div>
 
               <figure class="event-card--thumbnail">

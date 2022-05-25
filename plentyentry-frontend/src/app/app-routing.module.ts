@@ -33,6 +33,10 @@ const routes: Routes = [
   {
     path: 'toolbar',
     loadChildren: () => import('../library/tool-bar/tool-bar.module').then(m => m.ToolBarModule)
+  },
+  {
+    path: 'special-privileges',
+    loadChildren: () => import('./user/special-privileges/special-privileges.module').then(m => m.SpecialPrivilegesModule)
   }
 
 ];

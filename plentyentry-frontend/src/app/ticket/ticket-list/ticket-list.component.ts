@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TicketService} from "../service/ticket.service";
 import {TicketDTO} from "../../definitions/objects";
 import {DomSanitizer} from "@angular/platform-browser";
+import {ErrorService} from "../../../library/error-handling/error.service";
 
 @Component({
   selector: 'app-ticket-list',
@@ -14,7 +15,8 @@ export class TicketListComponent implements OnInit {
   allTickets: TicketDTO[];
   qrCode: any = "";
 
-  constructor(private ticketService: TicketService, private sanitizer: DomSanitizer) { }
+  constructor(private ticketService: TicketService, private sanitizer: DomSanitizer, private errorHandling: ErrorService) {
+  }
 
   ngOnInit(): void {
     this.loadAllEvents();
@@ -23,7 +25,12 @@ export class TicketListComponent implements OnInit {
   loadAllEvents() {
     return this.ticketService.getBoughtTickets().subscribe(tickets => {
       this.allTickets = tickets;
-      this.loaded=true;
+      this.loaded = true;
+
+      if (tickets.length == 0) {
+        this.errorHandling.openInformation("Sie haben noch keine Tickets gekauft");
+      }
+
     }, error => {
       console.log(error);
     });
