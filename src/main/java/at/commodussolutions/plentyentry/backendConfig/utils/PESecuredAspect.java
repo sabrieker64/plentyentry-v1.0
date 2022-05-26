@@ -46,6 +46,9 @@ public class PESecuredAspect {
     public void annotationChecker(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
+        if (env.acceptsProfiles(Profiles.of("test"))) {
+            return;
+        }
         PESecured peSecured = AnnotationUtils.findAnnotation(method, PESecured.class);
         if (peSecured == null) {
             throw new NotAllowedException("No Permissioncheck provided on this RestMethod, please define the " +
