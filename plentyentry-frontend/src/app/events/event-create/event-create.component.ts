@@ -84,8 +84,6 @@ export class EventCreateComponent implements OnInit {
 
     const files = <any>this.eventDTO.eventImageUrls;
 
-    console.log(this.eventDTO.eventImageUrls)
-    console.log("OIIIIIIIII")
 
     this.showEventImagesLoaded = false;
     this.showEventImages = [];

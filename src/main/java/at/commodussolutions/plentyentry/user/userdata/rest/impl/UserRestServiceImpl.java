@@ -94,9 +94,5 @@ public class UserRestServiceImpl implements UserRestService {
         return userMapper.mapToDTO(userService.updateUser(user));
     }
 
-    @Override
-    public List<UserDTO> getAllUser() {
-        List<User> user = userService.getAllUser();
-        return userMapper.mapToListDTO(user);
-    }
+
 }

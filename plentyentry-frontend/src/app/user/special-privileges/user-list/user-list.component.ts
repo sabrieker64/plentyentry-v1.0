@@ -48,7 +48,9 @@ export class UserListComponent implements OnInit {
   }
 
   editUser(id: number) {
-    // TODO CHECK IN BACKEND IF PRIVILEGE IS OK
+    this.router.navigateByUrl('/user/edit/' + id).then(r => {
+
+    });
   }
 
   deleteUser(id: number) {

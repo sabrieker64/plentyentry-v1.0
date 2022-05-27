@@ -66,7 +66,5 @@ public interface UserRestService {
     @ResponseBody
     UserDTO updateUser(@RequestBody UserDTO updatedUser);
 
-    @GetMapping("/special-privileges/list")
-        //@PESecured({ADMIN, SUPERADMIN})
-    List<UserDTO> getAllUser();
+
 }

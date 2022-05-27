@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {EventDTO, UserDTO} from "../../../definitions/objects";
+import {EventDTO} from "../../../definitions/objects";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MaintainerService {
 
-  private baseUrl: string = environment.baseUrl + 'api/backend/event';
+  private baseUrl: string = environment.baseUrl + 'api/backend/event/special-privileges';
   private baseUrlQRCode: string = environment.baseUrl + 'api/backend/qrcode';
   //private baseUrl: string = "http://172.16.254.133/" + 'api/backend/event';
 
