@@ -13,13 +13,15 @@ export class ErrorService {
 
   openErrorBox(message: string) {
     this.errorBox.open(message, 'Verstanden', {
-      panelClass: ['error-box']
+      panelClass: ['error-box'],
+      duration: 3000
     });
   }
 
   openErrorBoxAndGoToLogin(message: string) {
     this.errorBox.open(message, 'Zum Login', {
-      panelClass: ['warning-snackbar']
+      panelClass: ['warning-snackbar'],
+      duration: 3000
     }).onAction().subscribe(() => {
       this.router.navigateByUrl("/user/login");
     });
@@ -27,7 +29,8 @@ export class ErrorService {
 
   openInformation(message: string) {
     this.errorBox.open(message, 'Verstanden', {
-      panelClass: ['warning-snackbar']
+      panelClass: ['warning-snackbar'],
+      duration: 3000
     });
   }
 

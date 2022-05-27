@@ -43,14 +43,14 @@ export class ToolBarComponent implements OnInit {
         console.log("Benutzer besitzt keine Shoppingcart");
         if (this.loggedIn == false) {
 
-          this.errorHandling.openErrorBoxAndGoToLogin("Bitte melden Sie sich an, um alle Features verwenden zu können");
+          this.errorHandling.openErrorBoxAndGoToLogin("Sie besitzen keine ShoppingCart!");
 
         }
       }
     }, error => {
       //console.log(error);
       //this.errorHandling.openErrorBox(error.message);
-      this.errorHandling.openErrorBoxAndGoToLogin("Bitte melden Sie sich an, um alle Features verwenden zu können");
+      this.errorHandling.openErrorBoxAndGoToLogin("Sie besitzen keine ShoppingCart!");
 
     });
 

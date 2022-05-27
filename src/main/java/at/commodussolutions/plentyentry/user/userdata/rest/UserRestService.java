@@ -1,12 +1,10 @@
 package at.commodussolutions.plentyentry.user.userdata.rest;
 
-import at.commodussolutions.plentyentry.backendConfig.utils.PESecured;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserLoginDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserRegisterDTO;
-import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,9 +34,9 @@ public interface UserRestService {
 
 
     //This is for login
+    //@PESecured({ADMIN, GUEST, SUPERADMIN, CUSTOMER, MAINTAINER})
     @PostMapping("/authenticate")
     @ResponseBody
-    @PESecured({UserType.ADMIN, UserType.GUEST, UserType.SUPERADMIN, UserType.CUSTOMER, UserType.MAINTAINER})
     UserDTO createJwtToken(@RequestBody UserAuthReqDTO userAuthReqDTO) throws Exception;
 
     //This is after Login to load the user after succesfully auth
@@ -69,5 +67,6 @@ public interface UserRestService {
     UserDTO updateUser(@RequestBody UserDTO updatedUser);
 
     @GetMapping("/special-privileges/list")
+        //@PESecured({ADMIN, SUPERADMIN})
     List<UserDTO> getAllUser();
 }
