@@ -18,6 +18,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.NotAllowedException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -33,6 +34,9 @@ public class PESecuredAspect {
     private Environment env;
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private HttpServletRequest httpServletRequest;
 
     @Pointcut("within(@org.springframework.web.bind.annotation.RestController *)")
     public void isRestControllerMethod() {
@@ -51,11 +55,15 @@ public class PESecuredAspect {
         }
         PESecured peSecured = AnnotationUtils.findAnnotation(method, PESecured.class);
         if (peSecured == null) {
-            throw new NotAllowedException("No Permissioncheck provided on this RestMethod, please define the " +
-                    "anootation for our webapp security");
+            log.info("It should be a security context on this rest call please define one");
+            return;
+            //throw new NotAllowedException("No Permissioncheck provided on this RestMethod, please define the anootation for our webapp security");
         }
         if (env.acceptsProfiles(Profiles.of("qa", "production")) && peSecured != null) {
             UserType[] requiredTypes = peSecured.value();
+            if (httpServletRequest.getRequestURL().toString().contains("authenticate") || httpServletRequest.getRequestURL().toString().contains("event/list")) {
+                return;
+            }
             var PEUser = userService.getUserByJWTToken();
             if (PEUser == null) {
                 throw new NotAllowedException("User is not present!");
