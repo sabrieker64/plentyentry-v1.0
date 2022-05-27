@@ -192,7 +192,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByJWTToken() {
-        if (servletRequest.getPathInfo().contains("authenticate")) {
+        if (servletRequest.getRequestURL().toString().contains("authenticate")) {
             return null;
         }
         var jwtToken = servletRequest.getHeader(AUTHORIZATION);
