@@ -6,7 +6,7 @@
       <mat-icon>manage_accounts</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <a mat-menu-item routerLink="special-privileges/user/list" *ngIf="loggedIn && hasSuperPriviliges">
+      <a mat-menu-item routerLink="special-privileges/user/list" *ngIf="loggedIn && hasSpecialPriviliges">
         <mat-icon color="primary">fiber_new</mat-icon>
         <span>User anzeigen</span>
       </a>
