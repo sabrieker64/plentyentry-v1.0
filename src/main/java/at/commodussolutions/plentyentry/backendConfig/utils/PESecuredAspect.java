@@ -51,8 +51,9 @@ public class PESecuredAspect {
         }
         PESecured peSecured = AnnotationUtils.findAnnotation(method, PESecured.class);
         if (peSecured == null) {
-            throw new NotAllowedException("No Permissioncheck provided on this RestMethod, please define the " +
-                    "anootation for our webapp security");
+            log.info("It should be a security context on this rest call please define one");
+            return;
+            //throw new NotAllowedException("No Permissioncheck provided on this RestMethod, please define the anootation for our webapp security");
         }
         if (env.acceptsProfiles(Profiles.of("qa", "production")) && peSecured != null) {
             UserType[] requiredTypes = peSecured.value();
