@@ -6,9 +6,12 @@ import at.commodussolutions.plentyentry.ordermanagement.event.mapper.EventMapper
 import at.commodussolutions.plentyentry.ordermanagement.event.rest.EventSpecialPrivilegesRestService;
 import at.commodussolutions.plentyentry.ordermanagement.event.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.List;
 
+@RestController
 public class EventSpecialPrivilegesRestServiceImpl implements EventSpecialPrivilegesRestService {
 
     @Autowired
@@ -30,7 +33,7 @@ public class EventSpecialPrivilegesRestServiceImpl implements EventSpecialPrivil
     }
 
     @Override
-    public EventDTO createNewEvent(EventDTO eventDTO) {
+    public EventDTO createNewEvent(EventDTO eventDTO) throws IOException {
         Event event = new Event();
         eventMapper.mapToEntity(eventDTO, event);
         event = eventService.createNewEvent(event);

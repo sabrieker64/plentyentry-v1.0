@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserDTO} from "../../../definitions/objects";
+import {UserDTO, UserType} from "../../../definitions/objects";
 import {LoginRegisterService} from "../../service/login-register.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {ErrorService} from "../../../../library/error-handling/error.service";
@@ -20,6 +20,9 @@ export class UserEditComponent implements OnInit {
   userDTO: UserDTO = <UserDTO>{};
   paramUserId: number;
   allowed: boolean = false;
+
+
+  userTypes: UserType[] = ["GUEST", "CUSTOMER", "ADMIN", "MAINTAINER", "SUPERADMIN"];
 
   currentUserId: number = 0;
 
@@ -45,6 +48,7 @@ export class UserEditComponent implements OnInit {
         "street": new FormControl(),
         "city": new FormControl(),
         "postcode": new FormControl(),
+        "userType": new FormControl(),
       });
 
       this.loadUserDetails(this.currentUserId).then((res) => {
@@ -53,6 +57,8 @@ export class UserEditComponent implements OnInit {
         this.errorHandling.openInformation("Melden Sie sich bitte an!");
       });
 
+
+      console.log(this.userTypes);
     });
 
   }
@@ -74,7 +80,7 @@ export class UserEditComponent implements OnInit {
   updateUser(): void {
     this.specialPrivilegesService.updateUser(this.userDTO).toPromise().then((UserDTO) => {
       console.log(UserDTO);
-      this.router.navigateByUrl("/user/list");
+      this.router.navigateByUrl("/special-privileges/user/list");
     }).catch((error: HttpErrorResponse) => {
       this.errorHandling.openErrorBox(error.message);
     })

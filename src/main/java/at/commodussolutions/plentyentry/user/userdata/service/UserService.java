@@ -42,4 +42,6 @@ public interface UserService extends UserDetailsService {
     User getUserByJWTToken();
 
     List<User> getAllUser();
+
+    void deleteUserById(Long id);
 }

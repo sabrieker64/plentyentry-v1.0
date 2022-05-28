@@ -82,6 +82,15 @@
                  [(ngModel)]="userDTO.city">
         </mat-form-field>
 
+        <mat-form-field class="form-element" appearance="outline">
+          <mat-label>Rolle</mat-label>
+          <mat-select [(value)]="userDTO.userType">
+            <mat-option *ngFor="let userType of userTypes" [value]="userType">
+              {{userType}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
         <button mat-raised-button color="primary" type="submit">Ändern</button>
 
       </div>

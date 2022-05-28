@@ -91,6 +91,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
     public User registerNewUser(User user) {
         boolean isValidEmail = emailValidator.test(user.getEmail());
         if (!isValidEmail) {
@@ -192,7 +197,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByJWTToken() {
-        if (servletRequest.getPathInfo().contains("authenticate")) {
+        if (servletRequest.getRequestURL().toString().contains("authenticate")) {
             return null;
         }
         var jwtToken = servletRequest.getHeader(AUTHORIZATION);

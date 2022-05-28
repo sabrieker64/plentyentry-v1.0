@@ -26,4 +26,8 @@ export class SpecialPrivilegesService {
     return this.http.get<UserDTO>(`${this.baseUrlUser}/` + userId);
   }
 
+  public deleteUserById(userId: number): Observable<UserDTO> {
+    return this.http.delete<any>(`${this.baseUrlUser}/` + userId);
+  }
+
 }

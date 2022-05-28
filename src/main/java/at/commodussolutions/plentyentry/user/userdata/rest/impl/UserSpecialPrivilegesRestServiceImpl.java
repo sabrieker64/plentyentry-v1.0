@@ -6,9 +6,11 @@ import at.commodussolutions.plentyentry.user.userdata.mapper.UserMapper;
 import at.commodussolutions.plentyentry.user.userdata.rest.UserSpecialPrivilegesRestService;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RestController
 public class UserSpecialPrivilegesRestServiceImpl implements UserSpecialPrivilegesRestService {
 
     @Autowired
@@ -35,4 +37,10 @@ public class UserSpecialPrivilegesRestServiceImpl implements UserSpecialPrivileg
         userMapper.mapToEntity(updatedUser, user);
         return userMapper.mapToDTO(userService.updateUser(user));
     }
+
+    @Override
+    public void deleteUserById(Long id) {
+        userService.deleteUserById(id);
+    }
+
 }

@@ -8,7 +8,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {AngularMaterialModule} from "../../../library/anguler-material-module/anguler-material-module.module";
 import {UserEditComponent} from './user-edit/user-edit.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -23,7 +23,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     MatTableModule,
     MatIconModule,
     MatFormFieldModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class SpecialPrivilegesModule {

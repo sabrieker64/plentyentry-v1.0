@@ -27,4 +27,8 @@ public interface UserSpecialPrivilegesRestService {
     @GetMapping("/list")
     @PESecured({ADMIN, SUPERADMIN})
     List<UserDTO> getAllUser();
+
+    @DeleteMapping("/{id}")
+    @PESecured({ADMIN, SUPERADMIN})
+    void deleteUserById(@PathVariable Long id);
 }

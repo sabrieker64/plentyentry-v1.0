@@ -8,7 +8,8 @@
   </div>
 </div>
 
-<mat-tab-group [disablePagination]="true" mat-stretch-tabs class="container container-events example-stretched-tabs">
+<mat-tab-group [disablePagination]="true" (selectedTabChange)="changeDateFilter($event)" mat-stretch-tabs
+               class="container container-events example-stretched-tabs">
   <mat-tab label="Top Events">
     <div class="container-splide">
       <splide [options]="
@@ -63,6 +64,58 @@
       </splide>
     </div>
   </mat-tab>
-  <mat-tab label="In Kürze"> Content 2</mat-tab>
+  <mat-tab label="In Kürze">
+    <div class="container-splide">
+      <splide [options]="
+    {
+      perPage: 4,
+      gap: 30,
+      pagination: false,
+      breakpoints: {
+        '1200': {
+          perPage: 4
+        },
+        '1000': {
+          perPage: 3
+        },
+        '800': {
+          perPage: 2,
+          padding: {right: 0},
+          arrows: true
+        },
+        '600': {
+          perPage: 1,
+          padding: {right: 85},
+          arrows: false
+        }
+      }
+    }
+      ">
+        <splide-slide *ngFor="let event of filteredEvents">
+          <section class="event-card">
+            <div class="event-card--inner" (click)="getEventDetail(event.id)">
+
+              <div class="event-card--date">
+                <h3>{{ getDay(event.startDateTime) }} </h3>
+                <h3>{{ getMonth(event.startDateTime) }}</h3>
+              </div>
+
+              <figure class="event-card--thumbnail">
+                <img
+                  src="{{event.eventImageUrls[0]}}">
+              </figure>
+
+              <div class="event-card--information">
+              <span>
+                <h1>{{ event.name }}</h1>
+                <small>{{ event.city }}</small>
+              </span>
+              </div>
+            </div>
+          </section>
+        </splide-slide>
+      </splide>
+    </div>
+  </mat-tab>
   <mat-tab label="In deiner Nähe"> Content 3</mat-tab>
 </mat-tab-group>
