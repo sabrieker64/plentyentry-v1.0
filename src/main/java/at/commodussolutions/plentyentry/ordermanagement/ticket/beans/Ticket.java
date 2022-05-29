@@ -31,7 +31,7 @@ public class Ticket {
     @Column(name = "STATUS")
     private TicketStatus ticketStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_TICKET_EVENT_ID"), referencedColumnName = "ID")
     private Event event;
 

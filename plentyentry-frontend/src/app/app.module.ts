@@ -18,6 +18,7 @@ import {PaymentCheckoutComponent} from './payment/checkout/payment-checkout.comp
 import {ToolBarModule} from "../library/tool-bar/tool-bar.module";
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
+import {StripeModule} from "stripe-angular";
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import {environment} from '../environments/environment';
     FormsModule,
     ReactiveFormsModule,
     ToolBarModule,
+    StripeModule.forRoot(environment.stripe),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable

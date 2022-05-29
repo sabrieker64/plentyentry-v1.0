@@ -9,6 +9,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
 import {ShoppingCartDTO} from "../../../definitions/objects";
 import {UserDetailService} from "../../../user/service/user-detail.service";
+import {StripeService} from "../stripe.service";
 
 declare var Stripe: any;
 
@@ -51,7 +52,7 @@ export class CheckoutComponent implements OnInit {
   //todo achtung ganz wichtig es kann auch aus dem warenkorb kommen mit einer listen von events oder
 
   constructor(private http: HttpClient, private service: PaymentService,
-              private stripeService: StripeElementsService, private fb: FormBuilder,
+              private stripeService: StripeElementsService, private fb: FormBuilder, private serviceStripe: StripeService,
               private route: ActivatedRoute, private userService: UserDetailService) {
   }
 
@@ -60,7 +61,7 @@ export class CheckoutComponent implements OnInit {
       name: ['', [Validators.required]]
     });
     this.loadShoppingCart();
-    console.log(this.shoppingCart);
+    console.log(this.shoppingCart.tickets);
     /* const routeParamEvent = this.route.paramMap.pipe(map(value => this.handleParams(value)));*/
     /* const loadPaymentObject = routeParamEvent.pipe(switchMap(() => this.loadEvent()));
      this.shoppingCartObserver = loadPaymentObject.pipe(
@@ -71,6 +72,28 @@ export class CheckoutComponent implements OnInit {
 
 
   public createCharge() {
+  }
+
+  cardCaptureReady = false
+
+  onStripeInvalid(error: Error) {
+    console.log('Validation Error', error)
+  }
+
+  onStripeError(error: Error) {
+    console.error('Stripe error', error)
+  }
+
+  setPaymentMethod(token: stripe.paymentMethod.PaymentMethod) {
+    console.log('Stripe Payment Method', token)
+  }
+
+  setStripeToken(token: stripe.Token) {
+    console.log('Stripe Token', token)
+  }
+
+  setStripeSource(source: stripe.Source) {
+    console.log('Stripe Source', source)
   }
 
   makePayment() {
@@ -109,11 +132,12 @@ export class CheckoutComponent implements OnInit {
     private handleError() {
       return of(<ShoppingCartDTO>{});
     }*/
+  invalidError: any;
+  cardDetailsFilledOut: any;
+
   private loadShoppingCart() {
-    this.userService.getCurrentUser().toPromise().then(data => {
-      console.log(data);
-      this.ownerOfShoppingCart = data.firstName;
-      this.shoppingCart = data.shoppingCartDTO;
+    this.serviceStripe.getShoppingcart().toPromise().then(data => {
+      this.shoppingCart = data;
       console.log(this.shoppingCart);
     });
   }

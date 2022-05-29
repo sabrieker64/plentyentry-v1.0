@@ -46,7 +46,7 @@ public class ShoppingCartRestServiceImpl implements ShoppingCartRestService {
             shoppingCartTicketDTOPerEvent.setTicketDTOS(ticketMapper.mapToListDTO(detectedNewEvent));
             shoppingCartTicketDTOPerEvent.setEventName(detectedNewEvent.get(0).getEvent().getName());
             shoppingCartTicketDTOPerEvent.setEventDescription(detectedNewEvent.get(0).getEvent().getDescription());
-            shoppingCartTicketDTOPerEvent.setEventDate(detectedNewEvent.stream().findFirst().orElseThrow().getEvent().getDate());
+            shoppingCartTicketDTOPerEvent.setEventDate(detectedNewEvent.stream().findFirst().orElseThrow().getEvent().getStartDateTime().toLocalDate());
             shoppingCartTicketDTOPerEvent.setPricePerTicket(detectedNewEvent.stream().findFirst().orElseThrow().getEvent().getPrice());
             distinctTickets.add(shoppingCartTicketDTOPerEvent);
         });
