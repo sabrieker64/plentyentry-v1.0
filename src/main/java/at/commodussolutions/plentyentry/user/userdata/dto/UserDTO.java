@@ -1,7 +1,6 @@
 package at.commodussolutions.plentyentry.user.userdata.dto;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
-import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.user.coronastate.dto.CoronaStatusDTO;
 import at.commodussolutions.plentyentry.user.payment.dto.PaymentMethodDTO;
 import at.commodussolutions.plentyentry.user.shoppingcart.dto.ShoppingCartDTO;
@@ -45,4 +44,7 @@ public class UserDTO {
     private List<PaymentMethodDTO> paymentMethod;
     private String jwtToken;
     private ShoppingCartDTO shoppingCartDTO;
+    private String companyName;
+    private String phoneNumber;
+    private String uid;
 }

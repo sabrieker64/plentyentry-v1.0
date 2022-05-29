@@ -84,27 +84,21 @@ export class ToolBarComponent implements OnInit {
   }
 
   checkIfLoggedIn() {
-
-
-    this.userService.getUserByJWT().subscribe((loggedInUser) => {
       if (localStorage.getItem('token')) {
         this.loggedIn = true;
       } else {
         this.loggedIn = false;
       }
 
-      if (loggedInUser.userType == "ADMIN" || loggedInUser.userType == "SUPERADMIN") {
-        this.hasSpecialPriviliges = true;
-        this.hasStdPriviliges = true;
-      } else if (loggedInUser.userType == "MAINTAINER") {
-        this.hasStdPriviliges = true;
-      }
-
-    }, (err) => {
-      this.errorHandling.openErrorBoxAndGoToLogin("Loggen Sie sich bitte ein.")
-    })
-
-
+    /*if (loggedInUser.userType == "ADMIN" || loggedInUser.userType == "SUPERADMIN") {
+      this.hasSuperPriviliges = true;
+      this.hasStdPriviliges = true;
+    } else if (loggedInUser.userType == "MAINTAINER") {
+      this.hasSuperPriviliges = true;
+    }*/
   }
+
+
+
 
 }
