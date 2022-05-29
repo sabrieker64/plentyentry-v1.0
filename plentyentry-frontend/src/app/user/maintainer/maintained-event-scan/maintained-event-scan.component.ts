@@ -13,38 +13,60 @@ export class MaintainedEventScanComponent implements OnInit {
   constructor(private maintainerService: MaintainerService) {
   }
 
-  qrResultString: string="";
-  response: string="";
+  qrResultString: string = "";
+  response: string = "";
+
+  loading: boolean = false;
 
   clearResult() {
     this.qrResultString = "";
     this.response = "";
   }
 
-  onCodeResult(resultString: string) {
-    this.qrResultString = resultString;
+  async onCodeResult(resultString: string) {
+    await this.getResponse(resultString);
+  }
 
-    console.log(resultString);
-    var ticketId = Number(resultString.split('scan/')[1]);
+  async getResponse(resultString: string) {
 
-    console.log("-----------");
-    console.log(ticketId);
-    console.log("-----------");
+    if (this.loading == true) {
+      return new Promise(resolve => {
+        resolve("Loading..");
+      });
+    }
 
-    this.maintainerService.scanTicket(ticketId).subscribe((result: any) => {
-      this.response = result.response;
-      setTimeout(() => {
-        this.response = "";
-      }, 3000);
-    }, error => {
-      console.log(error);
+    this.loading = true;
+
+    return new Promise(resolve => {
+      this.qrResultString = resultString;
+
+      console.log(resultString);
+      var ticketId = Number(resultString.split('scan/')[1]);
+
+      console.log("-----------");
+      console.log(ticketId);
+      console.log("-----------");
+
+      this.maintainerService.scanTicket(ticketId).subscribe(async (result: any) => {
+        this.response = result.response;
+        setTimeout(async () => {
+          await this.refreshResponse();
+        }, 3000);
+        resolve("done");
+      }, error => {
+        console.log(error);
+      });
     });
-
 
   }
 
-  refreshScan() {
-    this.response = "";
+
+  async refreshResponse() {
+    return new Promise(resolve => {
+      this.loading = false;
+      this.response = "";
+      resolve('resolved');
+    });
   }
 
 

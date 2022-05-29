@@ -3,8 +3,8 @@
   <zxing-scanner  (scanSuccess)="onCodeResult($event)"></zxing-scanner>
 
   <section class="results" *ngIf="qrResultString && response">
-    <div>
-      <strong style="text-align: center">{{ response }}</strong>
+    <div style="text-align: center; background-color: green;">
+      <strong>{{ response }}</strong>
     </div>
   </section>
 </div>

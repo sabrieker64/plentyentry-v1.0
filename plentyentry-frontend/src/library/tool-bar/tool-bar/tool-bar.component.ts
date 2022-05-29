@@ -84,18 +84,22 @@ export class ToolBarComponent implements OnInit {
   }
 
   checkIfLoggedIn() {
-      if (localStorage.getItem('token')) {
-        this.loggedIn = true;
-      } else {
-        this.loggedIn = false;
-      }
+    if (localStorage.getItem('token')) {
+      this.loggedIn = true;
+    } else {
+      this.loggedIn = false;
+    }
 
-    /*if (loggedInUser.userType == "ADMIN" || loggedInUser.userType == "SUPERADMIN") {
-      this.hasSuperPriviliges = true;
-      this.hasStdPriviliges = true;
-    } else if (loggedInUser.userType == "MAINTAINER") {
-      this.hasSuperPriviliges = true;
-    }*/
+    this.userService.getUserByJWT().subscribe((user) => {
+      if (user.userType == "ADMIN" || user.userType == "SUPERADMIN") {
+        this.hasSpecialPriviliges = true;
+        this.hasStdPriviliges = true;
+      } else if (user.userType == "MAINTAINER") {
+        this.hasStdPriviliges = true;
+      }
+    });
+
+
   }
 
 
