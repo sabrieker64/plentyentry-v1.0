@@ -9,6 +9,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MaintainedEventCreateComponent} from './maintained-event-create/maintained-event-create.component';
 import {MaintainedEventScanComponent} from "./maintained-event-scan/maintained-event-scan.component";
 import {BecomeAMaintainerComponent} from './become-amaintainer/become-amaintainer.component';
+import {NgxSplideModule} from "ngx-splide";
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {BecomeAMaintainerComponent} from './become-amaintainer/become-amaintaine
     MaintainerRoutingModule,
     AngularMaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgxSplideModule
   ]
 })
 export class MaintainerModule { }

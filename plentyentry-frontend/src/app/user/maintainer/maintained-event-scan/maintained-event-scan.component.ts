@@ -58,7 +58,7 @@ export class MaintainedEventScanComponent implements OnInit {
 
         setTimeout(async () => {
           await this.refreshResponse();
-        }, 3000);
+        }, 5000);
         resolve("done");
       }, error => {
         this.response = "Serverprobleme";

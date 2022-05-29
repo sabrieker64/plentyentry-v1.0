@@ -5,6 +5,8 @@
   <section class="results" *ngIf="qrResultString && response">
     <div style="text-align: center;" [style.background-color]="successBackground == true ? 'green' : 'red'">
       <strong>{{ response }}</strong>
+
+      <button mat-raised-button color="primary" (click)="refreshResponse()">Neues Ticket scannen</button>
     </div>
   </section>
 </div>

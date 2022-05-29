@@ -49,18 +49,16 @@ export class ToolBarComponent implements OnInit {
 
         this.shoppingCartValue = howManyOpen;
       } else {
-        console.log("Benutzer besitzt keine Shoppingcart");
+
+        this.errorHandling.openInformation("Benutzer besitzt keine Shoppingcart!");
         if (this.loggedIn == false) {
 
-          this.errorHandling.openErrorBoxAndGoToLogin("Sie besitzen keine ShoppingCart!");
+          this.errorHandling.openErrorBoxAndGoToLogin("Sie sind nicht eingeloggt!");
 
         }
       }
     }, error => {
-      //console.log(error);
-      //this.errorHandling.openErrorBox(error.message);
-      this.errorHandling.openErrorBoxAndGoToLogin("Sie besitzen keine ShoppingCart!");
-
+      this.errorHandling.openErrorBoxAndGoToLogin("Fehler!");
     });
 
   }
