@@ -40,18 +40,19 @@ public class AmazonClient {
     }
 
     public List<String> uploadFiles(List<MultipartFile> multipartFiles, AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
+        int i = 0;
         List<String> fileUrls = new ArrayList<>();
         String path = "/"+awsEventImagesUploadDTO.getUsername()+"/"+awsEventImagesUploadDTO.getEventName()+"/";
 
         for (MultipartFile multipartFile:multipartFiles) {
             String fileUrl = "";
             try {
-                File file = convertMultiPartToFile(multipartFile);
-                String fileName = generateFileName(multipartFile);
+                File file = convertMultiPartToFile(multipartFile, i);
+                String fileName = generateFileName(multipartFile, i);
                 fileUrl = endpointUrl + path + fileName;
 
-                String tempPath = awsEventImagesUploadDTO.getUsername()+"/"+awsEventImagesUploadDTO.getEventName()+"/";
-                s3Client.putObject(new PutObjectRequest(bucketName, tempPath+fileName, file)
+                String tempPath = awsEventImagesUploadDTO.getUsername() + "/" + awsEventImagesUploadDTO.getEventName() + "/";
+                s3Client.putObject(new PutObjectRequest(bucketName, tempPath + fileName, file)
                         .withCannedAcl(CannedAccessControlList.PublicRead));
 
                 file.delete();
@@ -119,12 +120,12 @@ public class AmazonClient {
     }
 
 
-    private String generateFileName(MultipartFile multiPart) {
-        return new Date().getTime() + "-" + multiPart.getOriginalFilename().replace(" ", "_");
+    private String generateFileName(MultipartFile multiPart, int i) {
+        return new Date().getTime() + "-" + String.valueOf(i).replace(" ", "_");
     }
 
-    private File convertMultiPartToFile(MultipartFile file) throws IOException {
-        File convFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
+    private File convertMultiPartToFile(MultipartFile file, int i) throws IOException {
+        File convFile = new File(Objects.requireNonNull(String.valueOf(i)));
         FileOutputStream fos = new FileOutputStream(convFile);
         fos.write(file.getBytes());
         fos.close();
@@ -133,8 +134,8 @@ public class AmazonClient {
 
     public void deleteFileFromS3Bucket(String fileUrl, AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
         String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
-        String path = awsEventImagesUploadDTO.getUsername()+"/"+awsEventImagesUploadDTO.getEventName()+"/";
-        s3Client.deleteObject(bucketName, path+fileName);
+        String path = awsEventImagesUploadDTO.getUsername() + "/" + awsEventImagesUploadDTO.getEventName() + "/";
+        s3Client.deleteObject(bucketName, path + fileName);
     }
 
 

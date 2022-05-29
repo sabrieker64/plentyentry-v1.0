@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {EventDTO, TicketDTO} from "../../definitions/objects";
+import {EventDTO} from "../../definitions/objects";
 import {environment} from "../../../environments/environment";
 
 @Injectable({
@@ -26,11 +26,11 @@ export class EventService {
   }
 
   public updateEventById(eventDTO: EventDTO): Observable<EventDTO> {
-    return this.http.put<EventDTO>(`${this.BASE_URL}`, eventDTO);
+    return this.http.put<EventDTO>(`${this.BASE_URL}/special-privileges`, eventDTO);
   }
 
   public createEvent(eventDTO: EventDTO): Observable<EventDTO> {
-    return this.http.post<EventDTO>(`${this.BASE_URL}`, eventDTO);
+    return this.http.post<EventDTO>(`${this.BASE_URL}/special-privileges`, eventDTO);
   }
 
   public addTicketsToShoppingCart(ticketsDTO: TicketDTO[]): Observable<any> {

@@ -38,6 +38,7 @@ export class EventCreateComponent implements OnInit {
   endDateTimeDefault = new FormControl(new Date().getDate())
   eventImageCounter: number = 0;
   eventDTO: EventDTO = <EventDTO>{};
+  eventImagesBase64List: string[] = [];
   createFormGroup: FormGroup;
 
 
@@ -70,6 +71,10 @@ export class EventCreateComponent implements OnInit {
   }
 
   createEvent() {
+
+    this.eventDTO.eventImageUrls = [];
+    this.eventDTO.eventImageUrls = this.eventImagesBase64List;
+
     this.eventService.createEvent(this.eventDTO).toPromise().then((eventDTO: EventDTO) => {
       console.log(eventDTO);
       this.router.navigateByUrl("maintainedevents/maintained/events/list");
@@ -84,34 +89,29 @@ export class EventCreateComponent implements OnInit {
 
     const files = <any>this.eventDTO.eventImageUrls;
 
-    console.log(this.eventDTO.eventImageUrls)
-    console.log("OIIIIIIIII")
 
     this.showEventImagesLoaded = false;
     this.showEventImages = [];
 
     if (files.length === 0)
       return;
-    const mimeType = files[0].type;
 
 
     for (var i = 0; i < files.length; i++) {
       var currentFile = files[i];
+      const mimeType = files[i].type;
 
       const reader = new FileReader();
-      console.log("oi");
       reader.readAsDataURL(currentFile);
       reader.onload = (_event) => {
         var withoutBase = reader.result as string;
         withoutBase = withoutBase.split(',')[1];
-        this.showEventImages.push(this.sanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + withoutBase.toString()) as string);
+        this.showEventImages.push(this.sanitizer.bypassSecurityTrustUrl('data:' + mimeType + ';base64,' + withoutBase.toString()) as string);
+        this.eventImagesBase64List.push('data:' + mimeType + ';base64,' + withoutBase.toString());
       }
 
     }
 
-    console.log("--------------")
-    console.log(this.showEventImages);
-    console.log("-------------")
 
     this.showEventImagesLoaded = true;
 

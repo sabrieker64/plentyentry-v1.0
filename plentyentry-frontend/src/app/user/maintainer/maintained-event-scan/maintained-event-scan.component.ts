@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MaintainerService} from "../service/maintainer.service";
 
 
@@ -31,13 +31,22 @@ export class MaintainedEventScanComponent implements OnInit {
     console.log(ticketId);
     console.log("-----------");
 
-
-    this.maintainerService.scanTicket(ticketId).subscribe(result => {
-      this.response = result;
+    this.maintainerService.scanTicket(ticketId).subscribe((result: any) => {
+      this.response = result.response;
+      setTimeout(() => {
+        this.response = "";
+      }, 3000);
     }, error => {
       console.log(error);
     });
+
+
   }
+
+  refreshScan() {
+    this.response = "";
+  }
+
 
   ngOnInit() {
 

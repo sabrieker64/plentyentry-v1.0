@@ -14,6 +14,8 @@ export class EventTileOverviewComponent implements OnInit {
   filteredEvents: EventDTO[];
   allEvents: EventDTO[];
   emptyList: boolean = false;
+  dateFilter: boolean = false;
+
   constructor(private service: EventService, private router: Router, private errorHandling: ErrorService) {
   }
 
@@ -21,16 +23,34 @@ export class EventTileOverviewComponent implements OnInit {
     this.loadEvents();
   }
 
-  filterEventsWithSearch($event: any){
+  filterEventsWithSearch($event: any) {
     var searchedValue = $event.target.value;
 
-    if(searchedValue == ""){
+    if(searchedValue == "") {
+
       this.filteredEvents = this.allEvents;
+      /*
+      if(this.dateFilter==true) {
+
+      } else {
+
+        this.filteredEvents = this.allEvents;
+      }
+
+       */
+
     } else {
       this.filteredEvents = this.allEvents.filter(event => {
         var result = event.name.toLowerCase() + " " + event.city.toLowerCase();
 
-        return result.includes(searchedValue.toLowerCase());
+        if (this.dateFilter == true) {
+
+          console.log(event.startDateTime)
+
+          return result.includes(searchedValue.toLowerCase());
+        } else {
+          return result.includes(searchedValue.toLowerCase());
+        }
       });
     }
     if(this.filteredEvents.length==0){
@@ -63,5 +83,13 @@ export class EventTileOverviewComponent implements OnInit {
 
   getEventDetail(eventId: number) {
     this.router.navigateByUrl('/event-detail/' + eventId);
+  }
+
+  changeDateFilter($event: any) {
+    if ($event.index == 1) {
+      this.dateFilter = true;
+    } else {
+      this.dateFilter = false;
+    }
   }
 }

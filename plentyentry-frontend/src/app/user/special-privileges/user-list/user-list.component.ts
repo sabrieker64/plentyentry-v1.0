@@ -23,7 +23,7 @@ export class UserListComponent implements OnInit {
   }
 
   staticPositions: number = 1;
-  displayedColumns: string[] = ['position', 'firstName', 'lastName', 'email', 'city', 'age', 'birthday', 'userType', 'editUser', 'deleteUser'];
+  displayedColumns: string[] = ['position', 'firstName', 'email', 'city', 'age', 'birthday', 'userType', 'editUser', 'deleteUser'];
   allUsers: MatTableDataSource<UserDTO>;
 
   applyFilter(event: Event) {
@@ -48,11 +48,20 @@ export class UserListComponent implements OnInit {
   }
 
   editUser(id: number) {
-    // TODO CHECK IN BACKEND IF PRIVILEGE IS OK
+    this.router.navigateByUrl('/special-privileges/user/edit/' + id).then(r => {
+
+    });
   }
 
   deleteUser(id: number) {
-    // TODO CHECK IN BACKEND IF PRIVILEGE IS OK
+    if (confirm("Möchten Sie wirklich diesen Benutzer löschen?")) {
+      this.specialPrivilegeService.deleteUserById(id).subscribe(users => {
+        window.location.reload();
+      }, error => {
+        console.log(error);
+      });
+
+    }
   }
 
 }

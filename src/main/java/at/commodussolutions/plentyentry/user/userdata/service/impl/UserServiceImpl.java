@@ -91,6 +91,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
     public User registerNewUser(User user) {
         boolean isValidEmail = emailValidator.test(user.getEmail());
         if (!isValidEmail) {

@@ -7,6 +7,7 @@ package at.commodussolutions.plentyentry.ordermanagement.event.service.impl;
 import at.commodussolutions.plentyentry.ordermanagement.event.aws.service.AmazonClient;
 import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
+import at.commodussolutions.plentyentry.ordermanagement.event.aws.rest.impl.AwsBucketRestServiceImpl;
 import at.commodussolutions.plentyentry.ordermanagement.event.service.EventService;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketService;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
@@ -16,9 +17,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -35,6 +41,10 @@ public class EventServiceImpl implements EventService {
     private TicketService ticketService;
     @Autowired
     private AmazonClient amazonClient;
+
+    @Autowired
+    private AwsBucketRestServiceImpl awsBucketRestService;
+
 
     @Override
     public List<Event> getAllEvents() {
@@ -56,11 +66,36 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Event createNewEvent(Event event) {
-        var savedEvent = eventRepository.save(event);
-        ticketService.createAutomaticTicketsForNewEvent(savedEvent.getId(), savedEvent.getTicketCounter());
-        //amazonClient.uploadFiles()
-        return savedEvent;
+    public Event createNewEvent(Event event) throws IOException {
+
+        AWSEventImagesUploadDTO awsEventData = new AWSEventImagesUploadDTO();
+
+        awsEventData.setEventName(event.getName());
+        awsEventData.setUsername(userService.getUserByJWTToken().getEmail());
+
+        List<MultipartFile> list = new ArrayList<>();
+
+        for (String base64Url : event.getEventImageUrls()) {
+            String base64Image = base64Url.split(",")[1];
+            byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
+            MultipartFile file = new Base64DecodedMultipartFile(imageBytes);
+            BufferedImage img = ImageIO.read(new ByteArrayInputStream(imageBytes));
+            list.add(file);
+        }
+
+        List<String> imgLinks = awsBucketRestService.uploadFiles(list, awsEventData);
+        event.setEventImageUrls(imgLinks);
+
+        Event createdEvent = eventRepository.save(event);
+
+        User currentUser = userService.getUserByJWTToken();
+
+        Set<Event> entertainedEvents = currentUser.getEntertainedEvents();
+        entertainedEvents.add(createdEvent);
+        currentUser.setEntertainedEvents(entertainedEvents);
+        userService.updateUser(currentUser);
+
+        return createdEvent;
     }
 
     @Override

@@ -102,8 +102,8 @@ public class QrCodeGeneratorServiceImpl implements QrCodeGeneratorService {
                 && entertainerIsAllowedToScan) {
             ticket.setTicketStatus(TicketStatus.USED);
             ticketRepository.save(ticket);
-            return "Ticket wurde erfolgreich verwendet!";
+            return "{  \"response\" : \"Ticket wurde erfolgreich verwendet!\" }";
         }
-        return "Ticket kann nicht gescannt werden!";
+        return "{  \"response\" : \"Ticket kann nicht gescannt werden!\" }";
     }
 }

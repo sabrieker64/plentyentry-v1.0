@@ -7,11 +7,14 @@ import {MatTableModule} from "@angular/material/table";
 import {MatIconModule} from "@angular/material/icon";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {AngularMaterialModule} from "../../../library/anguler-material-module/anguler-material-module.module";
+import {UserEditComponent} from './user-edit/user-edit.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
   declarations: [
-    UserListComponent
+    UserListComponent,
+    UserEditComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +22,9 @@ import {AngularMaterialModule} from "../../../library/anguler-material-module/an
     AngularMaterialModule,
     MatTableModule,
     MatIconModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class SpecialPrivilegesModule {

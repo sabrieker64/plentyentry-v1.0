@@ -17,7 +17,7 @@ export class ToolBarComponent implements OnInit {
   loggedIn = false;
   shoppingCartValue: number = 0;
   userType: UserType;
-  hasSuperPriviliges: boolean = false;
+  hasSpecialPriviliges: boolean = false;
   hasStdPriviliges: boolean = false;
 
   constructor(private loginRegisterService: LoginRegisterService, private http: HttpClient, private errorHandling: ErrorService, private router: Router, private shoppincartService: ShoppingcartService, private userService: UserDetailService) {
@@ -38,19 +38,28 @@ export class ToolBarComponent implements OnInit {
 
       if (shoppingcart != null) {
         console.log("Shoppingcart vorhanden");
-        this.shoppingCartValue = shoppingcart.tickets.length;
+
+        var howManyOpen = 0;
+
+        shoppingcart.tickets.filter(ticket => {
+          if (ticket.ticketStatus == "NOTSELLED") {
+            howManyOpen++;
+          }
+        })
+
+        this.shoppingCartValue = howManyOpen;
       } else {
         console.log("Benutzer besitzt keine Shoppingcart");
         if (this.loggedIn == false) {
 
-          this.errorHandling.openErrorBoxAndGoToLogin("Bitte melden Sie sich an, um alle Features verwenden zu können");
+          this.errorHandling.openErrorBoxAndGoToLogin("Sie besitzen keine ShoppingCart!");
 
         }
       }
     }, error => {
       //console.log(error);
       //this.errorHandling.openErrorBox(error.message);
-      this.errorHandling.openErrorBoxAndGoToLogin("Bitte melden Sie sich an, um alle Features verwenden zu können");
+      this.errorHandling.openErrorBoxAndGoToLogin("Sie besitzen keine ShoppingCart!");
 
     });
 
