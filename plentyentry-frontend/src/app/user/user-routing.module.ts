@@ -20,10 +20,6 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: ':id/cart',
-    component: CartComponent
-  },
-  {
     path: 'detail',
     component: UserDetailComponent
   }
