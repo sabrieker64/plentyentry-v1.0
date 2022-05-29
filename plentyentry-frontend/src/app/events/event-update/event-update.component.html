@@ -79,7 +79,23 @@
         <mat-form-field appearance="outline" class="event-date--formfield">
           <mat-label>Datum</mat-label>
           <input matInput [matDatepicker]="picker1"
-                 [(ngModel)]="eventDTO.date">
+                 [(ngModel)]="eventDTO.startDateTime">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+          <mat-hint>Event Datum eingeben</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="event-detail--box box--shadow">
+      <div class="event-detail--box-1">
+        <mat-icon style="color: #ffffff;" class="icon" aria-hidden="false" aria-label="outlined icon">today</mat-icon>
+      </div>
+      <div class="event-detail--box-2">
+        <mat-form-field appearance="outline" class="event-date--formfield">
+          <mat-label>Datum</mat-label>
+          <input matInput [matDatepicker]="picker1"
+                 [(ngModel)]="eventDTO.endDateTime">
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
           <mat-hint>Event Datum eingeben</mat-hint>

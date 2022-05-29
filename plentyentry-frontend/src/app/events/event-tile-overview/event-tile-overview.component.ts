@@ -28,7 +28,9 @@ export class EventTileOverviewComponent implements OnInit {
       this.filteredEvents = this.allEvents;
     } else {
       this.filteredEvents = this.allEvents.filter(event => {
-        return event.name.toLowerCase().includes(searchedValue.toLowerCase());
+        var result = event.name.toLowerCase() + " " + event.city.toLowerCase();
+
+        return result.includes(searchedValue.toLowerCase());
       });
     }
     if(this.filteredEvents.length==0){

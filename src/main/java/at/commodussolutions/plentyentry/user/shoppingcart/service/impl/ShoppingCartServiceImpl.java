@@ -43,8 +43,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCart getShoppingCartById() {
         var user = userService.getUserByJWTToken();
-
-        return user.getShoppingCart();
+        try {
+            return user.getShoppingCart();
+        } catch (NullPointerException nullPointerException) {
+            System.out.println("Sie müssen sich anmelden um die Shoppingcart verwenden zu können");
+            return null;
+        }
 
     }
 

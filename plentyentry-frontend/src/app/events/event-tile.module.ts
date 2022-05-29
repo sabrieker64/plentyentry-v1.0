@@ -4,7 +4,7 @@ import {AppRoutingModule} from "../app-routing.module";
 import {AngularMaterialModule} from "../../library/anguler-material-module/anguler-material-module.module";
 import {EventTileRoutingModule} from "./event-tile-routing.module";
 import {EventTileOverviewComponent} from "./event-tile-overview/event-tile-overview.component";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FooterLayoutModule} from "../../library/footer-layout/footer-layout.module";
 import {NgxSplideModule} from "ngx-splide";
 import {EventDetailComponent} from './event-detail/event-detail.component';
@@ -23,13 +23,14 @@ import {EventUpdateComponent} from "./event-update/event-update.component";
     EventTileOverviewComponent
   ],
     imports: [
-        FooterLayoutModule,
-        CommonModule,
-        AngularMaterialModule,
-        EventTileRoutingModule,
-        AppRoutingModule,
-        FormsModule,
-        NgxSplideModule
+      FooterLayoutModule,
+      CommonModule,
+      AngularMaterialModule,
+      EventTileRoutingModule,
+      AppRoutingModule,
+      FormsModule,
+      NgxSplideModule,
+      ReactiveFormsModule
     ]
 })
 export class EventTileModule {

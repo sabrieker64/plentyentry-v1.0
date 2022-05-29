@@ -10,15 +10,15 @@ import {UserDTO} from "../../definitions/objects";
 export class UserDetailService {
 
   private baseUrl: string = environment.baseUrl + 'api/backend/user';
-  //private baseUrl: string = "http://172.16.254.133/" + 'api/backend/user';
 
+  //private baseUrl: string = "http://172.16.254.133/" + 'api/backend/user';
 
 
   constructor(private http: HttpClient) {
   }
 
-  public getUserById(userId: number): Observable<UserDTO> {
-    return this.http.get<UserDTO>(`${this.baseUrl}/${userId}`);
+  public getUserByJWT(): Observable<UserDTO> {
+    return this.http.get<UserDTO>(`${this.baseUrl}`);
   }
 
   public updateUser(userDTO: UserDTO): Observable<UserDTO> {

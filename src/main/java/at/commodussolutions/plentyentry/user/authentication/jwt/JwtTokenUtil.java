@@ -5,7 +5,9 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.commons.codec.binary.Base64;
@@ -47,7 +49,14 @@ public class JwtTokenUtil {
 
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimResolver) {
         final Claims claims = getAllClaimsFromToken(token);
-        return claimResolver.apply(claims);
+
+        try {
+            return claimResolver.apply(claims);
+        } catch (NullPointerException pointerException) {
+            return null;
+        }
+
+
     }
 
     public String getUsernameFromToken(String token) {
@@ -64,12 +73,23 @@ public class JwtTokenUtil {
     public boolean isTokenValid (UserDetails userDetails, String token) {
         String userName = getUsernameFromToken(token);
         JWTVerifier verifier = getJWTVerifier();
-        return ( userName.equals(userDetails.getUsername()) && !isTokenExpired(verifier, token));
+        try {
+            return (userName.equals(userDetails.getUsername()) && !isTokenExpired(verifier, token));
+        } catch (NullPointerException nullPointerException) {
+            return false;
+        }
     }
 
     public String getSubject(String token) {
-        JWTVerifier verifier =  getJWTVerifier();
-        return verifier.verify(token).getSubject();
+        JWTVerifier verifier = getJWTVerifier();
+
+        try {
+            return verifier.verify(token).getSubject();
+        } catch (TokenExpiredException expiredException) {
+            return "Session ist abgelaufen - bitte melden Sie sich nochmals an.";
+        }
+
+
     }
 
     private boolean isTokenExpired(JWTVerifier verifier, String token) {
@@ -78,7 +98,18 @@ public class JwtTokenUtil {
     }
 
     private Claims getAllClaimsFromToken(String token) {
+
+        try {
+            return Jwts.parser().setSigningKey(Base64.encodeBase64(secret.getBytes(StandardCharsets.UTF_8))).parseClaimsJws(token).getBody();
+        } catch (ExpiredJwtException e) {
+            System.out.println("Session ist abgelaufen - bitte melden Sie sich nochmals an.");
+            return null;
+        }
+
+        /*
         return Jwts.parser().setSigningKey(Base64.encodeBase64(secret.getBytes(StandardCharsets.UTF_8))).parseClaimsJws(token).getBody();
+
+         */
     }
 
     private JWTVerifier getJWTVerifier() {

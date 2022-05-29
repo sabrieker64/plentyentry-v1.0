@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-05-23 19:38:05.
+// Generated using typescript-generator version 2.32.889 on 2022-05-26 01:49:51.
 
 export interface UserDTO {
     id: number;
@@ -24,17 +24,18 @@ export interface UserDTO {
 }
 
 export interface EventDTO {
-    id: number;
-    name: string;
-    date: Date;
-    description: string;
-    price: number;
-    ticketCounter: number;
-    ticketId: number;
-    city: string;
-    address: string;
-    eventImageUrls: string[];
-    entertainers: UserDTO[];
+  id: number;
+  name: string;
+  startDateTime: Date;
+  endDateTime: Date;
+  description: string;
+  price: number;
+  ticketCounter: number;
+  ticketId: number;
+  city: string;
+  address: string;
+  eventImageUrls: string[];
+  entertainers: UserDTO[];
 }
 
 export interface UserRegisterDTO {
@@ -55,66 +56,38 @@ export interface UserAuthReqDTO {
     password: string;
 }
 
-export interface PaymentIntentDTO extends Serializable {
-  currency: Currency;
-  amount: number;
-  eventId: number;
-  description: string;
-  paymentType: StripePaymentTypes;
+export interface CreatePaymentResponse {
+    clientSecret: string;
 }
 
-export interface Order {
-  price: number;
-  currency: string;
-  method: string;
-  intent: string;
-  description: string;
-}
-
-export interface CreateTokenDTO {
-  cardNumber: number;
-  expMonth: number;
-  expYear: number;
-  cvc: number;
+export interface CreatePayment {
+    items: any[];
 }
 
 export interface CoronaStatusDTO {
-  id: number;
-  pcrTest: boolean;
-  antigenTest: boolean;
-  firstVaccine: boolean;
-  secondVaccine: boolean;
-  thirdVaccine: boolean;
-  quarantine: boolean;
-  user: UserDTO;
+    id: number;
+    pcrTest: boolean;
+    antigenTest: boolean;
+    firstVaccine: boolean;
+    secondVaccine: boolean;
+    thirdVaccine: boolean;
+    quarantine: boolean;
+    user: UserDTO;
 }
 
 export interface PaymentMethodDTO {
-  id: number;
-  paymentType: PaymentType;
-  creditCardNumber: number;
-  nameOnCard: string;
-  cvSecurityCode: number;
-  iban: number;
-  user: UserDTO;
+    id: number;
+    paymentType: PaymentType;
+    creditCardNumber: number;
+    nameOnCard: string;
+    cvSecurityCode: number;
+    iban: number;
+    user: UserDTO;
 }
 
 export interface ShoppingCartDTO {
-  id: number;
-  tickets: ShoppingCartTicketDTOPerEvent[];
-}
-
-export interface Serializable {
-}
-
-export interface ShoppingCartTicketDTOPerEvent {
-  ticketDTOS: TicketDTO[];
-  quantity: number;
-  amount: number;
-  eventName: string;
-  eventDescription: string;
-  eventDate: Date;
-  pricePerTicket: number;
+    id: number;
+    tickets: TicketDTO[];
 }
 
 export interface TicketDTO {
@@ -129,10 +102,6 @@ export type UserType = "GUEST" | "CUSTOMER" | "ADMIN" | "MAINTAINER" | "SUPERADM
 
 export type UserGender = "MALE" | "FEMALE" | "DIVERSE";
 
-export type Currency = "EUR";
-
-export type StripePaymentTypes = "card" | "giropay" | "sepa_debit";
-
 export type PaymentType = "CREDIT_CARD" | "PAYPAL" | "BANK_TRANSFER";
 
-export type TicketStatus = "NOTUSED" | "RESERVED" | "USED" | "INUSE" | "EXPIRED" | "SELLED" | "NOTSELLED";
+export type TicketStatus = "NOTUSED" | "USED" | "INUSE" | "EXPIRED" | "SELLED" | "NOTSELLED";

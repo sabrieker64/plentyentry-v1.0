@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,7 +139,8 @@ public class EventRestServiceTest {
 
         EventDTO newEvent = new EventDTO();
         newEvent.setName("SWINGER PARTY");
-        newEvent.setDate(LocalDate.now());
+        newEvent.setStartDateTime(LocalDateTime.now());
+        newEvent.setEndDateTime(LocalDateTime.now());
         newEvent.setDescription("Für jeden Schicker eine Eskalation!");
         newEvent.setPrice(BigDecimal.valueOf(10.00));
         newEvent.setTicketCounter(Long.parseLong("4"));

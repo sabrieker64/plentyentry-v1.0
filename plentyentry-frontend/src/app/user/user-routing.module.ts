@@ -20,7 +20,11 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: ':id/detail',
+    path: ':id/cart',
+    component: CartComponent
+  },
+  {
+    path: 'detail',
     component: UserDetailComponent
   }
 ];

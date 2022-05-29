@@ -6,7 +6,7 @@
           {{ticket.event.name}}
         </mat-panel-title>
         <mat-panel-description>
-          {{ticket.event.date | date:'dd.LL.yyyy'}}
+          {{ticket.event.startDateTime | date:'dd.LL.yyyy'}}
         </mat-panel-description>
       </mat-expansion-panel-header>
       {{ticket.event.city}}

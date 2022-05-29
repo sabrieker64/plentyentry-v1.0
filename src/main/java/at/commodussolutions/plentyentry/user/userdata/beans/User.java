@@ -1,26 +1,19 @@
 package at.commodussolutions.plentyentry.user.userdata.beans;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
-import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.user.payment.beans.PaymentMethod;
 import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
-import com.querydsl.core.types.EntityPath;
-import com.querydsl.core.types.Path;
-import com.querydsl.core.types.PathMetadata;
-import com.querydsl.core.types.Visitor;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.lang.reflect.AnnotatedElement;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
@@ -115,6 +108,16 @@ public class User implements UserDetails{
     @JoinColumn(name = "SHOPPINGCART_ID", referencedColumnName = "ID")
     private ShoppingCart shoppingCart;
     //MINA END
+
+
+    @Column(name = "UID")
+    private String uid;
+
+    @Column(name = "PHONE_NUMBER")
+    private String phoneNumber;
+
+    @Column(name = "COMPANY_NAME")
+    private String companyName;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

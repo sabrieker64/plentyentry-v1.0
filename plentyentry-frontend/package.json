@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-material-components/file-input": "^7.0.1",
     "@angular/animations": "~13.1.1",
     "@angular/cdk": "^13.3.7",
     "@angular/common": "~13.1.1",
@@ -21,6 +22,8 @@
     "@angular/platform-browser": "~13.1.1",
     "@angular/platform-browser-dynamic": "~13.1.1",
     "@angular/router": "~13.1.1",
+    "@angular/service-worker": "~13.1.1",
+    "@mat-datetimepicker/core": "^9.0.56",
     "@material/fab": "^13.0.0",
     "@splidejs/splide": "^3.6.12",
     "@zxing/browser": "^0.1.1",
