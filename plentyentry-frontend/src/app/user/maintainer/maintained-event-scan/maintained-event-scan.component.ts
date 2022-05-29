@@ -18,6 +18,8 @@ export class MaintainedEventScanComponent implements OnInit {
 
   loading: boolean = false;
 
+  successBackground: boolean = true;
+
   clearResult() {
     this.qrResultString = "";
     this.response = "";
@@ -43,21 +45,25 @@ export class MaintainedEventScanComponent implements OnInit {
       console.log(resultString);
       var ticketId = Number(resultString.split('scan/')[1]);
 
-      console.log("-----------");
-      console.log(ticketId);
-      console.log("-----------");
-
       this.maintainerService.scanTicket(ticketId).subscribe(async (result: any) => {
-        this.response = result.response;
+
+        if (result.response != null && result.response != "" && !result.response.empty) {
+          this.successBackground = true;
+          this.response = result.response;
+        } else {
+          this.successBackground = false;
+          this.response = result.responseerror;
+        }
+
+
         setTimeout(async () => {
           await this.refreshResponse();
         }, 3000);
         resolve("done");
       }, error => {
-        console.log(error);
+        this.response = "Serverprobleme";
       });
     });
-
   }
 
 

@@ -3,7 +3,7 @@
   <zxing-scanner  (scanSuccess)="onCodeResult($event)"></zxing-scanner>
 
   <section class="results" *ngIf="qrResultString && response">
-    <div style="text-align: center; background-color: green;">
+    <div style="text-align: center;" [style.background-color]="successBackground == true ? 'green' : 'red'">
       <strong>{{ response }}</strong>
     </div>
   </section>

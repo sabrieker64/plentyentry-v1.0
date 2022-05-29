@@ -104,6 +104,7 @@ public class QrCodeGeneratorServiceImpl implements QrCodeGeneratorService {
             ticketRepository.save(ticket);
             return "{  \"response\" : \"Ticket wurde erfolgreich verwendet!\" }";
         }
-        return "{  \"response\" : \"Ticket kann nicht gescannt werden!\" }";
+        return "{  \"responseerror\" : \"Ticket kann nicht gescannt werden!\" }";
+
     }
 }
