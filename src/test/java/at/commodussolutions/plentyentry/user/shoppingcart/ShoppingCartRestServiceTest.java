@@ -32,6 +32,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -95,7 +96,7 @@ public class ShoppingCartRestServiceTest {
     private ShoppingCartInitializer shoppingCartInitializer;
 
     @BeforeEach
-    void createData() {
+    void createData() throws IOException {
         if (eventInitializer.shouldDataBeInitialized()) {
             eventInitializer.initData();
         }

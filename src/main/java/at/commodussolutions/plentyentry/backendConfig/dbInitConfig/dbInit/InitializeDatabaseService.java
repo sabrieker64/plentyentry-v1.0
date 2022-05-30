@@ -8,6 +8,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -30,7 +31,11 @@ public class InitializeDatabaseService implements ApplicationRunner {
                 log.info("Initialize Started for {}: {}", initializeDatabase.initializerName(),
                         initializeDatabase.initializeName());
                 final long startTime = System.currentTimeMillis();
-                initializeDatabase.initData();
+                try {
+                    initializeDatabase.initData();
+                } catch (IOException e) {
+                    log.error(e.getMessage());
+                }
                 final long tookTime = System.currentTimeMillis() - startTime;
                 log.info("Initialize is finished for {}: {}", initializeDatabase.initializerName(),
                         initializeDatabase.initializeName());

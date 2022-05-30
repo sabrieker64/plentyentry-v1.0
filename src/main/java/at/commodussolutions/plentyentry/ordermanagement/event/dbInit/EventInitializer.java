@@ -1,14 +1,12 @@
 package at.commodussolutions.plentyentry.ordermanagement.event.dbInit;
 
 import at.commodussolutions.plentyentry.backendConfig.dbInitConfig.dbInit.InitializeDatabase;
-import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
@@ -40,7 +38,7 @@ public class EventInitializer implements InitializeDatabase {
     }
 
     @Override
-    public void initData() {
+    public void initData() throws IOException {
         eventBuilder.buildEvent();
     }
 }

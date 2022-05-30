@@ -29,6 +29,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -73,7 +74,7 @@ public class TicketRestServiceTest {
     private UserMapper userMapper;
 
     @BeforeEach
-    void createData() {
+    void createData() throws IOException {
         if (ticketInitializer.shouldDataBeInitialized()) {
             ticketInitializer.initData();
         }

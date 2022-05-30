@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -51,7 +52,7 @@ public class EventRestServiceTest {
     private EventInitializer eventInitializer;
 
     @BeforeEach
-    void createData() {
+    void createData() throws IOException {
         if (eventInitializer.shouldDataBeInitialized()) {
             eventInitializer.initData();
         }

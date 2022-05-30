@@ -4,10 +4,12 @@ package at.commodussolutions.plentyentry.ordermanagement.event.service.impl;
  */
 
 
+import at.commodussolutions.plentyentry.ordermanagement.event.aws.dto.AWSEventImagesUploadDTO;
+import at.commodussolutions.plentyentry.ordermanagement.event.aws.model.Base64DecodedMultipartFile;
+import at.commodussolutions.plentyentry.ordermanagement.event.aws.rest.impl.AwsBucketRestServiceImpl;
 import at.commodussolutions.plentyentry.ordermanagement.event.aws.service.AmazonClient;
 import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
-import at.commodussolutions.plentyentry.ordermanagement.event.aws.rest.impl.AwsBucketRestServiceImpl;
 import at.commodussolutions.plentyentry.ordermanagement.event.service.EventService;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketService;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;

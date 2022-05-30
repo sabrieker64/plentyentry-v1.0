@@ -1,19 +1,17 @@
-<h2>Hi, {{this.ownerOfShoppingCart}} du hast es fast geschafft!</h2>
+<div class="container">
+  <h2>Hi, {{this.ownerOfShoppingCart}} du hast es fast geschafft!</h2>
 
-<mat-list role="list" *ngFor="let events of shoppingCart.tickets">
-  <mat-list-item role="listitem">{{events.eventName}}</mat-list-item>
-</mat-list>
 
-<mat-card class="example-card">
-  <mat-card-header>
-    <div mat-card-avatar></div>
-    <mat-card-title>Iphone X</mat-card-title>
-  </mat-card-header>
-  <img mat-card-image src="assets/images/iphone.jpg"/>
+  <mat-card class="example-card">
+    <mat-list role="list" *ngFor="let events of shoppingCart.tickets">
+      <mat-list-item role="listitem">{{events.quantity}}  x   {{events.eventName}}
+        Preis {{events.amount}}</mat-list-item>
+    </mat-list>
 
-  <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="makePayment()">
-      Buy it for $999
-    </button>
-  </mat-card-actions>
-</mat-card>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="makePayment()">
+        Kauf abschließen
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

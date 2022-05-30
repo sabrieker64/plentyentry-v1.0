@@ -7,9 +7,9 @@ import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Builder
@@ -22,7 +22,7 @@ public class EventBuilder {
     @Autowired
     private EventService eventService;
 
-    public void buildEvent() {
+    public void buildEvent() throws IOException {
         ArrayList<String> eventImageUrls1 = new ArrayList<>();
         ArrayList<String> eventImageUrls2 = new ArrayList<>();
 

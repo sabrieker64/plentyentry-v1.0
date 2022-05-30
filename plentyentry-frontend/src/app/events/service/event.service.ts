@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {EventDTO} from "../../definitions/objects";
+import {EventDTO, TicketDTO} from "../../definitions/objects";
 import {environment} from "../../../environments/environment";
 
 @Injectable({

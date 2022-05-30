@@ -42,9 +42,12 @@ export class ToolBarComponent implements OnInit {
         var howManyOpen = 0;
 
         shoppingcart.tickets.filter(ticket => {
-          if (ticket.ticketStatus == "NOTSELLED") {
-            howManyOpen++;
-          }
+          ticket.ticketDTOS.forEach(tickets => {
+            if (tickets.ticketStatus == "NOTSELLED") {
+              howManyOpen++;
+            }
+          })
+
         })
 
         this.shoppingCartValue = howManyOpen;
