@@ -158,7 +158,7 @@
             <mat-error *ngIf="createFormGroup.get('startDateTime')?.errors">
               <p *ngIf="createFormGroup.get('startDateTime')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
             </mat-error>
-
+            <mat-hint>Startdatum und Zeit eingeben</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -187,10 +187,10 @@
               autocomplete="false"
             />
 
-
             <mat-error *ngIf="createFormGroup.get('endDateTime')?.errors">
               <p *ngIf="createFormGroup.get('endDateTime')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
             </mat-error>
+            <mat-hint>Enddatum und Zeit eingeben</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -205,7 +205,7 @@
             <input name="eventPrice" formControlName="eventPrice" matInput placeholder="9,99"
                    [(ngModel)]="eventDTO.price" type="number">
             <mat-error *ngIf="createFormGroup.get('eventPrice')?.errors">
-              <p *ngIf="createFormGroup.get('eventPrice')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+              <p *ngIf="createFormGroup.get('eventPrice')?.hasError('required')">Es sind nur ganze Zahlen erlaubt</p>
             </mat-error>
             <mat-hint>Event Preis eingeben</mat-hint>
           </mat-form-field>

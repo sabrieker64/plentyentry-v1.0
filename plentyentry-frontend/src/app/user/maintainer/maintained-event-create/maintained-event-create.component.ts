@@ -40,8 +40,8 @@ export class MaintainedEventCreateComponent implements OnInit {
       "files": new FormControl([], [Validators.required]),
       "eventName": new FormControl('', [Validators.required, Validators.minLength(2)]),
       "eventCity": new FormControl('', [Validators.required, Validators.minLength(2)]),
-      "eventStartDateTime": new FormControl(new Date().getDate()),
-      "eventEndDateTime": new FormControl(new Date().getDate()),
+      "eventStartDateTime": new FormControl(new Date().getDate(), [Validators.required]),
+      "eventEndDateTime": new FormControl(new Date().getDate(), [Validators.required]),
       "eventAddress": new FormControl('', [Validators.required, Validators.minLength(2)]),
       "eventPrice": new FormControl('', [Validators.required]),
       "eventTicketCounter": new FormControl('', [Validators.required]),
@@ -56,6 +56,15 @@ export class MaintainedEventCreateComponent implements OnInit {
   }
 
   createEvent() {
+
+
+    if (this.eventDTO.startDateTime > this.eventDTO.endDateTime) {
+
+      this.errorHandling.openInformation("Bitte ändern Sie das Enddatum!");
+
+      return;
+    }
+
 
     this.eventDTO.eventImageUrls = [];
     this.eventDTO.eventImageUrls = this.eventImagesBase64List;
@@ -104,3 +113,4 @@ export class MaintainedEventCreateComponent implements OnInit {
   }
 
 }
+
