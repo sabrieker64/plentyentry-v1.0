@@ -26,7 +26,7 @@
     "@mat-datetimepicker/core": "^9.0.56",
     "@material/fab": "^13.0.0",
     "@splidejs/splide": "^3.6.12",
-    "@stripe/stripe-js": "^1.29.0",
+    "@stripe/stripe-js": "^1.31.0",
     "@types/stripe-v3": "^3.1.26",
     "@zxing/browser": "^0.1.1",
     "@zxing/library": "^0.19.1",

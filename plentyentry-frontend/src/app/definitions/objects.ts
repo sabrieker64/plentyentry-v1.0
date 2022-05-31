@@ -1,16 +1,16 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-05-29 18:44:03.
+// Generated using typescript-generator version 2.32.889 on 2022-05-31 22:23:34.
 
 export interface UserDTO {
-    id: number;
-    firstName: string;
-    lastName: string;
-    street: string;
-    email: string;
-    password: string;
-    postCode: string;
-    city: string;
+  id: number;
+  firstName: string;
+  lastName: string;
+  street: string;
+  email: string;
+  password: string;
+  postCode: string;
+  city: string;
   age: number;
   svNumber: number;
   birthday: Date;
@@ -42,13 +42,13 @@ export interface EventDTO {
 }
 
 export interface UserRegisterDTO {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    city: string;
-    postCode: string;
-    street: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  city: string;
+  postCode: string;
+  street: string;
   birthday: Date;
   userGender: UserGender;
   shoppingCartDTO: ShoppingCartDTO;
@@ -65,6 +65,7 @@ export interface PaymentIntentDTO extends Serializable {
   eventId: number;
   description: string;
   paymentType: StripePaymentTypes;
+  orderId: string;
 }
 
 export interface Order {
@@ -94,7 +95,7 @@ export interface CoronaStatusDTO {
 }
 
 export interface PaymentMethodDTO {
-    id: number;
+  id: number;
   paymentType: PaymentType;
   creditCardNumber: number;
   nameOnCard: string;
@@ -135,7 +136,7 @@ export type UserGender = "MALE" | "FEMALE" | "DIVERSE";
 
 export type Currency = "EUR";
 
-export type StripePaymentTypes = "card" | "giropay" | "sepa_debit";
+export type StripePaymentTypes = "card";
 
 export type PaymentType = "CREDIT_CARD" | "PAYPAL" | "BANK_TRANSFER";
 

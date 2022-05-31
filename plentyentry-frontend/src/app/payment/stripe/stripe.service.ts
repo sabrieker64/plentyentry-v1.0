@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {CreateTokenDTO, ShoppingCartDTO} from "../../definitions/objects";
+import {CreateTokenDTO, PaymentIntentDTO, ShoppingCartDTO} from "../../definitions/objects";
 import {environment} from "../../../environments/environment";
 
 @Injectable({
@@ -20,9 +20,17 @@ export class StripeService {
     return this.http.post<any>(`${this.BASE_URL}/create-token`, createToken);
   }
 
+  public makePaymentIntent(paymentIntent: PaymentIntentDTO): Observable<any> {
+    return this.http.post<any>(`${this.BASE_URL}/create-payment-intent`, paymentIntent);
+  }
 
-  getShoppingcart() {
+
+  public getShoppingcart(): Observable<ShoppingCartDTO> {
     return this.http.get<ShoppingCartDTO>(`${this.baseUrl}`);
   }
 
+  public confirmPayment(id: string): Observable<any> {
+    return this.http.post<any>(`${this.BASE_URL}/confirm/` + id, null);
+
+  }
 }

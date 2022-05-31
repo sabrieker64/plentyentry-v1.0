@@ -3,15 +3,14 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
 import {loadStripe, StripeCardElementOptions, StripeElementsOptions} from "@stripe/stripe-js";
 import {PaymentService} from "../../service/payment.service";
-import {StripeCardNumberComponent, StripeElementsService} from "ngx-stripe";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
-import {ShoppingCartDTO} from "../../../definitions/objects";
+import {PaymentIntentDTO, ShoppingCartDTO, ShoppingCartTicketDTOPerEvent} from "../../../definitions/objects";
 import {UserDetailService} from "../../../user/service/user-detail.service";
 import {StripeService} from "../stripe.service";
+import {StripeCardComponent, StripeElementsService} from "ngx-stripe";
 
-declare var Stripe: any;
 
 @Component({
   selector: 'app-stripe',
@@ -19,8 +18,12 @@ declare var Stripe: any;
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
-  @ViewChild(StripeCardNumberComponent) card: StripeCardNumberComponent;
+  @ViewChild(StripeCardComponent) card: StripeCardComponent;
   stripePromise = loadStripe(environment.stripe);
+  stripe: any;
+  paymentIntent: PaymentIntentDTO = <PaymentIntentDTO>{};
+  events: ShoppingCartTicketDTOPerEvent;
+  fullAmount: number = 0;
   elementsOptions: StripeElementsOptions = {
     locale: 'de'
   };
@@ -32,10 +35,14 @@ export class CheckoutComponent implements OnInit {
         padding: '50px',
         fontWeight: '400',
         fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-        fontSize: '18px',
+        fontSize: '19px',
         '::placeholder': {
-          color: '#CFD7E0'
+          color: '#7e73d4'
         }
+      },
+      invalid: {
+        iconColor: '#F14520',
+        color: '#FB2C00'
       }
     }
   };
@@ -57,88 +64,46 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.stripeForm = this.fb.group({
       name: ['', [Validators.required]]
     });
     this.loadShoppingCart();
-    console.log(this.shoppingCart.tickets);
-    /* const routeParamEvent = this.route.paramMap.pipe(map(value => this.handleParams(value)));*/
-    /* const loadPaymentObject = routeParamEvent.pipe(switchMap(() => this.loadEvent()));
-     this.shoppingCartObserver = loadPaymentObject.pipe(
-       map(value => this.complete(value)),
-       catchError(() => this.handleError()),
-       shareReplay(1));*/
+    this.loadOwnerOfShoppingCart();
   }
-
-
-  public createCharge() {
-  }
-
-  cardCaptureReady = false
-
-  onStripeInvalid(error: Error) {
-    console.log('Validation Error', error)
-  }
-
-  onStripeError(error: Error) {
-    console.error('Stripe error', error)
-  }
-
-  setPaymentMethod(token: stripe.paymentMethod.PaymentMethod) {
-    console.log('Stripe Payment Method', token)
-  }
-
-  setStripeToken(token: stripe.Token) {
-    console.log('Stripe Token', token)
-  }
-
-  setStripeSource(source: stripe.Source) {
-    console.log('Stripe Source', source)
-  }
-
-  makePayment() {
-    console.log('test payment');
-    //todo make rest call to stripe api endpoint
-    //todo after creating the payment object, confirm or cancel the paymnet
-    // todo 1.Schritt wir holen uns die shoppingcart von dem user und rechnen alle kaufmännisch gerundet zusammen
-    //  danach gibt er uns seine daten in unserem fall entweder paypal oder debit/credit karte
-
-  }
-
-  getToken() {
-
-  }
-
-  createToken() {
-
-  }
-
-  /*  private handleParams(params: ParamMap) {
-      const ticketId = params.get('');
-      return params;
-
-    }
-
-    private loadEvent(): Observable<ShoppingCartDTO> {
-
-      return of();
-    }
-
-    private complete(value: ShoppingCartDTO) {
-      this.shoppingCart = value;
-      return value;
-    }
-
-    private handleError() {
-      return of(<ShoppingCartDTO>{});
-    }*/
-  invalidError: any;
-  cardDetailsFilledOut: any;
 
   private loadShoppingCart() {
     this.serviceStripe.getShoppingcart().toPromise().then(data => {
       this.shoppingCart = data;
-      console.log(this.shoppingCart);
+      data.tickets.forEach(ticket => {
+        //hier wird die summe des warenkorbs berechnet
+        this.fullAmount = this.fullAmount + ticket.amount;
+        this.fullAmount = Math.round(this.fullAmount * 100 + Number.EPSILON) / 100;
+        this.fullAmount.toFixed(2);
+      })
     });
   }
+
+  private loadOwnerOfShoppingCart() {
+    this.userService.getCurrentUser().toPromise().then(data => {
+      this.ownerOfShoppingCart = data.firstName;
+    });
+  }
+
+  makePayment(fullAmount: number) {
+    console.log(fullAmount);
+    const paymentIntent = this.paymentIntent
+    paymentIntent.amount = fullAmount;
+    this.serviceStripe.makePaymentIntent(this.paymentIntent).toPromise().then(data => {
+      if (data.id != null) {
+        this.serviceStripe.confirmPayment(data.id).toPromise().then(res => {
+          console.log(res);
+        })
+      }
+      console.log(data);
+    })
+
+  }
+
+
 }

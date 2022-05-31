@@ -1,17 +1,28 @@
 <div class="container">
-  <h2>Hi, {{this.ownerOfShoppingCart}} du hast es fast geschafft!</h2>
-
-
+  <h2>Hi {{this.ownerOfShoppingCart}}, <br>
+    deine aktuellen Tickets im Warenkorb: </h2>
   <mat-card class="example-card">
     <mat-list role="list" *ngFor="let events of shoppingCart.tickets">
       <mat-list-item role="listitem">{{events.quantity}}  x   {{events.eventName}}
-        Preis {{events.amount}}</mat-list-item>
+        Preis {{events.amount}} €
+      </mat-list-item>
+      <mat-divider></mat-divider>
     </mat-list>
-
+    <h3>Summe: {{this.fullAmount}} €</h3>
+  </mat-card>
+</div>
+<div class="container">
+  <mat-card class="example-card">
+    <h3>Kredit/Debit-Karte: </h3>
+    <ngx-stripe-card
+      [options]="cardOptions"
+      [elementsOptions]="elementsOptions"
+    ></ngx-stripe-card>
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="makePayment()">
-        Kauf abschließen
+      <button mat-raised-button color="primary" (click)="makePayment(fullAmount)">
+        Bezahlen
       </button>
     </mat-card-actions>
   </mat-card>
 </div>
+

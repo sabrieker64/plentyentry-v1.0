@@ -4,7 +4,5 @@ import lombok.Getter;
 
 @Getter
 public enum StripePaymentTypes {
-    card,
-    giropay,
-    sepa_debit
+    card
 }

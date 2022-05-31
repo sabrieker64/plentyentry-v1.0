@@ -2,6 +2,7 @@ package at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpa
 
 import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.PaymentIntentDTO;
+import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.enums.Currency;
 import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.types.StripePaymentTypes;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -13,11 +14,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
+import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -33,12 +32,17 @@ public class StripeAcceptPaymentService {
 
     public PaymentIntent paymentIntent(PaymentIntentDTO paymentIntentDTO) throws StripeException {
         Stripe.apiKey = secretKey;
-        List<Object> paymentMethodThatCanBeAccepted = Arrays.stream(StripePaymentTypes.values()).collect(Collectors.toList());
-        Map<String, Object> params = new HashMap<>();
-        params.put("amount", paymentIntentDTO.getAmount());
-        params.put("description", paymentIntentDTO.getDescription());
-        params.put("currency", paymentIntentDTO.getCurrency().getValue());
-        params.put("payment_method_types", paymentMethodThatCanBeAccepted);
+        paymentIntentDTO.setCurrency(Currency.EUR);
+        paymentIntentDTO.setPaymentType(StripePaymentTypes.card);
+        //Hier wird das Objekt für die PaymentIntent aufgebaut
+        PaymentIntentCreateParams params =
+                PaymentIntentCreateParams.builder()
+                        .setAmount(paymentIntentDTO.getAmount().multiply(BigDecimal.valueOf(100L)).longValue())
+                        .setDescription(paymentIntentDTO.getDescription())
+                        .addPaymentMethodType(paymentIntentDTO.getPaymentType().toString())
+                        .putMetadata("order_id", paymentIntentDTO.getOrderId())
+                        .setCurrency(paymentIntentDTO.getCurrency().getValue())
+                        .build();
         return PaymentIntent.create(params);
     }
 
