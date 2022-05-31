@@ -3,6 +3,9 @@ package at.commodussolutions.plentyentry.ordermanagement.event;
 import at.commodussolutions.plentyentry.ordermanagement.event.dbInit.EventInitializer;
 import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
+import at.commodussolutions.plentyentry.user.authentication.jwt.JwtTokenUtil;
+import at.commodussolutions.plentyentry.user.userdata.dbInit.UserInitializer;
+import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
@@ -46,15 +49,27 @@ public class EventRestServiceTest {
     @Autowired
     private EventRepository eventRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
     private final static String baseUrl = "/api/backend/event";
 
     @Autowired
     private EventInitializer eventInitializer;
 
+    @Autowired
+    private UserInitializer userInitializer;
+
     @BeforeEach
     void createData() throws IOException {
         if (eventInitializer.shouldDataBeInitialized()) {
             eventInitializer.initData();
+        }
+        if (userInitializer.shouldDataBeInitialized()) {
+            userInitializer.initData();
         }
     }
 
@@ -150,9 +165,13 @@ public class EventRestServiceTest {
         newEvent.setCity("Fieberbrooklyn");
         newEvent.setEventImageUrls(eventImageUrls);
 
-        MvcResult postNewEvent = mvc.perform(MockMvcRequestBuilders.post(baseUrl)
+        var user = userRepository.findAll().stream().findFirst().orElseThrow();
+        var jwt = jwtTokenUtil.generateJwtToken(user);
+
+        MvcResult postNewEvent = mvc.perform(MockMvcRequestBuilders.post(baseUrl + "/special-privileges")
                         .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newEvent))
+                        .header("authorization", "Bearer " + jwt)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();

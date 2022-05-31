@@ -5,6 +5,7 @@ import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRe
 import at.commodussolutions.plentyentry.ordermanagement.event.service.EventService;
 import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -21,6 +22,9 @@ public class EventBuilder {
 
     @Autowired
     private EventService eventService;
+
+    @Autowired
+    private Environment env;
 
     public void buildEvent() throws IOException {
         ArrayList<String> eventImageUrls1 = new ArrayList<>();
@@ -45,9 +49,8 @@ public class EventBuilder {
         event.setAddress("Miau miau Cat Cat");
         event.setCity("Seini Hons");
         event.setEventImageUrls(eventImageUrls1);
-        //Build Data
-        eventService.createNewEvent(event);
-        //eventRepository.save(event);
+        eventRepository.save(event);
+
 
         //EVENT NUMBER 2 -> Bourbon Street
         Event event2 = new Event();
@@ -62,7 +65,7 @@ public class EventBuilder {
         event2.setCity("Fieberbrooklyn");
         event2.setEventImageUrls(eventImageUrls2);
         //Build Data
-        //eventRepository.save(event2);
-        eventService.createNewEvent(event2);
+        eventRepository.save(event2);
+        //eventService.createNewEvent(event2);
     }
 }
