@@ -102,7 +102,7 @@ public class TicketRestServiceTest {
                 new TypeReference<List<TicketDTO>>() {
                 });
 
-        Assertions.assertEquals(firstTicket.getEvent().getId(), resultList.get(0).getEvent().getId());
+        Assertions.assertEquals(firstTicket.getId(), resultList.get(0).getId());
 
     }
 
@@ -120,7 +120,7 @@ public class TicketRestServiceTest {
                 new TypeReference<TicketDTO>() {
                 });
 
-        Assertions.assertEquals(firstTicket.getEvent().getId(), resultTicket.getEvent().getId());
+        Assertions.assertEquals(firstTicket.getId(), resultTicket.getId());
 
     }
 
@@ -139,7 +139,7 @@ public class TicketRestServiceTest {
                 new TypeReference<TicketDTO>() {
                 });
 
-        Assertions.assertEquals(firstTicket.getEvent().getId(), resultTicket.getEvent().getId());
+        Assertions.assertEquals(firstTicket.getId(), resultTicket.getId());
 
     }
 

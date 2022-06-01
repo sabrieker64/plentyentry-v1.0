@@ -27,7 +27,7 @@ public class TicketInitializer implements InitializeDatabase {
 
     @Override
     public boolean shouldDataBeInitialized() {
-        return false;
+        return ticketRepository.count() == 0;
     }
 
     @Override

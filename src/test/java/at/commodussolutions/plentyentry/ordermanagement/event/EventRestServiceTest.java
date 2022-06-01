@@ -120,7 +120,7 @@ public class EventRestServiceTest {
         var firstEvent = eventRepository.findById(allList.get(0).getId()).orElse(null);
         firstEvent.setCity("KITZBICHI");
 
-        MvcResult updateFirstEvent = mvc.perform(MockMvcRequestBuilders.put(baseUrl)
+        MvcResult updateFirstEvent = mvc.perform(MockMvcRequestBuilders.put(baseUrl + "/special-privileges")
                         .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(firstEvent))
                         .contentType(MediaType.APPLICATION_JSON))

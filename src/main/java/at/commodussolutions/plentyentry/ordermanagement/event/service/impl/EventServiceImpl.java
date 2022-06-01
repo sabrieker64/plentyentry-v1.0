@@ -17,6 +17,8 @@ import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,6 +45,9 @@ public class EventServiceImpl implements EventService {
     private TicketService ticketService;
     @Autowired
     private AmazonClient amazonClient;
+
+    @Autowired
+    private Environment env;
 
     @Autowired
     private AwsBucketRestServiceImpl awsBucketRestService;
@@ -77,19 +82,19 @@ public class EventServiceImpl implements EventService {
 
         List<MultipartFile> list = new ArrayList<>();
 
-        for (String base64Url : event.getEventImageUrls()) {
-            String base64Image = base64Url.split(",")[1];
-            byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
-            MultipartFile file = new Base64DecodedMultipartFile(imageBytes);
-            BufferedImage img = ImageIO.read(new ByteArrayInputStream(imageBytes));
-            list.add(file);
+        if (!env.acceptsProfiles(Profiles.of("test"))) {
+            for (String base64Url : event.getEventImageUrls()) {
+                String base64Image = base64Url.split(",")[1];
+                byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
+                MultipartFile file = new Base64DecodedMultipartFile(imageBytes);
+                BufferedImage img = ImageIO.read(new ByteArrayInputStream(imageBytes));
+                list.add(file);
+            }
+            List<String> imgLinks = awsBucketRestService.uploadFiles(list, awsEventData);
+            event.setEventImageUrls(imgLinks);
         }
 
-        List<String> imgLinks = awsBucketRestService.uploadFiles(list, awsEventData);
-        event.setEventImageUrls(imgLinks);
-
         Event createdEvent = eventRepository.save(event);
-
         User currentUser = userService.getUserByJWTToken();
 
         Set<Event> entertainedEvents = currentUser.getEntertainedEvents();
