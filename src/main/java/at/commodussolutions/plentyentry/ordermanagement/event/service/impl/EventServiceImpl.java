@@ -95,6 +95,7 @@ public class EventServiceImpl implements EventService {
         }
 
         Event createdEvent = eventRepository.save(event);
+        ticketService.createAutomaticTicketsForNewEvent(createdEvent.getId(), createdEvent.getTicketCounter());
         User currentUser = userService.getUserByJWTToken();
 
         Set<Event> entertainedEvents = currentUser.getEntertainedEvents();
