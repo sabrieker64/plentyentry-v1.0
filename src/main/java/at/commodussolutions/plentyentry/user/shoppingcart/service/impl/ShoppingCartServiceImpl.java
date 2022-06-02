@@ -1,5 +1,6 @@
 package at.commodussolutions.plentyentry.user.shoppingcart.service.impl;
 
+import at.commodussolutions.plentyentry.ordermanagement.ticket.mapper.TicketMapper;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
 import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
 import at.commodussolutions.plentyentry.user.shoppingcart.repository.ShoppingCartRepository;
@@ -22,6 +23,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Autowired
     TicketRepository ticketRepository;
+
+    @Autowired
+    private TicketMapper ticketMapper;
 
     @Autowired
     UserRepository userRepository;
@@ -47,6 +51,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
 
     }
+
 
     @Override
     public ShoppingCart updateShoppingCartById(ShoppingCart shoppingCart) {

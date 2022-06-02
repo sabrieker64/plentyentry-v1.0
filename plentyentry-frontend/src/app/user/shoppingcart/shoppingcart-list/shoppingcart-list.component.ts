@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {MaintainerService} from "../../maintainer/service/maintainer.service";
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {EventService} from "../../../events/service/event.service";
 import {MatTableDataSource} from "@angular/material/table";
-import {EventDTO, ShoppingCartDTO, TicketDTO} from "../../../definitions/objects";
+import {ShoppingCartDTO, ShoppingCartTicketDTOPerEvent} from "../../../definitions/objects";
 import {ShoppingcartService} from "../service/shoppingcart.service";
 
 @Component({
@@ -14,6 +12,9 @@ import {ShoppingcartService} from "../service/shoppingcart.service";
 export class ShoppingcartListComponent implements OnInit {
 
   private loaded: boolean = false;
+  eventId: number;
+  theRealTicketList: ShoppingCartTicketDTOPerEvent[];
+  ticketsRawList: ShoppingCartTicketDTOPerEvent[];
 
   constructor(private shoppincartService: ShoppingcartService, private router: Router) {
   }
@@ -24,8 +25,8 @@ export class ShoppingcartListComponent implements OnInit {
 
   staticPositions: number = 1;
   displayedColumns: string[] = ['position', 'name', 'date', 'description', 'quantity', 'price', 'quantitiyPrice', 'deleteTicket'];
-  tickets: MatTableDataSource<TicketDTO>;
-  ticketArrayCalculating: TicketDTO[];
+  tickets: MatTableDataSource<ShoppingCartTicketDTOPerEvent>;
+  ticketArrayCalculating: ShoppingCartTicketDTOPerEvent[];
   fullPrice: number = 0;
   shoppingcart: ShoppingCartDTO;
 
@@ -35,34 +36,32 @@ export class ShoppingcartListComponent implements OnInit {
   }
 
   loadShoppingCart() {
+    //TODO diese verdammmte kacklogik (nichts gegen dich habub es geht nicht anders, aber diese logik will ich bitte
+    // im backend im frontend ist mir das zu gefährlich
     return this.shoppincartService.getShoppingcart().subscribe(shoppingcart => {
-      this.shoppingcart = shoppingcart;
-      this.tickets = new MatTableDataSource(this.shoppingcart.tickets.filter(ticket => ticket.ticketStatus === "NOTSELLED"));
-      this.ticketArrayCalculating = this.shoppingcart.tickets.filter(ticket => ticket.ticketStatus === "NOTSELLED");
-
-      this.ticketArrayCalculating.forEach(ticket=>{
-        this.fullPrice = this.fullPrice + (ticket.quantity * ticket.event.price);
+      shoppingcart.tickets.forEach(ticket => {
+        this.fullPrice = this.fullPrice + (ticket.quantity * ticket.ticketDTOS[0].event.price);
       });
-
-      if(this.tickets) {
+      this.ticketsRawList = shoppingcart.tickets;
+      console.log(this.ticketsRawList);
+      this.tickets = new MatTableDataSource(this.ticketsRawList);
+      this.ticketArrayCalculating = shoppingcart.tickets;
+      if (this.tickets) {
         this.loaded = true;
       }
-
-      console.log(this.shoppingcart.tickets)
-
-
+      console.log(this.shoppingcart.tickets);
     }, error => {
       console.log(error);
     });
 
   }
 
-  deleteItem(id: number){
-
-    // TODO DELETE Item
-
-
-
+  deleteItem(id: number) {
+    // todo exclude to ticket from the shoppingcart
   }
 
+  goToCheckout() {
+    //todo there we will going to checkout there is now time for payment
+    this.router.navigateByUrl('/payment/stripe-checkout');
+  }
 }

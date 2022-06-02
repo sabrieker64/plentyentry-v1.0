@@ -17,19 +17,19 @@
   <!-- Name Column -->
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.event.name}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.eventName}} </td>
   </ng-container>
 
   <!-- Date Column -->
   <ng-container matColumnDef="date">
     <th mat-header-cell *matHeaderCellDef> Datum </th>
-    <td mat-cell *matCellDef="let element"> {{element.event.date}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.eventDate}} </td>
   </ng-container>
 
   <!-- Description Column -->
   <ng-container matColumnDef="description">
     <th mat-header-cell *matHeaderCellDef> Beschreibung </th>
-    <td mat-cell *matCellDef="let element"> {{element.event.description}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.eventDescription}} </td>
   </ng-container>
 
   <!-- TicketCounter Column -->
@@ -41,13 +41,13 @@
   <!-- Price Column -->
   <ng-container matColumnDef="price">
     <th mat-header-cell *matHeaderCellDef> Preis </th>
-    <td mat-cell *matCellDef="let element"> {{element.event.price|currency:"EUR":"symbol"}}</td>
+    <td mat-cell *matCellDef="let element"> {{element.pricePerTicket|currency:"EUR":"symbol"}}</td>
   </ng-container>
 
   <!-- Price Column -->
   <ng-container matColumnDef="quantitiyPrice">
     <th mat-header-cell *matHeaderCellDef> Preis </th>
-    <td mat-cell *matCellDef="let element"> {{element.event.price * element.quantity|currency:"EUR":"symbol"}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.pricePerTicket * element.quantity|currency:"EUR":"symbol"}} </td>
   </ng-container>
 
   <!-- Delete Ticket -->
@@ -74,17 +74,8 @@
 </table>
 
 <div class="container">
-
-  <!--
-  <div *ngFor="let ticket of ticketArrayCalculating let last = last;">
-    {{ticket.quantity}}
-    <div *ngIf="last">
-      dsfa
-    </div>
-  </div>
-  !-->
   <div>
     GESAMTPREIS: {{fullPrice|currency:"EUR":"symbol"}}
   </div>
-
+  <button mat-raised-button (click)="goToCheckout()">Bestellung abschließen</button>
 </div>

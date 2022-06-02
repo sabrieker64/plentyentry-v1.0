@@ -13,9 +13,8 @@ import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 public class TicketRestServiceImpl implements TicketRestService {
@@ -58,14 +57,29 @@ public class TicketRestServiceImpl implements TicketRestService {
     @Override
     public TicketDTO createNewTicket(TicketDTO ticketDTO) {
         Ticket ticket = new Ticket();
-        ticketMapper.mapToEntity(ticketDTO,ticket);
+        ticketMapper.mapToEntity(ticketDTO, ticket);
         ticket = ticketService.createNewTicket(ticket);
         return ticketMapper.mapToDTO(ticket);
     }
 
     @Override
-    public void putTicketsToShoppingCart(Set<TicketDTO> ticketDTOSet) {
-        Set<Ticket> ticketSet = new HashSet<>();
-        ticketService.putTicketsToShoppingCart(ticketMapper.mapToListEntity(ticketDTOSet, ticketSet));
+    public void putTicketsToShoppingCart(List<TicketDTO> ticketDTOSet) {
+        var ticketList = new ArrayList<Ticket>();
+        ticketService.putTicketsToShoppingCart(ticketMapper.mapToListEntity(ticketDTOSet, ticketList));
+    }
+
+    @Override
+    public List<TicketDTO> findTicketByEvent(Long eventId, Long quantity) {
+        return ticketMapper.mapToListDTO(ticketService.getTicketByEventId(eventId, quantity));
+    }
+
+    @Override
+    public List<TicketDTO> selectTicketsAndAddToCustomerShoppingCart(Long eventId, Long quantity) {
+        return ticketMapper.mapToListDTO(ticketService.getTicketForEventAndAddToCartByQuantity(eventId, quantity));
+    }
+
+    @Override
+    public void deleteTicketsFromShoppingCart(Long eventId) {
+        ticketService.excludeTicketsFromShoppingcart(eventId);
     }
 }

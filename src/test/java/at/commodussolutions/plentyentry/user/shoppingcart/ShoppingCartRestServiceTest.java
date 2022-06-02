@@ -8,13 +8,11 @@ import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.mapper.TicketMapper;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
 import at.commodussolutions.plentyentry.user.authentication.jwt.JwtTokenUtil;
+import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
 import at.commodussolutions.plentyentry.user.shoppingcart.dbInit.ShoppingCartInitializer;
 import at.commodussolutions.plentyentry.user.shoppingcart.mapper.ShoppingCartMapper;
 import at.commodussolutions.plentyentry.user.shoppingcart.repository.ShoppingCartRepository;
-import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dbInit.UserInitializer;
-import at.commodussolutions.plentyentry.user.userdata.enums.UserGender;
-import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import at.commodussolutions.plentyentry.user.userdata.mapper.UserMapper;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
@@ -30,12 +28,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -99,7 +96,7 @@ public class ShoppingCartRestServiceTest {
     private ShoppingCartInitializer shoppingCartInitializer;
 
     @BeforeEach
-    void createData() {
+    void createData() throws IOException {
         if (eventInitializer.shouldDataBeInitialized()) {
             eventInitializer.initData();
         }
@@ -118,38 +115,20 @@ public class ShoppingCartRestServiceTest {
 
     @Test
     void processTesting() throws Exception {
-        User user = new User();
-        user.setUserType(UserType.ADMIN);
-        user.setFirstName("Testuser");
-        user.setLastName("lastname");
-        user.setPassword(passwordEncoder.bCryptPasswordEncoder().encode("Test123!"));
-        user.setEnabled(true);
-        user.setUserGender(UserGender.MALE);
-        user.setCity("KITZ");
-        user.setPostCode("6360");
-        user.setStreet("test strret");
-        user.setBirthday(LocalDate.now());
-        userService.registerNewUser(user);
-
+        var user = userRepository.findAll().stream().findFirst()
+                .orElseThrow();
         var testTicket = ticketRepository.findAll().get(0);
-
-        var testUser = userRepository.findByEmail(user.getEmail()).orElseThrow();
-
-        var jwt = jwtTokenUtil.generateJwtToken(testUser);
-
-        testUser.setJwtToken(jwt);
-
+        var jwt = jwtTokenUtil.generateJwtToken(user);
+        user.setJwtToken(jwt);
+        user.setShoppingCart(new ShoppingCart());
         Set<TicketDTO> listTicket = new HashSet<>();
         listTicket.add(ticketMapper.mapToDTO(testTicket));
-
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put("/api/backend/ticket/addToShoppingCart")
+        mvc.perform(MockMvcRequestBuilders.put("/api/backend/ticket/addToShoppingCart")
                         .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(listTicket))
                         .header("authorization", "Bearer " + jwt)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
-
-        var updatedUser = userRepository.getByEmail(user.getEmail());
     }
 }

@@ -236,10 +236,14 @@
                         <class>at.commodussolutions.plentyentry.user.userdata.dto.UserRegisterDTO</class>
                         <class>at.commodussolutions.plentyentry.user.userdata.dto.UserAuthReqDTO</class>
                         <class>
-                            at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.CreatePaymentResponse
+                            at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.PaymentIntentDTO
+                        </class>
+                        <class>at.commodussolutions.plentyentry.ordermanagement.payment.paypal.dto.Order</class>
+                        <class>
+                            at.commodussolutions.plentyentry.ordermanagement.payment.stripe.enums.StripePaymentTypes
                         </class>
                         <class>
-                            at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.CreatePayment
+                            at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.CreateTokenDTO
                         </class>
                     </classes>
                     <outputKind>module</outputKind>

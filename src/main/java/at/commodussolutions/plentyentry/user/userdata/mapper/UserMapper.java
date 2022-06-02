@@ -4,6 +4,7 @@ import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserRegisterDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
+    @Mapping(target = "shoppingCartDTO", source = "shoppingCart")
     UserDTO mapToDTO(User entity);
 
     User mapToEntity(UserDTO dto, @MappingTarget User entity);

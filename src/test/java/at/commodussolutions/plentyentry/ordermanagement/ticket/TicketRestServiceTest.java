@@ -1,7 +1,6 @@
 package at.commodussolutions.plentyentry.ordermanagement.ticket;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.dbInit.EventInitializer;
-import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import at.commodussolutions.plentyentry.ordermanagement.event.mapper.EventMapper;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dbInit.TicketInitializer;
@@ -30,7 +29,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.transaction.Transactional;
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -75,7 +74,7 @@ public class TicketRestServiceTest {
     private UserMapper userMapper;
 
     @BeforeEach
-    void createData() {
+    void createData() throws IOException {
         if (ticketInitializer.shouldDataBeInitialized()) {
             ticketInitializer.initData();
         }
@@ -103,7 +102,7 @@ public class TicketRestServiceTest {
                 new TypeReference<List<TicketDTO>>() {
                 });
 
-        Assertions.assertEquals(firstTicket.getEvent(), resultList.get(0).getEvent());
+        Assertions.assertEquals(firstTicket.getId(), resultList.get(0).getId());
 
     }
 
@@ -121,7 +120,7 @@ public class TicketRestServiceTest {
                 new TypeReference<TicketDTO>() {
                 });
 
-        Assertions.assertEquals(firstTicket.getEvent(), resultTicket.getEvent());
+        Assertions.assertEquals(firstTicket.getId(), resultTicket.getId());
 
     }
 
@@ -140,7 +139,7 @@ public class TicketRestServiceTest {
                 new TypeReference<TicketDTO>() {
                 });
 
-        Assertions.assertEquals(firstTicket.getEvent(), resultTicket.getEvent());
+        Assertions.assertEquals(firstTicket.getId(), resultTicket.getId());
 
     }
 
@@ -153,7 +152,7 @@ public class TicketRestServiceTest {
 
         ticket.setTicketStatus(TicketStatus.NOTSELLED);
         ticket.setEvent(eventMapper.mapToDTO(event));
-        ticket.setQuantity(100);
+        //ticket.setQuantity(100);
         //ticket.setUser(userMapper.mapToDTO(user));
 
         //STACKOVERFLOW????
@@ -168,7 +167,7 @@ public class TicketRestServiceTest {
                 new TypeReference<TicketDTO>() {
                 });
 
-        Assertions.assertEquals(ticket.getEvent(), resultTicket.getEvent());
+        Assertions.assertEquals(ticket.getEvent().getId(), resultTicket.getEvent().getId());
 
     }
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {TicketDTO} from "../../definitions/objects";
 import {environment} from "../../../environments/environment";
@@ -12,16 +12,19 @@ export class TicketService {
   private BASE_URL: string = environment.baseUrl + 'api/backend/ticket';
   private BASE_URL_QR: string = environment.baseUrl + 'api/backend/qrcode';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   public getBoughtTickets(): Observable<TicketDTO[]> {
     return this.http.get<TicketDTO[]>(`${this.BASE_URL}` + '/boughtTickets');
   }
 
+  public getTicketsWithQuantityRandom(eventId: number, quantity: number): Observable<TicketDTO[]> {
+    return this.http.get<TicketDTO[]>(`${this.BASE_URL}` + "/" + eventId + "/" + quantity);
+  }
+
   public getQRCode(ticketID: number): Observable<ArrayBuffer> {
-
-
-    const httpOptions : Object = {
+    const httpOptions: Object = {
       headers: new HttpHeaders({
         'Accept': 'text/html',
         'Content-Type': 'text/plain; charset=utf-8'

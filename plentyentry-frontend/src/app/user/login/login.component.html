@@ -3,7 +3,9 @@
 
       <h1 class="form-headline">Login</h1>
 
-      <form #loginForm="ngForm" [formGroup]="loginFormGroup" (ngSubmit)="loginForm.form.valid && authenticate() ">
+      <form #loginForm="ngForm" [formGroup]="loginFormGroup" (keydown.enter)="loginForm.form.valid && authenticate()"
+            (ngSubmit)="loginForm.form.valid &&
+      authenticate() ">
         <div class="grid cols--1">
           <mat-form-field appearance="outline">
             <mat-label>Login Name</mat-label>

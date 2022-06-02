@@ -1,5 +1,8 @@
 import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {CreateTokenDTO, PaymentIntentDTO, ShoppingCartDTO} from "../../definitions/objects";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -7,20 +10,27 @@ import {Observable} from "rxjs";
 export class StripeService {
 
   private stripejsUrl = 'https://js.stripe.com/v3/';
+  private baseUrl: string = environment.baseUrl + 'api/backend/shoppingcart';
+  private BASE_URL = environment.baseUrl + 'api/backend/stripe';
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
-  public initializeStripe() {
-    return new Observable((observer) => {
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = this.stripejsUrl;
-      script.onload = () => {
-        observer.next();
-        observer.complete();
-      };
-      document.getElementsByTagName('head')[0].appendChild(script);
-    });
+  public makePaymentWithCreateToken(createToken: CreateTokenDTO): Observable<any> {
+    return this.http.post<any>(`${this.BASE_URL}/create-token`, createToken);
+  }
+
+  public makePaymentIntent(paymentIntent: PaymentIntentDTO): Observable<any> {
+    return this.http.post<any>(`${this.BASE_URL}/create-payment-intent`, paymentIntent);
+  }
+
+
+  public getShoppingcart(): Observable<ShoppingCartDTO> {
+    return this.http.get<ShoppingCartDTO>(`${this.baseUrl}`);
+  }
+
+  public confirmPayment(id: string): Observable<any> {
+    return this.http.post<any>(`${this.BASE_URL}/confirm/` + id, null);
+
   }
 }

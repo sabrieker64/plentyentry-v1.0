@@ -1,12 +1,14 @@
-<nav class="main-navigation">
-  <ul>
-    <li *ngFor="let navItem of navItems">
-      <a class="main-navigation--item" [ngClass]="{'active': navItem.isActive }" routerLink="{{ navItem.route }}"
-         (click)="onNavItemClick(navItem)">
-        <span class="circle circle--outter"></span>
-        <span class="circle circle--inner"></span>
-        <mat-icon aria-hidden="false" aria-label="Example home icon">{{ navItem.iconName }}</mat-icon>
-      </a>
-    </li>
-  </ul>
-</nav>
+<div style="margin: 100px">
+  <nav class="main-navigation">
+    <ul>
+      <li *ngFor="let navItem of navItems">
+        <a class="main-navigation--item" [ngClass]="{'active': navItem.isActive }" routerLink="{{ navItem.route }}"
+           (click)="onNavItemClick(navItem)">
+          <span class="circle circle--outter"></span>
+          <span class="circle circle--inner"></span>
+          <mat-icon aria-hidden="false" aria-label="Example home icon">{{ navItem.iconName }}</mat-icon>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

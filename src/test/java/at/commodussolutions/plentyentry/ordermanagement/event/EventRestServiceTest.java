@@ -3,6 +3,9 @@ package at.commodussolutions.plentyentry.ordermanagement.event;
 import at.commodussolutions.plentyentry.ordermanagement.event.dbInit.EventInitializer;
 import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
+import at.commodussolutions.plentyentry.user.authentication.jwt.JwtTokenUtil;
+import at.commodussolutions.plentyentry.user.userdata.dbInit.UserInitializer;
+import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
@@ -22,6 +25,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -44,15 +49,27 @@ public class EventRestServiceTest {
     @Autowired
     private EventRepository eventRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
     private final static String baseUrl = "/api/backend/event";
 
     @Autowired
     private EventInitializer eventInitializer;
 
+    @Autowired
+    private UserInitializer userInitializer;
+
     @BeforeEach
-    void createData() {
+    void createData() throws IOException {
         if (eventInitializer.shouldDataBeInitialized()) {
             eventInitializer.initData();
+        }
+        if (userInitializer.shouldDataBeInitialized()) {
+            userInitializer.initData();
         }
     }
 
@@ -103,7 +120,7 @@ public class EventRestServiceTest {
         var firstEvent = eventRepository.findById(allList.get(0).getId()).orElse(null);
         firstEvent.setCity("KITZBICHI");
 
-        MvcResult updateFirstEvent = mvc.perform(MockMvcRequestBuilders.put(baseUrl)
+        MvcResult updateFirstEvent = mvc.perform(MockMvcRequestBuilders.put(baseUrl + "/special-privileges")
                         .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(firstEvent))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -141,16 +158,20 @@ public class EventRestServiceTest {
         newEvent.setStartDateTime(LocalDateTime.now());
         newEvent.setEndDateTime(LocalDateTime.now());
         newEvent.setDescription("Für jeden Schicker eine Eskalation!");
-        newEvent.setPrice(10.00);
-        newEvent.setTicketCounter(4);
+        newEvent.setPrice(BigDecimal.valueOf(10.00));
+        newEvent.setTicketCounter(Long.parseLong("4"));
         newEvent.setTicketId(5L);
         newEvent.setAddress("Schicker Blowis");
         newEvent.setCity("Fieberbrooklyn");
         newEvent.setEventImageUrls(eventImageUrls);
 
-        MvcResult postNewEvent = mvc.perform(MockMvcRequestBuilders.post(baseUrl)
+        var user = userRepository.findAll().stream().findFirst().orElseThrow();
+        var jwt = jwtTokenUtil.generateJwtToken(user);
+
+        MvcResult postNewEvent = mvc.perform(MockMvcRequestBuilders.post(baseUrl + "/special-privileges")
                         .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newEvent))
+                        .header("authorization", "Bearer " + jwt)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();

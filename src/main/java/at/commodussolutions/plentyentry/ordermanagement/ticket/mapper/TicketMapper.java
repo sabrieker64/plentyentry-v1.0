@@ -3,19 +3,20 @@ package at.commodussolutions.plentyentry.ordermanagement.ticket.mapper;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import java.util.List;
-import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface TicketMapper {
 
+    @Mapping(target = "quantity", ignore = true)
     TicketDTO mapToDTO(Ticket entity);
 
     List<TicketDTO> mapToListDTO(List<Ticket> entity);
 
-    Set<Ticket> mapToListEntity(Set<TicketDTO> dtoList, @MappingTarget Set<Ticket> entity);
+    List<Ticket> mapToListEntity(List<TicketDTO> dtoList, @MappingTarget List<Ticket> entity);
 
     Ticket mapToEntity(TicketDTO dto, @MappingTarget Ticket entity);
 }

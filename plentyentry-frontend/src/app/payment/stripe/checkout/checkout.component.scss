@@ -1,6 +1,28 @@
-/* Variables */
+@import "../../../../assets/theme";
+
 * {
   box-sizing: border-box;
+}
+
+.fluid-property {
+  background-color: $brand-color;
+  padding: 1rem;
+  color: $white;
+  text-transform: uppercase;
+  min-width: 250px;
+  text-align: center;
+  position: absolute;
+  left: -30px;
+  @include fluid-property('top', $fluid-min-vw, $fluid-max-vw, 30px, 60px);
+  border-radius: $border-radius;
+  padding-top: 95px;
+  margin-top: 95px;
+  margin-left: 500px;
+}
+
+#payment-button {
+  background-color: #7f73d4;
+  max-width: 300px;
 }
 
 body {

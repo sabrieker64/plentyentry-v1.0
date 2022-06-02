@@ -2,6 +2,8 @@ package at.commodussolutions.plentyentry.backendConfig.dbInitConfig.dbInit;
 
 import org.springframework.core.Ordered;
 
+import java.io.IOException;
+
 public interface InitializeDatabase extends Ordered {
 
     String initializeName();
@@ -12,7 +14,7 @@ public interface InitializeDatabase extends Ordered {
 
     int getOrder();
 
-    void initData();
+    void initData() throws IOException;
 
 
 }

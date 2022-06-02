@@ -35,7 +35,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        if (request.getRemoteHost().equals("localhost")) {
+        if (request.getRemoteHost().contains("localhost")) {
             return true;
         }
         if (request.getRequestURL().toString().contains("/api/backend/event/list") || request.getRequestURL().toString().contains("/api/backend/user/register")) {

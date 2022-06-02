@@ -1,11 +1,8 @@
 package at.commodussolutions.plentyentry.ordermanagement.ticket.service;
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
-import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 public interface TicketService {
 
@@ -19,5 +16,15 @@ public interface TicketService {
 
     Ticket createNewTicket(Ticket ticket);
 
-    void putTicketsToShoppingCart(Set<Ticket> ticketSet);
+    void putTicketsToShoppingCart(List<Ticket> ticketSet);
+
+    List<Ticket> getTicketByEventId(Long eventId, Long quantity);
+
+    void createAutomaticTicketsForNewEvent(Long eventId, Long quantity);
+
+    List<Ticket> getTicketForEventAndAddToCartByQuantity(Long eventId, Long quantity);
+
+    void excludeTicketsFromShoppingcart(Long eventId);
+
+    List<Ticket> findAllTicketsThatAreNotAvailableAnymore(Long eventId);
 }

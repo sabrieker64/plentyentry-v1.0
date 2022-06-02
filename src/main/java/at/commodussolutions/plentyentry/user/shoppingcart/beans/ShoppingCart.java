@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Author: @Mina
@@ -30,6 +30,6 @@ public class ShoppingCart {
     @Column(name = "TICKETS")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "SHOPPING_CART_ID")
-    private Set<Ticket> tickets = new HashSet<>();
+    private List<Ticket> tickets = new ArrayList<>();
 
 }

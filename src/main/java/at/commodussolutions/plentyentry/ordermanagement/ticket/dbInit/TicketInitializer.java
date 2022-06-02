@@ -1,12 +1,7 @@
 package at.commodussolutions.plentyentry.ordermanagement.ticket.dbInit;
 
 import at.commodussolutions.plentyentry.backendConfig.dbInitConfig.dbInit.InitializeDatabase;
-import at.commodussolutions.plentyentry.backendConfig.security.PasswordEncoder;
-import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
-import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
-import at.commodussolutions.plentyentry.ordermanagement.ticket.enums.TicketStatus;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
-import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

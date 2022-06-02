@@ -85,10 +85,14 @@
                 <mat-icon class="icon">remove</mat-icon>
               </button>
             </span>
-            <button class="cart">
+            <button class="cart" (click)="addToShoppingCart(eventDTO, eventQuantity)">
               <mat-icon class="icon">shopping_cart</mat-icon>
               In den Warenkorb
             </button>
+            <!--<button class="cart" (click)="goToCheckout()">
+              <mat-icon class="icon">payments</mat-icon>
+              Kaufen
+            </button>-->
           </div>
         </section>
       </div>

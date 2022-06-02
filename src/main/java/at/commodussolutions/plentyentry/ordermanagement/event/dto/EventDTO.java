@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -18,8 +20,8 @@ public class EventDTO {
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     private String description;
-    private Double price;
-    private Integer ticketCounter;
+    private BigDecimal price;
+    private Long ticketCounter;
     private Long ticketId;
     private String city;
     private String address;

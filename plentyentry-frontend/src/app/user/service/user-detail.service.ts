@@ -25,5 +25,9 @@ export class UserDetailService {
     return this.http.put<UserDTO>(`${this.baseUrl}`, userDTO);
   }
 
+  public getCurrentUser(): Observable<UserDTO> {
+    return this.http.get<UserDTO>(`${this.baseUrl}`);
+  }
+
 //TODO: Mukiiii services erstellen
 }
