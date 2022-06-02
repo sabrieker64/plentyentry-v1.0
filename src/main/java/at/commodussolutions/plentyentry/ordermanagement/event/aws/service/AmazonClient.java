@@ -32,6 +32,14 @@ public class AmazonClient {
     private String accessKey;
     @Value("${amazonProperties.secretKey}")
     private String secretKey;
+    private String fromEmail;
+    @Value("${amazonProperties.smtpUsername}")
+    private String smtpUsername;
+    @Value("${amazonProperties.smtpPassword}")
+    private String smtpPasword;
+
+    @Value("${amazonProperties.mailHost}")
+    private String smtpHost;
 
     @PostConstruct
     private void initializeAmazon() {
@@ -137,7 +145,6 @@ public class AmazonClient {
         String path = awsEventImagesUploadDTO.getUsername() + "/" + awsEventImagesUploadDTO.getEventName() + "/";
         s3Client.deleteObject(bucketName, path + fileName);
     }
-
 
 
 }

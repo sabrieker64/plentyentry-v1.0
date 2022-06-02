@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public interface UserService extends UserDetailsService {
 
     User getUserById(Long id);
 
-    User registerNewUser(User user);
+    User registerNewUser(User user) throws MessagingException;
 
     String confirmToken(String token);
 

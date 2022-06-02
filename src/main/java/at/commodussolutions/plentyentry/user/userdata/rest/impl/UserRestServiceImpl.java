@@ -14,6 +14,7 @@ import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public class UserRestServiceImpl implements UserRestService {
     }
 
     @Override
-    public UserDTO createUser(UserRegisterDTO userRegisterDTO) {
+    public UserDTO createUser(UserRegisterDTO userRegisterDTO) throws MessagingException {
         User user = new User();
         userMapper.mapToEntityForRegister(userRegisterDTO, user);
         user = userService.registerNewUser(user);
