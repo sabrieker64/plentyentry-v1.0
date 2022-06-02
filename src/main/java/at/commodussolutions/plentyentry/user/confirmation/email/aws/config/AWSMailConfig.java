@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.aws.mail.simplemail.SimpleEmailServiceJavaMailSender;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 
 @Configuration
@@ -19,6 +20,7 @@ public class AWSMailConfig {
 
 
     @Bean
+    @Profile("!test")
     public AmazonSimpleEmailService simpleEmailService() {
         return AmazonSimpleEmailServiceClientBuilder.standard()
                 .withCredentials(
@@ -28,6 +30,7 @@ public class AWSMailConfig {
 
 
     @Bean
+    @Profile("!test")
     public JavaMailSender javaMailSender(AmazonSimpleEmailService amazonSimpleEmailService) {
         return new SimpleEmailServiceJavaMailSender(amazonSimpleEmailService);
     }
