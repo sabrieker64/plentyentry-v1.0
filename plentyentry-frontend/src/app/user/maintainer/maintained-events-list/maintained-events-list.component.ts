@@ -5,6 +5,9 @@ import {EventDTO} from "../../../definitions/objects";
 import {Router} from "@angular/router";
 import {EventService} from "../../../events/service/event.service";
 import {ErrorService} from "../../../../library/error-handling/error.service";
+import {registerLocaleData} from "@angular/common";
+import localeDe from "@angular/common/locales/de";
+import localeDeExtra from "@angular/common/locales/extra/de";
 
 @Component({
   selector: 'app-maintained-events-list',
@@ -24,10 +27,12 @@ export class MaintainedEventsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAllMaintainedEvents();
+    registerLocaleData(localeDe, 'de-DE', localeDeExtra);
   }
 
   staticPositions: number = 1;
-  displayedColumns: string[] = ['position', 'name', 'date', 'description', 'price', 'ticketCounter', 'fullAddress', 'editMaintainedEvent', 'deleteMaintainedEvent'];
+  //displayedColumns: string[] = ['position', 'name', 'date', 'description', 'price', 'ticketCounter', 'fullAddress', 'editMaintainedEvent', 'deleteMaintainedEvent'];
+  displayedColumns: string[] = ['name', 'date', 'description', 'price', 'ticketCounter', 'fullAddress', 'editMaintainedEvent', 'deleteMaintainedEvent'];
   allMaintainedEvents: MatTableDataSource<EventDTO>;
 
   applyFilter(event: Event) {

@@ -1,9 +1,30 @@
 <div class="container">
+
+  <div class="container-splide" *ngIf="eventDTO.eventImageUrls">
+    <splide [options]="
+      {
+        perPage: 1,
+        pagination: false
+      }
+        ">
+
+      <splide-slide *ngFor="let image of showEventImages; let i = index">
+        <figure class="image-thumbnail">
+          <img [src]="image" id="{{i}}">
+
+          <mat-icon class="delete-image" (click)="deleteImage(i)">delete</mat-icon>
+        </figure>
+      </splide-slide>
+
+    </splide>
+  </div>
+
   <div class="box box--shadow">
 
     <h1 class="form-headline">Event Bearbeiten</h1>
 
     <form #updateForm="ngForm" [formGroup]="updateEventFormGroup" (ngSubmit)="updateForm.form.valid && updateEvent() ">
+
       <div class="grid cols--2">
         <mat-form-field appearance="outline">
           <mat-label>Adresse</mat-label>
@@ -26,23 +47,82 @@
           </mat-error>
         </mat-form-field>
 
+
+        <mat-form-field class="form-element full-width" appearance="outline">
+          <mat-label>Fotos</mat-label>
+
+          <ngx-mat-file-input [multiple]="true"
+                              [(ngModel)]="eventDTO.eventImageUrls"
+                              formControlName="files"
+                              id="file"
+                              class="form-control"
+                              matInput
+                              (change)="onFileChange($event)"
+                              accept="{{accept}} "
+          >
+            <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+          </ngx-mat-file-input>
+
+          <mat-error *ngIf="updateEventFormGroup.get('files')?.errors">
+            <p *ngIf="updateEventFormGroup.get('files')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+          </mat-error>
+          <mat-hint>Foto hinzufügen</mat-hint>
+        </mat-form-field>
+
+
         <mat-form-field appearance="outline">
-          <mat-label>Datum</mat-label>
-          <input matInput [matDatepicker]="picker1" name="date"
-                 formControlName="date"
-                 [(ngModel)]="eventDTO.startDateTime">
-          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
+
+
+          <mat-placeholder>Start DateTime</mat-placeholder>
+          <mat-label>Startdatum</mat-label>
+
+          <input matInput [ngxMatDatetimePicker]="startDateTimePicker"
+                 formControlName="startDateTime" [(ngModel)]="eventDTO.startDateTime">
+
+          <mat-datepicker-toggle matSuffix [for]="$any(startDateTimePicker)"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #startDateTimePicker
+                                   [showSpinners]="true" [showSeconds]="false"
+                                   [stepHour]="1" [stepMinute]="10" [stepSecond]="1"
+                                   [touchUi]="true" [enableMeridian]="false"
+                                   [disableMinute]="false" [hideTime]="false">
+          </ngx-mat-datetime-picker>
+
+
+          <mat-error *ngIf="updateEventFormGroup.get('startDateTime')?.errors">
+            <p *ngIf="updateEventFormGroup.get('startDateTime')?.hasError('required')">Dieses Feld ist ein
+              Pflichtfeld</p>
+          </mat-error>
+          <mat-hint>Startdatum und Zeit eingeben</mat-hint>
+
+
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Datum</mat-label>
-          <input matInput [matDatepicker]="picker1" name="date"
-                 formControlName="date"
-                 [(ngModel)]="eventDTO.endDateTime">
-          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
+
+
+          <mat-placeholder>End DateTime</mat-placeholder>
+          <mat-label>Enddatum</mat-label>
+
+          <input matInput [ngxMatDatetimePicker]="endDateTimePicker"
+                 formControlName="endDateTime" [(ngModel)]="eventDTO.endDateTime">
+
+          <mat-datepicker-toggle matSuffix [for]="$any(endDateTimePicker)"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #endDateTimePicker
+                                   [showSpinners]="true" [showSeconds]="false"
+                                   [stepHour]="1" [stepMinute]="10" [stepSecond]="1"
+                                   [touchUi]="true" [enableMeridian]="false"
+                                   [disableMinute]="false" [hideTime]="false">
+          </ngx-mat-datetime-picker>
+
+
+          <mat-error *ngIf="updateEventFormGroup.get('endDateTime')?.errors">
+            <p *ngIf="updateEventFormGroup.get('endDateTime')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+          </mat-error>
+          <mat-hint>Endatum und Zeit eingeben</mat-hint>
+
+
         </mat-form-field>
+
 
         <mat-form-field class="form-element full-width" appearance="outline">
           <mat-label>Beschreibung</mat-label>
@@ -89,8 +169,11 @@
         <button class="cols--full-width" mat-raised-button color="primary" type="submit"
                 [disabled]="!updateForm.form.valid">Update
         </button>
+
+
       </div>
     </form>
+
 
   </div>
 </div>

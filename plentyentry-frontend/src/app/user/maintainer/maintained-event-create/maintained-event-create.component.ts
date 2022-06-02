@@ -69,6 +69,14 @@ export class MaintainedEventCreateComponent implements OnInit {
     this.eventDTO.eventImageUrls = [];
     this.eventDTO.eventImageUrls = this.eventImagesBase64List;
 
+
+    this.eventDTO.startDateTime = new Date(this.eventDTO.startDateTime);
+    this.eventDTO.startDateTime.setHours(this.eventDTO.startDateTime.getHours() + 2);
+
+    this.eventDTO.endDateTime = new Date(this.eventDTO.endDateTime);
+    this.eventDTO.endDateTime.setHours(this.eventDTO.endDateTime.getHours() + 2);
+
+
     this.eventService.createEvent(this.eventDTO).toPromise().then((eventDTO: EventDTO) => {
       console.log(eventDTO);
       this.router.navigateByUrl("maintainedevents/maintained/events/list");

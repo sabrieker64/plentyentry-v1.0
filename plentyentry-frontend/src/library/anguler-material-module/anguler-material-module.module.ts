@@ -37,6 +37,11 @@ import {MatSliderModule} from "@angular/material/slider";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {NgxMatFileInputModule} from "@angular-material-components/file-input";
 import {MatDatetimepickerModule, MatNativeDatetimeModule} from "@mat-datetimepicker/core";
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule
+} from "@angular-material-components/datetime-picker";
 
 const materialModules = [
   MatSliderModule,
@@ -78,6 +83,10 @@ const materialModules = [
   NgxMatFileInputModule,
   MatDatetimepickerModule,
   MatNativeDatetimeModule,
+  NgxMatTimepickerModule,
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+
 ];
 
 @NgModule({

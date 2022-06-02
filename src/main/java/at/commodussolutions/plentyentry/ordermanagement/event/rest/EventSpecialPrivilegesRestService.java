@@ -22,7 +22,7 @@ public interface EventSpecialPrivilegesRestService {
     @PutMapping()
     @ResponseBody
     @PESecured({ADMIN, SUPERADMIN, MAINTAINER})
-    EventDTO updateEventById(@RequestBody EventDTO updatedEvent);
+    EventDTO updateEventById(@RequestBody EventDTO updatedEvent) throws IOException;
 
     @PostMapping()
     @ResponseBody

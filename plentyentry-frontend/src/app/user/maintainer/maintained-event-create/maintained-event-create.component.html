@@ -134,7 +134,10 @@
           <mat-icon style="color: #ffffff;" class="icon" aria-hidden="false" aria-label="outlined icon">today</mat-icon>
         </div>
         <div class="event-detail--box-2">
+
+
           <mat-form-field appearance="outline" class="event-date--formfield">
+            <!--
 
             <mat-placeholder>Start DateTime</mat-placeholder>
             <mat-datetimepicker-toggle
@@ -159,7 +162,31 @@
               <p *ngIf="createFormGroup.get('startDateTime')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
             </mat-error>
             <mat-hint>Startdatum und Zeit eingeben</mat-hint>
+            !-->
+            <mat-placeholder>Start DateTime</mat-placeholder>
+            <mat-label>Startdatum</mat-label>
+
+            <input matInput [ngxMatDatetimePicker]="startDateTimePicker"
+                   formControlName="startDateTime" [(ngModel)]="eventDTO.startDateTime"
+                   [formControl]="startDateTimeDefault">
+
+            <mat-datepicker-toggle matSuffix [for]="$any(startDateTimePicker)"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #startDateTimePicker
+                                     [showSpinners]="true" [showSeconds]="false"
+                                     [stepHour]="1" [stepMinute]="10" [stepSecond]="1"
+                                     [touchUi]="true" [enableMeridian]="false"
+                                     [disableMinute]="false" [hideTime]="false">
+            </ngx-mat-datetime-picker>
+
+
+            <mat-error *ngIf="createFormGroup.get('startDateTime')?.errors">
+              <p *ngIf="createFormGroup.get('startDateTime')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+            </mat-error>
+            <mat-hint>Startdatum und Zeit eingeben</mat-hint>
+
           </mat-form-field>
+
+
         </div>
       </div>
 
@@ -169,6 +196,7 @@
         </div>
         <div class="event-detail--box-2">
           <mat-form-field appearance="outline" class="event-date--formfield">
+            <!--
             <mat-placeholder>Ende DateTime</mat-placeholder>
             <mat-datetimepicker-toggle
               [for]="endDateTimePicker"
@@ -191,6 +219,27 @@
               <p *ngIf="createFormGroup.get('endDateTime')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
             </mat-error>
             <mat-hint>Enddatum und Zeit eingeben</mat-hint>
+            !-->
+
+            <mat-placeholder>End DateTime</mat-placeholder>
+            <mat-label>Enddatum</mat-label>
+
+            <input matInput [ngxMatDatetimePicker]="endDateTimePicker"
+                   formControlName="endDateTime" [(ngModel)]="eventDTO.endDateTime" [formControl]="endDateTimeDefault">
+
+            <mat-datepicker-toggle matSuffix [for]="$any(endDateTimePicker)"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #endDateTimePicker
+                                     [showSpinners]="true" [showSeconds]="false"
+                                     [stepHour]="1" [stepMinute]="10" [stepSecond]="1"
+                                     [touchUi]="true" [enableMeridian]="false"
+                                     [disableMinute]="false" [hideTime]="false">
+            </ngx-mat-datetime-picker>
+
+
+            <mat-error *ngIf="createFormGroup.get('endDateTime')?.errors">
+              <p *ngIf="createFormGroup.get('endDateTime')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+            </mat-error>
+            <mat-hint>Endatum und Zeit eingeben</mat-hint>
           </mat-form-field>
         </div>
       </div>

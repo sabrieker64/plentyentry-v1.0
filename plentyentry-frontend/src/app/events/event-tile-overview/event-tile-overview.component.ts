@@ -40,7 +40,7 @@ export class EventTileOverviewComponent implements OnInit {
         var result = event.name.toLowerCase() + " " + event.city.toLowerCase();
 
         if (this.dateFilter == true) {
-          var differenceInDays = this.calculateDays(event.startDateTime.toString());
+          let differenceInDays = this.calculateDays(event.startDateTime.toString());
           return result.includes(searchedValue.toLowerCase()) && (differenceInDays <= 14) && (differenceInDays >= 0);
         } else {
           return result.includes(searchedValue.toLowerCase());
@@ -49,9 +49,11 @@ export class EventTileOverviewComponent implements OnInit {
 
     } else {
       if (this.dateFilter == true) {
+
         this.filteredEvents = this.allEvents.filter(event => {
-          var differenceInDays = this.calculateDays(event.startDateTime.toString());
-          return (differenceInDays <= 14 && differenceInDays >= 0);
+          console.log(event.startDateTime)
+          let differenceInDays = this.calculateDays(event.startDateTime.toString());
+          return (differenceInDays <= 14 && differenceInDays >= -0.9);
         })
       } else {
         this.filteredEvents = this.allEvents;
@@ -75,6 +77,7 @@ export class EventTileOverviewComponent implements OnInit {
     var today = new Date();
 
     var differenceInTime = startDate.getTime() - today.getTime();
+
     return (differenceInTime / (1000 * 3600 * 24));
   }
 
@@ -97,6 +100,13 @@ export class EventTileOverviewComponent implements OnInit {
 
   getDay(date: Date): string {
     return new Date(date).toLocaleDateString('de-DE', {day: 'numeric'});
+  }
+
+  getTime(date: Date): string {
+    let collector = date.toString().split("T");
+    let time = collector[1];
+    time = time.substr(0, 5) + " Uhr";
+    return time;
   }
 
   getEventDetail(eventId: number) {

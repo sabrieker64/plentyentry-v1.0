@@ -26,7 +26,7 @@ public class EventSpecialPrivilegesRestServiceImpl implements EventSpecialPrivil
     }
 
     @Override
-    public EventDTO updateEventById(EventDTO updatedEvent) {
+    public EventDTO updateEventById(EventDTO updatedEvent) throws IOException {
         Event event = eventService.getEventById(updatedEvent.getId());
         eventMapper.mapToEntity(updatedEvent, event);
         return eventMapper.mapToDTO(eventService.updateEventById(event));

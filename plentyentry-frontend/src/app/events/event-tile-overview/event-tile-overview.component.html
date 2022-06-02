@@ -43,14 +43,21 @@
             <div class="event-card--inner" (click)="getEventDetail(event.id)">
 
               <div class="event-card--date">
-                <h3>{{ getDay(event.startDateTime) }} </h3>
-                <h3>{{ getMonth(event.startDateTime) }}</h3>
+                <div class="event-card-date-left-start"
+                     style="float:left; text-align: center; background-color: #7f73d4; opacity: 70%; border-radius: 10px; padding: 5px">
+                  <h3>Von</h3>
+                  <h3>{{ getDay(event.startDateTime) }}.{{ getMonth(event.startDateTime) }}</h3>
+                  <h3>{{ getTime(event.startDateTime) }}</h3>
+                  <h3></h3>
+                </div>
+                <div class="event-card-date-right-end"
+                     style="float:right; text-align: center; background-color: #7f73d4; opacity: 70%; border-radius: 10px; padding: 5px">
+                  <h3>Bis</h3>
+                  <h3>{{ getDay(event.endDateTime) }}.{{ getMonth(event.endDateTime) }}</h3>
+                  <h3>{{ getTime(event.endDateTime) }}</h3>
+                </div>
               </div>
 
-              <div class="event-card--date">
-                <h3>{{ getDay(event.endDateTime) }} </h3>
-                <h3>{{ getMonth(event.endDateTime) }}</h3>
-              </div>
 
               <figure class="event-card--thumbnail">
                 <img
@@ -96,18 +103,25 @@
       }
     }
       ">
+
         <splide-slide *ngFor="let event of filteredEvents">
           <section class="event-card">
             <div class="event-card--inner" (click)="getEventDetail(event.id)">
 
               <div class="event-card--date">
-                <h3>{{ getDay(event.startDateTime) }} </h3>
-                <h3>{{ getMonth(event.startDateTime) }}</h3>
-              </div>
-
-              <div class="event-card--date">
-                <h3>{{ getDay(event.endDateTime) }} </h3>
-                <h3>{{ getMonth(event.endDateTime) }}</h3>
+                <div class="event-card-date-left-start"
+                     style="float:left; text-align: center; background-color: #7f73d4; opacity: 70%; border-radius: 10px; padding: 5px">
+                  <h3>Von</h3>
+                  <h3>{{ getDay(event.startDateTime) }}.{{ getMonth(event.startDateTime) }}</h3>
+                  <h3>{{ getTime(event.startDateTime) }}</h3>
+                  <h3></h3>
+                </div>
+                <div class="event-card-date-right-end"
+                     style="float:right; text-align: center; background-color: #7f73d4; opacity: 70%; border-radius: 10px; padding: 5px">
+                  <h3>Bis</h3>
+                  <h3>{{ getDay(event.endDateTime) }}.{{ getMonth(event.endDateTime) }}</h3>
+                  <h3>{{ getTime(event.endDateTime) }}</h3>
+                </div>
               </div>
 
 

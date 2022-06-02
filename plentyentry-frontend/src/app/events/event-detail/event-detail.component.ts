@@ -6,6 +6,9 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {ErrorService} from "../../../library/error-handling/error.service";
 import {TicketService} from "../../ticket/service/ticket.service";
 import {UserDetailService} from "../../user/service/user-detail.service";
+import localeDe from '@angular/common/locales/de';
+import localeDeExtra from '@angular/common/locales/extra/de';
+import {registerLocaleData} from "@angular/common";
 
 @Component({
   selector: 'app-event-detail',
@@ -23,8 +26,10 @@ export class EventDetailComponent implements OnInit {
               private ticketService: TicketService, private userService: UserDetailService) {
   }
 
+
   ngOnInit(): void {
     this.getEventDetail();
+    registerLocaleData(localeDe, 'de-DE', localeDeExtra);
   }
 
   public getEventDetail() {

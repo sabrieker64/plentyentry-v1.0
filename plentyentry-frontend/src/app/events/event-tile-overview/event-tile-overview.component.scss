@@ -93,14 +93,27 @@
 
   &--date {
     color: $white;
+    /*
     margin-right: 0;
     margin-left: auto;
-    height: 50px;
     width: 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    */
+    height: 50px;
+
     border-radius: 10px;
   }
+
+
+}
+
+.event-card-date-right-begin {
+  text-align: right !important;
+}
+
+event-card-date-left-begin {
+  text-align: left;
 }

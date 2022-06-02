@@ -112,7 +112,32 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Event updateEventById(Event event) {
+    public Event updateEventById(Event event) throws IOException {
+
+        AWSEventImagesUploadDTO awsEventData = new AWSEventImagesUploadDTO();
+
+        awsEventData.setEventName(event.getName());
+        awsEventData.setUsername(userService.getUserByJWTToken().getEmail());
+
+        List<MultipartFile> base64List = new ArrayList<>();
+
+        if (!env.acceptsProfiles(Profiles.of("test"))) {
+            for (String base64Url : event.getEventImageUrls()) {
+                if (base64Url.contains("base64")) {
+                    String base64Image = base64Url.split(",")[1];
+                    byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
+                    MultipartFile file = new Base64DecodedMultipartFile(imageBytes);
+                    //BufferedImage img = ImageIO.read(new ByteArrayInputStream(imageBytes));
+                    base64List.add(file);
+                }
+            }
+            List<String> imgLinks = awsBucketRestService.uploadFiles(base64List, awsEventData);
+            event.setEventImageUrls(imgLinks);
+        }
+
+        Event createdEvent = eventRepository.save(event);
+        ticketService.createAutomaticTicketsForNewEvent(createdEvent.getId(), createdEvent.getTicketCounter());
+
         return eventRepository.save(event);
     }
 

@@ -14,22 +14,6 @@
           </figure>
         </splide-slide>
       </splide>
-      <!--
-      <div class="grid cols--3">
-        <figure class="image-thumbnail">
-          <img
-            src="https://eventimagesbucket.s3.us-east-2.amazonaws.com/st.-johann-in-tirol-murdock-veranstaltungstechnik-events-murdock-1.jpg">
-        </figure>
-        <figure class="image-thumbnail">
-          <img
-            src="https://eventimagesbucket.s3.us-east-2.amazonaws.com/st.-johann-in-tirol-murdock-veranstaltungstechnik-events-murdock-1.jpg">
-        </figure>
-        <figure class="image-thumbnail">
-          <img
-            src="https://eventimagesbucket.s3.us-east-2.amazonaws.com/st.-johann-in-tirol-murdock-veranstaltungstechnik-events-murdock-1.jpg">
-        </figure>
-      </div>
-      !-->
     </div>
     <div class="event-detail--information">
       <div class="grid cols--1">
@@ -45,7 +29,7 @@
           !-->
         </div>
         <mat-divider></mat-divider>
-        <div class="grid cols--2">
+        <div class="grid cols--4">
 
           <section class="event-detail--card">
             <div class="event-detail--card-icon">
@@ -57,15 +41,27 @@
             </div>
           </section>
 
+
           <section class="event-detail--card">
             <div class="event-detail--card-icon">
               <mat-icon class="icon">calendar_today</mat-icon>
             </div>
             <div class="event-detail--card-description">
-              <h2>Datum</h2>
-              <h4>{{ eventDTO.startDateTime | date: 'd.MM.yyyy'}}</h4>
+              <h2>Start</h2>
+              <h4>{{ eventDTO.startDateTime | date: 'dd.MM.yyyy HH:mm'}}</h4>
             </div>
           </section>
+
+          <section class="event-detail--card">
+            <div class="event-detail--card-icon">
+              <mat-icon class="icon">calendar_today</mat-icon>
+            </div>
+            <div class="event-detail--card-description">
+              <h2>Ende</h2>
+              <h4>{{ eventDTO.endDateTime | date: 'dd.MM.yyyy HH:mm'}}</h4>
+            </div>
+          </section>
+
         </div>
 
         <section class="event-detail--description">
@@ -75,7 +71,7 @@
 
         <section class="event-detail--shopping">
           <div class="event-detail--shopping-box">
-            <h1>{{ eventDTO.price * eventQuantity | currency: 'EUR' }}</h1>
+            <h1>{{ eventDTO.price * eventQuantity | currency: 'EUR' :'symbol':'.2-2':'de-DE' }}</h1>
             <span class="event-detail--shopping-quantity">
               <button (click)="increaseQuantity()">
                 <mat-icon class="icon">add</mat-icon>
