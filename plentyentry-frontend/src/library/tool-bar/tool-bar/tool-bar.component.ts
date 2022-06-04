@@ -52,16 +52,18 @@ export class ToolBarComponent implements OnInit {
 
         this.shoppingCartValue = howManyOpen;
       } else {
-
-        this.errorHandling.openInformation("Benutzer besitzt keine Shoppingcart!");
+        console.log("Benutzer besitzt keine Shoppingcart");
         if (this.loggedIn == false) {
 
-          this.errorHandling.openErrorBoxAndGoToLogin("Sie sind nicht eingeloggt!");
+          this.errorHandling.openErrorBoxAndGoToLogin("Sie besitzen keine ShoppingCart!");
 
         }
       }
     }, error => {
-      this.errorHandling.openErrorBoxAndGoToLogin("Fehler!");
+      //console.log(error);
+      //this.errorHandling.openErrorBox(error.message);
+      this.errorHandling.openErrorBoxAndGoToLogin("Sie besitzen keine ShoppingCart!");
+
     });
 
   }
@@ -85,21 +87,23 @@ export class ToolBarComponent implements OnInit {
   }
 
   checkIfLoggedIn() {
-    if (localStorage.getItem('token')) {
-      this.loggedIn = true;
-    } else {
-      this.loggedIn = false;
-    }
+    this.userService.getUserByJWT().subscribe((loggedInUser) => {
+      if (localStorage.getItem('token')) {
+        this.loggedIn = true;
+      } else {
+        this.loggedIn = false;
+      }
 
-    this.userService.getUserByJWT().subscribe((user) => {
-      if (user.userType == "ADMIN" || user.userType == "SUPERADMIN") {
+      if (loggedInUser.userType == "ADMIN" || loggedInUser.userType == "SUPERADMIN") {
         this.hasSpecialPriviliges = true;
         this.hasStdPriviliges = true;
-      } else if (user.userType == "MAINTAINER") {
+      } else if (loggedInUser.userType == "MAINTAINER") {
         this.hasStdPriviliges = true;
       }
-    });
 
+    }, (err) => {
+      this.errorHandling.openErrorBoxAndGoToLogin("Loggen Sie sich bitte ein.")
+    })
 
   }
 

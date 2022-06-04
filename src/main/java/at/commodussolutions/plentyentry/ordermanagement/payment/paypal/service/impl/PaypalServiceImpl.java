@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 public class PaypalServiceImpl implements PaypalService {
 
-    @Autowired
+    @Autowired(required = false)
     private APIContext apiContext;
 
 

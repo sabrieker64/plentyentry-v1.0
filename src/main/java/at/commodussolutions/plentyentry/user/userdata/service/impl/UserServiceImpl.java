@@ -19,6 +19,7 @@ import at.commodussolutions.plentyentry.user.userdata.validations.EmailValidator
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -27,6 +28,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -96,7 +98,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerNewUser(User user) {
+    public User registerNewUser(User user) throws MessagingException {
         boolean isValidEmail = emailValidator.test(user.getEmail());
         if (!isValidEmail) {
             throw new IllegalStateException("email is not valid");
@@ -105,7 +107,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    private void signUpUser(User user) {
+    private void signUpUser(User user) throws MessagingException {
         boolean userExists = this.userRepository.findByEmail(user.getEmail()).isPresent();
         if (userExists) {
             throw new IllegalStateException("Email wird schon verwendet");
@@ -126,7 +128,10 @@ public class UserServiceImpl implements UserService {
             log.info("The Profile is on test that means no Email would be send, just call the Confirmation Link to enable the user");
         } else {
             String link = this.backendUtils.getHost() + "api/backend/user/confirm?token=" + token.getToken();
-            emailSender.send(user.getEmail(), buildEmail(user.getLastName(), link));
+            if (environment.acceptsProfiles(Profiles.of("test", "development"))) {
+                emailSender.send(user.getEmail(), buildEmail(user.getLastName(), link));
+            }
+            emailSender.sendEmailFromSES(user.getEmail(), buildEmail(user.getLastName(), link));
         }
     }
 

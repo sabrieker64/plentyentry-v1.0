@@ -7,6 +7,7 @@ import at.commodussolutions.plentyentry.user.userdata.dto.UserLoginDTO;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserRegisterDTO;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public interface UserRestService {
 
     @PostMapping("/register")
     @ResponseBody
-    UserDTO createUser(@RequestBody UserRegisterDTO userRegisterDTO);
+    UserDTO createUser(@RequestBody UserRegisterDTO userRegisterDTO) throws MessagingException;
 
     @GetMapping("/confirm")
     @ResponseBody

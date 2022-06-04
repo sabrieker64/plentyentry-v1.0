@@ -53,3 +53,8 @@ amazonProperties:
   accessKey: AKIAU3CJ5DRKN27DX2N3
   secretKey: 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
   bucketName: eventimagesbucket
+  smtpUsername: AKIAU3CJ5DRKDH5E27UE
+  smtpPassword: BNsPvdqU5zcTYG378bm9q8hRPpSOXWD31StHYq5gHjov
+  mailHost: email-smtp.us-east-2.amazonaws.com
+  accessKeyMail: AKIAU3CJ5DRKIFX7E4IG
+  secretKeyMail: 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
