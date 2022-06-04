@@ -1,9 +1,13 @@
 jwt:
   secret: 'plentyentrycommodus'
 pe:
-  baseHost: 'http://18.188.57.68:8080/'
+  baseHost: 'https://18.222.4.37/'
 server:
-  port: 8080
+  port: 443
+  ssl:
+    key-store-type: PKCS12
+    key-store:
+    enabled: true
 spring:
   jpa:
     properties:
