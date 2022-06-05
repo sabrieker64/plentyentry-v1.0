@@ -24,7 +24,7 @@ phases:
     commands:
       - echo Build started on `date`
       - ls
-      - mvn clean install
+      - mvn clean install --DskipTests
       - cd plentyentry-frontend
       - rm -rf /dist
       - ng build --progress

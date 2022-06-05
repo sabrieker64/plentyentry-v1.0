@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-06-02 20:41:39.
+// Generated using typescript-generator version 2.32.889 on 2022-06-05 13:01:47.
 
 export interface UserDTO {
   id: number;
