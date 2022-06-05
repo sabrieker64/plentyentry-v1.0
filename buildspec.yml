@@ -8,7 +8,7 @@ phases:
   install:
     runtime-versions:
       java: corretto11
-      nodejs: latest
+      nodejs: 16.15.1
     commands:
       - echo $CODEBUILD_SRC_DIR
       - cd plentyentry-frontend
