@@ -13,7 +13,7 @@ phases:
       - echo $CODEBUILD_SRC_DIR
       - cd plentyentry-frontend
       - npm install -y npm@latest
-      - npm install -g @angular/cli
+      - npm install -g @angular/cli@13.1.2
   pre_build:
     commands:
       - echo Installing source NPM dependencies
