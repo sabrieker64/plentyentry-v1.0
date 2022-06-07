@@ -68,18 +68,30 @@
           <mat-label>Adresse</mat-label>
           <input matInput placeholder="Musterstraße 1/1" name="street" formControlName="street"
                  [(ngModel)]="userDTO.street">
+          <mat-error *ngIf="editFormGroup.get('street')?.errors">
+            <p *ngIf="editFormGroup.get('street')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+            <p *ngIf="editFormGroup.get('street')?.hasError('pattern')">Die ist keine gültige E-Mail Adresse</p>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="form-element full-width" appearance="outline">
           <mat-label>Postleitzahl</mat-label>
           <input matInput placeholder="1234" name="postCode" formControlName="postcode"
                  [(ngModel)]="userDTO.postCode">
+          <mat-error *ngIf="editFormGroup.get('postCode')?.errors">
+            <p *ngIf="editFormGroup.get('postCode')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+            <p *ngIf="editFormGroup.get('postCode')?.hasError('pattern')">Die ist keine gültige E-Mail Adresse</p>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="form-element" appearance="outline">
           <mat-label>Stadt</mat-label>
           <input matInput placeholder="Musterstadt" name="city" formControlName="city"
                  [(ngModel)]="userDTO.city">
+          <mat-error *ngIf="editFormGroup.get('city')?.errors">
+            <p *ngIf="editFormGroup.get('city')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
+            <p *ngIf="editFormGroup.get('city')?.hasError('pattern')">Die ist keine gültige E-Mail Adresse</p>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="form-element" appearance="outline">
@@ -89,6 +101,18 @@
               {{userType}}
             </mat-option>
           </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="form-element" appearance="outline">
+          <mat-label>Firma</mat-label>
+          <input matInput placeholder="Firma" name="companyName" formControlName="companyName"
+                 [(ngModel)]="userDTO.companyName">
+        </mat-form-field>
+
+        <mat-form-field class="form-element" appearance="outline">
+          <mat-label>Telefonnummer</mat-label>
+          <input matInput placeholder="06767007418" name="phoneNumber" formControlName="phoneNumber"
+                 [(ngModel)]="userDTO.phoneNumber">
         </mat-form-field>
 
         <button mat-raised-button color="primary" type="submit">Ändern</button>

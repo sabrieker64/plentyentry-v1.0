@@ -82,34 +82,44 @@ export class MaintainedEventEditComponent implements OnInit {
     this.eventService.getEventById(id).subscribe((data) => {
       this.eventDTO = data;
       this.loaded = true;
-      this.setShowEventImages();
+      this.setCurrentShowEventImages();
     }, error => {
       console.log(error);
     });
   }
 
-  setShowEventImages() {
-    this.showEventImages = this.eventDTO.eventImageUrls;
+  async getBase64ImageFromUrl(imageUrl: string) {
+    var res = await fetch(imageUrl);
+    var blob = await res.blob();
 
-    /*
+    return new Promise((resolve, reject) => {
+      var reader = new FileReader();
+      reader.addEventListener("load", function () {
+        resolve(reader.result);
+      }, false);
+
+      reader.onerror = () => {
+        return reject(this);
+      };
+      reader.readAsDataURL(blob);
+    })
+  }
+
+  setCurrentShowEventImages() {
+
+
+    //TODO: CORS IN AWS ENABLEN
+
     setTimeout(() => {
-      this.showEventImages.forEach((test, index) => {
-        var img = document.getElementById(index.toString())
-        var canvas = document.createElement("canvas");
-        // @ts-ignore
-        canvas.width = img.width;
-        // @ts-ignore
-        canvas.height = img.height;
-        var ctx = canvas.getContext("2d");
-        // @ts-ignore
-        ctx.drawImage(img, 0, 0);
-        var dataURL = canvas.toDataURL("image/png");
-        return dataURL.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+      this.eventDTO.eventImageUrls.forEach((url, index) => {
+        this.getBase64ImageFromUrl(url)
+          .then((result: any) => {
+            console.log(result)
+            this.showEventImages.push(result)
+          })
+          .catch(err => console.error(err));
       })
-    },5000)
-
-     */
-
+    }, 300)
 
   }
 
@@ -122,13 +132,6 @@ export class MaintainedEventEditComponent implements OnInit {
 
       return;
     }
-
-    /*
-
-    console.log(this.eventDTO.startDateTime)
-    return;
-
-     */
 
     this.eventDTO.eventImageUrls = [];
     this.eventDTO.eventImageUrls = this.eventImagesBase64List;

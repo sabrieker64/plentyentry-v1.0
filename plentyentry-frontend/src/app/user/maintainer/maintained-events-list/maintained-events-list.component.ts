@@ -20,7 +20,12 @@ export class MaintainedEventsListComponent implements OnInit {
 
   private loaded: boolean = false;
 
-  editEvent: {[key: number]: boolean} = {};
+  editEvent: { [key: number]: boolean } = {};
+
+  staticPositions: number = 1;
+  //displayedColumns: string[] = ['position', 'name', 'date', 'description', 'price', 'ticketCounter', 'fullAddress', 'editMaintainedEvent', 'deleteMaintainedEvent'];
+  displayedColumns: string[] = ['name', 'date', 'description', 'price', 'ticketCounter', 'fullAddress', 'editMaintainedEvent', 'deleteMaintainedEvent'];
+  allMaintainedEvents: MatTableDataSource<EventDTO>;
 
   constructor(private maintainerService: MaintainerService, private router: Router, private eventService: EventService, private errorHandling: ErrorService) {
   }
@@ -28,12 +33,16 @@ export class MaintainedEventsListComponent implements OnInit {
   ngOnInit(): void {
     this.loadAllMaintainedEvents();
     registerLocaleData(localeDe, 'de-DE', localeDeExtra);
+
+    // Create a media condition that targets viewports at least 768px wide
+    const mediaQuery = window.matchMedia('(max-width: 600px)')
+    // Check if the media query is true
+    if (mediaQuery.matches) {
+      this.displayedColumns = ['name', 'price', 'editMaintainedEvent', 'deleteMaintainedEvent'];
+    }
+
   }
 
-  staticPositions: number = 1;
-  //displayedColumns: string[] = ['position', 'name', 'date', 'description', 'price', 'ticketCounter', 'fullAddress', 'editMaintainedEvent', 'deleteMaintainedEvent'];
-  displayedColumns: string[] = ['name', 'date', 'description', 'price', 'ticketCounter', 'fullAddress', 'editMaintainedEvent', 'deleteMaintainedEvent'];
-  allMaintainedEvents: MatTableDataSource<EventDTO>;
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

@@ -3,10 +3,13 @@
   <zxing-scanner  (scanSuccess)="onCodeResult($event)"></zxing-scanner>
 
   <section class="results" *ngIf="qrResultString && response">
-    <div style="text-align: center;" [style.background-color]="successBackground == true ? 'green' : 'red'">
-      <strong>{{ response }}</strong>
+    <div style="text-align: center;" [style.background-color]="successBackground == true ? 'green' : 'red'"
+         style="margin-top: 10px; text-align: center; border-radius: 5px; ">
+      <strong style="padding-top: 10px;">{{ response }}</strong>
 
-      <button mat-raised-button color="primary" (click)="refreshResponse()">Neues Ticket scannen</button>
+      <button mat-raised-button color="primary" (click)="refreshResponse()"
+              style="margin-top: 10px;  margin-bottom: 10px; ">Neues Ticket scannen
+      </button>
     </div>
   </section>
 </div>

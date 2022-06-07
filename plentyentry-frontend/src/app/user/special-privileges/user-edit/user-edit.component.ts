@@ -22,7 +22,7 @@ export class UserEditComponent implements OnInit {
   allowed: boolean = false;
 
 
-  userTypes: UserType[] = ["GUEST", "CUSTOMER", "ADMIN", "MAINTAINER", "SUPERADMIN"];
+  userTypes: UserType[] = ["SUPERADMIN", "ADMIN", "MAINTAINER", "CUSTOMER"];
 
   currentUserId: number = 0;
 
@@ -49,6 +49,8 @@ export class UserEditComponent implements OnInit {
         "city": new FormControl(),
         "postcode": new FormControl(),
         "userType": new FormControl(),
+        "companyName": new FormControl(),
+        "phoneNumber": new FormControl(),
       });
 
       this.loadUserDetails(this.currentUserId).then((res) => {

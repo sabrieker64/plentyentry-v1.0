@@ -104,6 +104,12 @@ public class QrCodeGeneratorServiceImpl implements QrCodeGeneratorService {
             ticketRepository.save(ticket);
             return "{  \"response\" : \"Ticket wurde erfolgreich verwendet!\" }";
         }
+
+        if (ticket.getTicketStatus().equals(TicketStatus.USED) && entertainerIsAllowedToScan) {
+            return "{  \"responseerror\" : \"Ticket wurde schon einmal verwendet!\" }";
+        }
+
+
         return "{  \"responseerror\" : \"Ticket kann nicht gescannt werden!\" }";
 
     }

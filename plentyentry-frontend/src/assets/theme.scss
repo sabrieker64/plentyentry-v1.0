@@ -19,14 +19,18 @@
   display: block; width: 100%;
 }
 
+/*
 .maintained-events-container {
   width: 100%;
 
   @media screen and (max-width: 600px) {
-    padding-left: $container-padding-left / 2;
-    padding-right: $container-padding-right / 2;
+    padding-left: $container-padding-left / 2 !important;
+    padding-right: $container-padding-right / 2 !important;
   }
 }
+
+ */
+
 
 .box {
   @include fluid-property('padding', $fluid-min-vw, $fluid-max-vw, 30px, 60px);

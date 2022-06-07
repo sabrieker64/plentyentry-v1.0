@@ -14,17 +14,24 @@ import {UserDTO} from "../../../definitions/objects";
 export class UserListComponent implements OnInit {
 
   private loaded: boolean = false;
+  staticPositions: number = 1;
+  displayedColumns: string[] = ['position', 'firstName', 'email', 'city', 'age', 'birthday', 'userType', 'editUser', 'deleteUser'];
+  allUsers: MatTableDataSource<UserDTO>;
 
   constructor(private specialPrivilegeService: SpecialPrivilegesService, private router: Router, private eventService: EventService, private errorHandling: ErrorService) {
   }
 
   ngOnInit(): void {
     this.loadAllUser();
+
+    // Create a media condition that targets viewports at least 768px wide
+    const mediaQuery = window.matchMedia('(max-width: 600px)')
+    // Check if the media query is true
+    if (mediaQuery.matches) {
+      this.displayedColumns = ['email', 'userType', 'editUser', 'deleteUser'];
+    }
   }
 
-  staticPositions: number = 1;
-  displayedColumns: string[] = ['position', 'firstName', 'email', 'city', 'age', 'birthday', 'userType', 'editUser', 'deleteUser'];
-  allUsers: MatTableDataSource<UserDTO>;
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
