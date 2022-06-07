@@ -40,9 +40,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         }
         if (request.getRequestURL().toString().contains("/api/backend/event/list") || request.getRequestURL().toString().contains("/api/backend/user/register") ||
                 request.getRequestURL().toString().contains("/actuator/")) {
-            if (request.getHeader(AUTHORIZATION).isEmpty() || request.getHeader(AUTHORIZATION).startsWith(TOKEN_PREFIX + "No Token")) {
-                return true;
-            }
+          return true;
         }
         return super.shouldNotFilter(request);
     }
