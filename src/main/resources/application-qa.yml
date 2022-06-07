@@ -1,7 +1,7 @@
 jwt:
   secret: 'plentyentrycommodus'
 pe:
-  baseHost: 'http://18.222.4.37/'
+  baseHost: 'https://plenty-entry-backend.com/'
 server:
   port: 80
 spring:
