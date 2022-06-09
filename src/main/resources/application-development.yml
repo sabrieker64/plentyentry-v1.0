@@ -1,7 +1,7 @@
 jwt:
   secret: 'plentyentrycommodus'
 pe:
-  baseHost: 'http://localhost:80/'
+  baseHost: 'http://localhost:8080/'
 server:
   port: 8080
 spring:
