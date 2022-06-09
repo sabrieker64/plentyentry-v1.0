@@ -1,9 +1,9 @@
 jwt:
   secret: 'plentyentrycommodus'
 pe:
-  baseHost: 'http://18.222.4.37:8080/'
+  baseHost: 'http://plenty-entry-backend.com/'
 server:
-  port: 8080
+  port: 80
 spring:
   jpa:
     properties:
@@ -11,6 +11,7 @@ spring:
         format_sql: true
         synonyms: true
         show_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
