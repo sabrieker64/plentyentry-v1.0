@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:80/',
+  baseUrl: 'http://localhost:8080/',
   stripe: 'pk_test_51Kfr2HDAXhrIxCz9JbKqmWo6ZTaUMBUPhY1iukliuy0iRqRoxFVv93oOTnst1mwW2XZMHXqFRLLK3BAmIDCI9CAe00tV99Snt1',
   trackingEnabled: false
 };
