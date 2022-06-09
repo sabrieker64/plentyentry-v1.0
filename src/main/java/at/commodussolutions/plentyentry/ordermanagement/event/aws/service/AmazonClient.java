@@ -47,7 +47,7 @@ public class AmazonClient {
         this.s3Client = new AmazonS3Client(credentials);
     }
 
-    public List<String> uploadFiles(List<MultipartFile> multipartFiles, List<String> currentUrls, AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
+    public List<String> uploadFiles(List<MultipartFile> multipartFiles, AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
         int i = 0;
         List<String> fileUrls = new ArrayList<>();
         String path = "/" + awsEventImagesUploadDTO.getUsername() + "/" + awsEventImagesUploadDTO.getEventName() + "/";

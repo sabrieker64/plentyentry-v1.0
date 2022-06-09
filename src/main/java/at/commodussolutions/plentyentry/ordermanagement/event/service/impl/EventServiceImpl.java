@@ -90,7 +90,7 @@ public class EventServiceImpl implements EventService {
                 BufferedImage img = ImageIO.read(new ByteArrayInputStream(imageBytes));
                 list.add(file);
             }
-            List<String> imgLinks = awsBucketRestService.uploadFiles(list, null, awsEventData);
+            List<String> imgLinks = awsBucketRestService.uploadFiles(list, awsEventData);
             event.setEventImageUrls(imgLinks);
         }
 
@@ -135,7 +135,7 @@ public class EventServiceImpl implements EventService {
                     currentUrls.add(currentUrl);
                 }
             }
-            List<String> imgLinks = awsBucketRestService.uploadFiles(base64List, currentUrls, awsEventData);
+            List<String> imgLinks = awsBucketRestService.uploadFiles(base64List, awsEventData);
             event.setEventImageUrls(imgLinks);
         }
 

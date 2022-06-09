@@ -24,8 +24,8 @@ public class AwsBucketRestServiceImpl {
 
     @PostMapping("/uploadFiles")
     @ResponseBody
-    public List<String> uploadFiles(@RequestParam(value = "files") List<MultipartFile> files, @RequestParam(value = "currentUrls") List<String> currentUrls, @RequestPart(name = "awsEventImagesUploadDTO") AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
-        return this.amazonClient.uploadFiles(files, currentUrls, awsEventImagesUploadDTO);
+    public List<String> uploadFiles(@RequestParam(value = "files") List<MultipartFile> files, @RequestPart(name = "awsEventImagesUploadDTO") AWSEventImagesUploadDTO awsEventImagesUploadDTO) {
+        return this.amazonClient.uploadFiles(files, awsEventImagesUploadDTO);
     }
 
     @PostMapping("/listFiles")
