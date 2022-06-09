@@ -90,7 +90,7 @@ public class EventServiceImpl implements EventService {
                 BufferedImage img = ImageIO.read(new ByteArrayInputStream(imageBytes));
                 list.add(file);
             }
-            List<String> imgLinks = awsBucketRestService.uploadFiles(list, awsEventData);
+            List<String> imgLinks = awsBucketRestService.uploadFiles(list, null, awsEventData);
             event.setEventImageUrls(imgLinks);
         }
 
@@ -120,6 +120,7 @@ public class EventServiceImpl implements EventService {
         awsEventData.setUsername(userService.getUserByJWTToken().getEmail());
 
         List<MultipartFile> base64List = new ArrayList<>();
+        List<String> currentUrls = new ArrayList<>();
 
         if (!env.acceptsProfiles(Profiles.of("test"))) {
             for (String base64Url : event.getEventImageUrls()) {
@@ -129,9 +130,12 @@ public class EventServiceImpl implements EventService {
                     MultipartFile file = new Base64DecodedMultipartFile(imageBytes);
                     //BufferedImage img = ImageIO.read(new ByteArrayInputStream(imageBytes));
                     base64List.add(file);
+                } else {
+                    String currentUrl = base64Url;
+                    currentUrls.add(currentUrl);
                 }
             }
-            List<String> imgLinks = awsBucketRestService.uploadFiles(base64List, awsEventData);
+            List<String> imgLinks = awsBucketRestService.uploadFiles(base64List, currentUrls, awsEventData);
             event.setEventImageUrls(imgLinks);
         }
 

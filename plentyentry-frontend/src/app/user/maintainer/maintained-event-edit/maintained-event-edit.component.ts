@@ -54,6 +54,7 @@ export class MaintainedEventEditComponent implements OnInit {
   accept: string = ".png, .jpg, .jpeg";
   showEventImages: string[] = [];
   eventImagesBase64List: string[] = [];
+  currentEventImageUrls: string[] = [];
 
   constructor(private eventService: EventService, private router: Router, private fb: FormBuilder, private errorHandling: ErrorService, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
   }
@@ -107,9 +108,11 @@ export class MaintainedEventEditComponent implements OnInit {
 
   setCurrentShowEventImages() {
 
+    this.eventDTO.eventImageUrls.forEach((url, index) => {
+      this.showEventImages.push(url)
+    })
 
-    //TODO: CORS IN AWS ENABLEN
-
+    /*
     setTimeout(() => {
       this.eventDTO.eventImageUrls.forEach((url, index) => {
         this.getBase64ImageFromUrl(url)
@@ -120,6 +123,8 @@ export class MaintainedEventEditComponent implements OnInit {
           .catch(err => console.error(err));
       })
     }, 300)
+
+     */
 
   }
 
@@ -134,7 +139,11 @@ export class MaintainedEventEditComponent implements OnInit {
     }
 
     this.eventDTO.eventImageUrls = [];
-    this.eventDTO.eventImageUrls = this.eventImagesBase64List;
+
+
+    //this.eventDTO.eventImageUrls = this.eventImagesBase64List;
+
+    this.eventDTO.eventImageUrls = this.showEventImages;
 
     this.eventDTO.startDateTime = new Date(this.eventDTO.startDateTime);
     this.eventDTO.startDateTime.setHours(this.eventDTO.startDateTime.getHours() + 2);
@@ -142,6 +151,12 @@ export class MaintainedEventEditComponent implements OnInit {
     this.eventDTO.endDateTime = new Date(this.eventDTO.endDateTime);
     this.eventDTO.endDateTime.setHours(this.eventDTO.endDateTime.getHours() + 2);
 
+    /*
+    this.currentEventImageUrls.forEach(url => {
+      this.eventDTO.eventImageUrls.push(url);
+    });
+
+     */
 
     this.eventService.updateEventById(this.eventDTO).subscribe((data) => {
       this.router.navigateByUrl('/maintainedevents/maintained/events/list');
@@ -159,7 +174,6 @@ export class MaintainedEventEditComponent implements OnInit {
 
 
     const files = <any>this.eventDTO.eventImageUrls;
-
 
     if (files.length === 0)
       return;

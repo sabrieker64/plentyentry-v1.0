@@ -20,6 +20,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.BadRequestException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Function;
@@ -102,8 +103,7 @@ public class JwtTokenUtil {
         try {
             return Jwts.parser().setSigningKey(Base64.encodeBase64(secret.getBytes(StandardCharsets.UTF_8))).parseClaimsJws(token).getBody();
         } catch (ExpiredJwtException e) {
-            System.out.println("Session ist abgelaufen - bitte melden Sie sich nochmals an.");
-            return null;
+            throw new BadRequestException("Session ist abgelaufen - bitte melden Sie sich nochmals an.");
         }
 
         /*
