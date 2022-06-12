@@ -82,8 +82,14 @@ export class MaintainedEventEditComponent implements OnInit {
     console.log(id);
     this.eventService.getEventById(id).subscribe((data) => {
       this.eventDTO = data;
+
+      this.eventDTO.eventImageUrls.forEach((url, index) => {
+        this.showEventImages.push(url)
+      })
+
+
       this.loaded = true;
-      this.setCurrentShowEventImages();
+
     }, error => {
       console.log(error);
     });
@@ -108,9 +114,6 @@ export class MaintainedEventEditComponent implements OnInit {
 
   setCurrentShowEventImages() {
 
-    this.eventDTO.eventImageUrls.forEach((url, index) => {
-      this.showEventImages.push(url)
-    })
 
     /*
     setTimeout(() => {
@@ -140,9 +143,6 @@ export class MaintainedEventEditComponent implements OnInit {
 
     this.eventDTO.eventImageUrls = [];
 
-
-    //this.eventDTO.eventImageUrls = this.eventImagesBase64List;
-
     this.eventDTO.eventImageUrls = this.showEventImages;
 
     this.eventDTO.startDateTime = new Date(this.eventDTO.startDateTime);
@@ -150,13 +150,6 @@ export class MaintainedEventEditComponent implements OnInit {
 
     this.eventDTO.endDateTime = new Date(this.eventDTO.endDateTime);
     this.eventDTO.endDateTime.setHours(this.eventDTO.endDateTime.getHours() + 2);
-
-    /*
-    this.currentEventImageUrls.forEach(url => {
-      this.eventDTO.eventImageUrls.push(url);
-    });
-
-     */
 
     this.eventService.updateEventById(this.eventDTO).subscribe((data) => {
       this.router.navigateByUrl('/maintainedevents/maintained/events/list');
@@ -178,6 +171,7 @@ export class MaintainedEventEditComponent implements OnInit {
     if (files.length === 0)
       return;
 
+    this.showEventImages = [];
 
     for (var i = 0; i < files.length; i++) {
       var currentFile = files[i];

@@ -84,4 +84,5 @@ export class EventTileModel {
   set eventPrice(value: number) {
     this._eventPrice = value;
   }
+
 }

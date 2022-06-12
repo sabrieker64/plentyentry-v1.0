@@ -5,9 +5,6 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserAuthReqDTO} from "../../definitions/objects";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ErrorService} from "../../../library/error-handling/error.service";
-import {ToolBarComponent} from "../../../library/tool-bar/tool-bar/tool-bar.component";
-import {ToolBarModule} from "../../../library/tool-bar/tool-bar.module";
-import {EventTileOverviewComponent} from "../../events/event-tile-overview/event-tile-overview.component";
 
 @Component({
   selector: 'app-login-register',
@@ -28,6 +25,7 @@ export class LoginComponent implements OnInit {
       "email": new FormControl('', [Validators.required, Validators.pattern(this.loginRegisterService.regex.email)]),
       "password": new FormControl('', [Validators.required, Validators.pattern(this.loginRegisterService.regex.passwort)])
     });
+
   }
 
   authenticate() {
@@ -51,4 +49,6 @@ export class LoginComponent implements OnInit {
       this.errorHandling.openErrorBox(error.message);
     })
   }
+
+
 }
