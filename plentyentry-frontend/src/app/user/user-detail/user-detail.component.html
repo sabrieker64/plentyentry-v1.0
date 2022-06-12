@@ -1,7 +1,7 @@
 <div class="container" *ngIf="allowed">
   <div class="box box--shadow">
 
-    <h1 class="form-headline">{{ userDTO.firstName}} Details</h1>
+    <h1 class="form-headline">{{ userDTO.firstName}}</h1>
 
     <form #registerForm="ngForm" [formGroup]="registerFormGroup" (ngSubmit)="updateUser()">
 
