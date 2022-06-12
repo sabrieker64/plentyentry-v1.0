@@ -77,10 +77,10 @@
           <div class="event-detail--shopping-box">
             <h1>{{ eventDTO.price * eventQuantity | currency: 'EUR' }}</h1>
             <span class="event-detail--shopping-quantity">
-              <h1>{{ eventQuantity }}</h1>
               <button (click)="decreaseQuantity()">
                 <mat-icon class="icon">remove</mat-icon>
               </button>
+               <h1>{{ eventQuantity }}</h1>
                <button (click)="increaseQuantity()">
                 <mat-icon class="icon">add</mat-icon>
               </button>
