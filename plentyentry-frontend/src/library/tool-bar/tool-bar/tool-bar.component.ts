@@ -6,6 +6,7 @@ import {ErrorService} from "../../error-handling/error.service";
 import {Router} from "@angular/router";
 import {ShoppingcartService} from "../../../app/user/shoppingcart/service/shoppingcart.service";
 import {UserDetailService} from "../../../app/user/service/user-detail.service";
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-tool-bar',
@@ -20,7 +21,8 @@ export class ToolBarComponent implements OnInit {
   hasSpecialPriviliges: boolean = false;
   hasStdPriviliges: boolean = false;
 
-  constructor(private loginRegisterService: LoginRegisterService, private http: HttpClient, private errorHandling: ErrorService, private router: Router, private shoppincartService: ShoppingcartService, private userService: UserDetailService) {
+  constructor(private loginRegisterService: LoginRegisterService, private http: HttpClient, private errorHandling: ErrorService, private router: Router,
+              private shoppincartService: ShoppingcartService, private userService: UserDetailService, private location: Location) {
   }
 
   ngOnInit(): void {
@@ -107,7 +109,9 @@ export class ToolBarComponent implements OnInit {
 
   }
 
-
+  back(): void {
+    this.location.back();
+  }
 
 
 }

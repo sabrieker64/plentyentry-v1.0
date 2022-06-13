@@ -143,7 +143,7 @@ export class MaintainedEventEditComponent implements OnInit {
 
     this.eventDTO.eventImageUrls = [];
 
-    this.eventDTO.eventImageUrls = this.showEventImages;
+    this.eventDTO.eventImageUrls = this.eventImagesBase64List;
 
     this.eventDTO.startDateTime = new Date(this.eventDTO.startDateTime);
     this.eventDTO.startDateTime.setHours(this.eventDTO.startDateTime.getHours() + 2);
