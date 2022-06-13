@@ -1,9 +1,9 @@
 jwt:
   secret: 'plentyentrycommodus'
 pe:
-  baseHost: 'http://localhost:8080/'
+  baseHost: 'http://localhost:80/'
 server:
-  port: 8080
+  port: 80
 spring:
   jpa:
     hibernate:
