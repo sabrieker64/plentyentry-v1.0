@@ -1,6 +1,8 @@
 <div class="container">
   <mat-toolbar color="primary" class="toolbar">
-    <mat-icon (click)="back()">arrow_back</mat-icon>
+    <button mat-button (click)="back()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
     <span>Plenty Entry</span>
     <span class="example-spacer"></span>
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
