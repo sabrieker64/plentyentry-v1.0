@@ -53,6 +53,7 @@ public class StripeAcceptPaymentService {
         Map<String, Object> params = new HashMap<>();
         params.put("payment_method", "pm_card_visa");
         paymentIntent.confirm(params);
+        //der ticket status wird im frontend gesetzt damit es bereit ist für den scan!
         return paymentIntent;
     }
 

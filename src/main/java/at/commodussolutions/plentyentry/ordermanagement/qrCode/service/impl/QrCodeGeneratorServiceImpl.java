@@ -98,7 +98,7 @@ public class QrCodeGeneratorServiceImpl implements QrCodeGeneratorService {
             }
         }
 
-        if (ticket.getTicketStatus().equals(TicketStatus.SELLED) && !ticket.getTicketStatus().equals(TicketStatus.USED)
+        if (ticket.getTicketStatus().equals(TicketStatus.SELLED) || ticket.getTicketStatus().equals(TicketStatus.RESERVED) && !ticket.getTicketStatus().equals(TicketStatus.USED)
                 && entertainerIsAllowedToScan) {
             ticket.setTicketStatus(TicketStatus.USED);
             ticketRepository.save(ticket);

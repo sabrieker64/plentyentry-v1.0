@@ -25,6 +25,7 @@ public interface TicketRestService {
     @PutMapping()
     @ResponseBody
     TicketDTO updateTicketById(@RequestBody TicketDTO updatedTicket);
+    //todo nach der bezahlung wenn es funktioniert hat die shoppingcart leeren und die ticketstatuse aktualisieren!!!
 
     @PostMapping()
     @ResponseBody

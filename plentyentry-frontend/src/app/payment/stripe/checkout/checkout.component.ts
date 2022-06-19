@@ -10,6 +10,7 @@ import {PaymentIntentDTO, ShoppingCartDTO, ShoppingCartTicketDTOPerEvent} from "
 import {UserDetailService} from "../../../user/service/user-detail.service";
 import {StripeService} from "../stripe.service";
 import {StripeCardComponent, StripeElementsService} from "ngx-stripe";
+import {TicketService} from "../../../ticket/service/ticket.service";
 
 
 @Component({
@@ -60,7 +61,7 @@ export class CheckoutComponent implements OnInit {
 
   constructor(private http: HttpClient, private service: PaymentService,
               private stripeService: StripeElementsService, private fb: FormBuilder, private serviceStripe: StripeService,
-              private route: ActivatedRoute, private userService: UserDetailService) {
+              private route: ActivatedRoute, private userService: UserDetailService, private ticketService: TicketService) {
   }
 
   ngOnInit(): void {

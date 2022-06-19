@@ -24,7 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
-import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -35,7 +34,6 @@ import java.util.Set;
 
 @Service
 @Slf4j
-@Transactional
 public class EventServiceImpl implements EventService {
     @Autowired
     private EventRepository eventRepository;
@@ -112,7 +110,8 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Event updateEventById(Event event) throws IOException {
+    public Event updateEventById(Event event, Boolean changeTicketCounts) throws IOException {
+        var loadEventFromdatabasetoCheckAmountOfTickets = eventRepository.getById(event.getId()).getTicketCounter();
 
         AWSEventImagesUploadDTO awsEventData = new AWSEventImagesUploadDTO();
 
@@ -138,10 +137,14 @@ public class EventServiceImpl implements EventService {
             List<String> imgLinks = awsBucketRestService.uploadFiles(base64List, awsEventData);
             event.setEventImageUrls(imgLinks);
         }
-
-        Event createdEvent = eventRepository.save(event);
-        ticketService.createAutomaticTicketsForNewEvent(createdEvent.getId(), createdEvent.getTicketCounter());
-
+        //todo keine ahnung warum das da drinnen ist die ticketanzahl soll nicht manipuliert werden!!!!
+        //todo nur wenn die anzahl geändert werden sollte muss die differenz erstellt werden
+        var checkdifferencebetweenBeforeAndAfterTicketCount =
+                eventRepository.findById(event.getId()).orElseThrow().getTicketCounter();
+        if (!checkdifferencebetweenBeforeAndAfterTicketCount.equals(event.getTicketCounter())) {
+            var actualTicketCount = event.getTicketCounter() - checkdifferencebetweenBeforeAndAfterTicketCount;
+            ticketService.createAutomaticTicketsForNewEvent(event.getId(), actualTicketCount);
+        }
         return eventRepository.save(event);
     }
 

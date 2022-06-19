@@ -15,7 +15,7 @@ public interface EventService {
 
     Event getEventById(Long id);
 
-    Event updateEventById(Event event) throws IOException;
+    Event updateEventById(Event event, Boolean changeTicketCounts) throws IOException;
 
     Page<Event> getEventsByCriteria(String criteria);
 

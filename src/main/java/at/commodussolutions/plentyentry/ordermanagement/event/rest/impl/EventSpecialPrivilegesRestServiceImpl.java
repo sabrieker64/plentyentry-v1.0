@@ -29,7 +29,7 @@ public class EventSpecialPrivilegesRestServiceImpl implements EventSpecialPrivil
     public EventDTO updateEventById(EventDTO updatedEvent) throws IOException {
         Event event = eventService.getEventById(updatedEvent.getId());
         eventMapper.mapToEntity(updatedEvent, event);
-        return eventMapper.mapToDTO(eventService.updateEventById(event));
+        return eventMapper.mapToDTO(eventService.updateEventById(event, true));
     }
 
     @Override

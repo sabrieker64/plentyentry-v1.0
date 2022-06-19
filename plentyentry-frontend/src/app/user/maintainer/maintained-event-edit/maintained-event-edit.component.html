@@ -156,14 +156,15 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="form-element" appearance="outline">
+        <!-- todo es sollte eigentlich nicht mehr geändert werden die ticket anzahl-->
+        <!--<mat-form-field class="form-element" appearance="outline">
           <mat-label>Anzahl der verfügbaren Tickets</mat-label>
           <input matInput placeholder="7000" name="ticketCounter" formControlName="ticketCounter"
                  [(ngModel)]="eventDTO.ticketCounter">
           <mat-error *ngIf="updateEventFormGroup.get('ticketCounter')?.errors">
             <p *ngIf="updateEventFormGroup.get('ticketCounter')?.hasError('required')">Dieses Feld ist ein Pflichtfeld</p>
           </mat-error>
-        </mat-form-field>
+        </mat-form-field>-->
 
 
         <button class="cols--full-width" mat-raised-button color="primary" type="submit"
