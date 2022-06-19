@@ -1,86 +1,86 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-06-05 14:16:10.
+// Generated using typescript-generator version 2.32.889 on 2022-06-19 14:09:11.
 
 export interface UserDTO {
-  id: number;
-  firstName: string;
-  lastName: string;
-  street: string;
-  email: string;
-  password: string;
-  postCode: string;
-  city: string;
-  age: number;
-  svNumber: number;
-  birthday: Date;
-  userType: UserType;
-  userGender: UserGender;
-  events: EventDTO[];
-  coronaStatus: CoronaStatusDTO;
-  paymentMethod: PaymentMethodDTO[];
-  jwtToken: string;
-  shoppingCartDTO: ShoppingCartDTO;
-  companyName: string;
-  phoneNumber: string;
-  uid: string;
+    id: number;
+    firstName: string;
+    lastName: string;
+    street: string;
+    email: string;
+    password: string;
+    postCode: string;
+    city: string;
+    age: number;
+    svNumber: number;
+    birthday: Date;
+    userType: UserType;
+    userGender: UserGender;
+    events: EventDTO[];
+    coronaStatus: CoronaStatusDTO;
+    paymentMethod: PaymentMethodDTO[];
+    jwtToken: string;
+    shoppingCartDTO: ShoppingCartDTO;
+    companyName: string;
+    phoneNumber: string;
+    uid: string;
 }
 
 export interface EventDTO {
-  id: number;
-  name: string;
-  startDateTime: Date;
-  endDateTime: Date;
-  description: string;
-  price: number;
-  ticketCounter: number;
-  ticketId: number;
-  city: string;
-  address: string;
-  eventImageUrls: string[];
-  entertainers: UserDTO[];
+    id: number;
+    name: string;
+    startDateTime: Date;
+    endDateTime: Date;
+    description: string;
+    price: number;
+    ticketCounter: number;
+    ticketId: number;
+    city: string;
+    address: string;
+    eventImageUrls: string[];
+    entertainers: UserDTO[];
 }
 
 export interface UserRegisterDTO {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  city: string;
-  postCode: string;
-  street: string;
-  birthday: Date;
-  userGender: UserGender;
-  shoppingCartDTO: ShoppingCartDTO;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    city: string;
+    postCode: string;
+    street: string;
+    birthday: Date;
+    userGender: UserGender;
+    shoppingCartDTO: ShoppingCartDTO;
 }
 
 export interface UserAuthReqDTO {
-  email: string;
-  password: string;
+    email: string;
+    password: string;
 }
 
 export interface PaymentIntentDTO extends Serializable {
-  currency: Currency;
-  amount: number;
-  eventId: number;
-  description: string;
-  paymentType: StripePaymentTypes;
-  orderId: string;
+    currency: Currency;
+    amount: number;
+    eventId: number;
+    description: string;
+    paymentType: StripePaymentTypes;
+    orderId: string;
 }
 
 export interface Order {
-  price: number;
-  currency: string;
-  method: string;
-  intent: string;
-  description: string;
+    price: number;
+    currency: string;
+    method: string;
+    intent: string;
+    description: string;
 }
 
 export interface CreateTokenDTO {
-  cardNumber: number;
-  expMonth: number;
-  expYear: number;
-  cvc: number;
+    cardNumber: number;
+    expMonth: number;
+    expYear: number;
+    cvc: number;
 }
 
 export interface CoronaStatusDTO {
@@ -95,39 +95,39 @@ export interface CoronaStatusDTO {
 }
 
 export interface PaymentMethodDTO {
-  id: number;
-  paymentType: PaymentType;
-  creditCardNumber: number;
-  nameOnCard: string;
-  cvSecurityCode: number;
-  iban: number;
-  user: UserDTO;
+    id: number;
+    paymentType: PaymentType;
+    creditCardNumber: number;
+    nameOnCard: string;
+    cvSecurityCode: number;
+    iban: number;
+    user: UserDTO;
 }
 
 export interface ShoppingCartDTO {
-  id: number;
-  tickets: ShoppingCartTicketDTOPerEvent[];
+    id: number;
+    tickets: ShoppingCartTicketDTOPerEvent[];
 }
 
 export interface Serializable {
 }
 
 export interface ShoppingCartTicketDTOPerEvent {
-  ticketDTOS: TicketDTO[];
-  quantity: number;
-  amount: number;
-  eventName: string;
-  eventDescription: string;
-  eventDate: Date;
-  pricePerTicket: number;
+    ticketDTOS: TicketDTO[];
+    quantity: number;
+    amount: number;
+    eventName: string;
+    eventDescription: string;
+    eventDate: Date;
+    pricePerTicket: number;
 }
 
 export interface TicketDTO {
-  id: number;
-  quantity: number;
-  ticketStatus: TicketStatus;
-  qrCode: string;
-  event: EventDTO;
+    id: number;
+    quantity: number;
+    ticketStatus: TicketStatus;
+    qrCode: string;
+    event: EventDTO;
 }
 
 export type UserType = "GUEST" | "CUSTOMER" | "ADMIN" | "MAINTAINER" | "SUPERADMIN";

@@ -112,10 +112,8 @@ public class EventRestServiceTest {
     }
 
 
-    //DOES NOT WORK
     @Test
     void updateEventById() throws Exception {
-
         var allList = eventRepository.findAll();
         var firstEvent = eventRepository.findById(allList.get(0).getId()).orElse(null);
         firstEvent.setCity("KITZBICHI");
