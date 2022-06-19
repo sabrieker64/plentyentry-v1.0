@@ -114,4 +114,7 @@ export class ToolBarComponent implements OnInit {
   }
 
 
+  isNotHomeRoute() {
+    return !this.router.url.toString().includes('/event/overview');
+  }
 }

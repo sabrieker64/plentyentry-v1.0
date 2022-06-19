@@ -1,6 +1,6 @@
 <div class="container">
   <mat-toolbar color="primary" class="toolbar">
-    <button mat-button (click)="back()">
+    <button mat-button (click)="back()" *ngIf="isNotHomeRoute()">
       <mat-icon>arrow_back</mat-icon>
     </button>
     <span>Plenty Entry</span>
