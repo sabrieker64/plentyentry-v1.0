@@ -34,7 +34,7 @@
 
   <!-- TicketCounter Column -->
   <ng-container matColumnDef="quantity">
-    <th mat-header-cell *matHeaderCellDef> Anzahl Tickets </th>
+    <th mat-header-cell *matHeaderCellDef> Stk.</th>
     <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
   </ng-container>
 
@@ -44,11 +44,11 @@
     <td mat-cell *matCellDef="let element"> {{element.pricePerTicket|currency:"EUR":"symbol"}}</td>
   </ng-container>
 
-  <!-- Price Column -->
+  <!-- Price Column
   <ng-container matColumnDef="quantitiyPrice">
     <th mat-header-cell *matHeaderCellDef> Preis </th>
     <td mat-cell *matCellDef="let element"> {{element.pricePerTicket * element.quantity|currency:"EUR":"symbol"}} </td>
-  </ng-container>
+  </ng-container>-->
 
   <!-- Delete Ticket -->
   <ng-container matColumnDef="deleteTicket">

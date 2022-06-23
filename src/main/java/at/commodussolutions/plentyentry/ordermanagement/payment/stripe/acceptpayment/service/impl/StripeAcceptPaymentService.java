@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -50,8 +52,10 @@ public class StripeAcceptPaymentService {
     public PaymentIntent confirm(String id) throws StripeException {
         Stripe.apiKey = secretKey;
         PaymentIntent paymentIntent = PaymentIntent.retrieve(id);
+        List<Object> paymentMethodTypes = new ArrayList<>();
+        paymentMethodTypes.add("card");
         Map<String, Object> params = new HashMap<>();
-        params.put("payment_method", "pm_card_visa");
+        params.put("payment_method_types", paymentMethodTypes);
         paymentIntent.confirm(params);
         //der ticket status wird im frontend gesetzt damit es bereit ist für den scan!
         return paymentIntent;

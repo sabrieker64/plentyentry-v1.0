@@ -24,7 +24,7 @@ export class ShoppingcartListComponent implements OnInit {
   }
 
   staticPositions: number = 1;
-  displayedColumns: string[] = ['position', 'name', 'date', 'description', 'quantity', 'price', 'quantitiyPrice', 'deleteTicket'];
+  displayedColumns: string[] = ['position', 'name', 'date', 'description', 'quantity', 'price', 'deleteTicket'];
   tickets: MatTableDataSource<ShoppingCartTicketDTOPerEvent>;
   ticketArrayCalculating: ShoppingCartTicketDTOPerEvent[];
   fullPrice: number = 0;
