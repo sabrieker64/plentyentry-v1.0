@@ -61,7 +61,7 @@ export class ShoppingcartListComponent implements OnInit {
   }
 
   goToCheckout() {
-    //todo there we will going to checkout there is now time for payment
+    //todo hier sollte eigentlich das payment intenet erstellt werden
     this.router.navigateByUrl('/payment/stripe-checkout');
   }
 }

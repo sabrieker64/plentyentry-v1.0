@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
 import {loadStripe, StripeCardElementOptions, StripeElementsOptions} from "@stripe/stripe-js";
 import {PaymentService} from "../../service/payment.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
 import {PaymentIntentDTO, ShoppingCartDTO, ShoppingCartTicketDTOPerEvent} from "../../../definitions/objects";
@@ -66,9 +66,21 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.stripeForm = this.fb.group({
-      name: ['', [Validators.required]]
-    });
+    this.stripe = Stripe(environment.stripe);
+    var elements = this.stripe.elements();
+    var styleCard = {
+      'style': {
+        'base': {
+          'fontFamily': 'Arial, sans-serif',
+          'fontSize': '8px',
+          'color': '#C1C7CD',
+        },
+        'Invalid': {'color': 'red',},
+      }
+    }
+    // Remove Zip-code in card UI component
+    var card = elements.create('card', {style: styleCard});
+    card.mount('#card-element');
     this.loadShoppingCart();
     this.loadOwnerOfShoppingCart();
   }

@@ -37,14 +37,29 @@ public class StripeAcceptPaymentService {
         paymentIntentDTO.setCurrency(Currency.EUR);
         paymentIntentDTO.setPaymentType(StripePaymentTypes.card);
         //Hier wird das Objekt für die PaymentIntent aufgebaut
-        PaymentIntentCreateParams params =
+        List<Object> paymentMethodTypes = new ArrayList<>();
+        paymentMethodTypes.add("card");
+       /* PaymentIntentCreateParams params =
                 PaymentIntentCreateParams.builder()
                         .setAmount(paymentIntentDTO.getAmount().multiply(BigDecimal.valueOf(100L)).longValue())
                         .setDescription(paymentIntentDTO.getDescription())
-                        .addPaymentMethodType(paymentIntentDTO.getPaymentType().toString())
+                        .addPaymentMethodType("bancontact")
+                        .addPaymentMethodType("card")
+                        .addPaymentMethodType("eps")
+                        .addPaymentMethodType("giropay")
+                        .addPaymentMethodType("ideal")
+                        .addPaymentMethodType("p24")
+                        .addPaymentMethodType("sepa_debit")
+                        .addPaymentMethodType("sofort")
+                        .setPaymentMethod("card")
                         .putMetadata("order_id", paymentIntentDTO.getOrderId())
                         .setCurrency(paymentIntentDTO.getCurrency().getValue())
-                        .build();
+                        .build();*/
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("amount", paymentIntentDTO.getAmount().multiply(BigDecimal.valueOf(100L)).longValue());
+        params.put("currency", "eur");
+        params.put("payment_method_types", paymentMethodTypes);
         return PaymentIntent.create(params);
     }
 
@@ -56,6 +71,7 @@ public class StripeAcceptPaymentService {
         paymentMethodTypes.add("card");
         Map<String, Object> params = new HashMap<>();
         params.put("payment_method_types", paymentMethodTypes);
+        paymentIntent.setPaymentMethod(id);
         paymentIntent.confirm(params);
         //der ticket status wird im frontend gesetzt damit es bereit ist für den scan!
         return paymentIntent;
