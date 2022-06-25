@@ -21,6 +21,12 @@ export class ShoppingcartListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadShoppingCart();
+    // Create a media condition that targets viewports at least 768px wide
+    const mediaQuery = window.matchMedia('(max-width: 600px)')
+    // Check if the media query is true
+    if (mediaQuery.matches) {
+      this.displayedColumns = ['name', 'quantity', 'price', 'deleteTicket'];
+    }
   }
 
   staticPositions: number = 1;

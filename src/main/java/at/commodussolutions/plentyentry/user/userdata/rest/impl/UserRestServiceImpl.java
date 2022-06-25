@@ -50,6 +50,14 @@ public class UserRestServiceImpl implements UserRestService {
     }
 
     @Override
+    public UserDTO resetPassword(UserRegisterDTO userRegisterDTO) throws MessagingException {
+        User user = new User();
+        userMapper.mapToEntityForRegister(userRegisterDTO, user);
+        user = userService.resetPassword(user);
+        return userMapper.mapToDTO(user);
+    }
+
+    @Override
     public String confirm(String token) {
         return userService.confirmToken(token);
     }

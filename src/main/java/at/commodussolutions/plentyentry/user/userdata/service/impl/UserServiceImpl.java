@@ -107,6 +107,20 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public User resetPassword(User user) throws MessagingException {
+        boolean userExists = this.userRepository.findByEmail(user.getEmail()).isPresent();
+        if (userExists) {
+            String encodedPassword = passwordEncoder.bCryptPasswordEncoder().encode("123Neuanmeldung!");
+            user.setPassword(encodedPassword);
+            userRepository.save(user);
+        } else {
+            throw new IllegalStateException("Die E-Mail " + user.getEmail() + " is nicht im System vorhanden.");
+        }
+
+        return user;
+    }
+
     private void signUpUser(User user) throws MessagingException {
         boolean userExists = this.userRepository.findByEmail(user.getEmail()).isPresent();
         if (userExists) {

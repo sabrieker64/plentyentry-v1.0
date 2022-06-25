@@ -21,6 +21,8 @@ public interface UserService extends UserDetailsService {
 
     User registerNewUser(User user) throws MessagingException;
 
+    User resetPassword(User user) throws MessagingException;
+
     String confirmToken(String token);
 
     List<Ticket> getUserTickets(Long id);

@@ -9,6 +9,7 @@ import {AppRoutingModule} from "../app-routing.module";
 import {FlexModule} from "@angular/flex-layout";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LogoutComponent} from './logout/logout.component';
+import {PasswordResetComponent} from './password-reset/password-reset.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {LogoutComponent} from './logout/logout.component';
     RegisterComponent,
     LoginComponent,
     UserDetailComponent,
-    LogoutComponent
+    LogoutComponent,
+    PasswordResetComponent
   ],
   exports: [
     LoginComponent,

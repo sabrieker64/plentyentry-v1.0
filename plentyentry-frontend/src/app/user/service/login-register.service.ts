@@ -36,5 +36,9 @@ export class LoginRegisterService {
     return this.http.get<UserDTO>(`${this.baseUrl}`);
   }
 
+  public resetPassword(userAuthReqDTO: UserAuthReqDTO): Observable<UserDTO> {
+    return this.http.post<UserDTO>(`${this.baseUrl}` + '/resetPassword', userAuthReqDTO);
+  }
+
 //TODO: Mukiiii services erstellen
 }

@@ -29,6 +29,11 @@ public interface UserRestService {
     @ResponseBody
     UserDTO createUser(@RequestBody UserRegisterDTO userRegisterDTO) throws MessagingException;
 
+    @PostMapping("/resetPassword")
+    @ResponseBody
+    UserDTO resetPassword(@RequestBody UserRegisterDTO userRegisterDTO) throws MessagingException;
+
+
     @GetMapping("/confirm")
     @ResponseBody
     String confirm(@RequestParam("token") String token);
