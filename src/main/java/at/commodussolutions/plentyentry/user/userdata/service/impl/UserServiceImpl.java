@@ -32,10 +32,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -111,9 +108,20 @@ public class UserServiceImpl implements UserService {
     public User resetPassword(User user) throws MessagingException {
         boolean userExists = this.userRepository.findByEmail(user.getEmail()).isPresent();
         if (userExists) {
-            String encodedPassword = passwordEncoder.bCryptPasswordEncoder().encode("123Neuanmeldung!");
+
+            Random random = new Random();
+            int randomNumber = random.nextInt(900) + 100;
+            String newPassword = Integer.toString(randomNumber);
+            newPassword = newPassword + "Neuanmeldung!";
+            String encodedPassword = passwordEncoder.bCryptPasswordEncoder().encode(newPassword);
             user.setPassword(encodedPassword);
             userRepository.save(user);
+
+            String emailText = "Dein Passwort wurde auf " + newPassword + " geändert!";
+
+            emailSender.sendEmailFromSES(user.getEmail(), emailText, "Passwort wurde geändert!");
+
+
         } else {
             throw new IllegalStateException("Die E-Mail " + user.getEmail() + " is nicht im System vorhanden.");
         }
@@ -145,7 +153,7 @@ public class UserServiceImpl implements UserService {
             if (environment.acceptsProfiles(Profiles.of("test", "development"))) {
                 emailSender.send(user.getEmail(), buildEmail(user.getLastName(), link));
             }
-            emailSender.sendEmailFromSES(user.getEmail(), buildEmail(user.getLastName(), link));
+            emailSender.sendEmailFromSES(user.getEmail(), buildEmail(user.getLastName(), link), "Confirm your Email");
         }
     }
 

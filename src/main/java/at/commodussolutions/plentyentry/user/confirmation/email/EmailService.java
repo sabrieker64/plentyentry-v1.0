@@ -44,13 +44,13 @@ public class EmailService implements EmailSender {
 
     @Override
     @Async
-    public void sendEmailFromSES(String to, String email) {
+    public void sendEmailFromSES(String to, String email, String subject) {
         try {
             var mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(email, true);
             helper.setTo(to);
-            helper.setSubject("Confirm your Email");
+            helper.setSubject(subject);
             helper.setFrom("welcome@plentyentry.at");
             javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {
