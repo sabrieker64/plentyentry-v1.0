@@ -119,6 +119,10 @@ public class UserServiceImpl implements UserService {
 
             String emailText = "Dein Passwort wurde auf " + newPassword + " geändert!";
 
+
+            if (environment.acceptsProfiles(Profiles.of("test", "development"))) {
+                emailSender.send(user.getEmail(), buildEmail(user.getLastName(), emailText));
+            }
             emailSender.sendEmailFromSES(user.getEmail(), emailText, "Passwort wurde geändert!");
 
 
