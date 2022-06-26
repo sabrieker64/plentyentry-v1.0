@@ -1,11 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
-import {loadStripe, StripeCardElementOptions, StripeElementsOptions} from "@stripe/stripe-js";
 import {PaymentService} from "../../service/payment.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
-import {Observable} from "rxjs";
 import {PaymentIntentDTO, ShoppingCartDTO, ShoppingCartTicketDTOPerEvent} from "../../../definitions/objects";
 import {UserDetailService} from "../../../user/service/user-detail.service";
 import {StripeService} from "../stripe.service";
@@ -21,45 +19,17 @@ import {TicketService} from "../../../ticket/service/ticket.service";
 export class CheckoutComponent implements OnInit {
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
   cardElement: any;
-  stripePromise = loadStripe(environment.stripe);
   stripe: any;
   paymentIntent: PaymentIntentDTO = <PaymentIntentDTO>{};
   events: ShoppingCartTicketDTOPerEvent;
   fullAmount: number = 0;
-  elementsOptions: StripeElementsOptions = {
-    locale: 'de'
-  };
-  cardOptions: StripeCardElementOptions = {
-    style: {
-      base: {
-        iconColor: '#666EE8',
-        color: '#7F73D4FF',
-        padding: '50px',
-        fontWeight: '400',
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-        fontSize: '19px',
-        '::placeholder': {
-          color: '#7e73d4'
-        }
-      },
-      invalid: {
-        iconColor: '#F14520',
-        color: '#FB2C00'
-      }
-    }
-  };
   public stripeForm: FormGroup;
   eventId: string = "Keine Ahnung";
   ownerOfShoppingCart: string = " Noch Keiner ";
   quantity: string;
+  elements: any;
   clientSecret: string;
-  calculatedAmount: number;
-  shoppingCartObserver: Observable<ShoppingCartDTO>;
   shoppingCart: ShoppingCartDTO;
-
-
-  //todo hier muss ich das objekt im unserm fall das event das sich der kunde angeschaut und auf bezahlen geklickt hat
-  //todo achtung ganz wichtig es kann auch aus dem warenkorb kommen mit einer listen von events oder
 
   constructor(private http: HttpClient, private service: PaymentService,
               private stripeService: StripeElementsService, private fb: FormBuilder, private serviceStripe: StripeService,
@@ -72,19 +42,19 @@ export class CheckoutComponent implements OnInit {
       console.log(this.clientSecret);
     });
     this.stripe = Stripe(environment.stripe);
-    var elements = this.stripe.elements();
+    this.elements = this.stripe.elements();
     var styleCard = {
       'style': {
         'base': {
           'fontFamily': 'Arial, sans-serif',
-          'fontSize': '8px',
-          'color': '#C1C7CD',
+          'fontSize': '15px',
+          'color': '#7f73d4',
         },
         'Invalid': {'color': 'red',},
       }
     }
     // Remove Zip-code in card UI component
-    this.cardElement = elements.create('card', {style: styleCard});
+    this.cardElement = this.elements.create('card', {style: styleCard});
     this.cardElement.mount('#card-element');
     this.loadShoppingCart();
     this.loadOwnerOfShoppingCart();
@@ -109,34 +79,22 @@ export class CheckoutComponent implements OnInit {
   }
 
   makePayment(fullAmount: number) {
+    //todo warum zu fick funkt des nid amk
     console.log(fullAmount);
     console.log(this.clientSecret);
-    this.stripe.confirmCardPayment(this.clientSecret, {
-      payment_method: {
-        card: this.cardElement,
-        billing_details: {
-          name: this.ownerOfShoppingCart,
-        },
+    var elements = this.elements;
+    this.stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: '/events/overview'
       },
-    })
-      .then(function (result: any) {
-        console.log(result);
-        // Handle result.error or result.paymentIntent
-      });
-
-
-    /*  const paymentIntent = this.paymentIntent
-      paymentIntent.amount = fullAmount;
-      this.serviceStripe.makePaymentIntent(this.paymentIntent).toPromise().then(data => {
-        if (data.id != null) {
-          this.serviceStripe.confirmPayment(data.id).toPromise().then(res => {
-            console.log(res);
-          })
-        }
-        console.log(data);
-      })*/
-
+    }).then(function (data: any) {
+      if (data.error) {
+        console.log(data.error);
+      }
+      if (data.paymentIntent) {
+        console.log(data.paymentIntent);
+      }
+    });
   }
-
-
 }
