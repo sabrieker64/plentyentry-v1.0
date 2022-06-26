@@ -20,6 +20,7 @@ import {TicketService} from "../../../ticket/service/ticket.service";
 })
 export class CheckoutComponent implements OnInit {
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
+  cardElement: any;
   stripePromise = loadStripe(environment.stripe);
   stripe: any;
   paymentIntent: PaymentIntentDTO = <PaymentIntentDTO>{};
@@ -51,6 +52,7 @@ export class CheckoutComponent implements OnInit {
   eventId: string = "Keine Ahnung";
   ownerOfShoppingCart: string = " Noch Keiner ";
   quantity: string;
+  clientSecret: string;
   calculatedAmount: number;
   shoppingCartObserver: Observable<ShoppingCartDTO>;
   shoppingCart: ShoppingCartDTO;
@@ -65,7 +67,10 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.route.queryParams.subscribe(data => {
+      this.clientSecret = data['client'];
+      console.log(this.clientSecret);
+    });
     this.stripe = Stripe(environment.stripe);
     var elements = this.stripe.elements();
     var styleCard = {
@@ -79,8 +84,8 @@ export class CheckoutComponent implements OnInit {
       }
     }
     // Remove Zip-code in card UI component
-    var card = elements.create('card', {style: styleCard});
-    card.mount('#card-element');
+    this.cardElement = elements.create('card', {style: styleCard});
+    this.cardElement.mount('#card-element');
     this.loadShoppingCart();
     this.loadOwnerOfShoppingCart();
   }
@@ -105,16 +110,31 @@ export class CheckoutComponent implements OnInit {
 
   makePayment(fullAmount: number) {
     console.log(fullAmount);
-    const paymentIntent = this.paymentIntent
-    paymentIntent.amount = fullAmount;
-    this.serviceStripe.makePaymentIntent(this.paymentIntent).toPromise().then(data => {
-      if (data.id != null) {
-        this.serviceStripe.confirmPayment(data.id).toPromise().then(res => {
-          console.log(res);
-        })
-      }
-      console.log(data);
+    console.log(this.clientSecret);
+    this.stripe.confirmCardPayment(this.clientSecret, {
+      payment_method: {
+        card: this.cardElement,
+        billing_details: {
+          name: this.ownerOfShoppingCart,
+        },
+      },
     })
+      .then(function (result: any) {
+        console.log(result);
+        // Handle result.error or result.paymentIntent
+      });
+
+
+    /*  const paymentIntent = this.paymentIntent
+      paymentIntent.amount = fullAmount;
+      this.serviceStripe.makePaymentIntent(this.paymentIntent).toPromise().then(data => {
+        if (data.id != null) {
+          this.serviceStripe.confirmPayment(data.id).toPromise().then(res => {
+            console.log(res);
+          })
+        }
+        console.log(data);
+      })*/
 
   }
 
