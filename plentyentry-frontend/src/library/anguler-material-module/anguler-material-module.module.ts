@@ -42,6 +42,7 @@ import {
   NgxMatNativeDateModule,
   NgxMatTimepickerModule
 } from "@angular-material-components/datetime-picker";
+import {NgImageSliderModule} from 'ng-image-slider';
 
 const materialModules = [
   MatSliderModule,
@@ -86,7 +87,7 @@ const materialModules = [
   NgxMatTimepickerModule,
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
-
+  NgImageSliderModule
 ];
 
 @NgModule({

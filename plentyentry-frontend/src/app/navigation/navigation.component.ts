@@ -12,10 +12,24 @@ export class NavigationComponent implements OnInit {
   selectedNavItem: { iconName: string, isActive: boolean, route: string };
 
   constructor(private renderer: Renderer2, private router: Router, private navigationService: NavigationService) {
+    /*
     this.navItems = [
       {iconName: 'search', isActive: false, route: '/event/overview'},
       {iconName: 'home', isActive: true, route: '/event/overview'},
       {iconName: 'login', isActive: false, route: '/user/login'}];
+      */
+
+    let token = localStorage.getItem('token');
+    if (token === null) {
+      this.navItems = [
+        {iconName: 'home', isActive: true, route: '/event/overview'}];
+    } else {
+
+      this.navItems = [
+        {iconName: 'home', isActive: true, route: '/event/overview'},
+        {iconName: 'login', isActive: false, route: '/user/login'}];
+    }
+
   }
 
   ngOnInit(): void {
@@ -26,6 +40,11 @@ export class NavigationComponent implements OnInit {
       navItem.isActive = false;
     }
     selectedNavItem.isActive = true;
+
+    if (selectedNavItem.iconName == 'login') {
+      localStorage.clear();
+      window.location.reload();
+    }
 
     if (selectedNavItem.iconName == 'manage_accounts') {
       this.navigationService.confirmToken().toPromise().then((data) => {
