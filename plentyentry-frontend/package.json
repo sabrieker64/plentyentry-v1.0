@@ -33,6 +33,7 @@
     "@zxing/library": "^0.18.5",
     "@zxing/ngx-scanner": "3.4.0",
     "bootstrap": "3.4.1",
+    "jquery": "^3.6.0",
     "ngx-stripe": "^13.1.0",
     "npm": "^8.10.0",
     "rxjs": "~6.6.0",

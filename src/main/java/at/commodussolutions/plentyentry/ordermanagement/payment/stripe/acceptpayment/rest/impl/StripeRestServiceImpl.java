@@ -13,14 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import javax.ws.rs.BadRequestException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 @RestController
-@Transactional
 @RequestMapping({"/api/backend/stripe"})
 public class StripeRestServiceImpl {
 

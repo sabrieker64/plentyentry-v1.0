@@ -41,7 +41,9 @@
               "node_modules/@splidejs/splide/dist/css/themes/splide-default.min.css"
             ],
             "scripts": [
-              "node_modules/@splidejs/splide/dist/js/splide.js"
+              "node_modules/@splidejs/splide/dist/js/splide.js",
+              "src/assets/stripe-js/checkout.js",
+              "node_modules/jquery/dist/jquery.min.js"
             ],
             "serviceWorker": true,
             "ngswConfigPath": "ngsw-config.json"

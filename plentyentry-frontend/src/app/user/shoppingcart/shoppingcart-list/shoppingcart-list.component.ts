@@ -1,8 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
-import {ShoppingCartDTO, ShoppingCartTicketDTOPerEvent} from "../../../definitions/objects";
+import {PaymentIntentDTO, ShoppingCartDTO, ShoppingCartTicketDTOPerEvent} from "../../../definitions/objects";
 import {ShoppingcartService} from "../service/shoppingcart.service";
+import {StripeService} from "../../../payment/stripe/stripe.service";
+import {Order} from "@stripe/stripe-js";
+
 
 @Component({
   selector: 'app-shoppingcart-list',
@@ -13,10 +16,11 @@ export class ShoppingcartListComponent implements OnInit {
 
   private loaded: boolean = false;
   eventId: number;
+  paymenIntent: PaymentIntentDTO = <PaymentIntentDTO>{};
   theRealTicketList: ShoppingCartTicketDTOPerEvent[];
   ticketsRawList: ShoppingCartTicketDTOPerEvent[];
 
-  constructor(private shoppincartService: ShoppingcartService, private router: Router) {
+  constructor(private shoppincartService: ShoppingcartService, private router: Router, private stripeService: StripeService) {
   }
 
   ngOnInit(): void {
@@ -49,13 +53,13 @@ export class ShoppingcartListComponent implements OnInit {
         this.fullPrice = this.fullPrice + (ticket.quantity * ticket.ticketDTOS[0].event.price);
       });
       this.ticketsRawList = shoppingcart.tickets;
-      console.log(this.ticketsRawList);
+      // console.log(this.ticketsRawList);
       this.tickets = new MatTableDataSource(this.ticketsRawList);
       this.ticketArrayCalculating = shoppingcart.tickets;
       if (this.tickets) {
         this.loaded = true;
       }
-      console.log(this.shoppingcart.tickets);
+      //console.log(this.shoppingcart?.tickets);
     }, error => {
       console.log(error);
     });
@@ -66,8 +70,14 @@ export class ShoppingcartListComponent implements OnInit {
     // todo exclude to ticket from the shoppingcart
   }
 
-  goToCheckout() {
-    //todo there we will going to checkout there is now time for payment
-    this.router.navigateByUrl('/payment/stripe-checkout');
+  goToCheckout(fullPrice: number) {
+    this.paymenIntent.amount = fullPrice;
+    this.paymenIntent.currency = "EUR";
+    this.stripeService.makePaymentIntent(this.paymenIntent).toPromise().then(data => {
+      if (data.client_secret != null) {
+        //console.log(data);
+        this.router.navigateByUrl("/payment/stripe-checkout?client=" + data.client_secret);
+      }
+    })
   }
 }

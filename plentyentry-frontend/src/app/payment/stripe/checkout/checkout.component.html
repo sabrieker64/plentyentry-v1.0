@@ -1,8 +1,9 @@
+
 <div class="container">
   <h2>Hi {{this.ownerOfShoppingCart}}, <br>
     deine aktuellen Tickets im Warenkorb: </h2>
   <mat-card class="example-card">
-    <mat-list role="list" *ngFor="let events of shoppingCart.tickets">
+    <mat-list role="list" *ngFor="let events of shoppingCart?.tickets">
       <mat-list-item role="listitem">{{events.quantity}}  x   {{events.eventName}}
         Preis {{events.amount}} €
       </mat-list-item>
@@ -12,17 +13,14 @@
   </mat-card>
 </div>
 <div class="container">
-  <mat-card class="example-card">
-    <h3>Kredit/Debit-Karte: </h3>
-    <ngx-stripe-card
-      [options]="cardOptions"
-      [elementsOptions]="elementsOptions"
-    ></ngx-stripe-card>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="makePayment(fullAmount)">
-        Bezahlen
-      </button>
-    </mat-card-actions>
-  </mat-card>
+  <form id="payment-form">
+    <div class="form-row">
+      <label for="card-element"> Kredit oder Debit Karte</label>
+      <div id="card-element"></div>
+      <div id="card-errors" role="alert"></div>
+    </div>
+    <button id="submit" (click)="makePayment(this.fullAmount)">Bezahlen</button>
+  </form>
 </div>
+
 

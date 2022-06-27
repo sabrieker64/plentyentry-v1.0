@@ -45,7 +45,7 @@ export class ToolBarComponent implements OnInit {
 
         shoppingcart.tickets.filter(ticket => {
           ticket.ticketDTOS.forEach(tickets => {
-            if (tickets.ticketStatus == "NOTSELLED") {
+            if (tickets.ticketStatus == "NOTSELLED" || tickets.ticketStatus == 'RESERVED') {
               howManyOpen++;
             }
           })
