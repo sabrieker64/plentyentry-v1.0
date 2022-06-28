@@ -6,7 +6,10 @@
       perPage: 1,
       pagination: true,
       type: 'fade',
-      autoPlay: true
+      width: '80vw',
+      autoPlay: true,
+      interval: 4000,
+      rewind: true
     }
       ">
         <splide-slide *ngFor="let image of eventDTO.eventImageUrls; let i=index ">
