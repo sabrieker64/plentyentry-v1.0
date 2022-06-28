@@ -65,7 +65,6 @@ export class EventDetailComponent implements OnInit {
   }
 
   addToShoppingCart(eventDTO: EventDTO, quantity: number) {
-    //todo einen service machen das die tickets random selektiert und zum warenkorb hinzufügt
     this.eventService.selectTicketsAndAddToCustomerShoppingCart(eventDTO.id, quantity).toPromise().then(data => {
       console.log('successfully added to your shopping cart' + data.toString());
       this.router.navigateByUrl('/shoppingcart/list');

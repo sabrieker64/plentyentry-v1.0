@@ -4,7 +4,7 @@ import {environment} from "../../../../environments/environment";
 import {PaymentService} from "../../service/payment.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
-import {PaymentIntentDTO, ShoppingCartDTO, ShoppingCartTicketDTOPerEvent} from "../../../definitions/objects";
+import {PaymentIntentDTO, ShoppingCartDTO, ShoppingCartTicketDTOPerEvent, UserDTO} from "../../../definitions/objects";
 import {UserDetailService} from "../../../user/service/user-detail.service";
 import {StripeService} from "../stripe.service";
 import {StripeCardComponent, StripeElementsService} from "ngx-stripe";
@@ -20,6 +20,7 @@ export class CheckoutComponent implements OnInit {
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
   cardElement: any;
   stripe: any;
+  currentUser: UserDTO = <UserDTO>{};
   paymentIntent: PaymentIntentDTO = <PaymentIntentDTO>{};
   events: ShoppingCartTicketDTOPerEvent;
   fullAmount: number = 0;
@@ -74,6 +75,7 @@ export class CheckoutComponent implements OnInit {
 
   private loadOwnerOfShoppingCart() {
     this.userService.getCurrentUser().toPromise().then(data => {
+      this.currentUser = data;
       this.ownerOfShoppingCart = data.firstName;
     });
   }
@@ -82,13 +84,22 @@ export class CheckoutComponent implements OnInit {
     //todo warum zu fick funkt des nid amk
     console.log(fullAmount);
     console.log(this.clientSecret);
-    var elements = this.elements;
-    this.stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: '/events/overview'
-      },
+
+    this.stripe.confirmCardPayment(this.clientSecret, {
+      payment_method: {
+        card: this.cardElement,
+        billing_details: {
+          name: this.ownerOfShoppingCart,
+          email: this.currentUser.email,
+          address: {
+            city: this.currentUser.city,
+            postal_code: this.currentUser.postCode,
+            line1: this.currentUser.street
+          }
+        }
+      }
     }).then(function (data: any) {
+      console.log(data);
       if (data.error) {
         console.log(data.error);
       }

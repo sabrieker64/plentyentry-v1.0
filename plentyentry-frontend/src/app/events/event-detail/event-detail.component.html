@@ -4,7 +4,9 @@
       <splide [options]="
     {
       perPage: 1,
-      pagination: false
+      pagination: true,
+      type: 'fade',
+      autoPlay: true
     }
       ">
         <splide-slide *ngFor="let image of eventDTO.eventImageUrls; let i=index ">
