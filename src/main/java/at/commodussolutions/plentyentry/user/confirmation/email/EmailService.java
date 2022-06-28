@@ -34,7 +34,7 @@ public class EmailService implements EmailSender {
             helper.setText(email, true);
             helper.setTo(to);
             helper.setSubject("Confirm your Email");
-            helper.setFrom("welcome@plentyentry.com");
+            helper.setFrom("welcome@plenty-entry.com");
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             LOGGER.error("failed to send email", e);
@@ -51,7 +51,7 @@ public class EmailService implements EmailSender {
             helper.setText(email, true);
             helper.setTo(to);
             helper.setSubject("Confirm your Email");
-            helper.setFrom("welcome@plentyentry.at");
+            helper.setFrom("welcome@plenty-entry.com");
             javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {
             log.error(e.getMessage());

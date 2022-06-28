@@ -130,8 +130,9 @@ public class UserServiceImpl implements UserService {
             String link = this.backendUtils.getHost() + "api/backend/user/confirm?token=" + token.getToken();
             if (environment.acceptsProfiles(Profiles.of("test", "development"))) {
                 emailSender.send(user.getEmail(), buildEmail(user.getLastName(), link));
+            } else {
+                emailSender.sendEmailFromSES(user.getEmail(), buildEmail(user.getLastName(), link));
             }
-            emailSender.sendEmailFromSES(user.getEmail(), buildEmail(user.getLastName(), link));
         }
     }
 

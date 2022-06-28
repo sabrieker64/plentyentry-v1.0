@@ -29,7 +29,7 @@ spring:
   mail:
     host: localhost
     password: test
-    port: 1025
+    port: 1080
     username: test
 
     properties:
