@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {EventDTO, TicketDTO} from "../../definitions/objects";
 import {ActivatedRoute, Router} from "@angular/router";
 import {EventService} from "../service/event.service";
@@ -9,7 +9,6 @@ import {UserDetailService} from "../../user/service/user-detail.service";
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import {registerLocaleData} from "@angular/common";
-import {NgImageSliderComponent} from "ng-image-slider";
 
 @Component({
   selector: 'app-event-detail',
@@ -21,51 +20,7 @@ export class EventDetailComponent implements OnInit {
   eventDTO: EventDTO = <EventDTO>{};
   eventQuantity: number = 1;
   selectedTickets: TicketDTO[];
-  imageObject: Array<object> =
-    [
-      {
-        image: 'https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg',
-        thumbImage: 'https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg',
-      },
-      {
-        image: 'https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg', // Support base64 image
-        thumbImage: 'https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg', // Support base64 image
-      },
-      {
-        image: 'https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg',
-        thumbImage: 'https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg',
-      },
-      {
-        image: 'https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg', // Support base64 image
-        thumbImage: 'https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg', // Support base64 image
-      },
-      {
-        image: 'https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg',
-        thumbImage: 'https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg',
-      },
-      {
-        image: 'https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg', // Support base64 image
-        thumbImage: 'https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg', // Support base64 image
-      },
-      {
-        image: 'https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg',
-        thumbImage: 'https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg',
-      },
-      {
-        image: 'https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg', // Support base64 image
-        thumbImage: 'https://eventimagesbucket.s3.us-east-2.amazonaws.com/eventtest/dummy/party1.jpg', // Support base64 image
-      },
-    ];
 
-  @ViewChild('nav') slider: NgImageSliderComponent;
-
-  prevImageClick() {
-    this.slider.prev();
-  }
-
-  nextImageClick() {
-    this.slider.next();
-  }
 
   constructor(private eventService: EventService, private route: ActivatedRoute,
               private errorHandling: ErrorService, private router: Router,
