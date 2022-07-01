@@ -34,7 +34,7 @@ public class EmailService implements EmailSender {
             helper.setText(email, true);
             helper.setTo(to);
             helper.setSubject("Confirm your Email");
-            helper.setFrom("welcome@plentyentry.com");
+            helper.setFrom("welcome@plenty-entry.com");
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             LOGGER.error("failed to send email", e);
@@ -44,14 +44,14 @@ public class EmailService implements EmailSender {
 
     @Override
     @Async
-    public void sendEmailFromSES(String to, String email, String subject) {
+    public void sendEmailFromSES(String to, String email) {
         try {
             var mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(email, true);
             helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setFrom("welcome@plentyentry.at");
+            helper.setSubject("Confirm your Email");
+            helper.setFrom("welcome@plenty-entry.com");
             javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {
             log.error(e.getMessage());

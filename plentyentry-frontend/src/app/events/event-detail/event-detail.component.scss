@@ -106,6 +106,10 @@
   }
 }
 
+.splide.is-active .splide__list {
+  display: flex;
+}
+
 .cols--3 {
 
   .image-thumbnail {

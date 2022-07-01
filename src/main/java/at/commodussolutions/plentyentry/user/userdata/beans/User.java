@@ -100,7 +100,7 @@ public class User implements UserDetails{
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private Set<PaymentMethod> paymentMethod = new HashSet<>();
 
-    @Column(name = "JWT_TOKEN")
+    @Column(name = "JWT_TOKEN", columnDefinition = "VARCHAR2(5000 CHAR)")
     private String jwtToken;
 
     //MINA
