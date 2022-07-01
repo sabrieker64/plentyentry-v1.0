@@ -36,4 +36,8 @@ export class TicketService {
       httpOptions);
   }
 
+  public removeFromShoppingCart(ticketID: number): Observable<TicketDTO> {
+    return this.http.put<TicketDTO>(`${this.BASE_URL}`, ticketID);
+  }
+
 }

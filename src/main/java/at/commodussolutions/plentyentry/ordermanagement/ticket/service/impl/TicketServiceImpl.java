@@ -8,6 +8,7 @@ import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.enums.TicketStatus;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketService;
+import at.commodussolutions.plentyentry.user.shoppingcart.service.ShoppingCartService;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
@@ -37,6 +38,9 @@ public class TicketServiceImpl implements TicketService {
 
     @Autowired
     private EventService eventService;
+
+    @Autowired
+    private ShoppingCartService shoppingCartService;
 
     @Override
     public List<Ticket> getAllTickets() {
@@ -134,5 +138,17 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public List<Ticket> findAllTicketsThatAreNotAvailableAnymore(Long eventId) {
         return ticketRepository.getAllByEventId(eventId);
+    }
+
+    public List<Ticket> removeFromShoppingCart(Long ticketId) {
+        User user = userService.getUserByJWTToken();
+        Ticket ticket = ticketRepository.findById(ticketId).get();
+        List<Ticket> ticketList = user.getShoppingCart().getTickets();
+        ticketList.removeIf(currentTicket -> currentTicket.getId().equals(ticket.getId()));
+        user.getShoppingCart().setTickets(ticketList);
+
+        userService.updateUser(user);
+
+        return ticketList;
     }
 }

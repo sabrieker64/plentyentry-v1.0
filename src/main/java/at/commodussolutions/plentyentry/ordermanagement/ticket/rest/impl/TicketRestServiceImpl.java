@@ -82,4 +82,9 @@ public class TicketRestServiceImpl implements TicketRestService {
     public void deleteTicketsFromShoppingCart(Long eventId) {
         ticketService.excludeTicketsFromShoppingcart(eventId);
     }
+
+    @Override
+    public List<TicketDTO> removeFromShoppingCart(Long ticketId) {
+        return ticketMapper.mapToListDTO(ticketService.removeFromShoppingCart(ticketId));
+    }
 }

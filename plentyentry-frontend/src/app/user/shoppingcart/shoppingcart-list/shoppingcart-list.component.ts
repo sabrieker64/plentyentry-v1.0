@@ -4,7 +4,6 @@ import {MatTableDataSource} from "@angular/material/table";
 import {PaymentIntentDTO, ShoppingCartDTO, ShoppingCartTicketDTOPerEvent} from "../../../definitions/objects";
 import {ShoppingcartService} from "../service/shoppingcart.service";
 import {StripeService} from "../../../payment/stripe/stripe.service";
-import {Order} from "@stripe/stripe-js";
 
 
 @Component({
@@ -67,7 +66,12 @@ export class ShoppingcartListComponent implements OnInit {
   }
 
   deleteItem(id: number) {
-    // todo exclude to ticket from the shoppingcart
+    console.log(id);
+    this.shoppincartService.updateShoppingCart(id).subscribe((res) => {
+      this.loadShoppingCart();
+    }, (err) => {
+      console.log(err)
+    })
   }
 
   goToCheckout(fullPrice: number) {

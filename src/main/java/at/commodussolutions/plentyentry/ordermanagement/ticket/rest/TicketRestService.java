@@ -48,4 +48,7 @@ public interface TicketRestService {
     @ResponseBody
     void deleteTicketsFromShoppingCart(@PathVariable Long eventId);
 
+    @PutMapping("/removeFromShoppingCart")
+    @ResponseBody
+    List<TicketDTO> removeFromShoppingCart(@RequestParam("ticketId") Long ticketId);
 }
