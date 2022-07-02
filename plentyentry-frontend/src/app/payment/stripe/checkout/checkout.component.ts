@@ -9,7 +9,10 @@ import {UserDetailService} from "../../../user/service/user-detail.service";
 import {StripeService} from "../stripe.service";
 import {StripeCardComponent, StripeElementsService} from "ngx-stripe";
 import {TicketService} from "../../../ticket/service/ticket.service";
+import {loadStripe, Stripe} from "@stripe/stripe-js";
 
+
+declare var makePayment: any;
 
 @Component({
   selector: 'app-stripe',
@@ -19,7 +22,7 @@ import {TicketService} from "../../../ticket/service/ticket.service";
 export class CheckoutComponent implements OnInit {
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
   cardElement: any;
-  stripe: any;
+  private stripe: Stripe;
   currentUser: UserDTO = <UserDTO>{};
   paymentIntent: PaymentIntentDTO = <PaymentIntentDTO>{};
   events: ShoppingCartTicketDTOPerEvent;
@@ -37,32 +40,21 @@ export class CheckoutComponent implements OnInit {
               private route: ActivatedRoute, private userService: UserDetailService, private ticketService: TicketService) {
   }
 
-  ngOnInit(): void {
-    this.route.queryParams.subscribe(data => {
-      this.clientSecret = data['client'];
-      console.log(this.clientSecret);
-    });
-    this.stripe = Stripe(environment.stripe);
-    this.elements = this.stripe.elements();
-    var styleCard = {
-      'style': {
-        'base': {
-          'fontFamily': 'Arial, sans-serif',
-          'fontSize': '15px',
-          'color': '#7f73d4',
-        },
-        'Invalid': {'color': 'red',},
-      }
-    }
-    // Remove Zip-code in card UI component
-    this.cardElement = this.elements.create('card', {style: styleCard});
-    this.cardElement.mount('#card-element');
+  async ngOnInit() {
     this.loadShoppingCart();
     this.loadOwnerOfShoppingCart();
+    this.stripe = await loadStripe(environment.stripe);
+    const elements = this.stripe.elements();
+    this.cardElement = elements.create('card');
+    this.cardElement.mount('#card');
+    this.route.queryParams.subscribe(data => {
+      this.clientSecret = data['client'];
+    });
+
   }
 
   private loadShoppingCart() {
-    this.serviceStripe.getShoppingcart().toPromise().then(data => {
+    this.serviceStripe.getShoppingcart().subscribe(data => {
       this.shoppingCart = data;
       data.tickets.forEach(ticket => {
         //hier wird die summe des warenkorbs berechnet
@@ -74,38 +66,14 @@ export class CheckoutComponent implements OnInit {
   }
 
   private loadOwnerOfShoppingCart() {
-    this.userService.getCurrentUser().toPromise().then(data => {
+    this.userService.getCurrentUser().subscribe(data => {
       this.currentUser = data;
       this.ownerOfShoppingCart = data.firstName;
     });
   }
 
-  makePayment(fullAmount: number) {
-    //todo warum zu fick funkt des nid amk
-    console.log(fullAmount);
-    console.log(this.clientSecret);
+  makePayment() {
 
-    this.stripe.confirmCardPayment(this.clientSecret, {
-      payment_method: {
-        card: this.cardElement,
-        billing_details: {
-          name: this.ownerOfShoppingCart,
-          email: this.currentUser.email,
-          address: {
-            city: this.currentUser.city,
-            postal_code: this.currentUser.postCode,
-            line1: this.currentUser.street
-          }
-        }
-      }
-    }).then(function (data: any) {
-      console.log(data);
-      if (data.error) {
-        console.log(data.error);
-      }
-      if (data.paymentIntent) {
-        console.log(data.paymentIntent);
-      }
-    });
   }
 }
+

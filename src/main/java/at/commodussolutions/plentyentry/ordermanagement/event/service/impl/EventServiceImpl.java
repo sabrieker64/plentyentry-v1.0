@@ -15,6 +15,8 @@ import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketSer
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
+import com.stripe.model.Price;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -28,9 +30,8 @@ import javax.ws.rs.NotFoundException;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -71,6 +72,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @SneakyThrows
     public Event createNewEvent(Event event) throws IOException {
 
         AWSEventImagesUploadDTO awsEventData = new AWSEventImagesUploadDTO();
@@ -91,6 +93,21 @@ public class EventServiceImpl implements EventService {
             List<String> imgLinks = awsBucketRestService.uploadFiles(list, awsEventData);
             event.setEventImageUrls(imgLinks);
         }
+
+        //Creating the Object in Stripe for Price Management
+
+        //Object that is created from EventName --> should do eventName Unnique too or with date extra
+        Map<String, Object> product = new HashMap<>();
+        product.put("name", event.getName() + event.getStartDateTime().toLocalDate().toString());
+
+        Map<String, Object> recurring = new HashMap<>();
+        recurring.put("interval", "month");
+        Map<String, Object> params = new HashMap<>();
+        params.put("unit_amount", event.getPrice().multiply(BigDecimal.valueOf(100)));
+        params.put("currency", "eur");
+        params.put("recurring", recurring);
+        params.put("product", product);
+        event.setPriceIdFromStripe(Price.create(params).getId());
 
         Event createdEvent = eventRepository.save(event);
         ticketService.createAutomaticTicketsForNewEvent(createdEvent.getId(), createdEvent.getTicketCounter());

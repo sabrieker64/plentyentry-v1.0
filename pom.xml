@@ -264,6 +264,8 @@
                         <class>
                             at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.CreateTokenDTO
                         </class>
+                        <class>at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.CheckoutSessionDTO</class>
+                        <class>at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.StripeCheckoutResultDTO</class>
                     </classes>
                     <outputKind>module</outputKind>
                     <outputFile>plentyentry-frontend/src/app/definitions/objects.ts</outputFile>

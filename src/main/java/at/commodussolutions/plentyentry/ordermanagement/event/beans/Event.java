@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -63,5 +62,8 @@ public class Event {
 
     @ManyToMany(mappedBy = "entertainedEvents")
     private Set<User> entertainers;
+
+    @Column(name = "PRICE_ID_STRIPE")
+    private String priceIdFromStripe;
 
 }

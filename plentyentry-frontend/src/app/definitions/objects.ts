@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-06-28 18:10:11.
+// Generated using typescript-generator version 2.32.889 on 2022-07-02 14:02:18.
 
 export interface UserDTO {
     id: number;
@@ -73,25 +73,36 @@ export interface Order {
     currency: string;
     method: string;
     intent: string;
-    description: string;
+  description: string;
 }
 
 export interface CreateTokenDTO {
-    cardNumber: number;
-    expMonth: number;
-    expYear: number;
-    cvc: number;
+  cardNumber: number;
+  expMonth: number;
+  expYear: number;
+  cvc: number;
+}
+
+export interface CheckoutSessionDTO {
+  userId: number;
+  successUrl: string;
+  cancelUrl: string;
+  fullAmount: number;
+}
+
+export interface StripeCheckoutResultDTO {
+  urlToStripe: string;
 }
 
 export interface CoronaStatusDTO {
-    id: number;
-    pcrTest: boolean;
-    antigenTest: boolean;
-    firstVaccine: boolean;
-    secondVaccine: boolean;
-    thirdVaccine: boolean;
-    quarantine: boolean;
-    user: UserDTO;
+  id: number;
+  pcrTest: boolean;
+  antigenTest: boolean;
+  firstVaccine: boolean;
+  secondVaccine: boolean;
+  thirdVaccine: boolean;
+  quarantine: boolean;
+  user: UserDTO;
 }
 
 export interface PaymentMethodDTO {
