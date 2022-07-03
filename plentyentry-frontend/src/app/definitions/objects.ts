@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-07-02 14:02:18.
+// Generated using typescript-generator version 2.32.889 on 2022-07-03 19:43:43.
 
 export interface UserDTO {
     id: number;
@@ -69,10 +69,10 @@ export interface PaymentIntentDTO extends Serializable {
 }
 
 export interface Order {
-    price: number;
-    currency: string;
-    method: string;
-    intent: string;
+  price: number;
+  currency: string;
+  method: string;
+  intent: string;
   description: string;
 }
 
