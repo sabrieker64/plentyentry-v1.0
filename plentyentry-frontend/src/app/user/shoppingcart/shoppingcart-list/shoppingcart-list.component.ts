@@ -73,8 +73,8 @@ export class ShoppingcartListComponent implements OnInit {
     this.checkoutDTO.successUrl = environment.frontendBaseUrl + '/payment/success';
     this.shoppincartService.makePaymentWithCheckoutSession(this.checkoutDTO)
       .toPromise().then(result => {
-      console.log(result.text);
-      document.location.href = result.text;
+      console.log(result.urlToStripe);
+      document.location.href = result.urlToStripe;
     });
   }
 }

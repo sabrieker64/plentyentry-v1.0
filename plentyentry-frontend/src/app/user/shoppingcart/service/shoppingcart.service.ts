@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {CheckoutSessionDTO, ShoppingCartDTO} from "../../../definitions/objects";
+import {CheckoutSessionDTO, ShoppingCartDTO, StripeCheckoutResultDTO} from "../../../definitions/objects";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -20,8 +20,8 @@ export class ShoppingcartService {
     return this.http.get<ShoppingCartDTO>(`${this.baseUrl}`);
   }
 
-  makePaymentWithCheckoutSession(checkoutDTO: CheckoutSessionDTO): Observable<any> {
-    return this.http.post<any>(`${this.baseUrlPayment}`, checkoutDTO);
+  makePaymentWithCheckoutSession(checkoutDTO: CheckoutSessionDTO): Observable<StripeCheckoutResultDTO> {
+    return this.http.post<StripeCheckoutResultDTO>(`${this.baseUrlPayment}`, checkoutDTO);
   }
 
 
