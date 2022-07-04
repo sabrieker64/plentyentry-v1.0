@@ -7,6 +7,9 @@
         </mat-panel-title>
         <mat-panel-description>
           <p>{{ticket.event.startDateTime | date:'dd.LL.yyyy'}}</p>
+          <br>
+          <mat-icon color="primary" *ngIf="checkIfTicketIsValidToUse(ticket)">check_circle</mat-icon>
+          <mat-icon color="warn" *ngIf="checkIfTicketIsUsed(ticket)">cancel</mat-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
       {{ticket.event.city}}

@@ -19,13 +19,18 @@ public interface TicketRestService {
 
     @GetMapping("/boughtTickets")
     @ResponseBody
-    List<TicketDTO>  getBoughtTickets();
+    List<TicketDTO> getBoughtTickets();
 
     //DO WE NEED THIS?
     @PutMapping()
     @ResponseBody
     TicketDTO updateTicketById(@RequestBody TicketDTO updatedTicket);
     //todo nach der bezahlung wenn es funktioniert hat die shoppingcart leeren und die ticketstatuse aktualisieren!!!
+
+
+    @PutMapping("/update-bought-tickets")
+    @ResponseBody
+    void updateBoughtTicketStatus(@RequestBody List<TicketDTO> ticketDTOList);
 
     @PostMapping()
     @ResponseBody

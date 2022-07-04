@@ -9,7 +9,7 @@ import {UserAuthReqDTO, UserDTO, UserRegisterDTO} from "../../definitions/object
 })
 export class LoginRegisterService {
   regex: {passwort: string, email: string} = {
-    passwort: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$',
+    passwort: '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$',
     email: '^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$'
   }
 
@@ -36,5 +36,4 @@ export class LoginRegisterService {
     return this.http.get<UserDTO>(`${this.baseUrl}`);
   }
 
-//TODO: Mukiiii services erstellen
 }

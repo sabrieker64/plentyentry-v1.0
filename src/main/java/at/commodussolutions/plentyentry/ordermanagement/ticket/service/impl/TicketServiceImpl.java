@@ -45,14 +45,6 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public List<Ticket> getBoughtTickets() {
-        /* Set<Ticket> tempSet = user.getShoppingCart().getTickets();
-        List<Ticket> tempList = new ArrayList<>(tempSet);
-        List<Ticket> boughtTickets = new ArrayList<>();
-        for(Ticket ticket : tempList) {
-            if(ticket.getTicketStatus().equals(TicketStatus.SELLED)){
-                boughtTickets.add(tempList.iterator().next());
-            }
-        }*/
         return userService.getUserByJWTToken().getShoppingCart().getTickets().stream()
                 .filter(status -> status.getTicketStatus().equals(TicketStatus.SELLED)
                         || !status.getTicketStatus().equals(TicketStatus.EXPIRED))
@@ -134,5 +126,13 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public List<Ticket> findAllTicketsThatAreNotAvailableAnymore(Long eventId) {
         return ticketRepository.getAllByEventId(eventId);
+    }
+
+    @Override
+    public void updateBoughtTickets(List<Ticket> tickets) {
+        tickets.forEach(ticket -> {
+            ticket.setTicketStatus(TicketStatus.SELLED);
+            ticketRepository.save(ticket);
+        });
     }
 }

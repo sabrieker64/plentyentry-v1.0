@@ -23,6 +23,10 @@ export class TicketService {
     return this.http.get<TicketDTO[]>(`${this.BASE_URL}` + "/" + eventId + "/" + quantity);
   }
 
+  updateBoughtTicket(tickets: TicketDTO[]): Observable<any> {
+    return this.http.put<any>(`${this.BASE_URL}/update-bought-tickets`, tickets);
+  }
+
   public getQRCode(ticketID: number): Observable<ArrayBuffer> {
     const httpOptions: Object = {
       headers: new HttpHeaders({

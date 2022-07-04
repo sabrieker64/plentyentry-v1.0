@@ -55,6 +55,13 @@ public class TicketRestServiceImpl implements TicketRestService {
     }
 
     @Override
+    public void updateBoughtTicketStatus(List<TicketDTO> ticketDTOList) {
+        List<Ticket> tickets = new ArrayList<>();
+        ticketMapper.mapToListEntity(ticketDTOList, tickets);
+        ticketService.updateBoughtTickets(tickets);
+    }
+
+    @Override
     public TicketDTO createNewTicket(TicketDTO ticketDTO) {
         Ticket ticket = new Ticket();
         ticketMapper.mapToEntity(ticketDTO, ticket);
