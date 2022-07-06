@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
-import {PaymentIntentDTO, ShoppingCartDTO, ShoppingCartTicketDTOPerEvent} from "../../../definitions/objects";
+import {CheckoutSessionDTO, PaymentIntentDTO, ShoppingCartDTO, ShoppingCartTicketDTOPerEvent} from "../../../definitions/objects";
 import {ShoppingcartService} from "../service/shoppingcart.service";
 import {StripeService} from "../../../payment/stripe/stripe.service";
+import {environment} from "../../../../environments/environment";
 
 
 @Component({
@@ -18,6 +19,7 @@ export class ShoppingcartListComponent implements OnInit {
   paymenIntent: PaymentIntentDTO = <PaymentIntentDTO>{};
   theRealTicketList: ShoppingCartTicketDTOPerEvent[];
   ticketsRawList: ShoppingCartTicketDTOPerEvent[];
+  checkoutDTO: CheckoutSessionDTO = <CheckoutSessionDTO>{}
 
   constructor(private shoppincartService: ShoppingcartService, private router: Router, private stripeService: StripeService) {
   }
@@ -77,11 +79,12 @@ export class ShoppingcartListComponent implements OnInit {
   goToCheckout(fullPrice: number) {
     this.paymenIntent.amount = fullPrice;
     this.paymenIntent.currency = "EUR";
-    this.stripeService.makePaymentIntent(this.paymenIntent).toPromise().then(data => {
-      if (data.client_secret != null) {
-        //console.log(data);
-        this.router.navigateByUrl("/payment/stripe-checkout?client=" + data.client_secret);
-      }
-    })
+    this.checkoutDTO.fullAmount = this.fullPrice;
+    this.checkoutDTO.cancelUrl = environment.frontendBaseUrl + '/payment/cancel';
+    this.checkoutDTO.successUrl = environment.frontendBaseUrl + '/payment/success';
+    this.shoppincartService.makePaymentWithCheckoutSession(this.checkoutDTO)
+      .toPromise().then(result => {
+      window.location.href = result.urlToStripe;
+    });
   }
 }

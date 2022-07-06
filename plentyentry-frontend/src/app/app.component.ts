@@ -14,11 +14,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.swUpdate.isEnabled) {
-
       this.swUpdate.available.subscribe(() => {
-
-        if (confirm("New version available. Load New Version?")) {
-
+        if (confirm("Neue Version von PlentyEntry ist verfügbar, soll die neue Version geladen werden?")) {
           window.location.reload();
         }
       });

@@ -15,6 +15,7 @@ import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketSer
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.enums.UserType;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -71,6 +72,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @SneakyThrows
     public Event createNewEvent(Event event) throws IOException {
 
         AWSEventImagesUploadDTO awsEventData = new AWSEventImagesUploadDTO();

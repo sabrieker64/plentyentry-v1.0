@@ -63,12 +63,19 @@ export class TicketListComponent implements OnInit {
 
   }
 
-  setQrCode(base64data: string, index:number){
-    this.qrCode = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,' +base64data.toString()) as string ;
+  setQrCode(base64data: string, index: number) {
+    this.qrCode = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,' + base64data.toString()) as string;
     this.qrCode = (this.qrCode.changingThisBreaksApplicationSecurity) as string;
     //CREATE IN MODEL QRCODE FIELD FOR ITERATING
 
-    this.allTickets[index].qrCode =  this.qrCode as string;
+    this.allTickets[index].qrCode = this.qrCode as string;
   }
 
+  checkIfTicketIsValidToUse(ticket: TicketDTO): boolean {
+    return ticket.ticketStatus === 'SELLED';
+  }
+
+  checkIfTicketIsUsed(ticket: TicketDTO): boolean {
+    return ticket.ticketStatus === 'USED';
+  }
 }

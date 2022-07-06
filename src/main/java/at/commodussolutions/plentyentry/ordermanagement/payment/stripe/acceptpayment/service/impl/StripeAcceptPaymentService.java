@@ -1,15 +1,22 @@
 package at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.service.impl;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.dto.EventDTO;
+import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.CheckoutSessionDTO;
 import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.PaymentIntentDTO;
 import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.enums.Currency;
 import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.types.StripePaymentTypes;
+import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
+import com.stripe.model.Price;
+import com.stripe.model.Product;
 import com.stripe.model.Token;
+import com.stripe.model.checkout.Session;
 import com.stripe.param.PaymentIntentCreateParams;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +39,9 @@ public class StripeAcceptPaymentService {
     String publicKey;
 
 
+    @Autowired
+    private UserService userService;
+
     public PaymentIntent paymentIntent(PaymentIntentDTO paymentIntentDTO) throws StripeException {
         Stripe.apiKey = secretKey;
         paymentIntentDTO.setCurrency(Currency.EUR);
@@ -39,23 +49,6 @@ public class StripeAcceptPaymentService {
         //Hier wird das Objekt für die PaymentIntent aufgebaut
         List<Object> paymentMethodTypes = new ArrayList<>();
         paymentMethodTypes.add("card");
-       /* PaymentIntentCreateParams params =
-                PaymentIntentCreateParams.builder()
-                        .setAmount(paymentIntentDTO.getAmount().multiply(BigDecimal.valueOf(100L)).longValue())
-                        .setDescription(paymentIntentDTO.getDescription())
-                        .addPaymentMethodType("bancontact")
-                        .addPaymentMethodType("card")
-                        .addPaymentMethodType("eps")
-                        .addPaymentMethodType("giropay")
-                        .addPaymentMethodType("ideal")
-                        .addPaymentMethodType("p24")
-                        .addPaymentMethodType("sepa_debit")
-                        .addPaymentMethodType("sofort")
-                        .setPaymentMethod("card")
-                        .putMetadata("order_id", paymentIntentDTO.getOrderId())
-                        .setCurrency(paymentIntentDTO.getCurrency().getValue())
-                        .build();*/
-
         Map<String, Object> params = new HashMap<>();
         params.put("amount", paymentIntentDTO.getAmount().multiply(BigDecimal.valueOf(100L)).longValue());
         params.put("currency", "eur");
@@ -112,4 +105,35 @@ public class StripeAcceptPaymentService {
         }
         return token;
     }
+
+    @SneakyThrows
+    public Session createCheckoutSession(CheckoutSessionDTO checkoutSessionDTO) {
+        var user = userService.getUserByJWTToken();
+        Map<String, Object> product = new HashMap<>();
+        product.put("name", user.getFirstName());
+        Product product1 = Product.create(product);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("unit_amount", checkoutSessionDTO.getFullAmount());
+        params.put("product", product1.getId());
+        params.put("currency", "eur");
+        Price price = Price.create(params);
+
+
+        List<Object> lineItems = new ArrayList<>();
+        Map<String, Object> lineItem = new HashMap<>();
+        lineItem.put("price", price.getId());
+        lineItem.put("quantity", 1);
+        lineItems.add(lineItem);
+
+        Map<String, Object> sessionCreateParams = new HashMap<>();
+        sessionCreateParams.put("success_url", checkoutSessionDTO.getSuccessUrl());
+        sessionCreateParams.put("cancel_url", checkoutSessionDTO.getCancelUrl());
+        sessionCreateParams.put("line_items", lineItems);
+        sessionCreateParams.put("mode", "payment");
+
+        return Session.create(sessionCreateParams);
+    }
+
+
 }

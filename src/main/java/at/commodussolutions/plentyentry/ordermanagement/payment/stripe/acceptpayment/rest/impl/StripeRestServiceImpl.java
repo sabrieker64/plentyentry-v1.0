@@ -1,7 +1,8 @@
 package at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.rest.impl;
 
+import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.CheckoutSessionDTO;
 import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.CreateTokenDTO;
-import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.PaymentIntentDTO;
+import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.StripeCheckoutResultDTO;
 import at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.service.impl.StripeAcceptPaymentService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -34,13 +35,14 @@ public class StripeRestServiceImpl {
     private StripeAcceptPaymentService acceptPayment;
 
 
-    @PostMapping("/create-payment-intent")
+    @PostMapping("/create-checkout-session")
     @ResponseBody
-    public ResponseEntity<String> createCheckoutSession(@RequestBody PaymentIntentDTO paymentIntentDTO) throws StripeException {
+    public StripeCheckoutResultDTO createCheckoutSession(@RequestBody CheckoutSessionDTO checkoutSessionDTO) throws StripeException {
         Stripe.apiKey = apiKey;
-        PaymentIntent paymentIntent = acceptPayment.paymentIntent(paymentIntentDTO);
-        String paymentStr = paymentIntent.toJson();
-        return new ResponseEntity<String>(paymentStr, HttpStatus.OK);
+        var createCheckoutSession = acceptPayment.createCheckoutSession(checkoutSessionDTO);
+        var stripeCheckoutUrl = new StripeCheckoutResultDTO();
+        stripeCheckoutUrl.setUrlToStripe(createCheckoutSession.getUrl());
+        return stripeCheckoutUrl;
     }
 
     @PostMapping("/confirm/{id}")

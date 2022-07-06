@@ -5,10 +5,12 @@
 export const environment = {
   production: false,
   baseUrl: 'http://localhost:80/',
+  frontendBaseUrl: 'http://localhost:4200',
   stripe: 'pk_test_51Kfr2HDAXhrIxCz9JbKqmWo6ZTaUMBUPhY1iukliuy0iRqRoxFVv93oOTnst1mwW2XZMHXqFRLLK3BAmIDCI9CAe00tV99Snt1',
   trackingEnabled: false
 };
 
+//5356863155200207
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

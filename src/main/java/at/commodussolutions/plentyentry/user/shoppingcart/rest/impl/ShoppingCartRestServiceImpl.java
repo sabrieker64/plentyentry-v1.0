@@ -2,6 +2,7 @@ package at.commodussolutions.plentyentry.user.shoppingcart.rest.impl;
 
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.enums.TicketStatus;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.mapper.TicketMapper;
 import at.commodussolutions.plentyentry.user.shoppingcart.beans.ShoppingCart;
 import at.commodussolutions.plentyentry.user.shoppingcart.dto.ShoppingCartDTO;
@@ -36,18 +37,33 @@ public class ShoppingCartRestServiceImpl implements ShoppingCartRestService {
         var everyEvent = shoppingCart.getTickets().stream().map(Ticket::getEvent).collect(Collectors.toList());
         var eventsDistinct = everyEvent.stream().distinct().collect(Collectors.toList());
         var distinctTickets = new ArrayList<ShoppingCartTicketDTOPerEvent>();
+        if (shoppingCart.getTickets().stream().filter(ticket -> ticket.getTicketStatus().equals(TicketStatus.NOTSELLED)).collect(Collectors.toList())
+                .isEmpty()) {
+            return shoppingCartDTO;
+        }
+        if (eventsDistinct.isEmpty()) {
+            return shoppingCartDTO;
+        }
         eventsDistinct.forEach(event -> {
             var detectedNewEvent =
-                    shoppingCart.getTickets().stream().filter(ticket -> ticket.getEvent().getId().equals(event.getId())).collect(Collectors.toList());
+                    shoppingCart.getTickets().stream().filter(ticket -> ticket.getEvent().getId().equals(event.getId())
+                            && ticket.getTicketStatus().equals(TicketStatus.NOTSELLED)).collect(Collectors.toList());
             var shoppingCartTicketDTOPerEvent = new ShoppingCartTicketDTOPerEvent();
             shoppingCartTicketDTOPerEvent.setTicketDTOS(ticketMapper.mapToListDTO(detectedNewEvent));
             shoppingCartTicketDTOPerEvent.setAmount(getTheRightAmount(event.getPrice(), detectedNewEvent.size()));
             shoppingCartTicketDTOPerEvent.setQuantity(detectedNewEvent.size());
             shoppingCartTicketDTOPerEvent.setTicketDTOS(ticketMapper.mapToListDTO(detectedNewEvent));
-            shoppingCartTicketDTOPerEvent.setEventName(detectedNewEvent.get(0).getEvent().getName());
-            shoppingCartTicketDTOPerEvent.setEventDescription(detectedNewEvent.get(0).getEvent().getDescription());
-            shoppingCartTicketDTOPerEvent.setEventDate(detectedNewEvent.stream().findFirst().orElseThrow().getEvent().getStartDateTime().toLocalDate());
-            shoppingCartTicketDTOPerEvent.setPricePerTicket(detectedNewEvent.stream().findFirst().orElseThrow().getEvent().getPrice());
+            if (detectedNewEvent.get(0) == null) {
+                shoppingCartTicketDTOPerEvent.setEventDate(null);
+                shoppingCartTicketDTOPerEvent.setEventName(null);
+                shoppingCartTicketDTOPerEvent.setEventDescription(null);
+                shoppingCartTicketDTOPerEvent.setPricePerTicket(null);
+            } else {
+                shoppingCartTicketDTOPerEvent.setEventName(detectedNewEvent.get(0).getEvent().getName());
+                shoppingCartTicketDTOPerEvent.setEventDescription(detectedNewEvent.get(0).getEvent().getDescription());
+                shoppingCartTicketDTOPerEvent.setEventDate(detectedNewEvent.stream().findFirst().orElseThrow().getEvent().getStartDateTime().toLocalDate());
+                shoppingCartTicketDTOPerEvent.setPricePerTicket(detectedNewEvent.stream().findFirst().orElseThrow().getEvent().getPrice());
+            }
             distinctTickets.add(shoppingCartTicketDTOPerEvent);
         });
         shoppingCartDTO.setTickets(distinctTickets);
