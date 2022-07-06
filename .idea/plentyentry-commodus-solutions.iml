@@ -17,6 +17,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="entityManagerFactory" value="7a61b676-941f-4b3a-840a-afb5b3241494" />
+          <factory-entry name="plentyentry-commodus-solutions" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
