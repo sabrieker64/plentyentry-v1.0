@@ -5,6 +5,7 @@ package at.commodussolutions.plentyentry.ordermanagement.ticket.service.impl;
 
 import at.commodussolutions.plentyentry.ordermanagement.event.service.EventService;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketsToRemove;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.enums.TicketStatus;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketService;
@@ -12,6 +13,7 @@ import at.commodussolutions.plentyentry.user.shoppingcart.service.ShoppingCartSe
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.repository.UserRepository;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
+import com.stripe.model.Token;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -119,12 +121,17 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public void excludeTicketsFromShoppingcart(Long eventId) {
-        getBoughtTickets().stream().filter(ticket -> Objects.equals(ticket.getEvent().getId(), eventId))
-                .forEach(ticket -> {
-                    ticket.setTicketStatus(TicketStatus.NOTSELLED);
-                    //todo hier nochj bitte die tickets aus der sjoppingcart entfernen
-                });
+    public TicketsToRemove excludeTicketsFromShoppingcart(Long eventId) {
+        var user = userService.getUserByJWTToken();
+       var deleteList =  user.getShoppingCart().getTickets().stream()
+                .filter(ticket -> ticket.getTicketStatus().equals(TicketStatus.RESERVED) && ticket.getEvent().getId().equals(eventId)).collect(Collectors.toList());
+        user.getShoppingCart().getTickets().removeAll(deleteList);
+        deleteList.forEach(ticket -> {
+            ticket.setTicketStatus(TicketStatus.NOTSELLED);
+        });
+        var ticketsToRemove = new TicketsToRemove();
+        ticketsToRemove.setEventId(1L);
+        return ticketsToRemove;
     }
 
     @Override

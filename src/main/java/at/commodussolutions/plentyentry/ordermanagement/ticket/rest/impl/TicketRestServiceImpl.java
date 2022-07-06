@@ -5,6 +5,7 @@ package at.commodussolutions.plentyentry.ordermanagement.ticket.rest.impl;
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketsToRemove;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.mapper.TicketMapper;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.rest.TicketRestService;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketService;
@@ -86,8 +87,8 @@ public class TicketRestServiceImpl implements TicketRestService {
     }
 
     @Override
-    public void deleteTicketsFromShoppingCart(Long eventId) {
-        ticketService.excludeTicketsFromShoppingcart(eventId);
+    public TicketsToRemove deleteTicketsFromShoppingCart(TicketsToRemove tickets) {
+      return ticketService.excludeTicketsFromShoppingcart(tickets.getEventId());
     }
 
     @Override

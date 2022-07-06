@@ -114,7 +114,7 @@ public class StripeAcceptPaymentService {
         Product product1 = Product.create(product);
 
         Map<String, Object> params = new HashMap<>();
-        params.put("unit_amount", checkoutSessionDTO.getFullAmount());
+        params.put("unit_amount", checkoutSessionDTO.getFullAmount().multiply(BigDecimal.valueOf(100)));
         params.put("product", product1.getId());
         params.put("currency", "eur");
         Price price = Price.create(params);

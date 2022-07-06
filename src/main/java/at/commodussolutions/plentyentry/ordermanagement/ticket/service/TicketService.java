@@ -1,6 +1,7 @@
 package at.commodussolutions.plentyentry.ordermanagement.ticket.service;
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketsToRemove;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public interface TicketService {
 
     List<Ticket> getTicketForEventAndAddToCartByQuantity(Long eventId, Long quantity);
 
-    void excludeTicketsFromShoppingcart(Long eventId);
+    TicketsToRemove excludeTicketsFromShoppingcart(Long eventId);
 
     List<Ticket> findAllTicketsThatAreNotAvailableAnymore(Long eventId);
 

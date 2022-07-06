@@ -37,7 +37,7 @@ public class ShoppingCartRestServiceImpl implements ShoppingCartRestService {
         var everyEvent = shoppingCart.getTickets().stream().map(Ticket::getEvent).collect(Collectors.toList());
         var eventsDistinct = everyEvent.stream().distinct().collect(Collectors.toList());
         var distinctTickets = new ArrayList<ShoppingCartTicketDTOPerEvent>();
-        if (shoppingCart.getTickets().stream().filter(ticket -> ticket.getTicketStatus().equals(TicketStatus.NOTSELLED)).collect(Collectors.toList())
+        if (shoppingCart.getTickets().stream().filter(ticket -> ticket.getTicketStatus().equals(TicketStatus.NOTSELLED) || ticket.getTicketStatus().equals(TicketStatus.RESERVED)).collect(Collectors.toList())
                 .isEmpty()) {
             return shoppingCartDTO;
         }
@@ -47,7 +47,7 @@ public class ShoppingCartRestServiceImpl implements ShoppingCartRestService {
         eventsDistinct.forEach(event -> {
             var detectedNewEvent =
                     shoppingCart.getTickets().stream().filter(ticket -> ticket.getEvent().getId().equals(event.getId())
-                            && ticket.getTicketStatus().equals(TicketStatus.NOTSELLED)).collect(Collectors.toList());
+                            && ticket.getTicketStatus().equals(TicketStatus.RESERVED)).collect(Collectors.toList());
             var shoppingCartTicketDTOPerEvent = new ShoppingCartTicketDTOPerEvent();
             shoppingCartTicketDTOPerEvent.setTicketDTOS(ticketMapper.mapToListDTO(detectedNewEvent));
             shoppingCartTicketDTOPerEvent.setAmount(getTheRightAmount(event.getPrice(), detectedNewEvent.size()));

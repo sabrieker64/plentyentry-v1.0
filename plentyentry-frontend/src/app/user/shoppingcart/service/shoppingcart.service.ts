@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../../../environments/environment";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {CheckoutSessionDTO, ShoppingCartDTO, StripeCheckoutResultDTO, TicketDTO} from "../../../definitions/objects";
+import {CheckoutSessionDTO, ShoppingCartDTO, StripeCheckoutResultDTO, TicketDTO, TicketsToRemove} from "../../../definitions/objects";
 import {Observable} from "rxjs";
 
 
@@ -27,10 +27,8 @@ export class ShoppingcartService {
   }
 
 
-  updateShoppingCart(ticketId: number): Observable<TicketDTO[]> {
-    var httpParams = new HttpParams();
-    httpParams.append("ticketId", ticketId);
-    return this.http.put<TicketDTO[]>(`${this.baseUrlTicket}` + '/removeFromShoppingCart', httpParams);
+  updateShoppingCart(ticketsToRemove: TicketsToRemove): Observable<TicketsToRemove> {
+    return this.http.post<TicketsToRemove>(`${this.baseUrlTicket}` + '/deleteTicketsFromShoppingCart', ticketsToRemove);
   }
 
 

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
-import {CheckoutSessionDTO, PaymentIntentDTO, ShoppingCartDTO, ShoppingCartTicketDTOPerEvent} from "../../../definitions/objects";
+import {CheckoutSessionDTO, PaymentIntentDTO, ShoppingCartDTO, ShoppingCartTicketDTOPerEvent, TicketsToRemove} from "../../../definitions/objects";
 import {ShoppingcartService} from "../service/shoppingcart.service";
 import {StripeService} from "../../../payment/stripe/stripe.service";
 import {environment} from "../../../../environments/environment";
@@ -19,7 +19,8 @@ export class ShoppingcartListComponent implements OnInit {
   paymenIntent: PaymentIntentDTO = <PaymentIntentDTO>{};
   theRealTicketList: ShoppingCartTicketDTOPerEvent[];
   ticketsRawList: ShoppingCartTicketDTOPerEvent[];
-  checkoutDTO: CheckoutSessionDTO = <CheckoutSessionDTO>{}
+  checkoutDTO: CheckoutSessionDTO = <CheckoutSessionDTO>{};
+  ticketsToRemove: TicketsToRemove = <TicketsToRemove>{};
 
   constructor(private shoppincartService: ShoppingcartService, private router: Router, private stripeService: StripeService) {
   }
@@ -40,6 +41,7 @@ export class ShoppingcartListComponent implements OnInit {
   ticketArrayCalculating: ShoppingCartTicketDTOPerEvent[];
   fullPrice: number = 0;
   shoppingcart: ShoppingCartDTO;
+  checkIfAnythingisInSC: boolean;
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -50,10 +52,16 @@ export class ShoppingcartListComponent implements OnInit {
     //TODO diese verdammmte kacklogik (nichts gegen dich habub es geht nicht anders, aber diese logik will ich bitte
     // im backend im frontend ist mir das zu gefährlich
     return this.shoppincartService.getShoppingcart().subscribe(shoppingcart => {
+      if(shoppingcart.tickets.length == 0){
+        this.checkIfAnythingisInSC = false;
+      }else {
+        this.checkIfAnythingisInSC = true;
+      }
       shoppingcart.tickets.forEach(ticket => {
         this.fullPrice = this.fullPrice + (ticket.quantity * ticket.ticketDTOS[0].event.price);
       });
       this.ticketsRawList = shoppingcart.tickets;
+
       // console.log(this.ticketsRawList);
       this.tickets = new MatTableDataSource(this.ticketsRawList);
       this.ticketArrayCalculating = shoppingcart.tickets;
@@ -67,13 +75,14 @@ export class ShoppingcartListComponent implements OnInit {
 
   }
 
-  deleteItem(id: number) {
-    console.log(id);
-    this.shoppincartService.updateShoppingCart(id).subscribe((res) => {
-      this.loadShoppingCart();
-    }, (err) => {
-      console.log(err)
-    })
+  deleteItem(shoppingcart: ShoppingCartTicketDTOPerEvent) {
+    console.log(shoppingcart);
+    this.ticketsToRemove.eventId = shoppingcart.ticketDTOS[0].event.id;
+    this.shoppincartService.updateShoppingCart(this.ticketsToRemove).toPromise().then(data => {
+      console.log(data.eventId);
+      location.reload();
+    });
+
   }
 
   goToCheckout(fullPrice: number) {

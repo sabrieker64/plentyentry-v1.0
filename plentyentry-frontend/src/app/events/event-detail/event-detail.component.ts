@@ -67,7 +67,7 @@ export class EventDetailComponent implements OnInit {
 
   addToShoppingCart(eventDTO: EventDTO, quantity: number) {
     this.eventService.selectTicketsAndAddToCustomerShoppingCart(eventDTO.id, quantity).toPromise().then(data => {
-      console.log('successfully added to your shopping cart' + data.toString());
+      console.log('successfully added to your shopping cart'+  data);
       this.router.navigateByUrl('/shoppingcart/list');
     });
   }

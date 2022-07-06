@@ -1,12 +1,14 @@
 package at.commodussolutions.plentyentry.ordermanagement.ticket.rest;
 
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketsToRemove;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/backend/ticket")
+@CrossOrigin
 public interface TicketRestService {
 
     @GetMapping("/list")
@@ -49,9 +51,9 @@ public interface TicketRestService {
     List<TicketDTO> selectTicketsAndAddToCustomerShoppingCart(@PathVariable Long eventId, @PathVariable Long quantity);
 
 
-    @PostMapping("/deleteTicketsFromShoppingCart/{eventId}")
+    @PostMapping("/deleteTicketsFromShoppingCart")
     @ResponseBody
-    void deleteTicketsFromShoppingCart(@PathVariable Long eventId);
+    TicketsToRemove deleteTicketsFromShoppingCart(@RequestBody TicketsToRemove tickets);
 
     @PutMapping("/removeFromShoppingCart")
     @ResponseBody
