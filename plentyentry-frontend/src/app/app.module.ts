@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from "./app-routing.module";
@@ -16,9 +16,22 @@ import {EventTileModule} from "./events/event-tile.module";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PaymentCheckoutComponent} from './payment/checkout/payment-checkout.component';
 import {ToolBarModule} from "../library/tool-bar/tool-bar.module";
-import {ServiceWorkerModule} from '@angular/service-worker';
+import {ServiceWorkerModule, SwUpdate} from '@angular/service-worker';
 import {environment} from '../environments/environment';
 import {StripeModule} from "stripe-angular";
+
+export const checkForUpdates = (swUpdate: SwUpdate): (() => Promise<any>) => {
+  return (): Promise<void> =>
+    new Promise((resolve) => {
+      swUpdate.checkForUpdate()
+
+      swUpdate.available.subscribe(() => {
+        window.location.reload();
+      });
+
+      resolve();
+    });
+};
 
 @NgModule({
   declarations: [
@@ -48,7 +61,8 @@ import {StripeModule} from "stripe-angular";
       registrationStrategy: 'registerWhenStable:30000'
     }),
   ],
-  providers: [AuthService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  providers: [AuthService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: APP_INITIALIZER, useFactory: checkForUpdates, deps:[SwUpdate], multi: true}],
   bootstrap: [AppComponent],
 })
 export class AppModule {

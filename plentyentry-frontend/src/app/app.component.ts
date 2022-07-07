@@ -13,12 +13,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.swUpdate.isEnabled) {
+  /*  if (this.swUpdate.isEnabled) {
       this.swUpdate.available.subscribe(() => {
         if (confirm("Neue Version von PlentyEntry ist verfügbar, soll die neue Version geladen werden?")) {
           window.location.reload();
         }
       });
-    }
+    }*/
   }
 }

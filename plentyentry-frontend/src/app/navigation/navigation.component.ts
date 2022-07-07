@@ -13,7 +13,7 @@ export class NavigationComponent implements OnInit {
 
   constructor(private renderer: Renderer2, private router: Router, private navigationService: NavigationService) {
     this.navItems = [
-      {iconName: 'search', isActive: false, route: '/event/overview'},
+      {iconName: 'credit_score', isActive: false, route: '/ticket/bought-tickets'},
       {iconName: 'home', isActive: true, route: '/event/overview'},
       {iconName: 'login', isActive: false, route: '/user/login'}];
   }
