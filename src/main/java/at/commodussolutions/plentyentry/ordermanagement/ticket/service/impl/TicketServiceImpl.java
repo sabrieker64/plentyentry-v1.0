@@ -52,8 +52,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public List<Ticket> getBoughtTickets() {
         return userService.getUserByJWTToken().getShoppingCart().getTickets().stream()
-                .filter(status -> status.getTicketStatus().equals(TicketStatus.SELLED)
-                        || !status.getTicketStatus().equals(TicketStatus.EXPIRED))
+                .filter(status -> status.getTicketStatus().equals(TicketStatus.SELLED))
                 .collect(Collectors.toList());
     }
 

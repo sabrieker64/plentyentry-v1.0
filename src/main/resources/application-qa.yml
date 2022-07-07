@@ -49,7 +49,7 @@ paypal:
 stripe:
   mode: development
   public-key: pk_live_51Kfr2HDAXhrIxCz90htH1X7foAJ2nmoVeppXGQauGIV8eipXLw0LngNsG0Z7hWMZ7pfttIfGqq0ixrrvHFCBJqpm00CMFwKUoT
-  private-key: sk_test_51Kfr2HDAXhrIxCz9mhNotfY56zLN1kLUAMK5dQFAY1Ptgk2rvvkrMu6hIabFKylT1mRcYa8U3osRUjqHz5wWGGOD00dvbwtdrV
+  private-key: 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
 amazonProperties:
   endpointUrl: https://eventimagesbucket.s3-us-east-2.amazonaws.com
   accessKey: AKIAU3CJ5DRKN27DX2N3

@@ -23,7 +23,7 @@
 
     <h1 class="form-headline">Bearbeiten</h1>
 
-    <form #updateForm="ngForm" [formGroup]="updateEventFormGroup" (ngSubmit)="updateForm.form.valid && updateEvent() ">
+    <form #updateForm="ngForm" [formGroup]="updateEventFormGroup" (ngSubmit)="updateEvent()">
 
       <div class="grid cols--2">
         <mat-form-field appearance="outline">
@@ -48,11 +48,10 @@
         </mat-form-field>
 
 
-        <mat-form-field class="form-element full-width" appearance="outline">
+        <mat-form-field class="form-element full-width" appearance="outline" [formGroup]="updateEventFormGroup" >
           <mat-label>Fotos (beim Upload von neuen Fotos werden die alten gelöscht)</mat-label>
 
           <ngx-mat-file-input [multiple]="true"
-                              [(ngModel)]="eventDTO.eventImageUrls"
                               formControlName="files"
                               id="file"
                               class="form-control"
@@ -167,8 +166,7 @@
         </mat-form-field>-->
 
 
-        <button class="cols--full-width" mat-raised-button color="primary" type="submit"
-                [disabled]="!updateForm.form.valid">Update
+        <button class="cols--full-width" mat-raised-button color="primary" type="submit">Update
         </button>
 
 

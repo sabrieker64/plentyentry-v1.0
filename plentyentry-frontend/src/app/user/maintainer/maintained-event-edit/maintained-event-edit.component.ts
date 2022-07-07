@@ -134,6 +134,7 @@ export class MaintainedEventEditComponent implements OnInit {
 
   updateEvent() {
 
+    console.log(this.updateEventFormGroup.value);
     if (this.eventDTO.startDateTime > this.eventDTO.endDateTime) {
 
       this.errorHandling.openInformation("Bitte ändern Sie das Enddatum!");
@@ -164,12 +165,10 @@ export class MaintainedEventEditComponent implements OnInit {
   }
 
   onFileChange(event: any) {
-
-
-    const files = <any>this.eventDTO.eventImageUrls;
-
-    if (files.length === 0)
+    const files = this.updateEventFormGroup.controls['files'].value;
+    if (files.length === 0){
       return;
+    }
 
     this.showEventImages = [];
 
@@ -178,17 +177,15 @@ export class MaintainedEventEditComponent implements OnInit {
       const mimeType = files[i].type;
 
       const reader = new FileReader();
-      reader.readAsDataURL(currentFile);
-      reader.onload = (_event) => {
-        var withoutBase = reader.result as string;
-        withoutBase = withoutBase.split(',')[1];
-        this.showEventImages.push(this.sanitizer.bypassSecurityTrustUrl('data:' + mimeType + ';base64,' + withoutBase.toString()) as string);
-        this.eventImagesBase64List.push('data:' + mimeType + ';base64,' + withoutBase.toString());
+      console.log(currentFile);
+        reader.readAsDataURL(currentFile);
+        reader.onload = (_event) => {
+          let withoutBase = reader.result as string;
+          withoutBase = withoutBase.split(',')[1];
+          this.showEventImages.push(this.sanitizer.bypassSecurityTrustUrl('data:' + mimeType + ';base64,' + withoutBase.toString()) as string);
+          this.eventImagesBase64List.push('data:' + mimeType + ';base64,' + withoutBase.toString());
       }
-
     }
-
-
   }
 
 }
