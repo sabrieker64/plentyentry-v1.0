@@ -56,26 +56,16 @@ export class EventDetailComponent implements OnInit {
     }
   }
 
-  paymentTest(event: EventDTO) {
-    // todo make a dropdown to choose payment type before checkout for example paying with paypal or stripe
-    // cechkout(card, iban, klarna, etc...)
-    // todo nach der logik sollte hier der status auf reserviert gehen vom ticket und von dem jeweiligen user in die
-    // shoppingcart hinzugefügt werden
-    //this.ticketService.this.eventService.addTicketsToShoppingCart(ticket)
-    //this.router.navigateByUrl('/payment/stripe-checkout?eventId=' + event.id);
-  }
-
   addToShoppingCart(eventDTO: EventDTO, quantity: number) {
     if(localStorage.getItem("token") == null || localStorage.getItem("token") == 'No token'){
-      this.router.navigateByUrl('/user/register');
+      this.router.navigateByUrl('/user/login');
       localStorage.setItem('eventId', eventDTO.id.toString());
-      localStorage.setItem('quantitiy', quantity.toString());
+      localStorage.setItem('quantity', quantity.toString());
     }
     this.eventService.selectTicketsAndAddToCustomerShoppingCart(eventDTO.id, quantity).toPromise().then(data => {
       console.log('successfully added to your shopping cart'+  data);
       this.router.navigateByUrl('/shoppingcart/list');
     });
-
   }
 
   private ticketFinalize(data: TicketDTO[]) {
@@ -83,7 +73,4 @@ export class EventDetailComponent implements OnInit {
     return data;
   }
 
-  goToCheckout() {
-
-  }
 }

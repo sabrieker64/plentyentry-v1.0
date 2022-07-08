@@ -49,8 +49,6 @@ export class ShoppingcartListComponent implements OnInit {
   }
 
   loadShoppingCart() {
-    //TODO diese verdammmte kacklogik (nichts gegen dich habub es geht nicht anders, aber diese logik will ich bitte
-    // im backend im frontend ist mir das zu gefährlich
     return this.shoppincartService.getShoppingcart().subscribe(shoppingcart => {
       if(shoppingcart.tickets.length == 0){
         this.checkIfAnythingisInSC = false;

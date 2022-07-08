@@ -5,6 +5,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserAuthReqDTO} from "../../definitions/objects";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ErrorService} from "../../../library/error-handling/error.service";
+import {EventService} from "../../events/service/event.service";
+import {toNumbers} from "@angular/compiler-cli/src/version_helpers";
 
 @Component({
   selector: 'app-login-register',
@@ -16,7 +18,8 @@ export class LoginComponent implements OnInit {
   userAuthReqDTO: UserAuthReqDTO = <UserAuthReqDTO>{};
   loginFormGroup: FormGroup;
 
-  constructor(private router: Router, private loginRegisterService: LoginRegisterService, private fb: FormBuilder, private errorHandling: ErrorService) {
+  constructor(private router: Router, private loginRegisterService: LoginRegisterService,
+              private fb: FormBuilder, private errorHandling: ErrorService, private eventService: EventService) {
   }
 
   ngOnInit(): void {
@@ -29,22 +32,25 @@ export class LoginComponent implements OnInit {
   }
 
   authenticate() {
-
-    console.log("dsa");
-
     this.loginRegisterService.authenticateUser(this.userAuthReqDTO).toPromise().then((userDTO) => {
       localStorage.setItem('token', userDTO.jwtToken);
 
-
-
-      this.router.navigateByUrl('/event/overview').then((res) => {
+      if(localStorage.getItem('eventId') && localStorage.getItem('quantity')){
+        const eventId = parseInt(localStorage.getItem('eventId'));
+        const quantity  = parseInt( localStorage.getItem('quantity'));
+        this.eventService.selectTicketsAndAddToCustomerShoppingCart(eventId, quantity).toPromise().then(data => {
+          console.log(data);
+          localStorage.removeItem('eventId');
+          localStorage.removeItem('quantity');
+        });
+        this.router.navigateByUrl('/shoppingcart/list').then(res =>{
+          location.reload();
+        });
+      }else{
+        this.router.navigateByUrl('/event/overview').then((res) => {
           window.location.reload();
-        }
-      );
-
-
-
-
+        });
+      }
     }).catch((error: HttpErrorResponse) => {
       this.errorHandling.openErrorBox(error.message);
     })
