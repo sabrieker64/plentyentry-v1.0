@@ -28,4 +28,7 @@
       <module name="plentyentry-commodus-solutions" options="-parameters" />
     </option>
   </component>
+  <component name="TypeScriptCompiler">
+    <option name="recompileOnChanges" value="true" />
+  </component>
 </project>

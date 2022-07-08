@@ -20,27 +20,6 @@ import {ServiceWorkerModule, SwUpdate} from '@angular/service-worker';
 import {environment} from '../environments/environment';
 import {StripeModule} from "stripe-angular";
 
-function initializeApp(): Promise<any> {
-  return new Promise(async (resolve, reject) => {
-    try {
-      // Check if Service Worker is supported by the Browser
-      if (this.swUpdate.isEnabled) {
-        const isNewVersion = await this.swUpdate.checkForUpdate();
-        // Check if the new version is available
-        if (isNewVersion) {
-          const isNewVersionActivated = await this.swUpdate.activateUpdate();
-          // Check if the new version is activated and reload the app if it is
-          if (isNewVersionActivated) window.location.reload();
-          resolve(true);
-        }
-        resolve(true);
-      }
-      resolve(true);
-    } catch (error) {
-      window.location.reload();
-    }
-  });
-}
 
 @NgModule({
   declarations: [
@@ -68,8 +47,7 @@ function initializeApp(): Promise<any> {
       registrationStrategy: 'registerImmediately'
     }),
   ],
-  providers: [AuthService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-    {provide: APP_INITIALIZER, useFactory: initializeApp, deps:[SwUpdate], multi: true}],
+  providers: [AuthService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent],
 })
 export class AppModule {

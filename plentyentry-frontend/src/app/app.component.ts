@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {SwUpdate} from "@angular/service-worker";
-import {UpdateServiceService} from "./update-service/service/update-service.service";
 
 @Component({
   selector: 'app-root',
@@ -10,12 +9,21 @@ import {UpdateServiceService} from "./update-service/service/update-service.serv
 export class AppComponent implements OnInit {
   title = 'plentyentry-frontend';
 
-  constructor(private updateService: UpdateServiceService) {
+  constructor(private swUpdate: SwUpdate) {
   }
 
   ngOnInit(): void {
-
-    this.updateService.checkForUpdates()
-
+   if (this.swUpdate.isEnabled) {
+     this.swUpdate.checkForUpdate().then(data => {
+       if(data == true){
+         this.swUpdate.activateUpdate().then(() => {
+           console.log('updating the app');
+         });
+       }
+     });
+    /*  this.swUpdate.versionUpdates.subscribe(() => {
+          window.location.reload();
+      });*/
+    }
   }
 }

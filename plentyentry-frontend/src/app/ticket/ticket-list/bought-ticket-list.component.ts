@@ -6,10 +6,10 @@ import {ErrorService} from "../../../library/error-handling/error.service";
 
 @Component({
   selector: 'app-ticket-list',
-  templateUrl: './ticket-list.component.html',
-  styleUrls: ['./ticket-list.component.scss']
+  templateUrl: './bought-ticket-list.component.html',
+  styleUrls: ['./bought-ticket-list.component.scss']
 })
-export class TicketListComponent implements OnInit {
+export class BoughtTicketListComponent implements OnInit {
 
   loaded: boolean = false;
   allTickets: TicketDTO[];
@@ -19,6 +19,7 @@ export class TicketListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.loadAllEvents();
   }
 
