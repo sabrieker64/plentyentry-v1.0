@@ -2,7 +2,7 @@
   <nav class="main-navigation">
     <ul>
       <li *ngFor="let navItem of navItems">
-        <a class="main-navigation--item" [ngClass]="{'active': navItem.isActive }" routerLink="{{ navItem.route }}"
+        <a class="main-navigation--item" [ngClass]="{'active': navItem.isActive }"
            (click)="onNavItemClick(navItem)">
           <span class="circle circle--outter"></span>
           <span class="circle circle--inner"></span>

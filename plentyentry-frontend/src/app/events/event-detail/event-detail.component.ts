@@ -68,6 +68,8 @@ export class EventDetailComponent implements OnInit {
   addToShoppingCart(eventDTO: EventDTO, quantity: number) {
     if(localStorage.getItem("token") == null || localStorage.getItem("token") == 'No token'){
       this.router.navigateByUrl('/user/register');
+      localStorage.setItem('eventId', eventDTO.id.toString());
+      localStorage.setItem('quantitiy', quantity.toString());
     }
     this.eventService.selectTicketsAndAddToCustomerShoppingCart(eventDTO.id, quantity).toPromise().then(data => {
       console.log('successfully added to your shopping cart'+  data);
