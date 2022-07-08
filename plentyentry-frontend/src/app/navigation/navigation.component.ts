@@ -27,11 +27,10 @@ export class NavigationComponent implements OnInit {
     }
     selectedNavItem.isActive = true;
     console.log(selectedNavItem);
-    if(selectedNavItem.iconName == 'login'){
-      localStorage.clear();
+    if(selectedNavItem.iconName == 'login' && localStorage.getItem('token') != 'No token'){
       localStorage.setItem("token", "No token");
+      window.location.reload();
     }
-
     if (selectedNavItem.iconName == 'manage_accounts') {
       this.navigationService.confirmToken().toPromise().then((data) => {
         console.log(data)

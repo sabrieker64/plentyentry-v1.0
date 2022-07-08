@@ -34,7 +34,8 @@ export class PasswordResetComponent implements OnInit {
     this.loginRegisterService.resetPassword(this.userAuthReqDTO).toPromise().then(
       (user) => {
         if (user.email != '') {
-          this.passwordResetStatus = 'Password erfolgreich zurückgesetzt';
+          this.passwordResetStatus = 'Password erfolgreich zurückgesetzt, Bitte Überprüfen Sie Ihre Email für Ihr neues Passwort!';
+          localStorage.setItem('token', 'No token');
         } else {
           this.passwordResetStatus = 'Es ist ein Fehler unterlaufen';
         }

@@ -10,6 +10,7 @@ import {FlexModule} from "@angular/flex-layout";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LogoutComponent} from './logout/logout.component';
 import {PasswordResetComponent} from './password-reset/password-reset.component';
+import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {PasswordResetComponent} from './password-reset/password-reset.component'
     LoginComponent,
     UserDetailComponent,
     LogoutComponent,
-    PasswordResetComponent
+    PasswordResetComponent,
+    EmailConfirmationComponent
   ],
   exports: [
     LoginComponent,

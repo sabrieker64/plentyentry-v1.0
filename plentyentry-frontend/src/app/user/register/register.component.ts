@@ -6,6 +6,8 @@ import {Router} from "@angular/router";
 import {crossFieldValidator} from "../../../library/custom-validators/crossField.validator";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ErrorService} from "../../../library/error-handling/error.service";
+import {MatDialog} from "@angular/material/dialog";
+import {EmailConfirmationComponent} from "../email-confirmation/email-confirmation.component";
 
 @Component({
   selector: 'app-register',
@@ -16,7 +18,8 @@ export class RegisterComponent implements OnInit {
   registerFormGroup: FormGroup;
   userRegisterDTO: UserRegisterDTO = <UserRegisterDTO>{};
 
-  constructor(private loginRegisterService: LoginRegisterService, private router: Router, private fb: FormBuilder, private errorHandling: ErrorService) {
+  constructor(private loginRegisterService: LoginRegisterService, private router: Router, private fb: FormBuilder, private errorHandling: ErrorService,
+              private dialog: MatDialog) {
 
   }
 
@@ -38,10 +41,15 @@ export class RegisterComponent implements OnInit {
 
   register() {
     this.loginRegisterService.registerNewUser(this.userRegisterDTO).toPromise().then((data) => {
-      this.router.navigateByUrl('/user/login');
+      const dialogRef = this.dialog.open(EmailConfirmationComponent);
+      dialogRef.afterClosed().subscribe(result => {
+        if(result == true){
+          this.router.navigateByUrl('/user/login');
+        }
+      });
     }).catch((error: HttpErrorResponse) => {
-      this.errorHandling.openErrorBox(error.message);
-    })
+      this.errorHandling.openInformation("Diese Email-Adresse existiert bereits, bitte verwenden Sie eine andere Email-Adresse");
+    });
   }
 }
 

@@ -134,30 +134,32 @@ public class UserServiceImpl implements UserService {
     }
 
     private void signUpUser(User user) throws MessagingException {
-        boolean userExists = this.userRepository.findByEmail(user.getEmail()).isPresent();
-        if (userExists) {
-            throw new IllegalStateException("Email wird schon verwendet");
-        }
-        String encodedPassword = passwordEncoder.bCryptPasswordEncoder().encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        if (user.getUserType() == null) {
-            user.setUserType(UserType.CUSTOMER);
-        }
-
-        userRepository.save(user);
-        var shoppingCart = shoppingCartService.createNewShoppingCart();
-        user.setShoppingCart(shoppingCart);
-        userRepository.save(user);
-        var token = createToken(user);
-        //IF you are testing, you dont need the maildev server just open the confirmation link to enable the user !!Please do not change
-        if (Objects.equals(Arrays.stream(this.environment.getActiveProfiles()).collect(Collectors.toList()).get(0), "test")) {
-            log.info("The Profile is on test that means no Email would be send, just call the Confirmation Link to enable the user");
-        } else {
-            String link = this.backendUtils.getHost() + "api/backend/user/confirm?token=" + token.getToken();
-            if (environment.acceptsProfiles(Profiles.of("test", "development"))) {
-                emailSender.send(user.getEmail(), buildEmail(user.getLastName(), link));
+        boolean userExists;
+        var userfound  =  this.userRepository.findByEmail(user.getEmail()).orElseGet(User::new);
+        if(!userfound.getEnabled()){
+            String encodedPassword = passwordEncoder.bCryptPasswordEncoder().encode(user.getPassword());
+            user.setPassword(encodedPassword);
+            if (user.getUserType() == null) {
+                user.setUserType(UserType.CUSTOMER);
             }
-            emailSender.sendEmailFromSES(user.getEmail(), buildEmail(user.getLastName(), link), "Confirm your Email");
+
+            userRepository.save(user);
+            var shoppingCart = shoppingCartService.createNewShoppingCart();
+            user.setShoppingCart(shoppingCart);
+            userRepository.save(user);
+            var token = createToken(user);
+            //IF you are testing, you dont need the maildev server just open the confirmation link to enable the user !!Please do not change
+            if (Objects.equals(Arrays.stream(this.environment.getActiveProfiles()).collect(Collectors.toList()).get(0), "test")) {
+                log.info("The Profile is on test that means no Email would be send, just call the Confirmation Link to enable the user");
+            } else {
+                String link = this.backendUtils.getHost() + "api/backend/user/confirm?token=" + token.getToken();
+                if (environment.acceptsProfiles(Profiles.of("test", "development"))) {
+                    emailSender.send(user.getEmail(), buildEmail(user.getLastName(), link));
+                }
+                emailSender.sendEmailFromSES(user.getEmail(), buildEmail(user.getLastName(), link), "Confirm your Email");
+            }
+        }else{
+            throw new IllegalStateException("Email wird schon verwendet");
         }
     }
 
@@ -261,10 +263,10 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public User enableUser(String email) {
+    public void enableUser(String email) {
         var enabledUser = userRepository.getByEmail(email);
         enabledUser.setEnabled(true);
-        return userRepository.save(enabledUser);
+        userRepository.save(enabledUser);
     }
 
 
