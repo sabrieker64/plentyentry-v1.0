@@ -20,18 +20,27 @@ import {ServiceWorkerModule, SwUpdate} from '@angular/service-worker';
 import {environment} from '../environments/environment';
 import {StripeModule} from "stripe-angular";
 
-export const checkForUpdates = (swUpdate: SwUpdate): (() => Promise<any>) => {
-  return (): Promise<void> =>
-    new Promise((resolve) => {
-      swUpdate.checkForUpdate()
-
-      swUpdate.available.subscribe(() => {
-        window.location.reload();
-      });
-
-      resolve();
-    });
-};
+function initializeApp(): Promise<any> {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // Check if Service Worker is supported by the Browser
+      if (this.swUpdate.isEnabled) {
+        const isNewVersion = await this.swUpdate.checkForUpdate();
+        // Check if the new version is available
+        if (isNewVersion) {
+          const isNewVersionActivated = await this.swUpdate.activateUpdate();
+          // Check if the new version is activated and reload the app if it is
+          if (isNewVersionActivated) window.location.reload();
+          resolve(true);
+        }
+        resolve(true);
+      }
+      resolve(true);
+    } catch (error) {
+      window.location.reload();
+    }
+  });
+}
 
 @NgModule({
   declarations: [
@@ -56,13 +65,11 @@ export const checkForUpdates = (swUpdate: SwUpdate): (() => Promise<any>) => {
     StripeModule.forRoot(environment.stripe),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerImmediately'
     }),
   ],
   providers: [AuthService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-    {provide: APP_INITIALIZER, useFactory: checkForUpdates, deps:[SwUpdate], multi: true}],
+    {provide: APP_INITIALIZER, useFactory: initializeApp, deps:[SwUpdate], multi: true}],
   bootstrap: [AppComponent],
 })
 export class AppModule {
