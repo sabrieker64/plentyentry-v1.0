@@ -47,4 +47,6 @@ public class UserDTO {
     private String companyName;
     private String phoneNumber;
     private String uid;
+    private Boolean enabled;
+
 }

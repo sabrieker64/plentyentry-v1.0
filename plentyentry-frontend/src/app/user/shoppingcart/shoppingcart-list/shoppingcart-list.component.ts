@@ -1,10 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
-import {CheckoutSessionDTO, PaymentIntentDTO, ShoppingCartDTO, ShoppingCartTicketDTOPerEvent, TicketsToRemove} from "../../../definitions/objects";
+import {
+  CheckoutSessionDTO,
+  EmailSendWithAttachmentDTO,
+  PaymentIntentDTO,
+  ShoppingCartDTO,
+  ShoppingCartTicketDTOPerEvent, StripeCheckoutResultDTO,
+  TicketsToRemove
+} from "../../../definitions/objects";
 import {ShoppingcartService} from "../service/shoppingcart.service";
 import {StripeService} from "../../../payment/stripe/stripe.service";
 import {environment} from "../../../../environments/environment";
+import {TicketService} from "../../../ticket/service/ticket.service";
 
 
 @Component({
@@ -21,8 +29,10 @@ export class ShoppingcartListComponent implements OnInit {
   ticketsRawList: ShoppingCartTicketDTOPerEvent[];
   checkoutDTO: CheckoutSessionDTO = <CheckoutSessionDTO>{};
   ticketsToRemove: TicketsToRemove = <TicketsToRemove>{};
+  sendDetails: EmailSendWithAttachmentDTO = <EmailSendWithAttachmentDTO>{};
 
-  constructor(private shoppincartService: ShoppingcartService, private router: Router, private stripeService: StripeService) {
+  constructor(private shoppincartService: ShoppingcartService,
+              private router: Router, private stripeService: StripeService, private ticketService: TicketService) {
   }
 
   ngOnInit(): void {
@@ -42,6 +52,7 @@ export class ShoppingcartListComponent implements OnInit {
   fullPrice: number = 0;
   shoppingcart: ShoppingCartDTO;
   checkIfAnythingisInSC: boolean;
+  resultOfStripe: StripeCheckoutResultDTO = <StripeCheckoutResultDTO>{};
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -90,8 +101,9 @@ export class ShoppingcartListComponent implements OnInit {
     this.checkoutDTO.cancelUrl = environment.frontendBaseUrl + '/payment/cancel';
     this.checkoutDTO.successUrl = environment.frontendBaseUrl + '/payment/success';
     this.shoppincartService.makePaymentWithCheckoutSession(this.checkoutDTO)
-      .toPromise().then(result => {
-      window.location.href = result.urlToStripe;
+      .subscribe(result => {
+        this.resultOfStripe = result;
+        window.location.href = result.urlToStripe;
     });
   }
 }

@@ -25,6 +25,11 @@ public interface UserRestService {
     @ResponseBody
     UserDTO getUserById(@PathVariable Long id);
 
+
+    @GetMapping("/by-email/{email}")
+    @ResponseBody
+    UserDTO getUserByEmail(@PathVariable String email);
+
     @PostMapping("/register")
     @ResponseBody
     UserDTO createUser(@RequestBody UserRegisterDTO userRegisterDTO) throws MessagingException;

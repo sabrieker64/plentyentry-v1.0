@@ -41,6 +41,11 @@ public class UserRestServiceImpl implements UserRestService {
     }
 
     @Override
+    public UserDTO getUserByEmail(String email) {
+        return userMapper.mapToDTO(userService.getUserByEmail(email));
+    }
+
+    @Override
     public UserDTO createUser(UserRegisterDTO userRegisterDTO) throws MessagingException {
         User user = new User();
         userMapper.mapToEntityForRegister(userRegisterDTO, user);

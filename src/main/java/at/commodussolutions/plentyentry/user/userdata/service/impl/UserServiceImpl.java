@@ -95,6 +95,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        return userRepository.getByEmail(email);
+    }
+
+    @Override
     public User registerNewUser(User user) throws MessagingException {
         boolean isValidEmail = emailValidator.test(user.getEmail());
         if (!isValidEmail) {

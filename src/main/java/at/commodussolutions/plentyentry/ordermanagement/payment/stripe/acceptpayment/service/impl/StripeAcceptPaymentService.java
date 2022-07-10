@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -114,7 +115,7 @@ public class StripeAcceptPaymentService {
         Product product1 = Product.create(product);
 
         Map<String, Object> params = new HashMap<>();
-        params.put("unit_amount", checkoutSessionDTO.getFullAmount().multiply(BigDecimal.valueOf(100)));
+        params.put("unit_amount", checkoutSessionDTO.getFullAmount().multiply(BigDecimal.valueOf(100).setScale(-2, RoundingMode.FLOOR)));
         params.put("product", product1.getId());
         params.put("currency", "eur");
         Price price = Price.create(params);

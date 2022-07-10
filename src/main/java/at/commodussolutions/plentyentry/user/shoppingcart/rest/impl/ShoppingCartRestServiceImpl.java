@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -37,16 +38,16 @@ public class ShoppingCartRestServiceImpl implements ShoppingCartRestService {
         var everyEvent = shoppingCart.getTickets().stream().map(Ticket::getEvent).collect(Collectors.toList());
         var eventsDistinct = everyEvent.stream().distinct().collect(Collectors.toList());
         var distinctTickets = new ArrayList<ShoppingCartTicketDTOPerEvent>();
-        if (shoppingCart.getTickets().stream().filter(ticket -> ticket.getTicketStatus().equals(TicketStatus.NOTSELLED) || ticket.getTicketStatus().equals(TicketStatus.RESERVED)).collect(Collectors.toList())
-                .isEmpty()) {
+        if (shoppingCart.getTickets().stream().noneMatch(ticket -> ticket.getTicketStatus()
+                .equals(TicketStatus.RESERVED))) {
             return shoppingCartDTO;
         }
         if (eventsDistinct.isEmpty()) {
             return shoppingCartDTO;
         }
         eventsDistinct.forEach(event -> {
-            var detectedNewEvent =
-                    shoppingCart.getTickets().stream().filter(ticket -> ticket.getEvent().getId().equals(event.getId())
+            var detectedNewEvent = Optional.ofNullable(shoppingCart.getTickets()).orElseGet(ArrayList::new)
+            .stream().filter(ticket -> ticket.getEvent().getId().equals(event.getId())
                             && ticket.getTicketStatus().equals(TicketStatus.RESERVED)).collect(Collectors.toList());
             var shoppingCartTicketDTOPerEvent = new ShoppingCartTicketDTOPerEvent();
             shoppingCartTicketDTOPerEvent.setTicketDTOS(ticketMapper.mapToListDTO(detectedNewEvent));

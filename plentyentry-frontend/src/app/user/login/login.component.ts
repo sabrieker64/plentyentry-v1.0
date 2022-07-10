@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {LoginRegisterService} from "../service/login-register.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserAuthReqDTO} from "../../definitions/objects";
+import {UserAuthReqDTO, UserDTO} from "../../definitions/objects";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ErrorService} from "../../../library/error-handling/error.service";
 import {EventService} from "../../events/service/event.service";
@@ -17,6 +17,7 @@ import {toNumbers} from "@angular/compiler-cli/src/version_helpers";
 export class LoginComponent implements OnInit {
   userAuthReqDTO: UserAuthReqDTO = <UserAuthReqDTO>{};
   loginFormGroup: FormGroup;
+  userDTO : UserDTO = <UserDTO> {};
 
   constructor(private router: Router, private loginRegisterService: LoginRegisterService,
               private fb: FormBuilder, private errorHandling: ErrorService, private eventService: EventService) {
@@ -34,7 +35,6 @@ export class LoginComponent implements OnInit {
   authenticate() {
     this.loginRegisterService.authenticateUser(this.userAuthReqDTO).toPromise().then((userDTO) => {
       localStorage.setItem('token', userDTO.jwtToken);
-
       if(localStorage.getItem('eventId') && localStorage.getItem('quantity')){
         const eventId = parseInt(localStorage.getItem('eventId'));
         const quantity  = parseInt( localStorage.getItem('quantity'));
@@ -52,9 +52,14 @@ export class LoginComponent implements OnInit {
         });
       }
     }).catch((error: HttpErrorResponse) => {
-      this.errorHandling.openErrorBox(error.message);
+      this.errorHandling.openInformation('Passwort oder Email ist falsch bitte überprüfen Sie ihre Eingabe');
+      this.loginRegisterService.getUserByEmail(this.userAuthReqDTO.email).toPromise().then(user => {
+        if(!user.enabled){
+          this.errorHandling.openInformation('Sie haben noch ihre Email Adresse nicht bestätigt, bitte bestätigen Sie es bevor Sie sich anmelden');
+        }
+      }).catch((error: HttpErrorResponse) => {
+        this.errorHandling.openInformation('Passwort oder Email ist falsch bitte überprüfen Sie ihre Eingabe');
+      });
     })
   }
-
-
 }

@@ -36,7 +36,7 @@ export class NavigationComponent implements OnInit {
       window.location.reload();
     }
     if(selectedNavItem.iconName === 'credit_score'){
-      if(localStorage.getItem('token') === 'No token'){
+      if(localStorage.getItem('token') === 'No token' || localStorage.getItem('token') === null){
         this.errorHandling.openInformation('Sie müssen Sie anmelden um diese Funktion zu verwenden');
         this.router.navigateByUrl('/user/login');
       }else {

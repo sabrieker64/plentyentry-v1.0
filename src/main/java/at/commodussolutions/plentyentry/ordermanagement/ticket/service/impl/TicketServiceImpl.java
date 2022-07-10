@@ -89,7 +89,7 @@ public class TicketServiceImpl implements TicketService {
         var ticketList = new ArrayList<Ticket>();
         var ticketsWithTheRightStatus = ticketRepository.getAllByEventId(eventId).stream()
                 .filter(ticket -> ticket.getTicketStatus().equals(TicketStatus.NOTSELLED)).collect(Collectors.toList());
-        for (var ticketIndex = 1; ticketIndex <= quantity; ticketIndex++) {
+        for (var ticketIndex = 0; ticketIndex < quantity; ticketIndex++) {
             ticketList.add(ticketsWithTheRightStatus.get(ticketIndex));
         }
         return ticketList;
@@ -124,8 +124,8 @@ public class TicketServiceImpl implements TicketService {
         var user = userService.getUserByJWTToken();
        var deleteList =  user.getShoppingCart().getTickets().stream()
                 .filter(ticket -> ticket.getTicketStatus().equals(TicketStatus.RESERVED) && ticket.getEvent().getId().equals(eventId)).collect(Collectors.toList());
-        user.getShoppingCart().getTickets().removeAll(deleteList);
         deleteList.forEach(ticket -> {
+            ticket.setShoppingCart(null);
             ticket.setTicketStatus(TicketStatus.NOTSELLED);
         });
         var ticketsToRemove = new TicketsToRemove();

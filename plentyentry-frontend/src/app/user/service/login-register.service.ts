@@ -23,6 +23,9 @@ export class LoginRegisterService {
     return this.http.get<UserDTO>(`${this.baseUrl}/${id}`);
   }
 
+  public getUserByEmail(email: string): Observable<UserDTO> {
+    return this.http.get<UserDTO>(`${this.baseUrl}/by-email/${email}`);
+  }
   //Muki das ist dein Register Rest Api
   public registerNewUser(userRegisterDTO: UserRegisterDTO): Observable<UserDTO> {
     return this.http.post<UserDTO>(`${this.baseUrl}` + '/register', userRegisterDTO);

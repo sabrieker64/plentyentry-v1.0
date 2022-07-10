@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-07-08 14:52:19.
+// Generated using typescript-generator version 2.32.889 on 2022-07-10 20:19:13.
 
 export interface UserDTO {
     id: number;
@@ -24,6 +24,7 @@ export interface UserDTO {
     companyName: string;
     phoneNumber: string;
     uid: string;
+    enabled: boolean;
 }
 
 export interface EventDTO {
@@ -98,6 +99,19 @@ export interface TicketsToRemove {
     eventId: number;
 }
 
+export interface EmailSendDTO {
+    emailTo: string;
+    email: string;
+    subject: string;
+}
+
+export interface EmailSendWithAttachmentDTO {
+    emailTo: string;
+    email: string;
+    subject: string;
+    files: any[];
+}
+
 export interface CoronaStatusDTO {
     id: number;
     pcrTest: boolean;
@@ -143,6 +157,7 @@ export interface TicketDTO {
     ticketStatus: TicketStatus;
     qrCode: string;
     event: EventDTO;
+    shoppingCart: ShoppingCartDTO;
 }
 
 export type UserType = "GUEST" | "CUSTOMER" | "ADMIN" | "MAINTAINER" | "SUPERADMIN";

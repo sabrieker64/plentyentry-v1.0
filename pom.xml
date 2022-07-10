@@ -260,6 +260,8 @@
                         <class>at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.CheckoutSessionDTO</class>
                         <class>at.commodussolutions.plentyentry.ordermanagement.payment.stripe.acceptpayment.dto.StripeCheckoutResultDTO</class>
                         <class>at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketsToRemove</class>
+                        <class>at.commodussolutions.plentyentry.user.confirmation.email.dto.EmailSendDTO</class>
+                        <class>at.commodussolutions.plentyentry.user.confirmation.email.dto.EmailSendWithAttachmentDTO</class>
                     </classes>
                     <outputKind>module</outputKind>
                     <outputFile>plentyentry-frontend/src/app/definitions/objects.ts</outputFile>
