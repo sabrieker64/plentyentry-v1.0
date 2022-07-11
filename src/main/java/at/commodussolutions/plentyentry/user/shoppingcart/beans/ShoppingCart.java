@@ -27,9 +27,7 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "TICKETS")
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "SHOPPING_CART_ID")
+    @OneToMany(mappedBy = "shoppingCart")
     private List<Ticket> tickets = new ArrayList<>();
 
 }

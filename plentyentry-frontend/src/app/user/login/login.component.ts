@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   userAuthReqDTO: UserAuthReqDTO = <UserAuthReqDTO>{};
   loginFormGroup: FormGroup;
   userDTO : UserDTO = <UserDTO> {};
+  fieldTextType: any;
 
   constructor(private router: Router, private loginRegisterService: LoginRegisterService,
               private fb: FormBuilder, private errorHandling: ErrorService, private eventService: EventService) {
@@ -61,5 +62,9 @@ export class LoginComponent implements OnInit {
         this.errorHandling.openInformation('Passwort oder Email ist falsch bitte überprüfen Sie ihre Eingabe');
       });
     })
+  }
+
+  changePasswordType() {
+    this.fieldTextType = !this.fieldTextType;
   }
 }
