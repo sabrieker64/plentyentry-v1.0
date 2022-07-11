@@ -76,7 +76,11 @@ public class TicketServiceImpl implements TicketService {
         User user = userService.getUserByJWTToken();
         boolean addedAllTicketsToShoppingCart = user.getShoppingCart().getTickets().addAll(ticketSet);
         if (addedAllTicketsToShoppingCart) {
-            ticketSet.forEach(ticket -> ticket.setTicketStatus(TicketStatus.RESERVED));
+            ticketSet.forEach(ticket -> {
+                ticket.setTicketStatus(TicketStatus.RESERVED);
+                ticket.setShoppingCart(user.getShoppingCart());
+            });
+
             log.info("Added to shoppingcart");
             // userRepository.save(user);
         } else {

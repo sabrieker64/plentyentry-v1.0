@@ -38,10 +38,9 @@ public class ShoppingCartRestServiceImpl implements ShoppingCartRestService {
         var everyEvent = shoppingCart.getTickets().stream().map(Ticket::getEvent).collect(Collectors.toList());
         var eventsDistinct = everyEvent.stream().distinct().collect(Collectors.toList());
         var distinctTickets = new ArrayList<ShoppingCartTicketDTOPerEvent>();
-        if (shoppingCart.getTickets().stream().noneMatch(ticket -> ticket.getTicketStatus()
-                .equals(TicketStatus.RESERVED))) {
+       /* if (shoppingCart.getTickets().stream().noneMatch(ticket -> ticket.getTicketStatus().equals(TicketStatus.RESERVED))) {
             return shoppingCartDTO;
-        }
+        }*/
         if (eventsDistinct.isEmpty()) {
             return shoppingCartDTO;
         }
