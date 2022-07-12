@@ -29,5 +29,4 @@ export class UserDetailService {
     return this.http.get<UserDTO>(`${this.baseUrl}`);
   }
 
-//TODO: Mukiiii services erstellen
 }

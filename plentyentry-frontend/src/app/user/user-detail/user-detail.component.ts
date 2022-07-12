@@ -6,6 +6,9 @@ import {LoginRegisterService} from "../service/login-register.service";
 import {ActivatedRoute} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ErrorService} from "../../../library/error-handling/error.service";
+import {registerLocaleData} from "@angular/common";
+import localeDe from "@angular/common/locales/de";
+import localeDeExtra from "@angular/common/locales/extra/de";
 
 
 @Component({
@@ -24,7 +27,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<any> {
-
+    registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     this.registerFormGroup = this.fb.group({
       "gender": new FormControl('', [Validators.required]),
       "firstname": new FormControl('', [Validators.required, Validators.minLength(2)]),

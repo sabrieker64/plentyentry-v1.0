@@ -41,7 +41,7 @@ export class PasswordResetComponent implements OnInit {
         }
       },
       (err) => {
-
+        this.errorHandling.openErrorBox(err);
       }
     )
   }
