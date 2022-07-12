@@ -27,6 +27,7 @@
     "@angular/service-worker": "~13.1.1",
     "@mat-datetimepicker/core": "^9.0.56",
     "@material/fab": "^13.0.0",
+    "@schematics/angular": "^14.0.5",
     "@splidejs/splide": "^2.4.14",
     "@stripe/stripe-js": "1.32.0",
     "@types/stripe-v3": "^3.1.26",
