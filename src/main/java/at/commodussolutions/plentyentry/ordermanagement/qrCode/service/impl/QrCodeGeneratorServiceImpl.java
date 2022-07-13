@@ -4,7 +4,6 @@ import at.commodussolutions.plentyentry.backendConfig.utils.PlentyEntryBackendUt
 import at.commodussolutions.plentyentry.ordermanagement.qrCode.QRCodeGenerator;
 import at.commodussolutions.plentyentry.ordermanagement.qrCode.service.QrCodeGeneratorService;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
-import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.enums.TicketStatus;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.repository.TicketRepository;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketService;
@@ -12,23 +11,24 @@ import at.commodussolutions.plentyentry.user.confirmation.email.EmailSender;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import at.commodussolutions.plentyentry.user.userdata.service.UserService;
 import com.google.zxing.WriterException;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 import org.springframework.stereotype.Service;
-
 import javax.mail.MessagingException;
-import javax.transaction.Transactional;
 import javax.ws.rs.BadRequestException;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Slf4j
-@Transactional
 public class QrCodeGeneratorServiceImpl implements QrCodeGeneratorService {
 
     @Autowired
@@ -98,29 +98,27 @@ public class QrCodeGeneratorServiceImpl implements QrCodeGeneratorService {
     }
 
     @Override
-    public String sendQRCodeToUser(List<TicketDTO> ticketDTOList) {
+    @SneakyThrows
+    public String sendQRCodeToUser(List<Ticket> tickets) {
 
         User user = userService.getUserByJWTToken();
 
-        for (TicketDTO ticketDTO : ticketDTOList) {
+        for (Ticket ticket : tickets) {
+            File qrCode =File.createTempFile(ticket.getEvent().getName(), ticket.getId().toString());
+            FileOutputStream fileOutputStream = new FileOutputStream(qrCode);
+            fileOutputStream.write(this.getQRCode(ticket.getId()));
 
-            this.getQRCode(ticketDTO.getId());
-
-            String emailText = "Dein QR-Code für das Event " + ticketDTO.getEvent().getName() + "!";
-
-
+            String emailText = "Dein QR-Code für das Event " + ticket.getEvent().getName() + "!";
             if (environment.acceptsProfiles(Profiles.of("test", "development"))) {
-                emailSender.send(user.getEmail(), buildEmail(user.getLastName(), emailText));
+               emailSender.send(user.getEmail(), buildEmail(user.getLastName(), emailText));
+            }else {
+                try {
+                    emailSender.sendEmailFromSES(user.getEmail(), emailText, "QR-Code " + ticket.getEvent().getName());
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
             }
-            try {
-                emailSender.sendEmailFromSES(user.getEmail(), emailText, "QR-Code " + ticketDTO.getEvent().getName());
-            } catch (MessagingException e) {
-                e.printStackTrace();
-            }
-
-
         }
-
         return null;
     }
 

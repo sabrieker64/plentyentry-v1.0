@@ -16,7 +16,7 @@ public interface TicketMapper {
 
     List<TicketDTO> mapToListDTO(List<Ticket> entity);
 
-    List<Ticket> mapToListEntity(List<TicketDTO> dtoList, @MappingTarget List<Ticket> entity);
+    void mapToListEntity(List<TicketDTO> dtoList, @MappingTarget List<Ticket> entity);
 
-    Ticket mapToEntity(TicketDTO dto, @MappingTarget Ticket entity);
+    void  mapToEntity(TicketDTO dto, @MappingTarget Ticket entity);
 }

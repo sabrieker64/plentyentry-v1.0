@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit {
   checkoutDTO: CheckoutSessionDTO = <CheckoutSessionDTO>{};
   resultOfStripe: StripeCheckoutResultDTO = <StripeCheckoutResultDTO>{};
   fullPrice: number;
+  eventId: number;
+  quantity: number;
 
   constructor(private router: Router, private loginRegisterService: LoginRegisterService,
               private fb: FormBuilder, private errorHandling: ErrorService, private eventService: EventService,
@@ -32,6 +34,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.eventId  = parseInt(localStorage.getItem('eventId'));
+    this.quantity = parseInt( localStorage.getItem('quantity'));
     this.loadEventWithEventId(parseInt(localStorage.getItem('eventId')), parseInt(localStorage.getItem('quantity')));
     this.loginFormGroup = this.fb.group({
       "email": new FormControl('', [Validators.required, Validators.pattern(this.loginRegisterService.regex.email)]),
@@ -54,32 +58,10 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('token', userDTO.jwtToken);
       if(localStorage.getItem('eventId') && localStorage.getItem('quantity')){
         if(localStorage.getItem('directBuy') === 'true'){
-          this.paymenIntent.amount = this.fullPrice;
-          this.paymenIntent.currency = "EUR";
-          this.checkoutDTO.fullAmount = this.fullPrice;
-          this.checkoutDTO.cancelUrl = environment.frontendBaseUrl + '/payment/cancel';
-          this.checkoutDTO.successUrl = environment.frontendBaseUrl + '/payment/success';
-          this.shoppincartService.makePaymentWithCheckoutSession(this.checkoutDTO)
-            .subscribe(result => {
-              this.resultOfStripe = result;
-              window.location.href = result.urlToStripe;
-            });
-          localStorage.removeItem('directBuy');
-          localStorage.removeItem('quantity');
-          localStorage.removeItem('eventId');
+          this.directPayment();
         }else{
-          const eventId = parseInt(localStorage.getItem('eventId'));
-          const quantity  = parseInt( localStorage.getItem('quantity'));
-          this.eventService.selectTicketsAndAddToCustomerShoppingCart(eventId, quantity).toPromise().then(data => {
-            console.log(data);
-            localStorage.removeItem('eventId');
-            localStorage.removeItem('quantity');
-          });
-          this.router.navigateByUrl('/shoppingcart/list').then(res =>{
-            location.reload();
-          });
+          this.addTicketToShoppingCartAsGuest();
         }
-
       }else{
         this.router.navigateByUrl('/event/overview').then((res) => {
           window.location.reload();
@@ -99,5 +81,40 @@ export class LoginComponent implements OnInit {
 
   changePasswordType() {
     this.fieldTextType = !this.fieldTextType;
+  }
+
+  justAddTheTicketsToShoppingCartForPayment() {
+    this.eventService.selectTicketsAndAddToCustomerShoppingCart(this.eventId, this.quantity).toPromise().then(data => {
+      console.log(data);
+    });
+  }
+
+  directPayment() {
+    this.justAddTheTicketsToShoppingCartForPayment();
+    this.paymenIntent.amount = this.fullPrice;
+    this.paymenIntent.currency = "EUR";
+    this.checkoutDTO.fullAmount = this.fullPrice;
+    this.checkoutDTO.cancelUrl = environment.frontendBaseUrl + '/payment/cancel';
+    this.checkoutDTO.successUrl = environment.frontendBaseUrl + '/payment/success';
+    this.shoppincartService.makePaymentWithCheckoutSession(this.checkoutDTO)
+      .subscribe(result => {
+        this.resultOfStripe = result;
+        window.location.href = result.urlToStripe;
+      });
+    localStorage.removeItem('directBuy');
+    localStorage.removeItem('quantity');
+    localStorage.removeItem('eventId');
+  }
+
+  addTicketToShoppingCartAsGuest() {
+
+    this.eventService.selectTicketsAndAddToCustomerShoppingCart(this.eventId, this.quantity).toPromise().then(data => {
+      console.log(data);
+      localStorage.removeItem('eventId');
+      localStorage.removeItem('quantity');
+    });
+    this.router.navigateByUrl('/shoppingcart/list').then(res =>{
+      location.reload();
+    });
   }
 }

@@ -11,6 +11,7 @@ import static at.commodussolutions.plentyentry.user.userdata.enums.UserType.*;
 
 @RestController
 @RequestMapping("/api/backend/qrcode")
+@CrossOrigin
 public interface QrCodeGeneratorRestService {
 
     @GetMapping("/{ticketID}")

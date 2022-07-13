@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ShoppingcartService} from "../../../user/shoppingcart/service/shoppingcart.service";
-import {ShoppingCartDTO, TicketDTO} from "../../../definitions/objects";
+import {ShoppingCartDTO, ShoppingCartTicketDTOPerEvent, TicketDTO} from "../../../definitions/objects";
 import {TicketService} from "../../../ticket/service/ticket.service";
 
 @Component({
@@ -17,7 +17,12 @@ export class SuccessComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadShoppingCart();
-   /* this.sendEmail();*/
+    /* this.sendEmail();*/
+  }
+
+  sendEmail(eachTicketEvent: ShoppingCartTicketDTOPerEvent) {
+    this.ticketService.sendUserTicketQRCode(eachTicketEvent.ticketDTOS).toPromise().then(data => {
+    });
   }
 
   private loadShoppingCart() {
@@ -25,34 +30,12 @@ export class SuccessComponent implements OnInit {
       this.currentShoppingCart = data;
       this.currentShoppingCart.tickets.forEach(tickets => {
         this.tickets = tickets.ticketDTOS;
-      })
-    this.currentShoppingCart.tickets.forEach(eachTicketEvent => {
-        this.ticketService.updateBoughtTicket(eachTicketEvent.ticketDTOS).toPromise().then(data => {
-          console.log("Tickets Erfolgreich gekauft");
-
-          this.ticketService.sendUserTicketQRCode(eachTicketEvent.ticketDTOS).toPromise().then(data => {
-
-          });
-
-
-        });
+      });
+      this.currentShoppingCart.tickets.forEach(eachTicketEvent => {
+        this.ticketService.updateBoughtTicket(eachTicketEvent.ticketDTOS
+          .filter(ticket => ticket.ticketStatus === 'RESERVED')).toPromise().then(() => {});
+        this.sendEmail(eachTicketEvent);
       });
     });
   }
-
-/*   sendEmail() {
-      this.tickets.forEach(ticket => {
-          this.ticketService.getQRCode(ticket.id).
-          subscribe((base64: ArrayBuffer) => {
-            var blob  =  new Blob([base64]);
-            var reader = new FileReader();
-            reader.readAsArrayBuffer(blob);
-            console.log(reader.readAsArrayBuffer(blob));
-            var file = new File([blob], ticket.event.name );
-            console.log(file);
-          });
-        });
-      // this.sendDetails.files.push()
-      // this.shoppincartService.sendEmailServiceWithAttachment()
-    }*/
-  }
+}

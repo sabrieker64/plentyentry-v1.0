@@ -144,8 +144,10 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void updateBoughtTickets(List<Ticket> tickets) {
+        var currentUser = this.userService.getUserByJWTToken();
         tickets.forEach(ticket -> {
             ticket.setTicketStatus(TicketStatus.SELLED);
+            ticket.setShoppingCart(currentUser.getShoppingCart());
             ticketRepository.save(ticket);
         });
     }

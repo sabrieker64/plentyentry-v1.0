@@ -2,12 +2,15 @@ package at.commodussolutions.plentyentry.ordermanagement.qrCode.rest.impl;
 
 import at.commodussolutions.plentyentry.ordermanagement.qrCode.rest.QrCodeGeneratorRestService;
 import at.commodussolutions.plentyentry.ordermanagement.qrCode.service.QrCodeGeneratorService;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.beans.Ticket;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.dto.TicketDTO;
+import at.commodussolutions.plentyentry.ordermanagement.ticket.mapper.TicketMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
+
 
 @RestController
 public class QrCodeGeneratorRestServiceImpl implements QrCodeGeneratorRestService {
@@ -15,6 +18,8 @@ public class QrCodeGeneratorRestServiceImpl implements QrCodeGeneratorRestServic
 
     @Autowired
     QrCodeGeneratorService qrCodeGeneratorService;
+    @Autowired
+    private TicketMapper ticketMapper;
 
     @Override
     public byte[] getQRCode(Long ticketID, HttpServletResponse response) {
@@ -23,9 +28,11 @@ public class QrCodeGeneratorRestServiceImpl implements QrCodeGeneratorRestServic
         return qrCodeGeneratorService.getQRCode(ticketID);
     }
 
-    @Autowired
+    @Override
     public String sendQRCodeToUser(List<TicketDTO> ticketDTOList) {
-        return qrCodeGeneratorService.sendQRCodeToUser(ticketDTOList);
+        var listOfEntity = new ArrayList<Ticket>();
+        ticketMapper.mapToListEntity(ticketDTOList, listOfEntity);
+        return  qrCodeGeneratorService.sendQRCodeToUser(listOfEntity);
     }
 
 

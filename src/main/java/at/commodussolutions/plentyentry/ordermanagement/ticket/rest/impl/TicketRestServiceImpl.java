@@ -73,7 +73,8 @@ public class TicketRestServiceImpl implements TicketRestService {
     @Override
     public void putTicketsToShoppingCart(List<TicketDTO> ticketDTOSet) {
         var ticketList = new ArrayList<Ticket>();
-        ticketService.putTicketsToShoppingCart(ticketMapper.mapToListEntity(ticketDTOSet, ticketList));
+        ticketMapper.mapToListEntity(ticketDTOSet, ticketList);
+        ticketService.putTicketsToShoppingCart(ticketList);
     }
 
     @Override
