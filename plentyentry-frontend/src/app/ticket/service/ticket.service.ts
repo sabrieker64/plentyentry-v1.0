@@ -27,6 +27,10 @@ export class TicketService {
     return this.http.put<any>(`${this.BASE_URL}/update-bought-tickets`, tickets);
   }
 
+  sendUserTicketQRCode(tickets: TicketDTO[]): Observable<any> {
+    return this.http.post<any>(`${this.BASE_URL_QR}/sendMail`, tickets);
+  }
+
   public getQRCode(ticketID: number): Observable<ArrayBuffer> {
     const httpOptions: Object = {
       headers: new HttpHeaders({

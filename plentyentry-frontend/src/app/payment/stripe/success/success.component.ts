@@ -33,6 +33,12 @@ export class SuccessComponent implements OnInit {
     this.currentShoppingCart.tickets.forEach(eachTicketEvent => {
         this.ticketService.updateBoughtTicket(eachTicketEvent.ticketDTOS).toPromise().then(data => {
           console.log("Tickets Erfolgreich gekauft");
+
+          this.ticketService.sendUserTicketQRCode(eachTicketEvent.ticketDTOS).toPromise().then(data => {
+
+          });
+
+
         });
       });
     });
