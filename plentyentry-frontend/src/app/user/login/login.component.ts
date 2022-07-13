@@ -2,11 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {LoginRegisterService} from "../service/login-register.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserAuthReqDTO, UserDTO} from "../../definitions/objects";
+import {CheckoutSessionDTO, PaymentIntentDTO, StripeCheckoutResultDTO, UserAuthReqDTO, UserDTO} from "../../definitions/objects";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ErrorService} from "../../../library/error-handling/error.service";
 import {EventService} from "../../events/service/event.service";
 import {toNumbers} from "@angular/compiler-cli/src/version_helpers";
+import {environment} from "../../../environments/environment";
+import {ShoppingcartService} from "../shoppingcart/service/shoppingcart.service";
 
 @Component({
   selector: 'app-login-register',
@@ -19,13 +21,18 @@ export class LoginComponent implements OnInit {
   loginFormGroup: FormGroup;
   userDTO : UserDTO = <UserDTO> {};
   fieldTextType: any;
+  paymenIntent: PaymentIntentDTO = <PaymentIntentDTO>{};
+  checkoutDTO: CheckoutSessionDTO = <CheckoutSessionDTO>{};
+  resultOfStripe: StripeCheckoutResultDTO = <StripeCheckoutResultDTO>{};
+  fullPrice: number;
 
   constructor(private router: Router, private loginRegisterService: LoginRegisterService,
-              private fb: FormBuilder, private errorHandling: ErrorService, private eventService: EventService) {
+              private fb: FormBuilder, private errorHandling: ErrorService, private eventService: EventService,
+              private shoppincartService: ShoppingcartService) {
   }
 
   ngOnInit(): void {
-
+    this.loadEventWithEventId(parseInt(localStorage.getItem('eventId')), parseInt(localStorage.getItem('quantity')));
     this.loginFormGroup = this.fb.group({
       "email": new FormControl('', [Validators.required, Validators.pattern(this.loginRegisterService.regex.email)]),
       "password": new FormControl('', [Validators.required, Validators.pattern(this.loginRegisterService.regex.passwort)])
@@ -33,20 +40,46 @@ export class LoginComponent implements OnInit {
 
   }
 
+  loadEventWithEventId(id: number, quantity: number){
+    this.eventService.getEventById(id)
+      .toPromise().then(event => {
+      this.fullPrice = event.price;
+      this.fullPrice = this.fullPrice * quantity;
+      console.log(this.fullPrice);
+    });
+  }
+
   authenticate() {
     this.loginRegisterService.authenticateUser(this.userAuthReqDTO).toPromise().then((userDTO) => {
       localStorage.setItem('token', userDTO.jwtToken);
       if(localStorage.getItem('eventId') && localStorage.getItem('quantity')){
-        const eventId = parseInt(localStorage.getItem('eventId'));
-        const quantity  = parseInt( localStorage.getItem('quantity'));
-        this.eventService.selectTicketsAndAddToCustomerShoppingCart(eventId, quantity).toPromise().then(data => {
-          console.log(data);
-          localStorage.removeItem('eventId');
+        if(localStorage.getItem('directBuy') === 'true'){
+          this.paymenIntent.amount = this.fullPrice;
+          this.paymenIntent.currency = "EUR";
+          this.checkoutDTO.fullAmount = this.fullPrice;
+          this.checkoutDTO.cancelUrl = environment.frontendBaseUrl + '/payment/cancel';
+          this.checkoutDTO.successUrl = environment.frontendBaseUrl + '/payment/success';
+          this.shoppincartService.makePaymentWithCheckoutSession(this.checkoutDTO)
+            .subscribe(result => {
+              this.resultOfStripe = result;
+              window.location.href = result.urlToStripe;
+            });
+          localStorage.removeItem('directBuy');
           localStorage.removeItem('quantity');
-        });
-        this.router.navigateByUrl('/shoppingcart/list').then(res =>{
-          location.reload();
-        });
+          localStorage.removeItem('eventId');
+        }else{
+          const eventId = parseInt(localStorage.getItem('eventId'));
+          const quantity  = parseInt( localStorage.getItem('quantity'));
+          this.eventService.selectTicketsAndAddToCustomerShoppingCart(eventId, quantity).toPromise().then(data => {
+            console.log(data);
+            localStorage.removeItem('eventId');
+            localStorage.removeItem('quantity');
+          });
+          this.router.navigateByUrl('/shoppingcart/list').then(res =>{
+            location.reload();
+          });
+        }
+
       }else{
         this.router.navigateByUrl('/event/overview').then((res) => {
           window.location.reload();
@@ -61,7 +94,7 @@ export class LoginComponent implements OnInit {
       }).catch((error: HttpErrorResponse) => {
         this.errorHandling.openInformation('Passwort oder Email ist falsch bitte überprüfen Sie ihre Eingabe');
       });
-    })
+    });
   }
 
   changePasswordType() {

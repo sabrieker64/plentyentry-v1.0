@@ -43,7 +43,7 @@ import {StripeModule} from "stripe-angular";
     ToolBarModule,
     StripeModule.forRoot(environment.stripe),
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
+      enabled: true,
       registrationStrategy: 'registerImmediately'
     }),
   ],

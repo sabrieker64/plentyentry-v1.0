@@ -87,6 +87,10 @@
                 <mat-icon class="icon">add</mat-icon>
               </button>
             </span>
+            <button class="cart" (click)="buyDirectly(eventDTO, eventQuantity)">
+              <mat-icon class="icon">payments</mat-icon>
+              Direkt Kaufen
+            </button>
             <button class="cart" (click)="addToShoppingCart(eventDTO, eventQuantity)">
               <mat-icon class="icon">shopping_cart</mat-icon>
               In den Warenkorb

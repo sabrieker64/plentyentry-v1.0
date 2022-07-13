@@ -38,6 +38,13 @@ public class ShoppingCartRestServiceImpl implements ShoppingCartRestService {
         var everyEvent = shoppingCart.getTickets().stream().map(Ticket::getEvent).collect(Collectors.toList());
         var eventsDistinct = everyEvent.stream().distinct().collect(Collectors.toList());
         var distinctTickets = new ArrayList<ShoppingCartTicketDTOPerEvent>();
+
+        var checkIfShoppingCartIsEmpty =
+                shoppingCart.getTickets().stream().filter(ticket -> ticket.getTicketStatus().equals(TicketStatus.RESERVED)).collect(Collectors.toList());
+        if(checkIfShoppingCartIsEmpty.isEmpty()){
+            return shoppingCartDTO;
+        }
+
        /* if (shoppingCart.getTickets().stream().noneMatch(ticket -> ticket.getTicketStatus().equals(TicketStatus.RESERVED))) {
             return shoppingCartDTO;
         }*/
@@ -53,17 +60,10 @@ public class ShoppingCartRestServiceImpl implements ShoppingCartRestService {
             shoppingCartTicketDTOPerEvent.setAmount(getTheRightAmount(event.getPrice(), detectedNewEvent.size()));
             shoppingCartTicketDTOPerEvent.setQuantity(detectedNewEvent.size());
             shoppingCartTicketDTOPerEvent.setTicketDTOS(ticketMapper.mapToListDTO(detectedNewEvent));
-            if (detectedNewEvent.get(0) == null) {
-                shoppingCartTicketDTOPerEvent.setEventDate(null);
-                shoppingCartTicketDTOPerEvent.setEventName(null);
-                shoppingCartTicketDTOPerEvent.setEventDescription(null);
-                shoppingCartTicketDTOPerEvent.setPricePerTicket(null);
-            } else {
-                shoppingCartTicketDTOPerEvent.setEventName(detectedNewEvent.get(0).getEvent().getName());
-                shoppingCartTicketDTOPerEvent.setEventDescription(detectedNewEvent.get(0).getEvent().getDescription());
-                shoppingCartTicketDTOPerEvent.setEventDate(detectedNewEvent.stream().findFirst().orElseThrow().getEvent().getStartDateTime().toLocalDate());
-                shoppingCartTicketDTOPerEvent.setPricePerTicket(detectedNewEvent.stream().findFirst().orElseThrow().getEvent().getPrice());
-            }
+            shoppingCartTicketDTOPerEvent.setEventName(detectedNewEvent.stream().findFirst().orElseGet(Ticket::new).getEvent().getName());
+            shoppingCartTicketDTOPerEvent.setEventDescription(detectedNewEvent.stream().findFirst().orElseGet(Ticket::new).getEvent().getDescription());
+            shoppingCartTicketDTOPerEvent.setEventDate(detectedNewEvent.stream().findFirst().orElseGet(Ticket::new).getEvent().getStartDateTime().toLocalDate());
+            shoppingCartTicketDTOPerEvent.setPricePerTicket(detectedNewEvent.stream().findFirst().orElseGet(Ticket::new).getEvent().getPrice());
             distinctTickets.add(shoppingCartTicketDTOPerEvent);
         });
         shoppingCartDTO.setTickets(distinctTickets);

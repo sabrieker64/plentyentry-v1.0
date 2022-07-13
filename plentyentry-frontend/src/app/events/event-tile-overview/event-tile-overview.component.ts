@@ -90,7 +90,7 @@ export class EventTileOverviewComponent implements OnInit {
       }
 
     }).catch((error: HttpErrorResponse) => {
-      this.errorHandling.openErrorBox(error.message);
+      this.errorHandling.openErrorBox('Die Events konnten nicht geladen werden');
     });
   }
 

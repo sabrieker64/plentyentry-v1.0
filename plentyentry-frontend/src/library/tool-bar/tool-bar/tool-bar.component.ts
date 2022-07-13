@@ -45,7 +45,7 @@ export class ToolBarComponent implements OnInit {
 
         shoppingcart.tickets.filter(ticket => {
           ticket.ticketDTOS.forEach(tickets => {
-            if (tickets.ticketStatus == "NOTSELLED" || tickets.ticketStatus == 'RESERVED') {
+            if (tickets.ticketStatus == 'RESERVED') {
               howManyOpen++;
             }
           })
@@ -54,18 +54,16 @@ export class ToolBarComponent implements OnInit {
 
         this.shoppingCartValue = howManyOpen;
       } else {
-        console.log("Benutzer besitzt keine Shoppingcart");
         if (this.loggedIn == false) {
 
-          this.errorHandling.openErrorBoxAndGoToLogin("Sie besitzen keine ShoppingCart!");
+          this.errorHandling.openErrorBoxAndGoToLogin("Melden Sie sich an um alle Funktionen zu verwenden");
 
         }
       }
-    }, error => {
+    }, () => {
       //console.log(error);
       //this.errorHandling.openErrorBox(error.message);
-      this.errorHandling.openErrorBoxAndGoToLogin("Sie besitzen keine ShoppingCart!");
-
+      this.errorHandling.openInformation('Bitte melden Sie sich an um alle Funktionen zu verwenden');
     });
 
   }

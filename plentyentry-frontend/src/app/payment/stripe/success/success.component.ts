@@ -23,10 +23,6 @@ export class SuccessComponent implements OnInit {
   private loadShoppingCart() {
     this.shoppingCartService.getShoppingcart().toPromise().then(data => {
       this.currentShoppingCart = data;
-
-      console.log(this.currentShoppingCart.tickets.forEach(ticket => {
-        console.log(ticket.ticketDTOS)
-      }));
       this.currentShoppingCart.tickets.forEach(tickets => {
         this.tickets = tickets.ticketDTOS;
       })
