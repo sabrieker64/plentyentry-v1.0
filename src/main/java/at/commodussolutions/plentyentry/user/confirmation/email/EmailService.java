@@ -17,7 +17,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
 
 
@@ -79,20 +78,20 @@ public class EmailService implements EmailSender {
             helper.setFrom("welcome@plenty-entry.com");
 
             var bodyPart = new MimeBodyPart();
-           if(!files.isEmpty()){
-               files.forEach(file -> {
-                   try {
-                       bodyPart.attachFile(file);
-                   } catch (IOException | MessagingException e) {
-                       throw new RuntimeException("Fehler bei der hinzufügung der Anhänge");
-                   }
-               });
-           }
-           
-           var fileAttachment = new MimeMultipart();
-           fileAttachment.addBodyPart(bodyPart);
-           mimeMessage.setContent(fileAttachment);
-           javaMailSender.send(mimeMessage);
+            if (!files.isEmpty()) {
+                files.forEach(file -> {
+                    try {
+                        bodyPart.attachFile(file);
+                    } catch (IOException | MessagingException e) {
+                        throw new RuntimeException("Fehler bei der hinzufügung der Anhänge");
+                    }
+                });
+            }
+
+            var fileAttachment = new MimeMultipart();
+            fileAttachment.addBodyPart(bodyPart);
+            mimeMessage.setContent(fileAttachment);
+            javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {
             log.error(e.getMessage());
         }

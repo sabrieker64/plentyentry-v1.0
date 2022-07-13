@@ -17,12 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 import org.springframework.stereotype.Service;
+
 import javax.mail.MessagingException;
 import javax.ws.rs.BadRequestException;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -104,14 +102,28 @@ public class QrCodeGeneratorServiceImpl implements QrCodeGeneratorService {
         User user = userService.getUserByJWTToken();
 
         for (Ticket ticket : tickets) {
+
+            /*
             File qrCode =File.createTempFile(ticket.getEvent().getName(), ticket.getId().toString());
             FileOutputStream fileOutputStream = new FileOutputStream(qrCode);
             fileOutputStream.write(this.getQRCode(ticket.getId()));
 
+             */
+
+            /*
+            ByteArrayInputStream bis = new ByteArrayInputStream(this.getQRCode(ticket.getId()));
+            BufferedImage bImage2 = ImageIO.read(bis);
+            ImageIO.write(bImage2, "jpg", new File(ticket.getEvent().getName()+".jpg") );
+
+             */
+
+
             String emailText = "Dein QR-Code für das Event " + ticket.getEvent().getName() + "!";
+
+
             if (environment.acceptsProfiles(Profiles.of("test", "development"))) {
-               emailSender.send(user.getEmail(), buildEmail(user.getLastName(), emailText));
-            }else {
+                emailSender.send(user.getEmail(), buildEmail(user.getLastName(), emailText));
+            } else {
                 try {
                     emailSender.sendEmailFromSES(user.getEmail(), emailText, "QR-Code " + ticket.getEvent().getName());
                 } catch (MessagingException e) {
