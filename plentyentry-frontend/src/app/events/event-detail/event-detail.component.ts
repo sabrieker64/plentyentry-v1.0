@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {EventDTO, TicketDTO} from "../../definitions/objects";
+import {CheckoutSessionDTO, EventDTO, PaymentIntentDTO, StripeCheckoutResultDTO, TicketDTO} from "../../definitions/objects";
 import {ActivatedRoute, Router} from "@angular/router";
 import {EventService} from "../service/event.service";
 import {HttpErrorResponse} from "@angular/common/http";
@@ -9,6 +9,8 @@ import {UserDetailService} from "../../user/service/user-detail.service";
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import {registerLocaleData} from "@angular/common";
+import {environment} from "../../../environments/environment";
+import {ShoppingcartService} from "../../user/shoppingcart/service/shoppingcart.service";
 
 @Component({
   selector: 'app-event-detail',
@@ -19,12 +21,17 @@ import {registerLocaleData} from "@angular/common";
 export class EventDetailComponent implements OnInit {
   eventDTO: EventDTO = <EventDTO>{};
   eventQuantity: number = 1;
+  fullPrice: number;
   selectedTickets: TicketDTO[];
+  paymenIntent: PaymentIntentDTO = <PaymentIntentDTO>{};
+  checkoutDTO: CheckoutSessionDTO = <CheckoutSessionDTO>{};
+  resultOfStripe: StripeCheckoutResultDTO = <StripeCheckoutResultDTO>{};
+
 
 
   constructor(private eventService: EventService, private route: ActivatedRoute,
               private errorHandling: ErrorService, private router: Router,
-              private ticketService: TicketService, private userService: UserDetailService) {
+              private shoppincartService: ShoppingcartService, private userService: UserDetailService) {
   }
 
 
@@ -61,16 +68,34 @@ export class EventDetailComponent implements OnInit {
       this.router.navigateByUrl('/user/login');
       localStorage.setItem('eventId', eventDTO.id.toString());
       localStorage.setItem('quantity', quantity.toString());
+    }else{
+      this.eventService.selectTicketsAndAddToCustomerShoppingCart(eventDTO.id, quantity).toPromise().then(data => {
+        console.log('successfully added to your shopping cart'+  data);
+        this.router.navigateByUrl('/shoppingcart/list');
+      });
     }
-    this.eventService.selectTicketsAndAddToCustomerShoppingCart(eventDTO.id, quantity).toPromise().then(data => {
-      console.log('successfully added to your shopping cart'+  data);
-      this.router.navigateByUrl('/shoppingcart/list');
-    });
+
   }
 
-  private ticketFinalize(data: TicketDTO[]) {
-    data = this.selectedTickets;
-    return data;
+  buyDirectly(eventDTO: EventDTO, eventQuantity: number) {
+    this.fullPrice = eventDTO.price * eventQuantity;
+    console.log(this.fullPrice);
+    if(localStorage.getItem('token') == null || localStorage.getItem('token') == 'No token'){
+      this.router.navigateByUrl('/user/login');
+      localStorage.setItem('eventId', eventDTO.id.toString());
+      localStorage.setItem('quantity', eventQuantity.toString());
+      localStorage.setItem('directBuy', 'true');
+    }else{
+      this.paymenIntent.amount = this.fullPrice;
+      this.paymenIntent.currency = "EUR";
+      this.checkoutDTO.fullAmount = this.fullPrice;
+      this.checkoutDTO.cancelUrl = environment.frontendBaseUrl + '/payment/cancel';
+      this.checkoutDTO.successUrl = environment.frontendBaseUrl + '/payment/success';
+      this.shoppincartService.makePaymentWithCheckoutSession(this.checkoutDTO)
+        .subscribe(result => {
+          this.resultOfStripe = result;
+          window.location.href = result.urlToStripe;
+        });
+    }
   }
-
 }
