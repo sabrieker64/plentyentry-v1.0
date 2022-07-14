@@ -31,7 +31,7 @@ public class EmailSenderRestServiceImpl {
 
     }
 
-    @PostMapping("/send-email/attachment")
+ /*   @PostMapping("/send-email/attachment")
     @ResponseBody
     void sendEmailAttachment(@RequestBody EmailSendWithAttachmentDTO emailSendWithAttachmentDTO) {
 
@@ -40,5 +40,5 @@ public class EmailSenderRestServiceImpl {
         }
         emailService.sendEmailFromSESWithFile(emailSendWithAttachmentDTO.getEmailTo(), emailSendWithAttachmentDTO.getEmail(),
                 emailSendWithAttachmentDTO.getSubject(), emailSendWithAttachmentDTO.getFiles());
-    }
+    }*/
 }

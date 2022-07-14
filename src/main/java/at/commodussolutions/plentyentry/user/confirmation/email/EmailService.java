@@ -68,7 +68,7 @@ public class EmailService implements EmailSender {
     @Override
     @Async
     @SneakyThrows
-    public void sendEmailFromSESWithFile(String to, String email, String subject, List<File> files) {
+    public void sendEmailFromSESWithFile(String to, String email, String subject, List<String> qrcodes) {
         try {
             var mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
@@ -76,21 +76,6 @@ public class EmailService implements EmailSender {
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setFrom("welcome@plenty-entry.com");
-
-            var bodyPart = new MimeBodyPart();
-            if (!files.isEmpty()) {
-                files.forEach(file -> {
-                    try {
-                        bodyPart.attachFile(file);
-                    } catch (IOException | MessagingException e) {
-                        throw new RuntimeException("Fehler bei der hinzufügung der Anhänge");
-                    }
-                });
-            }
-
-            var fileAttachment = new MimeMultipart();
-            fileAttachment.addBodyPart(bodyPart);
-            mimeMessage.setContent(fileAttachment);
             javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {
             log.error(e.getMessage());

@@ -86,6 +86,9 @@ export class EventDetailComponent implements OnInit {
       localStorage.setItem('quantity', eventQuantity.toString());
       localStorage.setItem('directBuy', 'true');
     }else{
+      this.eventService.selectTicketsAndAddToCustomerShoppingCart(eventDTO.id, eventQuantity).toPromise().then(data => {
+
+      });
       this.paymenIntent.amount = this.fullPrice;
       this.paymenIntent.currency = "EUR";
       this.checkoutDTO.fullAmount = this.fullPrice;
