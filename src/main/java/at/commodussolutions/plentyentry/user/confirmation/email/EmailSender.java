@@ -10,5 +10,5 @@ public interface EmailSender {
 
     void sendEmailFromSES(String to, String email, String subject) throws MessagingException;
 
-    void sendEmailFromSESWithFile(String to, String email, String subject, List<String> qrCodes);
+    void sendEmailFromSESWithFile(String to, String subject, String bodyPlainText, String bodyHtml, String contentId, byte[] base64Image);
 }

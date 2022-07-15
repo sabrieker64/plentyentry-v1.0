@@ -14,19 +14,18 @@ import com.amazonaws.services.dynamodbv2.xspec.S;
 import com.google.zxing.WriterException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Base64InputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
 
 import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
 import javax.ws.rs.BadRequestException;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -116,9 +115,8 @@ public class QrCodeGeneratorServiceImpl implements QrCodeGeneratorService {
         String eventName = null;
 
         for (Ticket ticket : tickets) {
-
-            String base64Code = Base64.getEncoder().encodeToString(this.getQRCode(ticket.getId()));
-            qrcodes.add(base64Code);
+            var base64CodeString = new String(this.getQRCode(ticket.getId()));
+           // qrcodes.add(base64Code);
             eventName = ticket.getEvent().getName();
             emailText  = "Dein QR-Code für das Event " + ticket.getEvent().getName() + "!";
 
@@ -126,7 +124,9 @@ public class QrCodeGeneratorServiceImpl implements QrCodeGeneratorService {
             BufferedImage bImage2 = ImageIO.read(bis);
             ImageIO.write(bImage2, "png", new File(ticket.getEvent().getName()+".png") );
             */
-            emailSender.sendEmailFromSESWithFile(user.getEmail(), buildEmailForQrCodes(base64Code, emailText), "QR-Code " + eventName, qrcodes);
+            emailSender.sendEmailFromSESWithFile(user.getEmail(),"Dein Ticket für  "+ ticket.getEvent().getName(), "QR-Code " + eventName,
+                    buildEmailForQrCodes(base64CodeString, ticket.getEvent().getName(), ticket.getEvent().getStartDateTime().toString(), this.userService.getUserByJWTToken().getFirstName()),
+                    ticket.getId().toString(), this.getQRCode(ticket.getId()));
 
         }
 
@@ -163,10 +163,12 @@ public class QrCodeGeneratorServiceImpl implements QrCodeGeneratorService {
 
     }
 
-    private String buildEmailForQrCodes(String qrCodes, String text) {
-        return "<h2>\""+ text +"\"</h2>" +
-                "<img width=\"400\" height=\"400\" "
-                + "alt=\"View of the object.\" src=\"data:image/jpeg;base64,"
-                + qrCodes + "\">";
+    private String buildEmailForQrCodes(String qrCodes, String eventName, String eventDate, String ticketOwner) {
+       // return "<img src=\"cid:qrImage\" alt=\"qr code\">";
+       return   "<h2> Ticket Inhaber: " +ticketOwner+"</h2>"
+                +"<h2>Event Name: "+eventName+"</h2>"
+                +"<h2>Startdatum: "+eventDate+"</h2>"
+                +"<img style=\"text-align: center\" src=\"data:image/png;base64, "+qrCodes+"\">"
+                +"<h4>Danke für Ihre Bestellung!";
     }
 }
