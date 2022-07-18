@@ -163,4 +163,10 @@ public class TicketServiceImpl implements TicketService {
 
         return ticketList;
     }
+
+    @Override
+    public List<Ticket> findAllTicketsThatAreAvailable(long eventId) {
+       return  ticketRepository.findAll().stream().filter(ticket -> ticket.getTicketStatus().equals(TicketStatus.NOTSELLED)
+               && ticket.getEvent().getId().equals(eventId)).collect(Collectors.toList());
+    }
 }

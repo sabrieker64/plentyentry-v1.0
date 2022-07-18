@@ -96,4 +96,9 @@ public class TicketRestServiceImpl implements TicketRestService {
     public List<TicketDTO> removeFromShoppingCart(Long ticketId) {
         return ticketMapper.mapToListDTO(ticketService.removeFromShoppingCart(ticketId));
     }
+
+    @Override
+    public List<TicketDTO> countTicketThatAreAvailable(long eventId) {
+        return ticketMapper.mapToListDTO(ticketService.findAllTicketsThatAreAvailable(eventId));
+    }
 }

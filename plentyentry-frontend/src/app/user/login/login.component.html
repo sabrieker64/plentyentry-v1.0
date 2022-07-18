@@ -35,9 +35,11 @@
               <p *ngIf="loginFormGroup.get('password')?.hasError('pattern')">Dies entspricht nicht den Passwort
                 Vorgaben</p>
             </mat-error>
-            <mat-hint>Passwort Anforderungen beachten</mat-hint>
-            <mat-hint>[min. 8-Zeichen, 1 x Großbuchstabe, 1x Sonderzeichen]</mat-hint>
           </mat-form-field>
+            <ng-container style="margin-bottom: 2px; padding: 0">
+            <mat-hint>Passwort Anforderungen beachten <br> [min. 8-Zeichen, 1 x Großbuchstabe, 1x Sonderzeichen]</mat-hint>
+            </ng-container>
+
 
           <div class="form-element">
             <mat-checkbox color="primary" (click)="changePasswordType()">Passwort anzeigen</mat-checkbox><br>

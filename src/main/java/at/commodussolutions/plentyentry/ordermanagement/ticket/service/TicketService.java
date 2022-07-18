@@ -32,4 +32,6 @@ public interface TicketService {
     void updateBoughtTickets(List<Ticket> tickets);
 
     List<Ticket> removeFromShoppingCart(Long ticketId);
+
+    List<Ticket> findAllTicketsThatAreAvailable(long eventId);
 }

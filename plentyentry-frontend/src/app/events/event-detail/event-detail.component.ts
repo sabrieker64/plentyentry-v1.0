@@ -22,22 +22,38 @@ export class EventDetailComponent implements OnInit {
   eventDTO: EventDTO = <EventDTO>{};
   eventQuantity: number = 1;
   fullPrice: number;
+  availableTicketCount: number;
   selectedTickets: TicketDTO[];
   paymenIntent: PaymentIntentDTO = <PaymentIntentDTO>{};
   checkoutDTO: CheckoutSessionDTO = <CheckoutSessionDTO>{};
   resultOfStripe: StripeCheckoutResultDTO = <StripeCheckoutResultDTO>{};
+  noTicketsAvailable: boolean = false;
+  notMuchTicketsLeft: boolean = false;
 
 
 
   constructor(private eventService: EventService, private route: ActivatedRoute,
               private errorHandling: ErrorService, private router: Router,
-              private shoppincartService: ShoppingcartService, private userService: UserDetailService) {
+              private shoppincartService: ShoppingcartService, private ticketService: TicketService) {
   }
 
 
   ngOnInit(): void {
     this.getEventDetail();
+    this.loadAvailableTickets();
     registerLocaleData(localeDe, 'de-DE', localeDeExtra);
+  }
+
+  loadAvailableTickets() {
+    let eventId = Number(this.route.snapshot.paramMap.get('id'));
+    this.ticketService.findAllTicketsThatAreAvailable(eventId).toPromise().then(data => {
+      this.availableTicketCount = data.length;
+     if(this.availableTicketCount === 0){
+       this.noTicketsAvailable = true;
+     }else if(this.availableTicketCount <= 10) {
+       this.notMuchTicketsLeft = true;
+     }
+    });
   }
 
   public getEventDetail() {

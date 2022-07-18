@@ -87,11 +87,17 @@
                 <mat-icon class="icon">add</mat-icon>
               </button>
             </span>
-            <button class="cart" (click)="buyDirectly(eventDTO, eventQuantity)">
+            <ng-container *ngIf="noTicketsAvailable">
+            <mat-hint style="color: red" >Keine Tickets mehr für dieses Event verfügbar!</mat-hint>
+            </ng-container>
+            <ng-container *ngIf="notMuchTicketsLeft">
+              <mat-hint style="color: orange">Nicht mehr viele Tickets verfügbar, greif gleich zu!</mat-hint>
+            </ng-container>
+            <button mat-raised-button color="primary" class="cart" [disabled]="noTicketsAvailable" (click)="buyDirectly(eventDTO, eventQuantity)">
               <mat-icon class="icon">payments</mat-icon>
               Direkt Kaufen
             </button>
-            <button class="cart" (click)="addToShoppingCart(eventDTO, eventQuantity)">
+            <button mat-raised-button color="primary" class="cart"  [disabled]="noTicketsAvailable" (click)="addToShoppingCart(eventDTO, eventQuantity)">
               <mat-icon class="icon">shopping_cart</mat-icon>
               In den Warenkorb
             </button>

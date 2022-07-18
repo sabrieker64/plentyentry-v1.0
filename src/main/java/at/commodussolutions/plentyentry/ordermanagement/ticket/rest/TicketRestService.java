@@ -58,4 +58,8 @@ public interface TicketRestService {
     @PutMapping("/removeFromShoppingCart")
     @ResponseBody
     List<TicketDTO> removeFromShoppingCart(@RequestParam("ticketId") Long ticketId);
+
+    @GetMapping("/count-ticket-available")
+    @ResponseBody
+    List<TicketDTO> countTicketThatAreAvailable(@RequestParam("eventId") long eventId);
 }

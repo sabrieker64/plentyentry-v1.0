@@ -48,4 +48,8 @@ export class TicketService {
     return this.http.put<TicketDTO>(`${this.BASE_URL}`, ticketID);
   }
 
+  public findAllTicketsThatAreAvailable(eventId: number): Observable<TicketDTO[]> {
+    return this.http.get<TicketDTO[]>(`${this.BASE_URL}`+ '/count-ticket-available?eventId=' + eventId);
+  }
+
 }
