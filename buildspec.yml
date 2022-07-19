@@ -43,4 +43,5 @@ artifacts:
     - plentyentry-frontend/dist/plentyentry-frontend/assets/**
     - plentyentry-frontend/dist/plentyentry-frontend/assets/fonts/**
     - plentyentry-frontend/dist/plentyentry-frontend/assets/scss/**
+    - plentyentry-frontend/dist/plentyentry-frontend/assets/icons/**
   discard-paths: yes
