@@ -1,5 +1,6 @@
 package at.commodussolutions.plentyentry.ordermanagement.event.dto;
 
+import at.commodussolutions.plentyentry.ordermanagement.event.enums.EventStatus;
 import at.commodussolutions.plentyentry.user.userdata.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,5 +28,6 @@ public class EventDTO {
     private String address;
     private List<String> eventImageUrls;
     private Set<UserDTO> entertainers;
+    private EventStatus eventStatus;
 
 }

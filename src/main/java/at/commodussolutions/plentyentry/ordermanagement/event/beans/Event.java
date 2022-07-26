@@ -1,5 +1,6 @@
 package at.commodussolutions.plentyentry.ordermanagement.event.beans;
 
+import at.commodussolutions.plentyentry.ordermanagement.event.enums.EventStatus;
 import at.commodussolutions.plentyentry.user.userdata.beans.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -53,6 +54,10 @@ public class Event {
 
     @Column(name = "CITY")
     private String city;
+
+    @Column(name = "EVENT_STATUS")
+    @Enumerated(EnumType.STRING)
+    private EventStatus eventStatus;
 
 
     @ElementCollection(fetch = FetchType.LAZY)

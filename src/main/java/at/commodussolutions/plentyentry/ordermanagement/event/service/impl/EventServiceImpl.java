@@ -9,6 +9,7 @@ import at.commodussolutions.plentyentry.ordermanagement.event.aws.model.Base64De
 import at.commodussolutions.plentyentry.ordermanagement.event.aws.rest.impl.AwsBucketRestServiceImpl;
 import at.commodussolutions.plentyentry.ordermanagement.event.aws.service.AmazonClient;
 import at.commodussolutions.plentyentry.ordermanagement.event.beans.Event;
+import at.commodussolutions.plentyentry.ordermanagement.event.enums.EventStatus;
 import at.commodussolutions.plentyentry.ordermanagement.event.repository.EventRepository;
 import at.commodussolutions.plentyentry.ordermanagement.event.service.EventService;
 import at.commodussolutions.plentyentry.ordermanagement.ticket.service.TicketService;
@@ -79,6 +80,12 @@ public class EventServiceImpl implements EventService {
 
         awsEventData.setEventName(event.getName());
         awsEventData.setUsername(userService.getUserByJWTToken().getEmail());
+        if(event.getEventStatus() == null){
+            //this should be our default value, but we need to check when the date is over the localdate now then it should be on status finished
+            //or if its cancelled it must be set manuelly on a dropdown to status cancelled.
+            //and on canelletion the event owner can decied if he wants to return the money to customers or do it the other way
+            event.setEventStatus(EventStatus.ACTIVE);
+        }
 
         List<MultipartFile> list = new ArrayList<>();
 
