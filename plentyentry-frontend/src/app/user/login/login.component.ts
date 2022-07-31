@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   fullPrice: number;
   eventId: number;
   quantity: number;
-  showProgressSpinner: boolean = false;
+ // showProgressSpinner: boolean = false;
 
   constructor(private router: Router, private loginRegisterService: LoginRegisterService,
               private fb: FormBuilder, private errorHandling: ErrorService, private eventService: EventService,
@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
   }
 
   authenticate() {
-    this.showProgressSpinner = true;
+  //  this.showProgressSpinner = true;
     this.loginRegisterService.authenticateUser(this.userAuthReqDTO).toPromise().then((userDTO) => {
       localStorage.setItem('token', userDTO.jwtToken);
       if(localStorage.getItem('eventId') && localStorage.getItem('quantity')){
@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
           window.location.reload();
         });
       }
-      this.showProgressSpinner = false;
+    //  this.showProgressSpinner = false;
     }).catch((error: HttpErrorResponse) => {
       this.errorHandling.openInformation('Passwort oder Email ist falsch bitte überprüfen Sie ihre Eingabe');
       this.loginRegisterService.getUserByEmail(this.userAuthReqDTO.email).toPromise().then(user => {
