@@ -9,6 +9,7 @@ import {EventService} from "../../events/service/event.service";
 import {toNumbers} from "@angular/compiler-cli/src/version_helpers";
 import {environment} from "../../../environments/environment";
 import {ShoppingcartService} from "../shoppingcart/service/shoppingcart.service";
+import {throwError} from "rxjs";
 
 @Component({
   selector: 'app-login-register',
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit {
   fullPrice: number;
   eventId: number;
   quantity: number;
+  showProgressSpinner: boolean = false;
 
   constructor(private router: Router, private loginRegisterService: LoginRegisterService,
               private fb: FormBuilder, private errorHandling: ErrorService, private eventService: EventService,
@@ -54,6 +56,7 @@ export class LoginComponent implements OnInit {
   }
 
   authenticate() {
+    this.showProgressSpinner = true;
     this.loginRegisterService.authenticateUser(this.userAuthReqDTO).toPromise().then((userDTO) => {
       localStorage.setItem('token', userDTO.jwtToken);
       if(localStorage.getItem('eventId') && localStorage.getItem('quantity')){
@@ -67,6 +70,7 @@ export class LoginComponent implements OnInit {
           window.location.reload();
         });
       }
+      this.showProgressSpinner = false;
     }).catch((error: HttpErrorResponse) => {
       this.errorHandling.openInformation('Passwort oder Email ist falsch bitte überprüfen Sie ihre Eingabe');
       this.loginRegisterService.getUserByEmail(this.userAuthReqDTO.email).toPromise().then(user => {

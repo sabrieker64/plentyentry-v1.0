@@ -45,10 +45,8 @@ public class EventServiceImpl implements EventService {
     private TicketService ticketService;
     @Autowired
     private AmazonClient amazonClient;
-
     @Autowired
     private Environment env;
-
     @Autowired
     private AwsBucketRestServiceImpl awsBucketRestService;
 
