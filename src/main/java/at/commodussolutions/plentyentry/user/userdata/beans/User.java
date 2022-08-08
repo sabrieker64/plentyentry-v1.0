@@ -119,6 +119,9 @@ public class User implements UserDetails{
     @Column(name = "COMPANY_NAME")
     private String companyName;
 
+    @Column(name = "CONNECTED_ACCOUNT_ID")
+    private String connectedAccountID;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userType.name());

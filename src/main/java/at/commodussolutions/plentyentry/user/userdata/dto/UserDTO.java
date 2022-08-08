@@ -48,5 +48,7 @@ public class UserDTO {
     private String phoneNumber;
     private String uid;
     private Boolean enabled;
+    private String connectedAccountID;
+
 
 }

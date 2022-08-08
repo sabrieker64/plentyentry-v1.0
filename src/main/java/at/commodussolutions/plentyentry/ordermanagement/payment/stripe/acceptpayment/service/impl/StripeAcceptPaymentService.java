@@ -30,7 +30,6 @@ import java.util.Map;
 
 @Service
 @Slf4j
-@Transactional
 public class StripeAcceptPaymentService {
 
     @Value("${stripe.private-key}")
