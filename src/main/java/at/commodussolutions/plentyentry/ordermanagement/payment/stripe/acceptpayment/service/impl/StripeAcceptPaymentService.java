@@ -13,6 +13,7 @@ import com.stripe.model.Price;
 import com.stripe.model.Product;
 import com.stripe.model.Token;
 import com.stripe.model.checkout.Session;
+import com.stripe.net.RequestOptions;
 import com.stripe.param.PaymentIntentCreateParams;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -132,7 +133,10 @@ public class StripeAcceptPaymentService {
         sessionCreateParams.put("line_items", lineItems);
         sessionCreateParams.put("mode", "payment");
 
-        return Session.create(sessionCreateParams);
+        RequestOptions requestOptions = RequestOptions.builder()
+                .setStripeAccount("test").build();
+
+        return Session.create(sessionCreateParams, requestOptions);
     }
 
 
