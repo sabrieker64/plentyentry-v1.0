@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2022-07-14 20:56:58.
+// Generated using typescript-generator version 2.32.889 on 2022-09-06 22:39:22.
 
 export interface UserDTO {
     id: number;
@@ -25,6 +25,7 @@ export interface UserDTO {
     phoneNumber: string;
     uid: string;
     enabled: boolean;
+    connectedAccountID: string;
 }
 
 export interface EventDTO {
@@ -40,6 +41,7 @@ export interface EventDTO {
     address: string;
     eventImageUrls: string[];
     entertainers: UserDTO[];
+    eventStatus: EventStatus;
 }
 
 export interface UserRegisterDTO {
@@ -163,6 +165,8 @@ export interface TicketDTO {
 export type UserType = "GUEST" | "CUSTOMER" | "ADMIN" | "MAINTAINER" | "SUPERADMIN";
 
 export type UserGender = "MALE" | "FEMALE" | "DIVERSE";
+
+export type EventStatus = "ACTIVE" | "CANCELLED" | "FINISHED";
 
 export type Currency = "EUR";
 

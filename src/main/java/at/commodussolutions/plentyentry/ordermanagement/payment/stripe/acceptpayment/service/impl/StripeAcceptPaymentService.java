@@ -101,8 +101,6 @@ public class StripeAcceptPaymentService {
             token = Token.create(params);
         } catch (StripeException e) {
             log.error(e.getMessage());
-            {
-            }
         }
         return token;
     }
